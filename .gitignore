@@ -1,0 +1,17 @@
+media-fever/bin/
+media-fever/target/
+media-fever/test-output/
+media-fever/work/
+media-fever/.settings/org.maven.ide.eclipse.prefs
+media-fever/src/main/resources/settings.local.properties
+media-fever/src/main/resources/git.properties
+media-fever/src/main/resources/log4j.xml
+media-fever/src/main/webapp/META-INF/context.xml
+media-fever/src/main/webapp/.#webclasspath
+
+media-android/bin/
+media-android/gen/
+media-android/target/
+media-android/.settings/org.maven.ide.eclipse.prefs
+media-android/src/main/resources/settings.local.properties
+media-android/src/main/resources/git.properties
