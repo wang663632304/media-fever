@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+	
+	<bean id="marshallerTypeEvaluator" class="com.jdroid.javaweb.marshaller.HibernateMarshallerTypeEvaluator"/>
+
+	<bean id="marshallerProvider" class="com.jdroid.java.marshaller.MarshallerProvider"
+		factory-method="get">
+		<property name="marshallerTypeEvaluator" ref="marshallerTypeEvaluator"/>
+		<property name="marshallers">
+			<util:map>
+				<entry key="com.mediafever.core.domain.UserWatchable">
+					<bean class="com.mediafever.api.marshaller.json.UserWatchableJsonMarshaller" />
+				</entry>
+				<entry key="com.mediafever.core.domain.User">
+					<bean class="com.mediafever.api.marshaller.json.UserJsonMarshaller" />
+				</entry>
+				<entry key="com.mediafever.core.domain.watchingsession.WatchingSession">
+					<bean class="com.mediafever.api.marshaller.json.WatchingSessionJsonMarshaller" />
+				</entry>
+				<entry key="com.mediafever.core.domain.watchingsession.WatchingSessionUser">
+					<bean class="com.mediafever.api.marshaller.json.WatchingSessionUserJsonMarshaller" />
+				</entry>
+				<entry key="com.mediafever.core.domain.watchingsession.WatchingSelection">
+					<bean class="com.mediafever.api.marshaller.json.WatchingSelectionJsonMarshaller" />
+				</entry>
+				<entry key="com.mediafever.core.domain.FriendRequest">
+					<bean class="com.mediafever.api.marshaller.json.FriendRequestJsonMarshaller" />
+				</entry>
+				<entry key="com.mediafever.core.domain.watchable.Movie">
+					<bean class="com.mediafever.api.marshaller.json.MovieJsonMarshaller" />
+				</entry>
+				<entry key="com.mediafever.core.domain.watchable.Series">
+					<bean class="com.mediafever.api.marshaller.json.SeriesJsonMarshaller" />
+				</entry>
+				<entry key="com.mediafever.core.domain.watchable.Season">
+					<bean class="com.mediafever.api.marshaller.json.SeasonJsonMarshaller" >
+						<property name="userWatchableService" ref="userWatchableService" />
+					</bean>
+				</entry>
+				<entry key="com.mediafever.core.domain.watchable.Episode">
+					<bean class="com.mediafever.api.marshaller.json.EpisodeJsonMarshaller" />
+				</entry>
+				<entry key="com.mediafever.core.domain.watchable.Person">
+					<bean class="com.mediafever.api.marshaller.json.PersonJsonMarshaller" />
+				</entry>
+					<entry key="com.jdroid.javaweb.search.PagedResult">
+					<bean class="com.jdroid.javaweb.search.PagedResultJsonMarshaller" />
+				</entry>
+			</util:map>
+		</property>
+	</bean>
+</beans>
+
+

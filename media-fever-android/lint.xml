@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="ContentDescription" severity="ignore" />
+    <issue id="FieldGetter" severity="warning" />
+    <issue id="HardcodedText">
+        <ignore path="res\layout\left_action_row.xml" />
+        <ignore path="res/layout/left_action_row.xml" />
+    </issue>
+    <issue id="IconExpectedSize" severity="warning" />
+    <issue id="Overdraw">
+        <ignore path="res\layout\left_action_bar_fragment.xml" />
+        <ignore path="res/layout/left_action_bar_fragment.xml" />
+        <ignore path="res\layout\share_row.xml" />
+        <ignore path="res/layout/share_row.xml" />
+        <ignore path="res\layout\toast_custom.xml" />
+        <ignore path="res/layout/toast_custom.xml" />
+    </issue>
+    <issue id="UnknownIdInLayout" severity="ignore" />
+    <issue id="UnusedIds" severity="warning" />
+    <issue id="UseCompoundDrawables" severity="ignore" />
+</lint>

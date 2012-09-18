@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<style name="defaultList" parent="@style/list">
+		<item name="android:listSelector">@drawable/list_selector</item>
+	</style>
+
+	<style name="defaultGrid" parent="@style/grid">
+		<item name="android:listSelector">@drawable/grid_selector</item>
+	</style>
+
+	<style name="textView">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_marginTop">10dp</item>
+		<item name="android:layout_marginBottom">5dp</item>
+		<item name="android:layout_marginLeft">10dp</item>
+		<item name="android:layout_marginRight">10dp</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
+	<style name="largeTextView">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">200dp</item>
+		<item name="android:layout_margin">10dp</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
+	<style name="editText">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_marginTop">5dp</item>
+		<item name="android:layout_marginBottom">5dp</item>
+		<item name="android:layout_marginLeft">10dp</item>
+		<item name="android:layout_marginRight">10dp</item>
+	</style>
+
+	<style name="largeEditText">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">300dp</item>
+		<item name="android:layout_margin">10dp</item>
+	</style>
+
+	<style name="watchableTitle">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_marginTop">10dp</item>
+		<item name="android:layout_marginBottom">5dp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:background">@drawable/title_background</item>
+		<item name="android:textSize">@dimen/defaultTextSize</item>
+		<item name="android:paddingLeft">10dp</item>
+		<item name="android:paddingRight">10dp</item>
+		<item name="android:paddingTop">1dp</item>
+		<item name="android:paddingBottom">1dp</item>
+	</style>
+
+</resources>

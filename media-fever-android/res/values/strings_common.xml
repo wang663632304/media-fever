@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Settings Activity -->
+	<string name="settings">Settings</string>
+
+	<!-- DEV Settings Activity -->
+	<string name="devSettings">DEV Settings</string>
+	<string name="httpMocks">HTTP Mocks</string>
+	<string name="httpMockEnabledTitle">Http Mocks</string>
+	<string name="httpMockEnabledDescription">Enable/disable http mocks</string>
+	<string name="httpMockSleepTitle">Http Mocks sleep</string>
+	<string name="httpMockSleepDescription">Enable/disable http mocks sleep</string>
+
+</resources>

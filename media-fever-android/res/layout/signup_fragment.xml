@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:layout_above="@+id/adViewContainer">
+
+		<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<TextView style="@style/textView" android:text="@string/firstName" />
+			<EditText android:id="@+id/firstName" style="@style/editText" android:inputType="text" />
+
+			<TextView style="@style/textView" android:text="@string/lastName" />
+			<EditText android:id="@+id/lastName" style="@style/editText" android:inputType="text" />
+
+			<TextView style="@style/textView" android:text="@string/email" />
+			<EditText android:id="@+id/email" style="@style/editText" android:inputType="textEmailAddress" />
+
+			<TextView style="@style/textView" android:text="@string/confirmEmail" />
+			<EditText android:id="@+id/confirmEmail" style="@style/editText" android:inputType="textEmailAddress" />
+
+			<TextView style="@style/textView" android:text="@string/password" />
+			<EditText android:id="@+id/password" style="@style/editText" android:inputType="textPassword" />
+
+			<TextView style="@style/textView" android:text="@string/confirmPassword" />
+			<EditText android:id="@+id/confirmPassword" style="@style/editText" android:inputType="textPassword" />
+
+			<Button android:id="@+id/signUp" style="@style/defaultLargeButton" android:text="@string/signUp"
+				android:layout_gravity="center_horizontal" android:minWidth="140dp" />
+
+		</LinearLayout>
+	</ScrollView>
+	<include layout="@layout/ad_view_container" />
+
+</RelativeLayout>

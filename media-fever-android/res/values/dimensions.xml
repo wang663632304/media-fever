@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<dimen name="defaultTextSize">18sp</dimen>
+	<dimen name="rowImageDim">50dp</dimen>
+
+	<!-- Left Nav Bar -->
+	<dimen name="left_nav_expanded_width">230dip</dimen>
+	<dimen name="left_nav_expanded_apparent_width">218dip</dimen>
+
+	<!-- CoverFlow -->
+	<dimen name="coverFlowWidth">120px</dimen>
+	<dimen name="coverFlowHeight">180px</dimen>
+
+</resources>

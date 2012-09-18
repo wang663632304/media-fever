@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- The Hibernate SessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.mediafever.core.domain.User</value>
+				<value>com.mediafever.core.domain.FriendRequest</value>
+				<value>com.mediafever.core.domain.UserWatchable</value>
+				<value>com.mediafever.core.domain.FacebookAccount</value>
+				<value>com.jdroid.javaweb.domain.FileEntity</value>
+				<value>com.jdroid.javaweb.push.Device</value>
+				<value>com.jdroid.javaweb.push.DeviceType</value>
+				<value>com.mediafever.core.domain.watchingsession.WatchingSession</value>
+				<value>com.mediafever.core.domain.watchingsession.WatchingSelection</value>
+				<value>com.mediafever.core.domain.watchingsession.WatchingSessionUser</value>
+				<value>com.mediafever.core.domain.watchable.Movie</value>
+				<value>com.mediafever.core.domain.watchable.Movie</value>
+				<value>com.mediafever.core.domain.watchable.Series</value>
+				<value>com.mediafever.core.domain.watchable.Season</value>
+				<value>com.mediafever.core.domain.watchable.Episode</value>
+				<value>com.mediafever.core.domain.watchable.Person</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Hibernate Transaction Manager -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+</beans>

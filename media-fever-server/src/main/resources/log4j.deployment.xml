@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/docs/api/org/apache/log4j/xml/doc-files/log4j.dtd">
+<!--=====================================================================-->
+<!--			   Log4j Configuration				 					 -->
+<!--=====================================================================-->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<!-- ================ -->
+	<!-- Appenders        -->
+	<!-- ================ -->
+
+	<appender name="dailyDefaultAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${app.homePath}/logs/server.log"/>
+		<param name="append" value="true"/>
+		<param name="immediateFlush" value="true"/>
+		<param name="datePattern" value="'.'yyyy-MM-dd'.log'"/>
+		<param name="encoding" value="UTF-8"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="conversionPattern" value="%d{ABSOLUTE} %-5p [%c] %m%n"/>
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="TRACE" />
+			<param name="LevelMax" value="WARN" />
+		</filter>
+	</appender>
+
+	<!-- Appender necessary to log exceptions and errors generated in normal operations -->
+	<appender name="dailyErrorAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="${app.homePath}/logs/error.log"/>
+		<param name="append" value="true"/>
+		<param name="immediateFlush" value="true"/>
+		<param name="datePattern" value="'.'yyyy-MM-dd'.log'"/>
+		<param name="encoding" value="UTF-8"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="conversionPattern" value="%d{ABSOLUTE} %-5p [%c] %m%n"/>
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ERROR" />
+			<param name="LevelMax" value="FATAL" />
+		</filter>
+	</appender>
+	
+	<!-- Appender necessary to send mails on exceptions and errors generated in normal operations -->
+	<appender name="emailAppender" class="com.jdroid.javaweb.log.GmailSMTPAppender">
+		<param name="BufferSize" value="10" />
+		<param name="Threshold" value="ERROR" />
+		<param name="SMTPHost" value="${mail.host}" />
+		<param name="SMTPUsername" value="${mail.username}" />
+		<param name="SMTPPassword" value="${mail.password}" />
+		<param name="SMTPPort" value="${mail.port}" />
+		<param name="To" value="${mail.to}" />
+		<param name="From" value="${mail.from}" />
+		<param name="Subject" value="${project.name} (${environment.name}) ${project.version} - Error" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}] %-5p %c %n%nApp URL: [%X{appURL}] %nThread Name: [%t] %nUser id: [%X{userId}] %nSession id: [%X{sessionId}] %n%n%m%n" />
+	    </layout>
+   	</appender>
+   	
+	<appender name="emailConsolidatingAppender" class="com.jdroid.javaweb.log.EventConsolidatingAppender">
+		<param name="delaySecs" value="5" />
+		<param name="Threshold" value="ERROR" />
+		<appender-ref ref="emailAppender" />
+	</appender>
+	
+	<appender name="asyncEmailAppender" class="org.apache.log4j.AsyncAppender">
+		<param name="Blocking" value="false" />
+		<param name="Threshold" value="ERROR" />
+		<appender-ref ref="emailConsolidatingAppender" />
+	</appender>
+
+	<!-- ================ -->
+	<!-- Limit categories -->
+	<!-- ================ -->
+	<logger name="java.sql">
+		<!-- Use DEBUG to display ibatis sql  -->
+		<level value="ERROR" />
+	</logger>
+
+	<!-- ======================= -->
+	<!-- Setup the Root category -->
+	<!-- ======================= -->
+	<root>
+		<priority value="INFO" />
+		<appender-ref ref="dailyDefaultAppender" />
+		<appender-ref ref="dailyErrorAppender" />
+		<appender-ref ref="asyncEmailAppender" />
+	</root>
+	
+</log4j:configuration>

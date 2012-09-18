@@ -1,0 +1,14 @@
+{
+    "movies": [
+        {
+            "id": 1,
+            "name": "Lion King",
+            "image": "http://server.com/image1.png"
+        },
+        {
+            "id": 2,
+            "name": "Starwars",
+            "image": "http://server.com/image2.png"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<ListView android:id="@+id/android:list" style="@style/defaultList" android:layout_above="@+id/adViewContainer" />
+
+	<TextView android:id="@id/android:empty" android:text="@string/noResults" style="@style/noResultsText"
+		android:textSize="16sp" android:layout_margin="15dp" />
+
+	<include layout="@layout/ad_view_container" />
+
+</RelativeLayout>

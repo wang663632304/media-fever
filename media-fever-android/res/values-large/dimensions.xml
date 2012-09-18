@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- CoverFlow -->
+	<dimen name="coverFlowWidth">200px</dimen>
+	<dimen name="coverFlowHeight">300px</dimen>
+
+</resources>

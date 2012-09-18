@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<color name="transluscentGrey">#AA000000</color>
+	<color name="blue">#357EC7</color>
+	<color name="green">#4C7D7E</color>
+	<color name="grey">#357EC7</color>
+	<color name="lightWhite">#DBDBDB</color>
+
+	<color name="pagerTabBackground">#33b5e5</color>
+
+
+</resources>

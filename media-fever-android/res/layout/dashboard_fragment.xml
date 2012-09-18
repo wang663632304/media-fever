@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+	android:layout_width="match_parent" android:layout_height="match_parent">
+
+	<RelativeLayout android:id="@+id/watchingSessions" android:layout_width="match_parent"
+		android:layout_height="75dp" android:layout_margin="5dp">
+
+		<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
+			android:layout_width="match_parent" android:scaleType="fitXY" android:src="@drawable/watchable_default" />
+
+		<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/watchingSessions"
+			android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+			android:layout_alignParentBottom="true" android:padding="5dp" />
+	</RelativeLayout>
+
+	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:orientation="horizontal" android:baselineAligned="false">
+		<RelativeLayout android:id="@+id/watched" android:layout_width="0dp" android:layout_height="80dp"
+			android:layout_weight="0.5" android:layout_margin="5dp">
+
+			<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
+				android:layout_width="match_parent" android:scaleType="fitXY" android:src="@drawable/watchable_default" />
+
+			<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/watched"
+				android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+				android:layout_alignParentBottom="true" android:padding="5dp" />
+		</RelativeLayout>
+
+		<RelativeLayout android:id="@+id/wishList" android:layout_width="0dp" android:layout_height="80dp"
+			android:layout_weight="0.5" android:layout_margin="5dp">
+
+			<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
+				android:layout_width="match_parent" android:scaleType="fitXY" android:src="@drawable/watchable_default" />
+
+			<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/wishList"
+				android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+				android:layout_alignParentBottom="true" android:padding="5dp" />
+		</RelativeLayout>
+
+	</LinearLayout>
+
+	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:orientation="horizontal" android:baselineAligned="false">
+		<RelativeLayout android:id="@+id/whatToWatch" android:layout_width="0dp" android:layout_height="80dp"
+			android:layout_weight="0.5" android:layout_margin="5dp">
+
+			<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
+				android:layout_width="match_parent" android:scaleType="fitXY" android:src="@drawable/watchable_default" />
+
+			<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/whatToWatch"
+				android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+				android:layout_alignParentBottom="true" android:padding="5dp" />
+		</RelativeLayout>
+
+		<RelativeLayout android:id="@+id/friends" android:layout_width="0dp" android:layout_height="80dp"
+			android:layout_weight="0.5" android:layout_margin="5dp">
+
+			<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
+				android:layout_width="match_parent" android:scaleType="fitXY" android:src="@drawable/watchable_default" />
+
+			<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/friends"
+				android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+				android:layout_alignParentBottom="true" android:padding="5dp" />
+		</RelativeLayout>
+
+	</LinearLayout>
+</LinearLayout>

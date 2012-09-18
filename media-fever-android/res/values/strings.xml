@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="appName">Media Fever</string>
+	<string name="appNameFree">Media Fever Lite</string>
+
+	<string name="movie">Movie</string>
+	<string name="series">Series</string>
+	<string name="moviesAndSeries">Movies &amp; Series</string>
+	<string name="whatToWatch">What to Watch</string>
+	<string name="selected">%1$s selected</string>
+	<string name="logout">Logout</string>
+
+	<!-- Login -->
+	<string name="requiredEmail">Email is required</string>
+	<string name="invalidEmail">The Email is not valid</string>
+	<string name="requiredPassword">Password is required</string>
+	<string name="invalidCredentials">Invalid Credentials</string>
+	<string name="invalidPassword">The password must be at least %1$s characters</string>
+	<string name="password">Password</string>
+	<string name="login">Login</string>
+	<string name="signUp">Sign Up</string>
+	<string name="buyFullApp">Buy Full App</string>
+
+	<!-- User Profile -->
+	<string name="profile">Profile</string>
+	<string name="photo">Photo</string>
+	<string name="firstName">First Name</string>
+	<string name="lastName">Last Name</string>
+	<string name="email">Email</string>
+	<string name="publicProfile">Public Profile</string>
+	<string name="publicProfileDescription">If you set this flag, your profile will be visible by users that are not your friends</string>
+	<string name="userProfileSaved">Your profile was succesfully saved</string>
+	<string name="confirmEmail">Confirm Email</string>
+	<string name="changePassword">Change Password</string>
+	<string name="confirmPassword">Confirm Password</string>
+	<string name="requiredFirstName">First name is required</string>
+	<string name="requiredLastName">Last name is required</string>
+	<string name="requiredConfirmEmail">Email confirmation is required</string>
+	<string name="requiredConfirmPassword">Password confirmation is required</string>
+	<string name="emailsDoNotMatch">Emails do not match</string>
+	<string name="passwordsDoNotMatch">Passwords do not match</string>
+	<string name="duplicatedUsername">Email already registered</string>
+
+	<!-- Social Fragment -->
+	<string name="social">Social</string>
+	<string name="linkAccount">Link your account to your favorite social network for an improved experience..</string>
+	<string name="newWaysToConnect">Look for new ways to connect in the future!</string>
+
+
+	<!-- Seasons Fragment -->
+	<string name="seasons">Seasons</string>
+	<string name="season">Season %1$s</string>
+
+	<!-- Watchable -->
+	<string name="overview">Overview</string>
+	<string name="actors">Actors</string>
+	<string name="genres">Genres</string>
+	<string name="social">Social</string>
+	<string name="watchingSession">Watching Session</string>
+	<string name="viewTrailer">View Trailer</string>
+	<string name="addToWatched">Add to Watched</string>
+	<string name="removeFromWatched">Remove from Watched</string>
+	<string name="todayDateFormat">Today %1$s</string>
+
+	<!-- WishList -->
+	<string name="wishList">Wish List</string>
+	<string name="noResultsWishList">There are no items in your Wish List</string>
+
+	<!-- Watched -->
+	<string name="watched">Watched</string>
+	<string name="noResultsWatched">There are no items in your Watched List</string>
+
+	<!-- Friends -->
+	<string name="friends">Friends</string>
+	<string name="noResultsFriends">You can invite friends from Facebook</string>
+	<string name="remove">Remove</string>
+	<string name="friendRemoved">Your friend was successfully removed</string>
+	<string name="facebook">Facebook</string>
+	<string name="requests">Requests</string>
+	<string name="searchUsers">Search Users</string>
+
+	<!-- Friends Requests -->
+	<string name="friendsRequests">Friends Requests</string>
+	<string name="noResultsFriendsRequests">There are no pending friends\' requests</string>
+
+	<!-- Watching Sessions -->
+	<string name="watchingSessions">Watching Sessions</string>
+	<string name="noResultsWatchingSessions">There are no watching sessions</string>
+	<string name="see">See</string>
+
+	<!-- Notifications -->
+	<string name="watchingSessionInvitationTickerText">%1$s invited you to a watching session</string>
+	<string name="watchingSessionInvitationContentTitle">Watching session</string>
+	<string name="watchingSessionInvitationContentText">%1$s invited you</string>
+	<string name="friendRequestTickerText">%1$s wants to be your friend</string>
+	<string name="friendRequestContentTitle">Friendship Request</string>
+	<string name="friendRequestContentText">%1$s want to be your friend</string>
+	<string name="newEpisodeTickerText">New %1$s episode released</string>
+	<string name="newEpisodeContentTitle">New Episode</string>
+	<string name="newEpisodeContentText">New %1$s episode released</string>
+
+	<!-- Search -->
+	<string name="search">Search</string>
+	<string name="searchHint">Search movies &amp; series</string>
+	<string name="searchDescription">Movies and Series</string>
+
+	<!-- About -->
+	<string name="shareSubject">Tp Prof</string>
+	<string name="shareContent">Organize movies or series sessions with your friends.
+		Download it from Google Play.
+		https://play.google.com/store/apps/details?id=%1$s</string>
+
+</resources>

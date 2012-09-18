@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<RelativeLayout android:id="@+id/imageContainer" android:layout_height="120dp" android:layout_width="120dp"
+		android:layout_centerHorizontal="true" android:layout_marginTop="15dp" android:layout_marginBottom="15dp">
+		<View android:layout_height="match_parent" android:layout_width="match_parent" android:background="@android:color/white" />
+		<com.jdroid.android.images.CustomImageView android:id="@+id/photo"
+			android:scaleType="centerCrop" android:layout_width="match_parent" android:layout_height="match_parent"
+			android:layout_margin="1dp" android:src="@drawable/person_default" />
+	</RelativeLayout>
+
+	<ListView android:id="@+id/android:list" android:layout_below="@+id/imageContainer" android:layout_height="match_parent"
+		android:layout_width="match_parent" style="@style/contextualList" />
+
+</RelativeLayout>

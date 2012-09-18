@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="wrap_content" android:paddingLeft="4dp" android:paddingRight="4dp" android:paddingTop="4dp"
+	android:paddingBottom="4dp" android:gravity="center_vertical">
+
+	<RelativeLayout android:id="@+id/imageContainer" android:layout_height="@dimen/rowImageDim"
+		android:layout_width="@dimen/rowImageDim" android:layout_centerVertical="true">
+		<View android:layout_height="match_parent" android:layout_width="match_parent" android:background="@android:color/white" />
+		<com.jdroid.android.images.CustomImageView android:id="@+id/image"
+			android:scaleType="centerCrop" android:layout_width="match_parent" android:layout_height="match_parent"
+			android:layout_margin="1dp" android:src="@drawable/user_default" />
+	</RelativeLayout>
+
+	<TextView android:id="@+id/fullName" android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
+		android:layout_toRightOf="@+id/imageContainer" android:layout_centerVertical="true" android:layout_toLeftOf="@+id/accept" />
+
+	<ImageButton android:id="@+id/accept" android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:src="@drawable/accept" android:layout_toLeftOf="@+id/reject" android:layout_centerVertical="true" />
+	<ImageButton android:id="@+id/reject" android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:src="@drawable/reject" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+		android:layout_alignParentRight="true" android:layout_centerVertical="true" />
+</RelativeLayout>

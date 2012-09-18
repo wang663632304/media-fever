@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:layout_above="@+id/adViewContainer">
+
+		<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:layout_marginTop="10dp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
+				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/photo"
+					android:layout_alignParentLeft="true" android:textStyle="bold" />
+				<RelativeLayout android:layout_height="50dp" android:layout_width="50dp"
+					android:layout_alignParentRight="true">
+					<View android:layout_height="match_parent" android:layout_width="match_parent" android:background="@android:color/white" />
+					<com.jdroid.android.images.CustomImageView android:id="@+id/photo"
+						android:scaleType="centerCrop" android:layout_width="match_parent" android:layout_height="match_parent"
+						android:layout_margin="1dp" android:src="@drawable/person_default" />
+				</RelativeLayout>
+			</RelativeLayout>
+
+			<TextView style="@style/textView" android:text="@string/firstName" />
+			<EditText android:id="@+id/firstName" style="@style/editText" android:inputType="text"
+				android:nextFocusDown="@+id/lastName" />
+
+			<TextView style="@style/textView" android:text="@string/lastName" />
+			<EditText android:id="@+id/lastName" style="@style/editText" android:inputType="text" android:nextFocusDown="@+id/email" />
+
+			<TextView style="@style/textView" android:text="@string/email" />
+			<EditText android:id="@+id/email" style="@style/editText" android:inputType="textEmailAddress" />
+
+			<TextView style="@style/textView" android:text="@string/confirmEmail" />
+			<EditText android:id="@+id/confirmEmail" style="@style/editText" android:inputType="textEmailAddress"
+				android:nextFocusDown="@+id/changePassword" />
+
+			<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:layout_marginTop="10dp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
+				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/changePassword"
+					android:textStyle="bold" android:layout_centerInParent="true" android:layout_alignParentLeft="true" />
+				<CheckBox android:id="@+id/changePassword" android:layout_height="wrap_content" android:layout_width="wrap_content"
+					android:layout_alignParentRight="true" android:layout_marginLeft="10dp" android:layout_centerInParent="true" />
+			</RelativeLayout>
+
+			<LinearLayout android:id="@+id/passwordContainer" android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+
+				<TextView style="@style/textView" android:text="@string/password" />
+				<EditText android:id="@+id/password" style="@style/editText" android:inputType="textPassword" />
+
+				<TextView style="@style/textView" android:text="@string/confirmPassword" />
+				<EditText android:id="@+id/confirmPassword" style="@style/editText" android:inputType="textPassword" />
+			</LinearLayout>
+
+			<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:layout_marginTop="10dp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
+				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfile"
+					android:textStyle="bold" android:layout_centerInParent="true" android:layout_alignParentLeft="true" />
+				<CheckBox android:id="@+id/publicProfile" android:layout_height="wrap_content" android:layout_width="wrap_content"
+					android:layout_marginLeft="10dp" android:layout_alignParentRight="true" android:layout_centerInParent="true" />
+			</RelativeLayout>
+			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfileDescription"
+				android:layout_marginLeft="10dp" />
+
+			<Button android:id="@+id/save" style="@style/defaultLargeButton" android:text="@string/save"
+				android:layout_gravity="center_horizontal" android:minWidth="140dp" />
+
+		</LinearLayout>
+	</ScrollView>
+	<include layout="@layout/ad_view_container" />
+
+</RelativeLayout>

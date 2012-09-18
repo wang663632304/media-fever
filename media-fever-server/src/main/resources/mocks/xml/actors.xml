@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Actors>
+<Actor>
+  <id>70082</id>
+  <Image>actors/70082.jpg</Image>
+  <Name>Jennifer Aniston</Name>
+  <Role>Rachel Karen Green</Role>
+  <SortOrder>0</SortOrder>
+</Actor>
+<Actor>
+  <id>70081</id>
+  <Image>actors/70081.jpg</Image>
+  <Name>Lisa Kudrow</Name>
+  <Role>Phoebe Buffay</Role>
+  <SortOrder>0</SortOrder>
+</Actor>
+<Actor>
+  <id>70080</id>
+  <Image>actors/70080.jpg</Image>
+  <Name>Matt LeBlanc</Name>
+  <Role>Joseph Francis &quot;Joey&quot; Tribbiani, Jr.</Role>
+  <SortOrder>0</SortOrder>
+</Actor>
+<Actor>
+  <id>70079</id>
+  <Image>actors/70079.jpg</Image>
+  <Name>Matthew Perry</Name>
+  <Role>Chandler Muriel Bing</Role>
+  <SortOrder>0</SortOrder>
+</Actor>
+<Actor>
+  <id>70078</id>
+  <Image>actors/70078.jpg</Image>
+  <Name>Courteney Cox</Name>
+  <Role>Monica Geller</Role>
+  <SortOrder>0</SortOrder>
+</Actor>
+<Actor>
+  <id>70077</id>
+  <Image>actors/70077.jpg</Image>
+  <Name>David Schwimmer</Name>
+  <Role>Ross Geller</Role>
+  <SortOrder>0</SortOrder>
+</Actor>
+<Actor>
+  <id>78185</id>
+  <Image>actors/78185.jpg</Image>
+  <Name>James Michael Tyler</Name>
+  <Role>Gunther</Role>
+  <SortOrder>2</SortOrder>
+</Actor>
+</Actors>
