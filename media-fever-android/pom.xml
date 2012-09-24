@@ -43,7 +43,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Android Commons -->
+		<!-- jdroid Android -->
 		<dependency>
 			<groupId>com.jdroid</groupId>
 			<artifactId>jdroid-android</artifactId>
@@ -51,7 +51,7 @@
 			<type>apklib</type>
 		</dependency>
 
-		<!-- Android Left Nav Bar -->
+		<!-- jdroid Android Left Nav Bar -->
 		<dependency>
 			<groupId>com.jdroid</groupId>
 			<artifactId>jdroid-android-leftnavbar</artifactId>

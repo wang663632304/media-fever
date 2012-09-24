@@ -86,7 +86,8 @@
 	<!-- Watching Sessions -->
 	<string name="watchingSessions">Watching Sessions</string>
 	<string name="noResultsWatchingSessions">There are no watching sessions</string>
-	<string name="see">See</string>
+	<string name="pendingSessions">Pending Sessions</string>
+	<string name="acceptedSessions">Accepted Sessions</string>
 
 	<!-- Notifications -->
 	<string name="watchingSessionInvitationTickerText">%1$s invited you to a watching session</string>
