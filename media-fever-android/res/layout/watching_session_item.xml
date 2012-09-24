@@ -15,8 +15,4 @@
 		android:src="@drawable/reject" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
 		android:layout_centerVertical="true" android:layout_alignParentRight="true" />
 
-	<ImageButton android:id="@+id/see" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:src="@drawable/accept" android:text="@string/see" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-		android:layout_centerVertical="true" android:layout_alignParentRight="true" />
-
 </RelativeLayout>

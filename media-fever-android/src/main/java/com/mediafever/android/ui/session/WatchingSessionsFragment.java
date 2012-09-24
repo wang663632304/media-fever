@@ -1,13 +1,18 @@
 package com.mediafever.android.ui.session;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.commonsware.cwac.merge.MergeAdapter;
+import com.google.ads.AdSize;
+import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.utils.AndroidUtils;
-import com.google.ads.AdSize;
+import com.jdroid.android.view.ListSeparatorView;
 import com.mediafever.R;
+import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.domain.watchingsession.WatchingSession;
 import com.mediafever.usecase.AcceptWatchingSessionUseCase;
 import com.mediafever.usecase.WatchingSessionsUseCase;
@@ -44,6 +49,15 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.list_fragment, container, false);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractListFragment#onItemSelected(java.lang.Object)
+	 */
+	@Override
+	public void onItemSelected(WatchingSession watchingSession) {
+		// TODO Change the target activity
+		ActivityLauncher.launchActivity(HomeActivity.class);
 	}
 	
 	/**
@@ -105,8 +119,13 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 			
 			@Override
 			public void run() {
-				setListAdapter(new WatchingSessionAdapter(WatchingSessionsFragment.this.getActivity(),
-						watchingSessionsUseCase.getWatchingSessions()) {
+				
+				MergeAdapter mergeAdapter = new MergeAdapter();
+				
+				Activity activity = WatchingSessionsFragment.this.getActivity();
+				mergeAdapter.addView(new ListSeparatorView(activity, R.string.pendingSessions));
+				mergeAdapter.addAdapter(new WatchingSessionAdapter(activity,
+						watchingSessionsUseCase.getPendingWatchingSessions()) {
 					
 					@Override
 					public void onAccept(WatchingSession watchingSession) {
@@ -122,6 +141,12 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 						executeUseCase(acceptWatchingSessionUseCase);
 					}
 				});
+				
+				mergeAdapter.addView(new ListSeparatorView(activity, R.string.acceptedSessions));
+				mergeAdapter.addAdapter(new WatchingSessionAdapter(activity,
+						watchingSessionsUseCase.getAcceptedWatchingSessions()));
+				
+				setListAdapter(mergeAdapter);
 				dismissLoading();
 			}
 		});

@@ -17,7 +17,7 @@ import com.mediafever.domain.watchingsession.WatchingSession;
  * 
  * @author Maxi Rosson
  */
-public abstract class WatchingSessionAdapter extends BaseHolderArrayAdapter<WatchingSession, WatchingSessionHolder> {
+public class WatchingSessionAdapter extends BaseHolderArrayAdapter<WatchingSession, WatchingSessionHolder> {
 	
 	private static final String SEPARATOR = ", ";
 	
@@ -28,30 +28,29 @@ public abstract class WatchingSessionAdapter extends BaseHolderArrayAdapter<Watc
 	@Override
 	protected void fillHolderFromItem(final WatchingSession watchingSession, WatchingSessionHolder holder) {
 		holder.watchableTypes.setText(StringUtils.join(watchingSession.getWatchableTypes(), SEPARATOR));
-		holder.accept.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				onAccept(watchingSession);
-			}
-		});
-		holder.reject.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				onReject(watchingSession);
-			}
-		});
 		holder.date.setText(getDateString(watchingSession.getDate()));
 		
 		if (watchingSession.isAccepted()) {
 			holder.accept.setVisibility(View.GONE);
 			holder.reject.setVisibility(View.GONE);
-			holder.see.setVisibility(View.VISIBLE);
 		} else {
+			holder.accept.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					onAccept(watchingSession);
+				}
+			});
 			holder.accept.setVisibility(View.VISIBLE);
+			
+			holder.reject.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					onReject(watchingSession);
+				}
+			});
 			holder.reject.setVisibility(View.VISIBLE);
-			holder.see.setVisibility(View.GONE);
 		}
 	}
 	
@@ -73,9 +72,13 @@ public abstract class WatchingSessionAdapter extends BaseHolderArrayAdapter<Watc
 		}
 	}
 	
-	public abstract void onAccept(WatchingSession watchingSession);
+	public void onAccept(WatchingSession watchingSession) {
+		
+	};
 	
-	public abstract void onReject(WatchingSession watchingSession);
+	public void onReject(WatchingSession watchingSession) {
+		
+	};
 	
 	@Override
 	protected WatchingSessionHolder createViewHolderFromConvertView(View convertView) {
@@ -83,7 +86,6 @@ public abstract class WatchingSessionAdapter extends BaseHolderArrayAdapter<Watc
 		holder.watchableTypes = findView(convertView, R.id.watchableTypes);
 		holder.accept = findView(convertView, R.id.accept);
 		holder.reject = findView(convertView, R.id.reject);
-		holder.see = findView(convertView, R.id.see);
 		holder.date = findView(convertView, R.id.date);
 		return holder;
 	}
@@ -93,7 +95,6 @@ public abstract class WatchingSessionAdapter extends BaseHolderArrayAdapter<Watc
 		protected TextView watchableTypes;
 		protected View accept;
 		protected View reject;
-		protected View see;
 		protected TextView date;
 	}
 	

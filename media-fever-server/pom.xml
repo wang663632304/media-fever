@@ -229,7 +229,7 @@
 
 	<dependencies>
 
-		<!-- Java Web Commons -->
+		<!-- jdroid Java Web -->
 		<dependency>
 			<groupId>com.jdroid</groupId>
 			<artifactId>jdroid-javaweb</artifactId>
