@@ -1,21 +1,21 @@
 package com.mediafever.usecase;
 
-import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.google.inject.Inject;
-import com.mediafever.domain.watchingsession.WatchingSession;
+import com.jdroid.android.usecase.AbstractApiUseCase;
+import com.mediafever.domain.session.MediaSession;
 import com.mediafever.service.APIService;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class AcceptWatchingSessionUseCase extends AbstractApiUseCase<APIService> {
+public class AcceptMediaSessionUseCase extends AbstractApiUseCase<APIService> {
 	
-	private WatchingSession watchingSession;
+	private MediaSession mediaSession;
 	private Boolean accept;
 	
 	@Inject
-	public AcceptWatchingSessionUseCase(APIService apiService) {
+	public AcceptMediaSessionUseCase(APIService apiService) {
 		super(apiService);
 	}
 	
@@ -35,8 +35,8 @@ public class AcceptWatchingSessionUseCase extends AbstractApiUseCase<APIService>
 		accept = false;
 	}
 	
-	public void setWatchingSession(WatchingSession watchingSession) {
-		this.watchingSession = watchingSession;
+	public void setMediaSession(MediaSession mediaSession) {
+		this.mediaSession = mediaSession;
 	}
 	
 }

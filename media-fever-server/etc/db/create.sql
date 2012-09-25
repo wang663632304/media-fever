@@ -157,69 +157,69 @@ CREATE TABLE UserWatchable (
 );
 
 -- --------------------
--- WATCHING_SESSION
+-- MEDIA_SESSION
 -- --------------------
-CREATE TABLE WatchingSession (
+CREATE TABLE MediaSession (
 	id		 			bigint(20) 		NOT NULL auto_increment,
 	date				DATETIME		NOT NULL,
 	PRIMARY KEY  		(id)
 );
 
 -- --------------------
--- WATCHINGSESSION_WATCHABLETYPE
+-- MEDIASESSION_WATCHABLETYPE
 -- --------------------
-CREATE TABLE WatchingSession_WatchableType (
-	watchingSessionId		bigint(20)		NOT NULL,
-	watchableType			VARCHAR(255) 	NOT NULL,
-	PRIMARY KEY  	(watchingSessionId, watchableType),
-	FOREIGN KEY 	(watchingSessionId) 	REFERENCES WatchingSession (id)
+CREATE TABLE MediaSession_WatchableType (
+	mediaSessionId		bigint(20)		NOT NULL,
+	watchableType		VARCHAR(255) 	NOT NULL,
+	PRIMARY KEY  	(mediaSessionId, watchableType),
+	FOREIGN KEY 	(mediaSessionId) 	REFERENCES MediaSession (id)
 );
 
 -- --------------------
--- WATCHING_SELECTION
+-- MEDIA_SELECTION
 -- --------------------
-CREATE TABLE WatchingSelection (
+CREATE TABLE MediaSelection (
 	id		 			bigint(20) 			NOT NULL auto_increment,
 	watchableId			bigint(20)			NOT NULL,
-	watchingSessionId	bigint(20)			NOT NULL,
+	mediaSessionId		bigint(20)			NOT NULL,
 	PRIMARY KEY  		(id),
 	FOREIGN KEY 		(watchableId) 		REFERENCES Watchable (id),
-	FOREIGN KEY 		(watchingSessionId) REFERENCES WatchingSession (id)
+	FOREIGN KEY 		(mediaSessionId) REFERENCES MediaSession (id)
 );
 
 -- --------------------
--- WATCHING_SESSION_USER
+-- MEDIA_SESSION_USER
 -- --------------------
-CREATE TABLE WatchingSessionUser (
+CREATE TABLE MediaSessionUser (
 	id		 				bigint(20) 		NOT NULL auto_increment,
 	userId		 			bigint(20) 		NOT NULL,
 	pendingThumbsUp			bigint(20)		NOT NULL,
 	pendingThumbsDown		bigint(20)		NOT NULL,
 	accepted				BOOLEAN			NOT NULL,
-	watchingSessionId		bigint(20)		NOT NULL,
+	mediaSessionId			bigint(20)		NOT NULL,
 	PRIMARY KEY  			(id),
 	FOREIGN KEY 			(userId) 		REFERENCES User (id),
-	FOREIGN KEY 			(watchingSessionId) REFERENCES WatchingSession (id)
+	FOREIGN KEY 			(mediaSessionId) REFERENCES MediaSession (id)
 );
 
 -- --------------------
--- WATCHING_SELECTION_THUMBSUPSUSERS
+-- MEDIA_SELECTION_THUMBSUPSUSERS
 -- --------------------
-CREATE TABLE WatchingSelection_ThumbsUpUsers (
-	watchingSelectionId		bigint(20)					NOT NULL,
-	watchingSessionUserId	bigint(20)					NOT NULL,
-	FOREIGN KEY 			(watchingSelectionId) 		REFERENCES WatchingSelection (id),
-	FOREIGN KEY 			(watchingSessionUserId)		REFERENCES WatchingSessionUser (id)
+CREATE TABLE MediaSelection_ThumbsUpUsers (
+	mediaSelectionId		bigint(20)				NOT NULL,
+	mediaSessionUserId		bigint(20)				NOT NULL,
+	FOREIGN KEY 			(mediaSelectionId) 		REFERENCES MediaSelection (id),
+	FOREIGN KEY 			(mediaSessionUserId)	REFERENCES MediaSessionUser (id)
 );
 
 -- --------------------
--- WATCHING_SELECTION_THUMBSDOWNSUSERS
+-- MEDIA_SELECTION_THUMBSDOWNSUSERS
 -- --------------------
-CREATE TABLE WatchingSelection_ThumbsDownUsers (
-	watchingSelectionId		bigint(20)					NOT NULL,
-	watchingSessionUserId	bigint(20)					NOT NULL,
-	FOREIGN KEY 			(watchingSelectionId) 		REFERENCES WatchingSelection (id),
-	FOREIGN KEY 			(watchingSessionUserId)		REFERENCES WatchingSessionUser (id)
+CREATE TABLE MediaSelection_ThumbsDownUsers (
+	mediaSelectionId		bigint(20)				NOT NULL,
+	mediaSessionUserId		bigint(20)				NOT NULL,
+	FOREIGN KEY 			(mediaSelectionId) 		REFERENCES MediaSelection (id),
+	FOREIGN KEY 			(mediaSessionUserId)		REFERENCES MediaSessionUser (id)
 );
 
 -- --------------------

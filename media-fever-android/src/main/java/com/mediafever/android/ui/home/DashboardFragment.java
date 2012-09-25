@@ -9,7 +9,7 @@ import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.listener.LaunchOnClickListener;
 import com.mediafever.R;
 import com.mediafever.android.ui.friends.FriendsActivity;
-import com.mediafever.android.ui.session.WatchingSessionListActivity;
+import com.mediafever.android.ui.session.MediaSessionListActivity;
 import com.mediafever.android.ui.watchable.watched.WatchedListActivity;
 import com.mediafever.android.ui.watchable.whattowatch.WhatToWatchActivity;
 import com.mediafever.android.ui.watchable.wishlist.WishListActivity;
@@ -29,8 +29,8 @@ public class DashboardFragment extends AbstractFragment {
 	@InjectView(R.id.watched)
 	private View watched;
 	
-	@InjectView(R.id.watchingSessions)
-	private View watchingSessions;
+	@InjectView(R.id.mediaSessions)
+	private View mediaSessions;
 	
 	@InjectView(R.id.whatToWatch)
 	private View whatToWatch;
@@ -63,7 +63,7 @@ public class DashboardFragment extends AbstractFragment {
 		friends.setOnClickListener(new LaunchOnClickListener(FriendsActivity.class));
 		wishList.setOnClickListener(new LaunchOnClickListener(WishListActivity.class));
 		watched.setOnClickListener(new LaunchOnClickListener(WatchedListActivity.class));
-		watchingSessions.setOnClickListener(new LaunchOnClickListener(WatchingSessionListActivity.class));
+		mediaSessions.setOnClickListener(new LaunchOnClickListener(MediaSessionListActivity.class));
 		whatToWatch.setOnClickListener(new LaunchOnClickListener(WhatToWatchActivity.class));
 		
 	}

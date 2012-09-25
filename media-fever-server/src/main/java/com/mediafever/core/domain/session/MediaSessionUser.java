@@ -1,4 +1,4 @@
-package com.mediafever.core.domain.watchingsession;
+package com.mediafever.core.domain.session;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -10,7 +10,7 @@ import com.mediafever.core.domain.User;
  * @author Maxi Rosson
  */
 @javax.persistence.Entity
-public class WatchingSessionUser extends Entity {
+public class MediaSessionUser extends Entity {
 	
 	@OneToOne
 	@JoinColumn(name = "userId", nullable = false)
@@ -24,11 +24,11 @@ public class WatchingSessionUser extends Entity {
 	 * Default constructor.
 	 */
 	@SuppressWarnings("unused")
-	private WatchingSessionUser() {
+	private MediaSessionUser() {
 		// Do nothing, is required by hibernate
 	}
 	
-	public WatchingSessionUser(User user) {
+	public MediaSessionUser(User user) {
 		this.user = user;
 		pendingThumbsUp = 10;
 		pendingThumbsDown = 10;

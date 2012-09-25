@@ -18,7 +18,7 @@
 	<Button android:id="@+id/viewTrailer" android:layout_width="200dp" style="@style/defaultButton" android:text="@string/viewTrailer"
 		android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" android:visibility="gone" />
 
-	<Button android:id="@+id/watchingSession" android:layout_width="200dp" style="@style/defaultButton"
-		android:text="@string/watchingSession" android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" />
+	<Button android:id="@+id/mediaSession" android:layout_width="200dp" style="@style/defaultButton" android:text="@string/mediaSession"
+		android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" />
 
 </LinearLayout>

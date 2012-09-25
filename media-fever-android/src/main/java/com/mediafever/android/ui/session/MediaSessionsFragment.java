@@ -13,18 +13,18 @@ import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.view.ListSeparatorView;
 import com.mediafever.R;
 import com.mediafever.android.ui.home.HomeActivity;
-import com.mediafever.domain.watchingsession.WatchingSession;
-import com.mediafever.usecase.AcceptWatchingSessionUseCase;
-import com.mediafever.usecase.WatchingSessionsUseCase;
+import com.mediafever.domain.session.MediaSession;
+import com.mediafever.usecase.AcceptMediaSessionUseCase;
+import com.mediafever.usecase.MediaSessionsUseCase;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class WatchingSessionsFragment extends AbstractListFragment<WatchingSession> {
+public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	
-	private WatchingSessionsUseCase watchingSessionsUseCase;
-	private AcceptWatchingSessionUseCase acceptWatchingSessionUseCase;
+	private MediaSessionsUseCase mediaSessionsUseCase;
+	private AcceptMediaSessionUseCase acceptMediaSessionUseCase;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -34,11 +34,11 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		getSupportActionBar().setTitle(R.string.watchingSessions);
+		getSupportActionBar().setTitle(R.string.mediaSessions);
 		
-		if (watchingSessionsUseCase == null) {
-			watchingSessionsUseCase = getInstance(WatchingSessionsUseCase.class);
-			watchingSessionsUseCase.setUserId(getUser().getId());
+		if (mediaSessionsUseCase == null) {
+			mediaSessionsUseCase = getInstance(MediaSessionsUseCase.class);
+			mediaSessionsUseCase.setUserId(getUser().getId());
 		}
 	}
 	
@@ -55,7 +55,7 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 	 * @see com.jdroid.android.fragment.AbstractListFragment#onItemSelected(java.lang.Object)
 	 */
 	@Override
-	public void onItemSelected(WatchingSession watchingSession) {
+	public void onItemSelected(MediaSession mediaSession) {
 		// TODO Change the target activity
 		ActivityLauncher.launchActivity(HomeActivity.class);
 	}
@@ -73,7 +73,7 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 	 */
 	@Override
 	protected int getNoResultsText() {
-		return R.string.noResultsWatchingSessions;
+		return R.string.noResultsMediaSessions;
 	}
 	
 	/**
@@ -85,8 +85,8 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 		
 		getListView().setItemsCanFocus(true);
 		
-		if (acceptWatchingSessionUseCase == null) {
-			acceptWatchingSessionUseCase = getInstance(AcceptWatchingSessionUseCase.class);
+		if (acceptMediaSessionUseCase == null) {
+			acceptMediaSessionUseCase = getInstance(AcceptMediaSessionUseCase.class);
 		}
 	}
 	
@@ -96,8 +96,8 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(watchingSessionsUseCase, this, true);
-		onResumeUseCase(acceptWatchingSessionUseCase, this);
+		onResumeUseCase(mediaSessionsUseCase, this, true);
+		onResumeUseCase(acceptMediaSessionUseCase, this);
 	}
 	
 	/**
@@ -106,8 +106,8 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 	@Override
 	public void onPause() {
 		super.onPause();
-		onPauseUseCase(watchingSessionsUseCase, this);
-		onPauseUseCase(acceptWatchingSessionUseCase, this);
+		onPauseUseCase(mediaSessionsUseCase, this);
+		onPauseUseCase(acceptMediaSessionUseCase, this);
 	}
 	
 	/**
@@ -122,29 +122,29 @@ public class WatchingSessionsFragment extends AbstractListFragment<WatchingSessi
 				
 				MergeAdapter mergeAdapter = new MergeAdapter();
 				
-				Activity activity = WatchingSessionsFragment.this.getActivity();
+				Activity activity = MediaSessionsFragment.this.getActivity();
 				mergeAdapter.addView(new ListSeparatorView(activity, R.string.pendingSessions));
-				mergeAdapter.addAdapter(new WatchingSessionAdapter(activity,
-						watchingSessionsUseCase.getPendingWatchingSessions()) {
+				mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
+						mediaSessionsUseCase.getPendingMediaSessions()) {
 					
 					@Override
-					public void onAccept(WatchingSession watchingSession) {
-						acceptWatchingSessionUseCase.setWatchingSession(watchingSession);
-						acceptWatchingSessionUseCase.setAsAccepted();
-						executeUseCase(acceptWatchingSessionUseCase);
+					public void onAccept(MediaSession mediaSession) {
+						acceptMediaSessionUseCase.setMediaSession(mediaSession);
+						acceptMediaSessionUseCase.setAsAccepted();
+						executeUseCase(acceptMediaSessionUseCase);
 					}
 					
 					@Override
-					public void onReject(WatchingSession watchingSession) {
-						acceptWatchingSessionUseCase.setWatchingSession(watchingSession);
-						acceptWatchingSessionUseCase.setAsRejected();
-						executeUseCase(acceptWatchingSessionUseCase);
+					public void onReject(MediaSession mediaSession) {
+						acceptMediaSessionUseCase.setMediaSession(mediaSession);
+						acceptMediaSessionUseCase.setAsRejected();
+						executeUseCase(acceptMediaSessionUseCase);
 					}
 				});
 				
 				mergeAdapter.addView(new ListSeparatorView(activity, R.string.acceptedSessions));
-				mergeAdapter.addAdapter(new WatchingSessionAdapter(activity,
-						watchingSessionsUseCase.getAcceptedWatchingSessions()));
+				mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
+						mediaSessionsUseCase.getAcceptedMediaSessions()));
 				
 				setListAdapter(mergeAdapter);
 				dismissLoading();

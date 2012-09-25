@@ -2,13 +2,13 @@
 -- Drop tables in reverse order
 --
 DROP TABLE IF EXISTS Device;
-DROP TABLE IF EXISTS WatchingSessionInvitation;
-DROP TABLE IF EXISTS WatchingSelection_ThumbsDownUsers;
-DROP TABLE IF EXISTS WatchingSelection_ThumbsUpUsers;
-DROP TABLE IF EXISTS WatchingSessionUser;
-DROP TABLE IF EXISTS WatchingSelection;
-DROP TABLE IF EXISTS WatchingSession_WatchableType;
-DROP TABLE IF EXISTS WatchingSession;
+DROP TABLE IF EXISTS MediaSessionInvitation;
+DROP TABLE IF EXISTS MediaSelection_ThumbsDownUsers;
+DROP TABLE IF EXISTS MediaSelection_ThumbsUpUsers;
+DROP TABLE IF EXISTS MediaSessionUser;
+DROP TABLE IF EXISTS MediaSelection;
+DROP TABLE IF EXISTS MediaSession_WatchableType;
+DROP TABLE IF EXISTS MediaSession;
 DROP TABLE IF EXISTS UserWatchable;
 DROP TABLE IF EXISTS FriendRequest;
 DROP TABLE IF EXISTS Friendship;

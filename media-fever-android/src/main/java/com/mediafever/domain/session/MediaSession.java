@@ -1,4 +1,4 @@
-package com.mediafever.domain.watchingsession;
+package com.mediafever.domain.session;
 
 import java.util.Date;
 import java.util.List;
@@ -9,14 +9,14 @@ import com.mediafever.domain.watchable.WatchableType;
  * 
  * @author Maxi Rosson
  */
-public class WatchingSession extends Entity {
+public class MediaSession extends Entity {
 	
 	private Date date;
-	private List<WatchingSessionUser> users;
+	private List<MediaSessionUser> users;
 	private List<WatchableType> watchableTypes;
 	private Boolean accepted;
 	
-	public WatchingSession(Long id, Date date, List<WatchingSessionUser> users, List<WatchableType> watchableTypes,
+	public MediaSession(Long id, Date date, List<MediaSessionUser> users, List<WatchableType> watchableTypes,
 			Boolean accepted) {
 		super(id);
 		this.date = date;
@@ -29,7 +29,7 @@ public class WatchingSession extends Entity {
 		return date;
 	}
 	
-	public List<WatchingSessionUser> getUsers() {
+	public List<MediaSessionUser> getUsers() {
 		return users;
 	}
 	

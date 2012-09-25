@@ -243,56 +243,56 @@ INSERT INTO UserWatchable VALUES ('9', true, false, '1', '215');
 INSERT INTO UserWatchable VALUES ('10', true, false, '1', '217');
 
 -- --------------------
--- WATCHING_SESSION
+-- MEDIA_SESSION
 -- --------------------
-INSERT INTO WatchingSession VALUES ('1', DATE_ADD(now(), INTERVAL 2 HOUR));
-INSERT INTO WatchingSession VALUES ('2', DATE_ADD(now(), INTERVAL -1 HOUR));
-INSERT INTO WatchingSession VALUES ('3', now());
-INSERT INTO WatchingSession VALUES ('4', DATE_ADD(now(), INTERVAL 2 DAY));
-INSERT INTO WatchingSession VALUES ('5', DATE_ADD(now(), INTERVAL 3 DAY));
-INSERT INTO WatchingSession VALUES ('6', DATE_ADD(now(), INTERVAL 31 DAY));
+INSERT INTO MediaSession VALUES ('1', DATE_ADD(now(), INTERVAL 2 HOUR));
+INSERT INTO MediaSession VALUES ('2', DATE_ADD(now(), INTERVAL -1 HOUR));
+INSERT INTO MediaSession VALUES ('3', now());
+INSERT INTO MediaSession VALUES ('4', DATE_ADD(now(), INTERVAL 2 DAY));
+INSERT INTO MediaSession VALUES ('5', DATE_ADD(now(), INTERVAL 3 DAY));
+INSERT INTO MediaSession VALUES ('6', DATE_ADD(now(), INTERVAL 31 DAY));
 
 -- --------------------
--- WATCHINGSESSION_WATCHABLETYPE
+-- MEDIASESSION_WATCHABLETYPE
 -- --------------------
-INSERT INTO WatchingSession_WatchableType VALUES ('1', 'MOVIE');
-INSERT INTO WatchingSession_WatchableType VALUES ('2', 'SERIES');
-INSERT INTO WatchingSession_WatchableType VALUES ('3', 'MOVIE');
-INSERT INTO WatchingSession_WatchableType VALUES ('4', 'MOVIE');
-INSERT INTO WatchingSession_WatchableType VALUES ('4', 'SERIES');
-INSERT INTO WatchingSession_WatchableType VALUES ('5', 'MOVIE');
-INSERT INTO WatchingSession_WatchableType VALUES ('6', 'SERIES');
+INSERT INTO MediaSession_WatchableType VALUES ('1', 'MOVIE');
+INSERT INTO MediaSession_WatchableType VALUES ('2', 'SERIES');
+INSERT INTO MediaSession_WatchableType VALUES ('3', 'MOVIE');
+INSERT INTO MediaSession_WatchableType VALUES ('4', 'MOVIE');
+INSERT INTO MediaSession_WatchableType VALUES ('4', 'SERIES');
+INSERT INTO MediaSession_WatchableType VALUES ('5', 'MOVIE');
+INSERT INTO MediaSession_WatchableType VALUES ('6', 'SERIES');
 
 -- --------------------
--- WATCHING_SESSION_USER
+-- MEDIA_SESSION_USER
 -- --------------------
-INSERT INTO WatchingSessionUser VALUES ('1', '1', 10, 10, true, '1');
-INSERT INTO WatchingSessionUser VALUES ('2', '2', 10, 10, true, '1');
-INSERT INTO WatchingSessionUser VALUES ('3', '1', 10, 10, false, '2');
-INSERT INTO WatchingSessionUser VALUES ('4', '2', 10, 10, true, '2');
-INSERT INTO WatchingSessionUser VALUES ('5', '3', 10, 10, true, '3');
-INSERT INTO WatchingSessionUser VALUES ('6', '1', 10, 10, true, '4');
-INSERT INTO WatchingSessionUser VALUES ('7', '1', 10, 10, true, '5');
-INSERT INTO WatchingSessionUser VALUES ('8', '1', 10, 10, true, '6');
+INSERT INTO MediaSessionUser VALUES ('1', '1', 10, 10, true, '1');
+INSERT INTO MediaSessionUser VALUES ('2', '2', 10, 10, true, '1');
+INSERT INTO MediaSessionUser VALUES ('3', '1', 10, 10, false, '2');
+INSERT INTO MediaSessionUser VALUES ('4', '2', 10, 10, true, '2');
+INSERT INTO MediaSessionUser VALUES ('5', '3', 10, 10, true, '3');
+INSERT INTO MediaSessionUser VALUES ('6', '1', 10, 10, true, '4');
+INSERT INTO MediaSessionUser VALUES ('7', '1', 10, 10, true, '5');
+INSERT INTO MediaSessionUser VALUES ('8', '1', 10, 10, true, '6');
 
 -- --------------------
--- WATCHING_SELECTION
+-- MEDIA_SELECTION
 -- --------------------
-INSERT INTO WatchingSelection VALUES ('1', '1', '1');
-INSERT INTO WatchingSelection VALUES ('2', '2', '1');
-INSERT INTO WatchingSelection VALUES ('3', '3', '1');
-INSERT INTO WatchingSelection VALUES ('4', '4', '2');
+INSERT INTO MediaSelection VALUES ('1', '1', '1');
+INSERT INTO MediaSelection VALUES ('2', '2', '1');
+INSERT INTO MediaSelection VALUES ('3', '3', '1');
+INSERT INTO MediaSelection VALUES ('4', '4', '2');
 
 -- --------------------
--- WATCHING_SELECTION_THUMBSUPSUSERS
+-- MEDIA_SELECTION_THUMBSUPSUSERS
 -- --------------------
-INSERT INTO WatchingSelection_ThumbsUpUsers VALUES ('1', '1');
-INSERT INTO WatchingSelection_ThumbsUpUsers VALUES ('2', '1');
-INSERT INTO WatchingSelection_ThumbsUpUsers VALUES ('2', '2');
-INSERT INTO WatchingSelection_ThumbsUpUsers VALUES ('3', '2');
+INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('1', '1');
+INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('2', '1');
+INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('2', '2');
+INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('3', '2');
 
 -- --------------------
--- WATCHING_SELECTION_THUMBSDOWNSUSERS
+-- MEDIA_SELECTION_THUMBSDOWNSUSERS
 -- --------------------
-INSERT INTO WatchingSelection_ThumbsDownUsers VALUES ('4', '1');
+INSERT INTO MediaSelection_ThumbsDownUsers VALUES ('4', '1');
 

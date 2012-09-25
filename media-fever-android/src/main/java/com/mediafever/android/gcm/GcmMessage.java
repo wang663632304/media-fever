@@ -15,7 +15,7 @@ import com.mediafever.android.AndroidApplication;
 import com.mediafever.android.ui.friends.FriendsActivity;
 import com.mediafever.android.ui.friends.FriendsContextualItem;
 import com.mediafever.android.ui.friends.FriendsRequestsActivity;
-import com.mediafever.android.ui.session.WatchingSessionListActivity;
+import com.mediafever.android.ui.session.MediaSessionListActivity;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.WatchableType;
 import com.mediafever.repository.FriendRequestsRepository;
@@ -27,20 +27,18 @@ import com.mediafever.repository.FriendRequestsRepository;
  */
 public enum GcmMessage {
 	
-	WATCHING_SESSION_INVITATION("watchingSessionInvitation") {
+	MEDIA_SESSION_INVITATION("mediaSessionInvitation") {
 		
 		@Override
 		public void handle(Intent intent) {
 			String friendFullName = intent.getStringExtra(FRIEND_FULL_NAME_KEY);
 			String friendImageUrl = intent.getStringExtra(FRIEND_IMAGE_URL_KEY);
-			String tickerText = LocalizationUtils.getString(R.string.watchingSessionInvitationTickerText,
-				friendFullName);
-			String contentTitle = LocalizationUtils.getString(R.string.watchingSessionInvitationContentTitle);
-			String contentText = LocalizationUtils.getString(R.string.watchingSessionInvitationContentText,
-				friendFullName);
+			String tickerText = LocalizationUtils.getString(R.string.mediaSessionInvitationTickerText, friendFullName);
+			String contentTitle = LocalizationUtils.getString(R.string.mediaSessionInvitationContentTitle);
+			String contentText = LocalizationUtils.getString(R.string.mediaSessionInvitationContentText, friendFullName);
 			
 			NotificationUtils.sendNotification(IdGenerator.getIntId(), R.drawable.ic_launcher, friendImageUrl,
-				tickerText, contentTitle, contentText, WatchingSessionListActivity.class);
+				tickerText, contentTitle, contentText, MediaSessionListActivity.class);
 		}
 	},
 	FRIEND_REQUEST("friendRequest") {

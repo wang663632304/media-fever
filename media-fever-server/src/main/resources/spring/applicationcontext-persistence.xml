@@ -17,9 +17,9 @@
 				<value>com.jdroid.javaweb.domain.FileEntity</value>
 				<value>com.jdroid.javaweb.push.Device</value>
 				<value>com.jdroid.javaweb.push.DeviceType</value>
-				<value>com.mediafever.core.domain.watchingsession.WatchingSession</value>
-				<value>com.mediafever.core.domain.watchingsession.WatchingSelection</value>
-				<value>com.mediafever.core.domain.watchingsession.WatchingSessionUser</value>
+				<value>com.mediafever.core.domain.session.MediaSession</value>
+				<value>com.mediafever.core.domain.session.MediaSelection</value>
+				<value>com.mediafever.core.domain.session.MediaSessionUser</value>
 				<value>com.mediafever.core.domain.watchable.Movie</value>
 				<value>com.mediafever.core.domain.watchable.Movie</value>
 				<value>com.mediafever.core.domain.watchable.Series</value>

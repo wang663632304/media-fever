@@ -56,7 +56,7 @@
 	<string name="actors">Actors</string>
 	<string name="genres">Genres</string>
 	<string name="social">Social</string>
-	<string name="watchingSession">Watching Session</string>
+	<string name="mediaSession">Media Session</string>
 	<string name="viewTrailer">View Trailer</string>
 	<string name="addToWatched">Add to Watched</string>
 	<string name="removeFromWatched">Remove from Watched</string>
@@ -83,16 +83,16 @@
 	<string name="friendsRequests">Friends Requests</string>
 	<string name="noResultsFriendsRequests">There are no pending friends\' requests</string>
 
-	<!-- Watching Sessions -->
-	<string name="watchingSessions">Watching Sessions</string>
-	<string name="noResultsWatchingSessions">There are no watching sessions</string>
+	<!-- Media Sessions -->
+	<string name="mediaSessions">Media Sessions</string>
+	<string name="noResultsMediaSessions">There are no media sessions</string>
 	<string name="pendingSessions">Pending Sessions</string>
 	<string name="acceptedSessions">Accepted Sessions</string>
 
 	<!-- Notifications -->
-	<string name="watchingSessionInvitationTickerText">%1$s invited you to a watching session</string>
-	<string name="watchingSessionInvitationContentTitle">Watching session</string>
-	<string name="watchingSessionInvitationContentText">%1$s invited you</string>
+	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>
+	<string name="mediaSessionInvitationContentTitle">Media session</string>
+	<string name="mediaSessionInvitationContentText">%1$s invited you</string>
 	<string name="friendRequestTickerText">%1$s wants to be your friend</string>
 	<string name="friendRequestContentTitle">Friendship Request</string>
 	<string name="friendRequestContentText">%1$s want to be your friend</string>

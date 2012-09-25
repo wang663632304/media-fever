@@ -6,9 +6,9 @@ import com.jdroid.android.search.PagedResult;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
+import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
-import com.mediafever.domain.watchingsession.WatchingSession;
 
 /**
  * 
@@ -86,6 +86,6 @@ public interface APIService {
 	
 	public void markAsWatched(Long userId, List<Long> watchablesIds, Boolean watched);
 	
-	public List<WatchingSession> getWatchingSessions(Long userId);
+	public List<MediaSession> getMediaSessions(Long userId);
 	
 }

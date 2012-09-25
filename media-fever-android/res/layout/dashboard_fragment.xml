@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
 	android:layout_width="match_parent" android:layout_height="match_parent">
 
-	<RelativeLayout android:id="@+id/watchingSessions" android:layout_width="match_parent"
+	<RelativeLayout android:id="@+id/mediaSessions" android:layout_width="match_parent"
 		android:layout_height="75dp" android:layout_margin="5dp">
 
 		<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
 			android:layout_width="match_parent" android:scaleType="fitXY" android:src="@drawable/watchable_default" />
 
-		<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/watchingSessions"
+		<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/mediaSessions"
 			android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
 			android:layout_alignParentBottom="true" android:padding="5dp" />
 	</RelativeLayout>

@@ -20,16 +20,16 @@ import com.mediafever.context.ApplicationContext;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
+import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
-import com.mediafever.domain.watchingsession.WatchingSession;
 import com.mediafever.parser.FriendRequestParser;
 import com.mediafever.parser.InnerWatchableParser;
+import com.mediafever.parser.MediaSessionParser;
 import com.mediafever.parser.PagedResultParser;
 import com.mediafever.parser.UserParser;
 import com.mediafever.parser.UserWatchableParser;
 import com.mediafever.parser.WatchableParser;
-import com.mediafever.parser.WatchingSessionParser;
 import com.mediafever.service.marshaller.DeviceJsonMarshaller;
 import com.mediafever.service.marshaller.FacebookAccountJsonMarshaller;
 import com.mediafever.service.marshaller.FriendRequestJsonMarshaller;
@@ -71,7 +71,7 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	private static final String USER_WATCHABLES = "userWatchables";
 	private static final String FRIENDS = "friends";
 	private static final String FRIEND_REQUESTS = "friendRequests";
-	private static final String WATCHING_SESSIONS = "watchingSessions";
+	private static final String MEDIA_SESSIONS = "mediaSessions";
 	private static final String ACCEPT = "accept";
 	private static final String REJECT = "reject";
 	private static final String DEVICES = "devices";
@@ -333,13 +333,13 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#getWatchingSessions(java.lang.Long)
+	 * @see com.mediafever.service.APIService#getMediaSessions(java.lang.Long)
 	 */
 	@Override
-	public List<WatchingSession> getWatchingSessions(Long userId) {
-		WebService webservice = newGetService(WATCHING_SESSIONS);
+	public List<MediaSession> getMediaSessions(Long userId) {
+		WebService webservice = newGetService(MEDIA_SESSIONS);
 		webservice.addQueryParameter(USER_ID, userId);
-		return webservice.execute(new JsonArrayParser(new WatchingSessionParser()));
+		return webservice.execute(new JsonArrayParser(new MediaSessionParser()));
 	}
 	
 	/**

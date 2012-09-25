@@ -13,7 +13,7 @@
    	<bean id="userRepository" class="com.mediafever.core.repository.UserHibernateRepository" parent="abstractRepository"/>
    	<bean id="deviceRepository" class="com.jdroid.javaweb.push.DeviceHibernateRepository" parent="abstractRepository"/>
    	<bean id="watchableRepository" class="com.mediafever.core.repository.WatchableHibernateRepository" parent="abstractRepository"/>
-   	<bean id="watchingSessionRepository" class="com.mediafever.core.repository.WatchingSessionHibernateRepository" parent="abstractRepository"/>
+   	<bean id="mediaSessionRepository" class="com.mediafever.core.repository.MediaSessionHibernateRepository" parent="abstractRepository"/>
    	<bean id="userWatchableRepository" class="com.mediafever.core.repository.UserWatchableHibernateRepository" parent="abstractRepository"/>
    	<bean id="peopleRepository" class="com.mediafever.core.repository.PeopleHibernateRepository" parent="abstractRepository"/>
    	<bean id="friendRequestRepository" class="com.mediafever.core.repository.FriendRequestHibernateRepository" parent="abstractRepository"/>

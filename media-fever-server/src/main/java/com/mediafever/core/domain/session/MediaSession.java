@@ -1,4 +1,4 @@
-package com.mediafever.core.domain.watchingsession;
+package com.mediafever.core.domain.session;
 
 import java.util.Date;
 import java.util.List;
@@ -18,20 +18,20 @@ import com.mediafever.core.domain.watchable.WatchableType;
  * @author Maxi Rosson
  */
 @javax.persistence.Entity
-public class WatchingSession extends Entity {
+public class MediaSession extends Entity {
 	
 	private Date date;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "watchingSessionId")
-	private List<WatchingSessionUser> users;
+	@JoinColumn(name = "mediaSessionId")
+	private List<MediaSessionUser> users;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "watchingSessionId")
-	private List<WatchingSelection> selections;
+	@JoinColumn(name = "mediaSessionId")
+	private List<MediaSelection> selections;
 	
 	@ElementCollection
-	@JoinTable(name = "WatchingSession_WatchableType", joinColumns = @JoinColumn(name = "watchingSessionId"))
+	@JoinTable(name = "MediaSession_WatchableType", joinColumns = @JoinColumn(name = "mediaSessionId"))
 	@Column(name = "watchableType")
 	@Enumerated(value = EnumType.STRING)
 	private List<WatchableType> watchableTypes;
@@ -40,11 +40,11 @@ public class WatchingSession extends Entity {
 	 * Default constructor.
 	 */
 	@SuppressWarnings("unused")
-	private WatchingSession() {
+	private MediaSession() {
 		// Do nothing, is required by hibernate
 	}
 	
-	public WatchingSession(List<WatchableType> watchableTypes, Date date) {
+	public MediaSession(List<WatchableType> watchableTypes, Date date) {
 		this.watchableTypes = watchableTypes;
 		this.date = date;
 	}
@@ -53,11 +53,11 @@ public class WatchingSession extends Entity {
 		return date;
 	}
 	
-	public List<WatchingSessionUser> getUsers() {
+	public List<MediaSessionUser> getUsers() {
 		return users;
 	}
 	
-	public List<WatchingSelection> getSelections() {
+	public List<MediaSelection> getSelections() {
 		return selections;
 	}
 	

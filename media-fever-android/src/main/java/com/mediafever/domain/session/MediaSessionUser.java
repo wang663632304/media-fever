@@ -1,4 +1,4 @@
-package com.mediafever.domain.watchingsession;
+package com.mediafever.domain.session;
 
 import com.jdroid.android.domain.Entity;
 import com.jdroid.android.domain.User;
@@ -7,14 +7,14 @@ import com.jdroid.android.domain.User;
  * 
  * @author Maxi Rosson
  */
-public class WatchingSessionUser extends Entity {
+public class MediaSessionUser extends Entity {
 	
 	private User user;
 	private Boolean accepted;
 	private Integer pendingThumbsUp;
 	private Integer pendingThumbsDown;
 	
-	public WatchingSessionUser(User user, Boolean accepted, Integer pendingThumbsUp, Integer pendingThumbsDown) {
+	public MediaSessionUser(User user, Boolean accepted, Integer pendingThumbsUp, Integer pendingThumbsDown) {
 		this.user = user;
 		this.accepted = accepted;
 		this.pendingThumbsUp = pendingThumbsUp;

@@ -19,14 +19,14 @@
 				<entry key="com.mediafever.core.domain.User">
 					<bean class="com.mediafever.api.marshaller.json.UserJsonMarshaller" />
 				</entry>
-				<entry key="com.mediafever.core.domain.watchingsession.WatchingSession">
-					<bean class="com.mediafever.api.marshaller.json.WatchingSessionJsonMarshaller" />
+				<entry key="com.mediafever.core.domain.session.MediaSession">
+					<bean class="com.mediafever.api.marshaller.json.MediaSessionJsonMarshaller" />
 				</entry>
-				<entry key="com.mediafever.core.domain.watchingsession.WatchingSessionUser">
-					<bean class="com.mediafever.api.marshaller.json.WatchingSessionUserJsonMarshaller" />
+				<entry key="com.mediafever.core.domain.session.MediaSessionUser">
+					<bean class="com.mediafever.api.marshaller.json.MediaSessionUserJsonMarshaller" />
 				</entry>
-				<entry key="com.mediafever.core.domain.watchingsession.WatchingSelection">
-					<bean class="com.mediafever.api.marshaller.json.WatchingSelectionJsonMarshaller" />
+				<entry key="com.mediafever.core.domain.session.MediaSelection">
+					<bean class="com.mediafever.api.marshaller.json.MediaSelectionJsonMarshaller" />
 				</entry>
 				<entry key="com.mediafever.core.domain.FriendRequest">
 					<bean class="com.mediafever.api.marshaller.json.FriendRequestJsonMarshaller" />

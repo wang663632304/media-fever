@@ -9,23 +9,23 @@ import org.jboss.resteasy.annotations.GZIP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import com.jdroid.javaweb.controller.AbstractController;
-import com.mediafever.core.service.WatchingSessionService;
+import com.mediafever.core.service.MediaSessionService;
 
 /**
  * 
  * @author Maxi Rosson
  */
-@Path("api/watchingSessions")
+@Path("api/mediaSessions")
 @Controller
-public class WatchingSessionController extends AbstractController {
+public class MediaSessionController extends AbstractController {
 	
 	@Autowired
-	private WatchingSessionService watchingSessionService;
+	private MediaSessionService mediaSessionService;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@GZIP
 	public String getAll(@QueryParam("userId") Long userId) {
-		return marshallSimple(watchingSessionService.getAll(userId));
+		return marshallSimple(mediaSessionService.getAll(userId));
 	}
 }

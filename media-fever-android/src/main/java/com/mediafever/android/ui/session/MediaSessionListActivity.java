@@ -7,13 +7,13 @@ import com.jdroid.android.activity.FragmentContainerActivity;
  * 
  * @author Maxi Rosson
  */
-public class WatchingSessionListActivity extends FragmentContainerActivity {
+public class MediaSessionListActivity extends FragmentContainerActivity {
 	
 	/**
 	 * @see com.jdroid.android.activity.FragmentContainerActivity#createNewFragment()
 	 */
 	@Override
 	protected Fragment createNewFragment() {
-		return new WatchingSessionsFragment();
+		return new MediaSessionsFragment();
 	}
 }

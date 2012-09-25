@@ -23,7 +23,7 @@ import com.mediafever.R;
 import com.mediafever.android.ui.AboutDialogFragment;
 import com.mediafever.android.ui.friends.FriendsActivity;
 import com.mediafever.android.ui.listener.BuyFullAppOnClickListener;
-import com.mediafever.android.ui.session.WatchingSessionListActivity;
+import com.mediafever.android.ui.session.MediaSessionListActivity;
 import com.mediafever.android.ui.settings.DevSettingsActivity;
 import com.mediafever.android.ui.settings.PreHoneycombDevSettingsActivity;
 import com.mediafever.android.ui.settings.SettingsActivity;
@@ -124,8 +124,7 @@ public class AndroidBaseActivity extends BaseActivity {
 		// TODO Replace the friends action selector once we have all the action's images
 		WATCHED(R.drawable.friends_action_selector, R.string.watched, WatchedListActivity.class),
 		WISHLIST(R.drawable.friends_action_selector, R.string.wishList, WishListActivity.class),
-		WATCHING_SESSIONS(R.drawable.friends_action_selector, R.string.watchingSessions,
-				WatchingSessionListActivity.class),
+		MEDIA_SESSIONS(R.drawable.friends_action_selector, R.string.mediaSessions, MediaSessionListActivity.class),
 		WATCH_TO_WATCH(R.drawable.friends_action_selector, R.string.whatToWatch, WhatToWatchActivity.class),
 		FRIENDS(R.drawable.friends_action_selector, R.string.friends, FriendsActivity.class);
 		

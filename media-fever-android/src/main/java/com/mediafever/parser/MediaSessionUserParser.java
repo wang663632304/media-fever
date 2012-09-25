@@ -4,13 +4,13 @@ import org.json.JSONException;
 import com.jdroid.android.domain.User;
 import com.jdroid.java.parser.json.JsonObjectWrapper;
 import com.jdroid.java.parser.json.JsonParser;
-import com.mediafever.domain.watchingsession.WatchingSessionUser;
+import com.mediafever.domain.session.MediaSessionUser;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class WatchingSessionUserParser extends JsonParser<JsonObjectWrapper> {
+public class MediaSessionUserParser extends JsonParser<JsonObjectWrapper> {
 	
 	private static final String USER = "user";
 	private static final String PENDING_THUMBS_UP = "pendingThumbsUp";
@@ -23,7 +23,7 @@ public class WatchingSessionUserParser extends JsonParser<JsonObjectWrapper> {
 	@Override
 	public Object parse(JsonObjectWrapper json) throws JSONException {
 		User user = (User)new UserParser().parse(json.getJSONObject(USER));
-		return new WatchingSessionUser(user, json.getBoolean(ACCEPTED), json.getInt(PENDING_THUMBS_UP),
+		return new MediaSessionUser(user, json.getBoolean(ACCEPTED), json.getInt(PENDING_THUMBS_UP),
 				json.getInt(PENDING_THUMBS_DOWN));
 	}
 	

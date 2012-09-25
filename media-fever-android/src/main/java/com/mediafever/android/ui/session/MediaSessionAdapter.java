@@ -10,27 +10,27 @@ import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.java.utils.DateUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
-import com.mediafever.android.ui.session.WatchingSessionAdapter.WatchingSessionHolder;
-import com.mediafever.domain.watchingsession.WatchingSession;
+import com.mediafever.android.ui.session.MediaSessionAdapter.MediaSessionHolder;
+import com.mediafever.domain.session.MediaSession;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class WatchingSessionAdapter extends BaseHolderArrayAdapter<WatchingSession, WatchingSessionHolder> {
+public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, MediaSessionHolder> {
 	
 	private static final String SEPARATOR = ", ";
 	
-	public WatchingSessionAdapter(Activity context, List<WatchingSession> items) {
-		super(context, items, R.layout.watching_session_item);
+	public MediaSessionAdapter(Activity context, List<MediaSession> items) {
+		super(context, items, R.layout.media_session_item);
 	}
 	
 	@Override
-	protected void fillHolderFromItem(final WatchingSession watchingSession, WatchingSessionHolder holder) {
-		holder.watchableTypes.setText(StringUtils.join(watchingSession.getWatchableTypes(), SEPARATOR));
-		holder.date.setText(getDateString(watchingSession.getDate()));
+	protected void fillHolderFromItem(final MediaSession mediaSession, MediaSessionHolder holder) {
+		holder.watchableTypes.setText(StringUtils.join(mediaSession.getWatchableTypes(), SEPARATOR));
+		holder.date.setText(getDateString(mediaSession.getDate()));
 		
-		if (watchingSession.isAccepted()) {
+		if (mediaSession.isAccepted()) {
 			holder.accept.setVisibility(View.GONE);
 			holder.reject.setVisibility(View.GONE);
 		} else {
@@ -38,7 +38,7 @@ public class WatchingSessionAdapter extends BaseHolderArrayAdapter<WatchingSessi
 				
 				@Override
 				public void onClick(View v) {
-					onAccept(watchingSession);
+					onAccept(mediaSession);
 				}
 			});
 			holder.accept.setVisibility(View.VISIBLE);
@@ -47,7 +47,7 @@ public class WatchingSessionAdapter extends BaseHolderArrayAdapter<WatchingSessi
 				
 				@Override
 				public void onClick(View v) {
-					onReject(watchingSession);
+					onReject(mediaSession);
 				}
 			});
 			holder.reject.setVisibility(View.VISIBLE);
@@ -72,17 +72,17 @@ public class WatchingSessionAdapter extends BaseHolderArrayAdapter<WatchingSessi
 		}
 	}
 	
-	public void onAccept(WatchingSession watchingSession) {
+	public void onAccept(MediaSession mediaSession) {
 		
 	};
 	
-	public void onReject(WatchingSession watchingSession) {
+	public void onReject(MediaSession mediaSession) {
 		
 	};
 	
 	@Override
-	protected WatchingSessionHolder createViewHolderFromConvertView(View convertView) {
-		WatchingSessionHolder holder = new WatchingSessionHolder();
+	protected MediaSessionHolder createViewHolderFromConvertView(View convertView) {
+		MediaSessionHolder holder = new MediaSessionHolder();
 		holder.watchableTypes = findView(convertView, R.id.watchableTypes);
 		holder.accept = findView(convertView, R.id.accept);
 		holder.reject = findView(convertView, R.id.reject);
@@ -90,7 +90,7 @@ public class WatchingSessionAdapter extends BaseHolderArrayAdapter<WatchingSessi
 		return holder;
 	}
 	
-	public static class WatchingSessionHolder {
+	public static class MediaSessionHolder {
 		
 		protected TextView watchableTypes;
 		protected View accept;
