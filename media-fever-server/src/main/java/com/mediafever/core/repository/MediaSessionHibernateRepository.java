@@ -23,7 +23,9 @@ public class MediaSessionHibernateRepository extends HibernateRepository<MediaSe
 	@Override
 	public List<MediaSession> getAll(Long userId) {
 		DetachedCriteria criteria = createDetachedCriteria();
-		criteria.createCriteria("users").createCriteria("user").add(Restrictions.eq("id", userId));
+		DetachedCriteria usersCriteria = criteria.createCriteria("users");
+		usersCriteria.createCriteria("user").add(Restrictions.eq("id", userId));
+		usersCriteria.add(Restrictions.or(Restrictions.isNull("accepted"), Restrictions.eq("accepted", true)));
 		criteria.addOrder(Order.asc("date"));
 		return find(criteria);
 	}

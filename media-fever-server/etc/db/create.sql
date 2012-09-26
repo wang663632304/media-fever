@@ -195,7 +195,7 @@ CREATE TABLE MediaSessionUser (
 	userId		 			bigint(20) 		NOT NULL,
 	pendingThumbsUp			bigint(20)		NOT NULL,
 	pendingThumbsDown		bigint(20)		NOT NULL,
-	accepted				BOOLEAN			NOT NULL,
+	accepted				BOOLEAN			NULL,
 	mediaSessionId			bigint(20)		NOT NULL,
 	PRIMARY KEY  			(id),
 	FOREIGN KEY 			(userId) 		REFERENCES User (id),

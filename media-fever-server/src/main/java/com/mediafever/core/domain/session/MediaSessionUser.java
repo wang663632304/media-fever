@@ -32,7 +32,6 @@ public class MediaSessionUser extends Entity {
 		this.user = user;
 		pendingThumbsUp = 10;
 		pendingThumbsDown = 10;
-		accepted = false;
 	}
 	
 	public User getUser() {
@@ -49,5 +48,13 @@ public class MediaSessionUser extends Entity {
 	
 	public Boolean isAccepted() {
 		return accepted;
+	}
+	
+	public void accept() {
+		accepted = true;
+	}
+	
+	public void reject() {
+		accepted = false;
 	}
 }

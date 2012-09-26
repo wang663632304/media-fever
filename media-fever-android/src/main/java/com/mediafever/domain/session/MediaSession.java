@@ -38,7 +38,7 @@ public class MediaSession extends Entity {
 	}
 	
 	public Boolean isAccepted() {
-		return accepted;
+		return (accepted != null) && accepted;
 	}
 	
 }

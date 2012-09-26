@@ -343,6 +343,24 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
+	 * @see com.mediafever.service.APIService#acceptMediaSession(com.mediafever.domain.session.MediaSession)
+	 */
+	@Override
+	public void acceptMediaSession(MediaSession mediaSession) {
+		WebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), ACCEPT);
+		webservice.execute();
+	}
+	
+	/**
+	 * @see com.mediafever.service.APIService#rejectMediaSession(com.mediafever.domain.session.MediaSession)
+	 */
+	@Override
+	public void rejectMediaSession(MediaSession mediaSession) {
+		WebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), REJECT);
+		webservice.execute();
+	}
+	
+	/**
 	 * @see com.jdroid.java.api.AbstractApiService#getHttpWebServiceProcessors()
 	 */
 	@Override
