@@ -132,12 +132,4 @@ public class AndroidApplication extends AbstractApplication {
 	public Boolean isGcmEnabled() {
 		return true;
 	}
-	
-	/**
-	 * @see com.jdroid.android.AbstractApplication#isAnalyticsEnabled()
-	 */
-	@Override
-	public Boolean isAnalyticsEnabled() {
-		return true;
-	}
 }
