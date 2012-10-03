@@ -14,8 +14,8 @@ import com.mediafever.service.APIService;
 public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 	
 	private Long userId;
-	private List<MediaSession> pendingMediaSessions = Lists.newArrayList();
-	private List<MediaSession> acceptedMediaSessions = Lists.newArrayList();
+	private List<MediaSession> pendingMediaSessions;
+	private List<MediaSession> acceptedMediaSessions;
 	
 	@Inject
 	public MediaSessionsUseCase(APIService apiService) {
@@ -27,6 +27,8 @@ public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
+		pendingMediaSessions = Lists.newArrayList();
+		acceptedMediaSessions = Lists.newArrayList();
 		List<MediaSession> mediaSessions = getApiService().getMediaSessions(userId);
 		for (MediaSession mediaSession : mediaSessions) {
 			if (mediaSession.isAccepted()) {

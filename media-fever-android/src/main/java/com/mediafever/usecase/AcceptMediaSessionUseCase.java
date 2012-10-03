@@ -24,7 +24,11 @@ public class AcceptMediaSessionUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		// TODO Implement this
+		if (accept) {
+			getApiService().acceptMediaSession(mediaSession);
+		} else {
+			getApiService().rejectMediaSession(mediaSession);
+		}
 	}
 	
 	public void setAsAccepted() {

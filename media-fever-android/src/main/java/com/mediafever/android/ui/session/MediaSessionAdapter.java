@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import android.app.Activity;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.java.utils.DateUtils;
@@ -29,29 +28,6 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 	protected void fillHolderFromItem(final MediaSession mediaSession, MediaSessionHolder holder) {
 		holder.watchableTypes.setText(StringUtils.join(mediaSession.getWatchableTypes(), SEPARATOR));
 		holder.date.setText(getDateString(mediaSession.getDate()));
-		
-		if (mediaSession.isAccepted()) {
-			holder.accept.setVisibility(View.GONE);
-			holder.reject.setVisibility(View.GONE);
-		} else {
-			holder.accept.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					onAccept(mediaSession);
-				}
-			});
-			holder.accept.setVisibility(View.VISIBLE);
-			
-			holder.reject.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					onReject(mediaSession);
-				}
-			});
-			holder.reject.setVisibility(View.VISIBLE);
-		}
 	}
 	
 	private String getDateString(Date date) {
@@ -72,20 +48,10 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		}
 	}
 	
-	public void onAccept(MediaSession mediaSession) {
-		
-	};
-	
-	public void onReject(MediaSession mediaSession) {
-		
-	};
-	
 	@Override
 	protected MediaSessionHolder createViewHolderFromConvertView(View convertView) {
 		MediaSessionHolder holder = new MediaSessionHolder();
 		holder.watchableTypes = findView(convertView, R.id.watchableTypes);
-		holder.accept = findView(convertView, R.id.accept);
-		holder.reject = findView(convertView, R.id.reject);
 		holder.date = findView(convertView, R.id.date);
 		return holder;
 	}
@@ -93,8 +59,6 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 	public static class MediaSessionHolder {
 		
 		protected TextView watchableTypes;
-		protected View accept;
-		protected View reject;
 		protected TextView date;
 	}
 	

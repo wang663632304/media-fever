@@ -283,6 +283,7 @@
 				<server.url>http://192.168.1.4:8080/media-fever-server/api</server.url>
 				<production.environment>false</production.environment>
 				<dev.settings>true</dev.settings>
+				<analytics.enabled>false</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
 				<facebook.app.id>253164851452906</facebook.app.id>
@@ -312,6 +313,7 @@
 				<server.url>http://10.0.2.2:8080/media-fever-server/api</server.url>
 				<production.environment>false</production.environment>
 				<dev.settings>true</dev.settings>
+				<analytics.enabled>false</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
@@ -340,6 +342,7 @@
 				<server.url>http://10.0.2.2:8080/media-fever-server/api</server.url>
 				<production.environment>false</production.environment>
 				<dev.settings>false</dev.settings>
+				<analytics.enabled>false</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
@@ -370,6 +373,7 @@
 				<server.url>http://10.0.2.2:8080/media-fever-server/api</server.url>
 				<production.environment>true</production.environment>
 				<dev.settings>false</dev.settings>
+				<analytics.enabled>true</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>false</android.manifest.debuggable>

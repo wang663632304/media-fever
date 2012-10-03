@@ -9,10 +9,4 @@
 		android:textSize="12sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
 		android:layout_below="@+id/watchableTypes" />
 
-	<ImageButton android:id="@+id/accept" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:src="@drawable/accept" android:layout_toLeftOf="@+id/reject" android:layout_centerVertical="true" />
-	<ImageButton android:id="@+id/reject" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:src="@drawable/reject" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-		android:layout_centerVertical="true" android:layout_alignParentRight="true" />
-
 </RelativeLayout>

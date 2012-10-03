@@ -4,11 +4,14 @@
 	<string name="appNameFree">Media Fever Lite</string>
 
 	<string name="movie">Movie</string>
+	<string name="movies">Movies</string>
 	<string name="series">Series</string>
 	<string name="moviesAndSeries">Movies &amp; Series</string>
 	<string name="whatToWatch">What to Watch</string>
 	<string name="selected">%1$s selected</string>
 	<string name="logout">Logout</string>
+	<string name="accept">Accept</string>
+	<string name="reject">Reject</string>
 
 	<!-- Login -->
 	<string name="requiredEmail">Email is required</string>
@@ -88,6 +91,10 @@
 	<string name="noResultsMediaSessions">There are no media sessions</string>
 	<string name="pendingSessions">Pending Sessions</string>
 	<string name="acceptedSessions">Accepted Sessions</string>
+	<string name="addMediaSession">Add Media Session</string>
+	<string name="now">Now</string>
+	<string name="on">On</string>
+	<string name="notDefined">Not Defined</string>
 
 	<!-- Notifications -->
 	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>

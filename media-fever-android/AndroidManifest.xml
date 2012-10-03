@@ -48,6 +48,7 @@
 		<activity android:name=".android.ui.watchable.wishlist.WishListActivity" android:label="@string/wishList" />
 		<activity android:name=".android.ui.watchable.watched.WatchedListActivity" android:label="@string/watched" />
 		<activity android:name=".android.ui.session.MediaSessionListActivity" android:label="@string/mediaSessions" />
+		<activity android:name=".android.ui.session.MediaSessionActivity" android:label="@string/mediaSessions" />
 		<activity android:name=".android.ui.watchable.whattowatch.WhatToWatchActivity" android:label="@string/whatToWatch" />
 		<activity android:name=".android.ui.friends.FriendsActivity" android:label="@string/friends" />
 		<activity android:name=".android.ui.friends.FriendsListActivity" android:label="@string/friends" />

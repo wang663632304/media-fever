@@ -88,4 +88,8 @@ public interface APIService {
 	
 	public List<MediaSession> getMediaSessions(Long userId);
 	
+	public void acceptMediaSession(MediaSession mediaSession);
+	
+	public void rejectMediaSession(MediaSession mediaSession);
+	
 }

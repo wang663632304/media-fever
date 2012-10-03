@@ -268,7 +268,7 @@ INSERT INTO MediaSession_WatchableType VALUES ('6', 'SERIES');
 -- --------------------
 INSERT INTO MediaSessionUser VALUES ('1', '1', 10, 10, true, '1');
 INSERT INTO MediaSessionUser VALUES ('2', '2', 10, 10, true, '1');
-INSERT INTO MediaSessionUser VALUES ('3', '1', 10, 10, false, '2');
+INSERT INTO MediaSessionUser VALUES ('3', '1', 10, 10, null, '2');
 INSERT INTO MediaSessionUser VALUES ('4', '2', 10, 10, true, '2');
 INSERT INTO MediaSessionUser VALUES ('5', '3', 10, 10, true, '3');
 INSERT INTO MediaSessionUser VALUES ('6', '1', 10, 10, true, '4');

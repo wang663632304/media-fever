@@ -14,7 +14,6 @@ import com.jdroid.android.view.ListSeparatorView;
 import com.mediafever.R;
 import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.usecase.AcceptMediaSessionUseCase;
 import com.mediafever.usecase.MediaSessionsUseCase;
 
 /**
@@ -24,7 +23,6 @@ import com.mediafever.usecase.MediaSessionsUseCase;
 public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	
 	private MediaSessionsUseCase mediaSessionsUseCase;
-	private AcceptMediaSessionUseCase acceptMediaSessionUseCase;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -56,8 +54,13 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	 */
 	@Override
 	public void onItemSelected(MediaSession mediaSession) {
-		// TODO Change the target activity
-		ActivityLauncher.launchActivity(HomeActivity.class);
+		
+		if (mediaSession.isAccepted()) {
+			// TODO Change the target activity
+			ActivityLauncher.launchActivity(HomeActivity.class);
+		} else {
+			AcceptRejectSessionDialogFragment.show(mediaSession, this);
+		}
 	}
 	
 	/**
@@ -77,27 +80,12 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#onViewCreated(android.view.View, android.os.Bundle)
-	 */
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		
-		getListView().setItemsCanFocus(true);
-		
-		if (acceptMediaSessionUseCase == null) {
-			acceptMediaSessionUseCase = getInstance(AcceptMediaSessionUseCase.class);
-		}
-	}
-	
-	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onResume()
 	 */
 	@Override
 	public void onResume() {
 		super.onResume();
 		onResumeUseCase(mediaSessionsUseCase, this, true);
-		onResumeUseCase(acceptMediaSessionUseCase, this);
 	}
 	
 	/**
@@ -107,7 +95,10 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(mediaSessionsUseCase, this);
-		onPauseUseCase(acceptMediaSessionUseCase, this);
+	}
+	
+	public void refresh() {
+		executeUseCase(mediaSessionsUseCase);
 	}
 	
 	/**
@@ -123,28 +114,17 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 				MergeAdapter mergeAdapter = new MergeAdapter();
 				
 				Activity activity = MediaSessionsFragment.this.getActivity();
-				mergeAdapter.addView(new ListSeparatorView(activity, R.string.pendingSessions));
-				mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
-						mediaSessionsUseCase.getPendingMediaSessions()) {
-					
-					@Override
-					public void onAccept(MediaSession mediaSession) {
-						acceptMediaSessionUseCase.setMediaSession(mediaSession);
-						acceptMediaSessionUseCase.setAsAccepted();
-						executeUseCase(acceptMediaSessionUseCase);
-					}
-					
-					@Override
-					public void onReject(MediaSession mediaSession) {
-						acceptMediaSessionUseCase.setMediaSession(mediaSession);
-						acceptMediaSessionUseCase.setAsRejected();
-						executeUseCase(acceptMediaSessionUseCase);
-					}
-				});
+				if (!mediaSessionsUseCase.getPendingMediaSessions().isEmpty()) {
+					mergeAdapter.addView(new ListSeparatorView(activity, R.string.pendingSessions));
+					mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
+							mediaSessionsUseCase.getPendingMediaSessions()));
+				}
 				
-				mergeAdapter.addView(new ListSeparatorView(activity, R.string.acceptedSessions));
-				mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
-						mediaSessionsUseCase.getAcceptedMediaSessions()));
+				if (!mediaSessionsUseCase.getAcceptedMediaSessions().isEmpty()) {
+					mergeAdapter.addView(new ListSeparatorView(activity, R.string.acceptedSessions));
+					mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
+							mediaSessionsUseCase.getAcceptedMediaSessions()));
+				}
 				
 				setListAdapter(mergeAdapter);
 				dismissLoading();
