@@ -92,7 +92,6 @@
 	<string name="pendingSessions">Pending Sessions</string>
 	<string name="acceptedSessions">Accepted Sessions</string>
 	<string name="addMediaSession">Add Media Session</string>
-	<string name="now">Now</string>
 	<string name="on">On</string>
 	<string name="notDefined">Not Defined</string>
 
