@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.RadioButton;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.fragment.DatePickerDialogFragment.OnDateSetListener;
 import com.jdroid.android.fragment.TimePickerDialogFragment.OnTimeSetListener;
-import com.jdroid.android.view.DateEditText;
-import com.jdroid.android.view.TimeEditText;
+import com.jdroid.android.view.DateButton;
+import com.jdroid.android.view.TimeButton;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.R;
 
@@ -21,10 +24,16 @@ import com.mediafever.R;
 public class MediaSessionSetupFragment extends AbstractFragment implements OnDateSetListener, OnTimeSetListener {
 	
 	@InjectView(R.id.date)
-	private DateEditText dateEditText;
+	private DateButton dateEditText;
 	
 	@InjectView(R.id.time)
-	private TimeEditText timeEditText;
+	private TimeButton timeEditText;
+	
+	@InjectView(R.id.defined)
+	private RadioButton defined;
+	
+	@InjectView(R.id.notDefined)
+	private RadioButton notDefined;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -54,6 +63,15 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 		Date now = DateUtils.now();
 		dateEditText.init(this, now);
 		timeEditText.init(this, now);
+		
+		defined.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				dateEditText.setEnabled(isChecked);
+				timeEditText.setEnabled(isChecked);
+			}
+		});
 	}
 	
 	/**
