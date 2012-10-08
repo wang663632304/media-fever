@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.FragmentContainerActivity;
+import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
 
 /**
@@ -25,7 +26,15 @@ public class MediaSessionListActivity extends FragmentContainerActivity {
 	 */
 	@Override
 	public int getMenuResourceId() {
-		return R.menu.media_sessions_menu;
+		int menuResourceId = 0;
+		if (AndroidUtils.isGoogleTV()) {
+			menuResourceId = R.menu.media_sessions_google_tv_menu;
+		} else if (AndroidUtils.isLargeScreenOrBigger()) {
+			menuResourceId = R.menu.media_sessions_tablet_menu;
+		} else {
+			menuResourceId = R.menu.media_sessions_handset_menu;
+		}
+		return menuResourceId;
 	}
 	
 	/**

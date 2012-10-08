@@ -49,7 +49,6 @@
 	<string name="linkAccount">Link your account to your favorite social network for an improved experience..</string>
 	<string name="newWaysToConnect">Look for new ways to connect in the future!</string>
 
-
 	<!-- Seasons Fragment -->
 	<string name="seasons">Seasons</string>
 	<string name="season">Season %1$s</string>
@@ -92,7 +91,8 @@
 	<string name="pendingSessions">Pending Sessions</string>
 	<string name="acceptedSessions">Accepted Sessions</string>
 	<string name="addMediaSession">Add Media Session</string>
-	<string name="now">Now</string>
+	<string name="sessionType">Session type</string>
+	<string name="sessionDate">Session date</string>
 	<string name="on">On</string>
 	<string name="notDefined">Not Defined</string>
 
