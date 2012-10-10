@@ -44,9 +44,10 @@ public class MediaSession extends Entity {
 		// Do nothing, is required by hibernate
 	}
 	
-	public MediaSession(List<WatchableType> watchableTypes, Date date) {
+	public MediaSession(List<WatchableType> watchableTypes, Date date, List<MediaSessionUser> users) {
 		this.watchableTypes = watchableTypes;
 		this.date = date;
+		this.users = users;
 	}
 	
 	public Date getDate() {

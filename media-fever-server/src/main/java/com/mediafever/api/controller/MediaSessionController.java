@@ -1,6 +1,8 @@
 package com.mediafever.api.controller;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -11,6 +13,8 @@ import org.jboss.resteasy.annotations.GZIP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import com.jdroid.javaweb.controller.AbstractController;
+import com.mediafever.api.controller.parser.MediaSessionParser;
+import com.mediafever.api.controller.parser.MediaSessionParser.MediaSessionJson;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.core.service.MediaSessionService;
 
@@ -25,6 +29,15 @@ public class MediaSessionController extends AbstractController {
 	@Autowired
 	private MediaSessionService mediaSessionService;
 	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@GZIP
+	public void createMediaSession(String mediaSessionJSON) {
+		MediaSessionJson mediaSessionJson = (MediaSessionJson)(new MediaSessionParser().parse(mediaSessionJSON));
+		mediaSessionService.createMediaSession(mediaSessionJson.getDate(), mediaSessionJson.getWatchableTypes(),
+			mediaSessionJson.getUsersIds());
+	}
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@GZIP
@@ -35,14 +48,14 @@ public class MediaSessionController extends AbstractController {
 	@PUT
 	@Path("{id}/accept")
 	@GZIP
-	public void acceptFriendRequest(@PathParam("id") Long id) {
+	public void acceptMediaSession(@PathParam("id") Long id) {
 		mediaSessionService.acceptMediaSession(id, ApplicationContext.get().getSecurityContext().getUser().getId());
 	}
 	
 	@PUT
 	@Path("{id}/reject")
 	@GZIP
-	public void rejectFriendRequest(@PathParam("id") Long id) {
+	public void rejectMediaSession(@PathParam("id") Long id) {
 		mediaSessionService.rejectMediaSession(id, ApplicationContext.get().getSecurityContext().getUser().getId());
 	}
 }
