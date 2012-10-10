@@ -12,6 +12,7 @@
 	<string name="logout">Logout</string>
 	<string name="accept">Accept</string>
 	<string name="reject">Reject</string>
+	<string name="next">Next</string>
 
 	<!-- Login -->
 	<string name="requiredEmail">Email is required</string>
@@ -95,6 +96,7 @@
 	<string name="sessionDate">Session date</string>
 	<string name="on">On</string>
 	<string name="notDefined">Not Defined</string>
+	<string name="requiredSessionType">You must pick at least one session type</string>
 
 	<!-- Notifications -->
 	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>

@@ -14,21 +14,24 @@ import com.mediafever.R;
  */
 public enum AndroidErrorCode implements ErrorCode {
 	
-	// Login Activity
+	// Login
 	REQUIRED_EMAIL(R.string.requiredEmail),
 	INVALID_EMAIL(R.string.invalidEmail),
 	REQUIRED_PASSWORD(R.string.requiredPassword),
 	INVALID_PASSWORD(R.string.invalidPassword),
 	INVALID_CREDENTIALS(R.string.invalidCredentials, 401),
 	
-	// Signup Activity
+	// Signup
 	REQUIRED_FIRST_NAME(R.string.requiredFirstName),
 	REQUIRED_LAST_NAME(R.string.requiredLastName),
 	REQUIRED_CONFIRM_EMAIL(R.string.requiredConfirmEmail),
 	REQUIRED_CONFIRM_PASSWORD(R.string.requiredConfirmPassword),
 	EMAILS_DONT_MATCH(R.string.emailsDoNotMatch),
 	PASSWORDS_DONT_MATCH(R.string.passwordsDoNotMatch),
-	DUPLICATED_USERNAME(R.string.duplicatedUsername, 201);
+	DUPLICATED_USERNAME(R.string.duplicatedUsername, 201),
+	
+	// Media Session
+	REQUIRED_SESSION_TYPE(R.string.requiredSessionType);
 	
 	private Integer resourceId;
 	private Integer statusCode;
