@@ -18,10 +18,10 @@
 	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
 	<uses-feature android:name="android.hardware.telephony" android:required="false" />
 
-	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="15" />
+	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
 
 	<application android:icon="@drawable/ic_launcher" android:logo="@drawable/logo" android:label="@string/appName"
-		android:name=".android.AndroidApplication" android:hardwareAccelerated="true" android:theme="@style/Theme.Sherlock.ForceOverflow">
+		android:name=".android.AndroidApplication" android:hardwareAccelerated="true" android:theme="@style/Theme.Sherlock">
 
 		<!-- enable the search dialog to send searches to SearchableActivity -->
 		<meta-data android:name="android.app.default_searchable" android:value="com.mediafever.android.ui.watchable.search.SearchableActivity" />
