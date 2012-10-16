@@ -27,7 +27,12 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 	@Override
 	protected void fillHolderFromItem(final MediaSession mediaSession, MediaSessionHolder holder) {
 		holder.watchableTypes.setText(StringUtils.join(mediaSession.getWatchableTypes(), SEPARATOR));
-		holder.date.setText(getDateString(mediaSession.getDate()));
+		if (mediaSession.getDate() != null) {
+			holder.date.setText(getDateString(mediaSession.getDate()));
+			holder.date.setVisibility(View.VISIBLE);
+		} else {
+			holder.date.setVisibility(View.GONE);
+		}
 	}
 	
 	private String getDateString(Date date) {

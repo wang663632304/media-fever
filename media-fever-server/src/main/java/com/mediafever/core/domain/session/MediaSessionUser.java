@@ -28,10 +28,15 @@ public class MediaSessionUser extends Entity {
 		// Do nothing, is required by hibernate
 	}
 	
-	public MediaSessionUser(User user) {
+	public MediaSessionUser(User user, Boolean accepted) {
 		this.user = user;
 		pendingThumbsUp = 10;
 		pendingThumbsDown = 10;
+		this.accepted = accepted;
+	}
+	
+	public MediaSessionUser(User user) {
+		this(user, null);
 	}
 	
 	public User getUser() {

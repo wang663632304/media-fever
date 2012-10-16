@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<android.sdk.platform>15</android.sdk.platform>
+		<android.sdk.platform>16</android.sdk.platform>
 		<app.alias>androiddebugkey</app.alias>
 	</properties>
 
@@ -27,11 +27,6 @@
 			<name>Dropbox Maven Repository</name>
 			<url>http://dl.dropbox.com/u/8520947/maven-repository/</url>
 		</repository>
-		<repository>
-			<id>actionbarsherlock-repo</id>
-			<name>Actionbarsherlock Maven Repository</name>
-			<url>http://r.jakewharton.com/maven/release/</url>
-		</repository>
 	</repositories>
 
 	<dependencies>
@@ -39,7 +34,7 @@
 		<dependency>
 			<groupId>android</groupId>
 			<artifactId>android</artifactId>
-			<version>4.0.3_r3</version>
+			<version>4.1_r3</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -105,7 +100,7 @@
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>3.3.2</version>
 				<configuration>
 					<sdk>
 						<path>${android.sdk.path}</path>
@@ -150,9 +145,9 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.codehaus.groovy.maven</groupId>
+				<groupId>org.codehaus.gmaven</groupId>
 				<artifactId>gmaven-plugin</artifactId>
-				<version>1.0</version>
+				<version>1.4</version>
 				<executions>
 					<execution>
 						<phase>generate-resources</phase>
@@ -162,23 +157,42 @@
 						<configuration>
 							<source>
 								def manifestFile = new File("./AndroidManifest.xml")
-								def ns = new
-								groovy.xml.Namespace("http://schemas.android.com/apk/res/android", "ns")
-								def parser = new
-								groovy.util.XmlParser(false, true)
+								def ns = new groovy.xml.Namespace("http://schemas.android.com/apk/res/android", "ns")
+								def parser = new groovy.util.XmlParser(false, true)
 								def rootNode = parser.parse(manifestFile)
-								def childrensIterator =
-								rootNode.children().iterator()
+								def childrensIterator =	rootNode.children().iterator()
+								
 								while(childrensIterator.hasNext()) {
-								def children = childrensIterator.next();
-								if(children.name() == 'application') {
-								def childrenAttributes = children.attributes()
-								childrenAttributes[ns.label] = "${app.name}"
+									def children = childrensIterator.next();
+									if(children.name() == 'application') {
+										def childrenAttributes = children.attributes()
+										childrenAttributes[ns.label] = "${app.name}"
+										
+										def applicationIterator = children.iterator()
+										while(applicationIterator.hasNext()) {
+											def applicationChildren = applicationIterator.next();
+											if(applicationChildren.name() == 'activity') {
+											
+												def activityAttributes = applicationChildren.attributes()
+												def intentFilter = applicationChildren.'intent-filter'
+												if (intentFilter != null) {
+													def action = intentFilter.'action'[0]
+													def category = intentFilter.'category'[0]
+													if (action != null &amp;&amp; category != null) {
+														if (action.attributes()[ns.name] == "android.intent.action.MAIN" 
+																&amp;&amp; category.attributes()[ns.name] == "android.intent.category.LAUNCHER") {
+															activityAttributes[ns.label] = "${app.name}"
+															break
+														}
+													}
+												}
+											}
+										}
+									}
 								}
-								}
+								
 								def writer = new groovy.io.GroovyPrintWriter(manifestFile)
-								writer.println('&lt;?xml version="1.0"
-								encoding="UTF-8"?&gt;')
+								writer.println('&lt;?xml version="1.0" encoding="UTF-8"?&gt;')
 								def xmlWriter = new groovy.util.XmlNodePrinter(writer)
 								xmlWriter.setPreserveWhitespace(false)
 								xmlWriter.setNamespaceAware(true)

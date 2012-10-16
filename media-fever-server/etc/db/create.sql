@@ -161,7 +161,7 @@ CREATE TABLE UserWatchable (
 -- --------------------
 CREATE TABLE MediaSession (
 	id		 			bigint(20) 		NOT NULL auto_increment,
-	date				DATETIME		NOT NULL,
+	date				DATETIME		NULL,
 	PRIMARY KEY  		(id)
 );
 
@@ -181,10 +181,10 @@ CREATE TABLE MediaSession_WatchableType (
 CREATE TABLE MediaSelection (
 	id		 			bigint(20) 			NOT NULL auto_increment,
 	watchableId			bigint(20)			NOT NULL,
-	mediaSessionId		bigint(20)			NOT NULL,
+	mediaSessionId		bigint(20)			NULL,
 	PRIMARY KEY  		(id),
 	FOREIGN KEY 		(watchableId) 		REFERENCES Watchable (id),
-	FOREIGN KEY 		(mediaSessionId) REFERENCES MediaSession (id)
+	FOREIGN KEY 		(mediaSessionId) 	REFERENCES MediaSession (id)
 );
 
 -- --------------------
@@ -196,7 +196,7 @@ CREATE TABLE MediaSessionUser (
 	pendingThumbsUp			bigint(20)		NOT NULL,
 	pendingThumbsDown		bigint(20)		NOT NULL,
 	accepted				BOOLEAN			NULL,
-	mediaSessionId			bigint(20)		NOT NULL,
+	mediaSessionId			bigint(20)		NULL,
 	PRIMARY KEY  			(id),
 	FOREIGN KEY 			(userId) 		REFERENCES User (id),
 	FOREIGN KEY 			(mediaSessionId) REFERENCES MediaSession (id)
@@ -219,7 +219,7 @@ CREATE TABLE MediaSelection_ThumbsDownUsers (
 	mediaSelectionId		bigint(20)				NOT NULL,
 	mediaSessionUserId		bigint(20)				NOT NULL,
 	FOREIGN KEY 			(mediaSelectionId) 		REFERENCES MediaSelection (id),
-	FOREIGN KEY 			(mediaSessionUserId)		REFERENCES MediaSessionUser (id)
+	FOREIGN KEY 			(mediaSessionUserId)	REFERENCES MediaSessionUser (id)
 );
 
 -- --------------------
