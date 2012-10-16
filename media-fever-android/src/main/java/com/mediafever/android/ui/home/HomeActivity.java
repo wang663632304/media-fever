@@ -40,6 +40,10 @@ public class HomeActivity extends AbstractFragmentActivity {
 	 */
 	@Override
 	public void onAfterSetContentView(Bundle savedInstanceState) {
+		
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		getSupportActionBar().setDisplayUseLogoEnabled(true);
+		
 		if (savedInstanceState == null) {
 			commitFragment(R.id.latestFragmentContainer, new LatestWatchablesFragment());
 			if (!AndroidUtils.isLargeScreenOrBigger()) {
