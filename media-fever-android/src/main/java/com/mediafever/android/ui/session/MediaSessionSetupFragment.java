@@ -130,10 +130,10 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.DatePickerDialogFragment.OnDateSetListener#onDateSet(java.util.Date)
+	 * @see com.jdroid.android.fragment.DatePickerDialogFragment.OnDateSetListener#onDateSet(java.util.Date, int)
 	 */
 	@Override
-	public void onDateSet(Date date) {
+	public void onDateSet(Date date, int requestCode) {
 		dateEditText.setDate(date);
 	}
 	
