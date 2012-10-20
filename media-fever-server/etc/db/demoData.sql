@@ -241,6 +241,29 @@ INSERT INTO UserWatchable VALUES ('7', true, false, '1', '201');
 INSERT INTO UserWatchable VALUES ('8', true, false, '1', '214');
 INSERT INTO UserWatchable VALUES ('9', true, false, '1', '215');
 INSERT INTO UserWatchable VALUES ('10', true, false, '1', '217');
+INSERT INTO UserWatchable VALUES ('11', true, false, '2', '1');
+INSERT INTO UserWatchable VALUES ('12', true, false, '2', '2');
+INSERT INTO UserWatchable VALUES ('14', true, false, '2', '3');
+INSERT INTO UserWatchable VALUES ('15', true, false, '2', '100');
+INSERT INTO UserWatchable VALUES ('16', true, false, '2', '101');
+INSERT INTO UserWatchable VALUES ('17', false, true, '3', '1');
+INSERT INTO UserWatchable VALUES ('18', false, true, '3', '2');
+INSERT INTO UserWatchable VALUES ('19', true, false, '4', '100');
+INSERT INTO UserWatchable VALUES ('20', true, false, '4', '101');
+
+INSERT INTO UserWatchable VALUES ('21', true, false, '4', '1');
+INSERT INTO UserWatchable VALUES ('22', true, false, '5', '1');
+INSERT INTO UserWatchable VALUES ('23', true, false, '6', '1');
+INSERT INTO UserWatchable VALUES ('24', true, false, '7', '1');
+INSERT INTO UserWatchable VALUES ('25', true, false, '8', '1');
+INSERT INTO UserWatchable VALUES ('26', true, false, '9', '1');
+INSERT INTO UserWatchable VALUES ('27', true, false, '10', '1');
+INSERT INTO UserWatchable VALUES ('28', false, true, '11', '1');
+INSERT INTO UserWatchable VALUES ('29', false, true, '12', '1');
+INSERT INTO UserWatchable VALUES ('30', false, true, '13', '1');
+INSERT INTO UserWatchable VALUES ('31', false, true, '14', '1');
+INSERT INTO UserWatchable VALUES ('32', false, true, '15', '1');
+INSERT INTO UserWatchable VALUES ('33', false, true, '16', '1');
 
 -- --------------------
 -- MEDIA_SESSION

@@ -30,6 +30,9 @@ public class WatchableContextualFragment extends AbstractFragment {
 	@InjectView(R.id.overview)
 	private Button overview;
 	
+	@InjectView(R.id.social)
+	private Button social;
+	
 	@InjectView(R.id.viewTrailer)
 	private Button viewTrailer;
 	
@@ -102,6 +105,15 @@ public class WatchableContextualFragment extends AbstractFragment {
 			@Override
 			public void onClick(View v) {
 				((OnItemSelectedListener<TabAction>)getActivity()).onItemSelected(WatchableContextualItem.OVERVIEW);
+			}
+		});
+		
+		social.setOnClickListener(new OnClickListener() {
+			
+			@SuppressWarnings("unchecked")
+			@Override
+			public void onClick(View v) {
+				((OnItemSelectedListener<TabAction>)getActivity()).onItemSelected(WatchableContextualItem.SOCIAL);
 			}
 		});
 		

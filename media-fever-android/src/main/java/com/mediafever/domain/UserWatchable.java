@@ -1,5 +1,6 @@
 package com.mediafever.domain;
 
+import java.util.List;
 import com.jdroid.android.domain.Entity;
 import com.mediafever.domain.watchable.Watchable;
 
@@ -13,12 +14,17 @@ public class UserWatchable<T extends Watchable> extends Entity {
 	private Boolean watched;
 	private Boolean isInWishList;
 	private T watchable;
+	private List<UserImpl> watchedBy;
+	private List<UserImpl> onTheWishListOf;
 	
-	public UserWatchable(Long id, Boolean watched, Boolean isInWishList, T watchable) {
+	public UserWatchable(Long id, Boolean watched, Boolean isInWishList, T watchable, List<UserImpl> watchedBy,
+			List<UserImpl> onTheWishListOf) {
 		super(id);
 		this.watched = watched;
 		this.isInWishList = isInWishList;
 		this.watchable = watchable;
+		this.watchedBy = watchedBy;
+		this.onTheWishListOf = onTheWishListOf;
 	}
 	
 	public void modify(Boolean watched, Boolean isInWishList) {
@@ -36,6 +42,14 @@ public class UserWatchable<T extends Watchable> extends Entity {
 	
 	public T getWatchable() {
 		return watchable;
+	}
+	
+	public List<UserImpl> getWatchedBy() {
+		return watchedBy;
+	}
+	
+	public List<UserImpl> getOnTheWishListOf() {
+		return onTheWishListOf;
 	}
 	
 }

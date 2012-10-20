@@ -14,7 +14,9 @@
 		<property name="marshallers">
 			<util:map>
 				<entry key="com.mediafever.core.domain.UserWatchable">
-					<bean class="com.mediafever.api.marshaller.json.UserWatchableJsonMarshaller" />
+					<bean class="com.mediafever.api.marshaller.json.UserWatchableJsonMarshaller" >
+						<property name="userWatchableService" ref="userWatchableService" />
+					</bean>
 				</entry>
 				<entry key="com.mediafever.core.domain.User">
 					<bean class="com.mediafever.api.marshaller.json.UserJsonMarshaller" />

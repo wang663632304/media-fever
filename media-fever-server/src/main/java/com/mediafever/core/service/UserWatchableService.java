@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.jdroid.java.repository.ObjectNotFoundException;
+import com.jdroid.javaweb.guava.function.IdPropertyFunction;
+import com.jdroid.javaweb.guava.function.PropertyFunction;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.User;
@@ -113,5 +115,17 @@ public class UserWatchableService {
 			};
 		});
 		return userWatchables;
+	}
+	
+	public List<User> getWatchedBy(List<User> users, Watchable watchable) {
+		List<Long> userIds = Lists.transform(users, new IdPropertyFunction());
+		return Lists.transform(userWatchableRepository.getWatchedBy(userIds, watchable.getId()),
+			new PropertyFunction<UserWatchable, User>("user"));
+	}
+	
+	public List<User> getOnTheWishListOf(List<User> users, Watchable watchable) {
+		List<Long> userIds = Lists.transform(users, new IdPropertyFunction());
+		return Lists.transform(userWatchableRepository.getOnTheWishListOf(userIds, watchable.getId()),
+			new PropertyFunction<UserWatchable, User>("user"));
 	}
 }

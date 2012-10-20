@@ -62,5 +62,4 @@ public class UserWatchable extends Entity {
 	public User getUser() {
 		return user;
 	}
-	
 }

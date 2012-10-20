@@ -16,6 +16,10 @@ import com.mediafever.domain.UserImpl;
  */
 public class UserAdapter extends BaseHolderArrayAdapter<UserImpl, UserHolder> {
 	
+	public UserAdapter(Activity context, List<UserImpl> items, int resource) {
+		super(context, items, resource);
+	}
+	
 	public UserAdapter(Activity context, List<UserImpl> items) {
 		super(context, items, R.layout.user_item);
 	}

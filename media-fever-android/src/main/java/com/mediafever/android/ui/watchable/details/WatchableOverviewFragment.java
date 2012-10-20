@@ -145,8 +145,7 @@ public class WatchableOverviewFragment extends AbstractFragment {
 			genresTitle.setVisibility(View.GONE);
 		}
 		
-		WatchableType watchableType = WatchableType.find(watchable);
-		if (watchableType.equals(WatchableType.MOVIE)) {
+		if (WatchableType.MOVIE.match(watchable)) {
 			final Movie movie = Movie.class.cast(watchable);
 			
 			if (StringUtils.isNotEmpty(movie.getTagline())) {

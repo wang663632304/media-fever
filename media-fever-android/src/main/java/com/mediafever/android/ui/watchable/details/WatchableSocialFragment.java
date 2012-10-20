@@ -4,14 +4,52 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.jdroid.android.fragment.AbstractFragment;
+import com.commonsware.cwac.merge.MergeAdapter;
+import com.jdroid.android.domain.User;
+import com.jdroid.android.fragment.AbstractListFragment;
+import com.jdroid.android.view.ListSeparatorView;
+import com.jdroid.java.utils.CollectionUtils;
 import com.mediafever.R;
+import com.mediafever.android.ui.UserAdapter;
+import com.mediafever.domain.UserWatchable;
+import com.mediafever.domain.watchable.Watchable;
+import com.mediafever.domain.watchable.WatchableType;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class WatchableSocialFragment extends AbstractFragment {
+public class WatchableSocialFragment extends AbstractListFragment<User> {
+	
+	private static final String USER_WATCHABLE_EXTRA = "userWatchable";
+	
+	private UserWatchable<Watchable> userWatchable;
+	
+	public WatchableSocialFragment() {
+	}
+	
+	public WatchableSocialFragment(UserWatchable<Watchable> userWatchable) {
+		this.userWatchable = userWatchable;
+		
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(USER_WATCHABLE_EXTRA, userWatchable);
+		setArguments(bundle);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		
+		Bundle args = getArguments();
+		if (args != null) {
+			userWatchable = (UserWatchable<Watchable>)args.getSerializable(USER_WATCHABLE_EXTRA);
+		}
+	}
 	
 	/**
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
@@ -19,8 +57,43 @@ public class WatchableSocialFragment extends AbstractFragment {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO Implment this
-		return inflater.inflate(R.layout.social_settings_fragment, container, false);
+		return inflater.inflate(R.layout.list_fragment, container, false);
 	}
 	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onActivityCreated(android.os.Bundle)
+	 */
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
+		MergeAdapter mergeAdapter = new MergeAdapter();
+		
+		if (CollectionUtils.isNotEmpty(userWatchable.getWatchedBy())) {
+			int resId = userWatchable.getWatchedBy().size() == 1 ? R.string.watchedByFriend : R.string.watchedByFriends;
+			mergeAdapter.addView(new ListSeparatorView(getActivity(), getString(resId,
+				userWatchable.getWatchedBy().size())));
+			mergeAdapter.addAdapter(new UserAdapter(getActivity(), userWatchable.getWatchedBy(),
+					R.layout.user_small_item));
+		}
+		
+		if (CollectionUtils.isNotEmpty(userWatchable.getOnTheWishListOf())) {
+			int resId = userWatchable.getOnTheWishListOf().size() == 1 ? R.string.onTheWishListOfFriend
+					: R.string.onTheWishListOfFriends;
+			mergeAdapter.addView(new ListSeparatorView(getActivity(), getString(resId,
+				userWatchable.getOnTheWishListOf().size())));
+			mergeAdapter.addAdapter(new UserAdapter(getActivity(), userWatchable.getOnTheWishListOf(),
+					R.layout.user_small_item));
+		}
+		setListAdapter(mergeAdapter);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractListFragment#getNoResultsText()
+	 */
+	@Override
+	protected int getNoResultsText() {
+		return WatchableType.MOVIE.match(userWatchable.getWatchable()) ? R.string.noResultsMovieSocial
+				: R.string.noResultsSeriesSocial;
+	}
 }

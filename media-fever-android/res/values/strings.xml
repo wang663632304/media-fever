@@ -58,12 +58,20 @@
 	<string name="overview">Overview</string>
 	<string name="actors">Actors</string>
 	<string name="genres">Genres</string>
-	<string name="social">Social</string>
 	<string name="mediaSession">Media Session</string>
 	<string name="viewTrailer">View Trailer</string>
 	<string name="addToWatched">Add to Watched</string>
 	<string name="removeFromWatched">Remove from Watched</string>
 	<string name="todayDateFormat">Today %1$s</string>
+
+	<!-- Watchable Social -->
+	<string name="social">Social</string>
+	<string name="watchedByFriend">Watched by %1$s friend</string>
+	<string name="watchedByFriends">Watched by %1$s friends</string>
+	<string name="onTheWishListOfFriend">On the Wishlist of %1$s friend</string>
+	<string name="onTheWishListOfFriends">On the Wishlist of %1$s friends</string>
+	<string name="noResultsMovieSocial">Your friends didn\'t watch this movie</string>
+	<string name="noResultsSeriesSocial">Your friends didn\'t watch this series</string>
 
 	<!-- WishList -->
 	<string name="wishList">Wish List</string>

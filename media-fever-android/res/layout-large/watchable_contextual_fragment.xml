@@ -7,7 +7,9 @@
 		android:layout_gravity="center_horizontal" />
 
 	<Button android:id="@+id/overview" android:layout_width="200dp" style="@style/defaultButton" android:text="@string/overview"
-		android:layout_gravity="center_horizontal" android:layout_marginTop="10dp" />
+		android:layout_gravity="center_horizontal" android:layout_marginTop="10dp">
+		<requestFocus />
+	</Button>
 
 	<Button android:id="@+id/social" android:layout_width="200dp" style="@style/defaultButton" android:text="@string/social"
 		android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" />

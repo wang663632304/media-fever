@@ -32,6 +32,10 @@ public enum WatchableType {
 		this.parser = parser;
 	}
 	
+	public Boolean match(Watchable watchable) {
+		return WatchableType.find(watchable).equals(this);
+	}
+	
 	public static WatchableType find(Watchable watchable) {
 		WatchableType watchableType = null;
 		for (WatchableType each : values()) {

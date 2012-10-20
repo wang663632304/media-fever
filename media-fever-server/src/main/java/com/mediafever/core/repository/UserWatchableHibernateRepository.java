@@ -52,4 +52,28 @@ public class UserWatchableHibernateRepository extends HibernateRepository<UserWa
 		criteria.createCriteria("user").add(Restrictions.eq("id", userId));
 		return find(criteria);
 	}
+	
+	/**
+	 * @see com.mediafever.core.repository.UserWatchableRepository#getWatchedBy(java.util.List, java.lang.Long)
+	 */
+	@Override
+	public List<UserWatchable> getWatchedBy(List<Long> userIds, Long watchableId) {
+		DetachedCriteria criteria = createDetachedCriteria();
+		criteria.add(Restrictions.eq("watched", true));
+		criteria.createCriteria("user").add(Restrictions.in("id", userIds));
+		criteria.createCriteria("watchable").add(Restrictions.eq("id", watchableId));
+		return find(criteria);
+	}
+	
+	/**
+	 * @see com.mediafever.core.repository.UserWatchableRepository#getOnTheWishListOf(java.util.List, java.lang.Long)
+	 */
+	@Override
+	public List<UserWatchable> getOnTheWishListOf(List<Long> userIds, Long watchableId) {
+		DetachedCriteria criteria = createDetachedCriteria();
+		criteria.add(Restrictions.eq("isInWishList", true));
+		criteria.createCriteria("user").add(Restrictions.in("id", userIds));
+		criteria.createCriteria("watchable").add(Restrictions.eq("id", watchableId));
+		return find(criteria);
+	}
 }

@@ -29,9 +29,10 @@ public enum WatchableContextualItem implements TabAction {
 	},
 	SOCIAL(R.string.social) {
 		
+		@SuppressWarnings("unchecked")
 		@Override
 		public Fragment createFragment(Object args) {
-			return new WatchableSocialFragment();
+			return new WatchableSocialFragment((UserWatchable<Watchable>)args);
 		}
 	},
 	SEASONS(R.string.seasons) {

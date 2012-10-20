@@ -25,4 +25,8 @@ public interface UserWatchableRepository extends Repository<UserWatchable> {
 	
 	public List<UserWatchable> findAll(Long userId, List<Long> watchablesIds);
 	
+	public List<UserWatchable> getWatchedBy(List<Long> userIds, Long watchableId);
+	
+	public List<UserWatchable> getOnTheWishListOf(List<Long> userIds, Long watchableId);
+	
 }
