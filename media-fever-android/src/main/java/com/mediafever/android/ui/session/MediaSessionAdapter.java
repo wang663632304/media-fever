@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.List;
 import android.app.Activity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
+import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.java.utils.DateUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
+import com.mediafever.android.ui.BorderImage;
 import com.mediafever.android.ui.session.MediaSessionAdapter.MediaSessionHolder;
 import com.mediafever.domain.session.MediaSession;
 
@@ -32,6 +35,18 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			holder.date.setVisibility(View.VISIBLE);
 		} else {
 			holder.date.setVisibility(View.GONE);
+		}
+		
+		holder.users.removeAllViews();
+		
+		int max = Math.min(mediaSession.getUsers().size(), 5);
+		if (AndroidUtils.isLargeScreenOrBigger()) {
+			max = mediaSession.getUsers().size();
+		}
+		for (int i = 0; i < max; i++) {
+			BorderImage borderImage = new BorderImage(getContext(), R.dimen.rowSamllImageDim, R.dimen.rowSamllImageDim);
+			borderImage.setImageContent(mediaSession.getUsers().get(i).getUser().getImage(), R.drawable.user_default);
+			holder.users.addView(borderImage);
 		}
 	}
 	
@@ -58,6 +73,7 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		MediaSessionHolder holder = new MediaSessionHolder();
 		holder.watchableTypes = findView(convertView, R.id.watchableTypes);
 		holder.date = findView(convertView, R.id.date);
+		holder.users = findView(convertView, R.id.users);
 		return holder;
 	}
 	
@@ -65,6 +81,7 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		
 		protected TextView watchableTypes;
 		protected TextView date;
+		private LinearLayout users;
 	}
 	
 }
