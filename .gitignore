@@ -1,3 +1,5 @@
+target/
+
 media-fever-server/bin/
 media-fever-server/target/
 media-fever-server/test-output/
