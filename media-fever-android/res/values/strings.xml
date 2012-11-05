@@ -48,7 +48,11 @@
 	<!-- Social Fragment -->
 	<string name="social">Social</string>
 	<string name="linkAccount">Link your account to your favorite social network for an improved experience..</string>
+	<string name="linkToFacebook">Link to Facebook</string>
 	<string name="newWaysToConnect">Look for new ways to connect in the future!</string>
+	<string name="accountConnected">Your account has been connected to Facebook successfully!</string>
+	<string name="accountDisconnected">Your account has been disconnected from Facebook.</string>
+	
 
 	<!-- Seasons Fragment -->
 	<string name="seasons">Seasons</string>

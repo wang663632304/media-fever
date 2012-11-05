@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import com.jdroid.android.facebook.FacebookConnector;
 import com.jdroid.android.fragment.AbstractFragment;
+import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.usecase.settings.ConnectToFacebookUseCase;
@@ -25,7 +26,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 	private FacebookConnector facebookConnector;
 	
 	@InjectView(R.id.connectToFacebook)
-	private ImageButton connectButton;
+	private CompoundButton connectButton;
 	
 	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
@@ -55,15 +56,26 @@ public class SocialSettingsFragment extends AbstractFragment {
 		if (connectToFacebookUseCase == null) {
 			connectToFacebookUseCase = getInstance(ConnectToFacebookUseCase.class);
 			connectToFacebookUseCase.addListener(this);
+			facebookConnector = new FacebookConnector(ApplicationContext.get().getFacebookAppId());
+			connectToFacebookUseCase.setFacebookConnector(facebookConnector);
 		}
 		
-		facebookConnector = new FacebookConnector(ApplicationContext.get().getFacebookAppId());
+		connectButton.setChecked(facebookConnector.isConnected());
 		
-		connectButton.setOnClickListener(new OnClickListener() {
+		connectButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
-			public void onClick(View v) {
-				facebookConnector.connect(getActivity());
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				Boolean isConnected = facebookConnector.isConnected();
+				connectToFacebookUseCase.setConnected(isConnected);
+				// Connect to Facebook only if the button was checked and we don't have a connection already.
+				if (isChecked && !isConnected) {
+					facebookConnector.connect(getActivity());
+				} else if (!isChecked && isConnected) {
+					// Disconnect from Facebook only when we are already connected and the button has been unchecked.
+					connectToFacebookUseCase.setContext(getActivity());
+					executeUseCase(connectToFacebookUseCase);
+				}
 			}
 		});
 		
@@ -72,6 +84,22 @@ public class SocialSettingsFragment extends AbstractFragment {
 		} else if (connectToFacebookUseCase.isFinish()) {
 			onFinishUseCase();
 		}
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
+	 */
+	@Override
+	public void onFinishUseCase() {
+		executeOnUIThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				ToastUtils.showInfoToast(connectToFacebookUseCase.isConnected() ? R.string.accountConnected
+						: R.string.accountDisconnected);
+				dismissLoading();
+			}
+		});
 	}
 	
 	/**

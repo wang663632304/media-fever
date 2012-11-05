@@ -5,8 +5,11 @@
 	<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/linkAccount"
 		android:layout_margin="10dp" android:textSize="20sp"/>
 
-	<ImageButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/connectToFacebook"
-		android:src="@drawable/fb_connect" android:layout_gravity="center_horizontal" android:background="@android:color/transparent"/>
+<!-- 	<ImageButton android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/connectToFacebook" -->
+<!-- 		android:src="@drawable/fb_connect" android:layout_gravity="center_horizontal" android:background="@android:color/transparent"/> -->
+
+	<include layout="@layout/switch_button" android:id="@+id/connectToFacebook"
+	    android:layout_margin="10dp" android:text="@string/linkToFacebook"/>
 
 	<TextView android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="10dp"
 		android:text="@string/newWaysToConnect" android:textSize="15sp" android:gravity="bottom"/>

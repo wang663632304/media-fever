@@ -124,12 +124,23 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#connectToFacebook(java.lang.Long, java.lang.String, java.lang.String)
+	 * @see com.mediafever.service.APIService#connectToFacebook(java.lang.Long, java.lang.String, java.lang.String,
+	 *      java.lang.Long)
 	 */
 	@Override
-	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken) {
+	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken, Long facebookExpiresIn) {
 		EntityEnclosingWebService webservice = newPostService(USERS_MODULE, userId, FACEBOOK);
-		webservice.setEntity(new FacebookAccountJsonMarshaller().marshall(facebookUserId, facebookAccessToken));
+		webservice.setEntity(new FacebookAccountJsonMarshaller().marshall(facebookUserId, facebookAccessToken,
+			facebookExpiresIn));
+		webservice.execute();
+	}
+	
+	/**
+	 * @see com.mediafever.service.APIService#disconnectFromFacebook(java.lang.Long)
+	 */
+	@Override
+	public void disconnectFromFacebook(Long userId) {
+		WebService webservice = newDeleteService(USERS_MODULE, userId, FACEBOOK);
 		webservice.execute();
 	}
 	
