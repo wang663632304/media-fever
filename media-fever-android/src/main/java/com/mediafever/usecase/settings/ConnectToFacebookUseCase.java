@@ -1,12 +1,14 @@
 package com.mediafever.usecase.settings;
 
-import com.jdroid.android.context.SecurityContext;
-import com.jdroid.android.usecase.AbstractApiUseCase;
+import android.content.Context;
 import com.google.inject.Inject;
+import com.jdroid.android.context.SecurityContext;
+import com.jdroid.android.facebook.FacebookConnector;
+import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.mediafever.service.APIService;
 
 /**
- * Use case to connect our account to a Facebook account.
+ * Use case to connect/disconnect our account to a Facebook account.
  * 
  * @author Estefanía Caravatti
  */
@@ -14,6 +16,9 @@ public class ConnectToFacebookUseCase extends AbstractApiUseCase<APIService> {
 	
 	private String accessToken;
 	private String facebookUserId;
+	private Boolean connected;
+	private FacebookConnector facebookConnector;
+	private Context context;
 	
 	/**
 	 * @param apiService
@@ -28,7 +33,15 @@ public class ConnectToFacebookUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		getApiService().connectToFacebook(SecurityContext.get().getUser().getId(), facebookUserId, accessToken);
+		if (connected) {
+			facebookConnector.disconnect(context);
+			connected = false;
+		} else {
+			facebookUserId = facebookConnector.getFacebookUserId();
+			getApiService().connectToFacebook(SecurityContext.get().getUser().getId(), facebookUserId, accessToken,
+				facebookConnector.getAccessExpires());
+			connected = true;
+		}
 	}
 	
 	/**
@@ -43,5 +56,33 @@ public class ConnectToFacebookUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	public void setFacebookUserId(String facebookUserId) {
 		this.facebookUserId = facebookUserId;
+	}
+	
+	/**
+	 * @param facebookConnector the facebookConnector to set
+	 */
+	public void setFacebookConnector(FacebookConnector facebookConnector) {
+		this.facebookConnector = facebookConnector;
+	}
+	
+	/**
+	 * @param connected the isConnected to set
+	 */
+	public void setConnected(Boolean connected) {
+		this.connected = connected;
+	}
+	
+	/**
+	 * @return whether it is connected to Facebook.
+	 */
+	public Boolean isConnected() {
+		return connected;
+	}
+	
+	/**
+	 * @param context the context to set
+	 */
+	public void setContext(Context context) {
+		this.context = context;
 	}
 }
