@@ -97,6 +97,14 @@ public class UserController extends AbstractController {
 			facebookAccountJson.getAccessToken(), facebookAccountJson.getAccessExpiresIn());
 	}
 	
+	@GET
+	@Path("{id}/facebook")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String getFacebookAccount(@PathParam("id") Long userId) {
+		return marshallSimple(userService.getFacebookAccount(userId));
+	}
+	
 	@DELETE
 	@Path("{id}/facebook")
 	public void unlinkFacebookAccount(@PathParam("id") Long userId) {

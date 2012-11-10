@@ -8,12 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import com.jdroid.android.AndroidUseCaseListener;
+import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.facebook.FacebookConnector;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
 import com.mediafever.context.ApplicationContext;
+import com.mediafever.domain.social.FacebookAccount;
 import com.mediafever.usecase.settings.ConnectToFacebookUseCase;
+import com.mediafever.usecase.settings.FacebookAccountUseCase;
 
 /**
  * 
@@ -22,8 +26,10 @@ import com.mediafever.usecase.settings.ConnectToFacebookUseCase;
 public class SocialSettingsFragment extends AbstractFragment {
 	
 	private ConnectToFacebookUseCase connectToFacebookUseCase;
+	private FacebookAccountUseCase facebookAccountUseCase;
+	private AndroidUseCaseListener facebookAccountUseCaseListener;
 	
-	private FacebookConnector facebookConnector;
+	private FacebookConnector facebookConnector = new FacebookConnector(ApplicationContext.get().getFacebookAppId());;
 	
 	@InjectView(R.id.connectToFacebook)
 	private CompoundButton connectButton;
@@ -53,12 +59,8 @@ public class SocialSettingsFragment extends AbstractFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-		if (connectToFacebookUseCase == null) {
-			connectToFacebookUseCase = getInstance(ConnectToFacebookUseCase.class);
-			connectToFacebookUseCase.addListener(this);
-			facebookConnector = new FacebookConnector(ApplicationContext.get().getFacebookAppId());
-			connectToFacebookUseCase.setFacebookConnector(facebookConnector);
-		}
+		initFacebookAccountUseCase();
+		initConnectToFacebookUseCase();
 		
 		connectButton.setChecked(facebookConnector.isConnected());
 		
@@ -67,8 +69,9 @@ public class SocialSettingsFragment extends AbstractFragment {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				Boolean isConnected = facebookConnector.isConnected();
-				connectToFacebookUseCase.setConnected(isConnected);
-				// Connect to Facebook only if the button was checked and we don't have a connection already.
+				connectToFacebookUseCase.setConnect(isChecked);
+				
+				// Connect to Facebook only if the button has been checked and we don't have a connection already.
 				if (isChecked && !isConnected) {
 					facebookConnector.connect(getActivity());
 				} else if (!isChecked && isConnected) {
@@ -79,10 +82,58 @@ public class SocialSettingsFragment extends AbstractFragment {
 			}
 		});
 		
-		if (connectToFacebookUseCase.isInProgress()) {
+	}
+	
+	/**
+	 * 
+	 */
+	private void initConnectToFacebookUseCase() {
+		if (connectToFacebookUseCase == null) {
+			connectToFacebookUseCase = getInstance(ConnectToFacebookUseCase.class);
+			connectToFacebookUseCase.addListener(this);
+			connectToFacebookUseCase.setFacebookConnector(facebookConnector);
+		} else if (connectToFacebookUseCase.isInProgress()) {
 			onStartUseCase();
 		} else if (connectToFacebookUseCase.isFinish()) {
 			onFinishUseCase();
+		}
+	}
+	
+	private void initFacebookAccountUseCase() {
+		if (facebookAccountUseCase == null) {
+			facebookAccountUseCase = getInstance(FacebookAccountUseCase.class);
+			facebookAccountUseCaseListener = new AndroidUseCaseListener() {
+				
+				@Override
+				public void onFinishUseCase() {
+					executeOnUIThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							FacebookAccount facebookAccount = facebookAccountUseCase.getFacebookAccount();
+							if (facebookAccount != null) {
+								facebookConnector.setAccessToken(facebookAccount.getAccessToken(),
+									facebookAccount.getAccessExpiresIn());
+								connectButton.setChecked(facebookConnector.isConnected());
+							}
+							dismissLoading();
+						}
+					});
+				}
+				
+				@Override
+				protected ActivityIf getActivityIf() {
+					return (ActivityIf)getActivity();
+				}
+			};
+			
+			facebookAccountUseCase.addListener(facebookAccountUseCaseListener);
+			executeUseCase(facebookAccountUseCase);
+			
+		} else if (facebookAccountUseCase.isInProgress()) {
+			facebookAccountUseCaseListener.onStartUseCase();
+		} else if (facebookAccountUseCase.isFinish()) {
+			facebookAccountUseCaseListener.onFinishUseCase();
 		}
 	}
 	
@@ -95,7 +146,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 			
 			@Override
 			public void run() {
-				ToastUtils.showInfoToast(connectToFacebookUseCase.isConnected() ? R.string.accountConnected
+				ToastUtils.showInfoToast(facebookConnector.isConnected() ? R.string.accountConnected
 						: R.string.accountDisconnected);
 				dismissLoading();
 			}

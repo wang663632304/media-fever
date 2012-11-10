@@ -115,6 +115,9 @@ public class User extends Entity {
 		socialAccount = new FacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpiresIn);
 	}
 	
+	/**
+	 * Unlinks the {@link User} to his {@link FacebookAccount}.
+	 */
 	public void unlinkFacebookAccount() {
 		socialAccount = null;
 	}
@@ -217,5 +220,12 @@ public class User extends Entity {
 	
 	public FileEntity getImage() {
 		return image;
+	}
+	
+	/**
+	 * @return the linked {@link FacebookAccount}.
+	 */
+	public FacebookAccount getFacebookAccount() {
+		return socialAccount;
 	}
 }

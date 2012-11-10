@@ -16,7 +16,7 @@ public class ConnectToFacebookUseCase extends AbstractApiUseCase<APIService> {
 	
 	private String accessToken;
 	private String facebookUserId;
-	private Boolean connected;
+	private Boolean connect;
 	private FacebookConnector facebookConnector;
 	private Context context;
 	
@@ -33,14 +33,14 @@ public class ConnectToFacebookUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		if (connected) {
-			facebookConnector.disconnect(context);
-			connected = false;
-		} else {
+		
+		if (connect) {
 			facebookUserId = facebookConnector.getFacebookUserId();
 			getApiService().connectToFacebook(SecurityContext.get().getUser().getId(), facebookUserId, accessToken,
 				facebookConnector.getAccessExpires());
-			connected = true;
+		} else {
+			facebookConnector.disconnect(context);
+			getApiService().disconnectFromFacebook(SecurityContext.get().getUser().getId());
 		}
 	}
 	
@@ -66,17 +66,12 @@ public class ConnectToFacebookUseCase extends AbstractApiUseCase<APIService> {
 	}
 	
 	/**
-	 * @param connected the isConnected to set
+	 * Set the use case to connect or disconnect from Facebook.
+	 * 
+	 * @param connect Whether to connect to Facebook or not.
 	 */
-	public void setConnected(Boolean connected) {
-		this.connected = connected;
-	}
-	
-	/**
-	 * @return whether it is connected to Facebook.
-	 */
-	public Boolean isConnected() {
-		return connected;
+	public void setConnect(Boolean connect) {
+		this.connect = connect;
 	}
 	
 	/**
