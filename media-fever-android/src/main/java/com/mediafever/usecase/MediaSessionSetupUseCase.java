@@ -16,7 +16,8 @@ import com.mediafever.service.APIService;
 public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	
 	private Date date;
-	private List<WatchableType> watchableTypes = Lists.newArrayList();
+	private Date time;
+	private List<WatchableType> watchableTypes = Lists.newArrayList(WatchableType.MOVIE);
 	private MediaSession mediaSession;
 	
 	@Inject
@@ -30,17 +31,26 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	@Override
 	protected void doExecute() {
 		mediaSession = new MediaSession(date, watchableTypes);
+		// TODO Implement API call here
 	}
 	
 	public void setDate(Date date) {
 		this.date = date;
 	}
 	
-	public void setWatchableTypes(List<WatchableType> watchableTypes) {
-		this.watchableTypes = watchableTypes;
+	public void addWatchableType(WatchableType watchableType) {
+		watchableTypes.add(watchableType);
+	}
+	
+	public void removeWatchableType(WatchableType watchableType) {
+		watchableTypes.remove(watchableType);
 	}
 	
 	public MediaSession getMediaSession() {
 		return mediaSession;
+	}
+	
+	public void setTime(Date time) {
+		this.time = time;
 	}
 }

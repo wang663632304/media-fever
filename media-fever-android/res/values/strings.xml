@@ -103,9 +103,11 @@
 	<string name="pendingSessions">Pending Sessions</string>
 	<string name="acceptedSessions">Accepted Sessions</string>
 	<string name="addMediaSession">Add Media Session</string>
-	<string name="sessionType">Session type</string>
+	<string name="sessionType">Media type</string>
 	<string name="sessionDate">Session date</string>
+	<string name="sessionTime">Session time</string>
 	<string name="on">On</string>
+	<string name="at">At</string>
 	<string name="notDefined">Not Defined</string>
 	<string name="requiredSessionType">You must pick at least one session type</string>
 

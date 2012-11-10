@@ -22,7 +22,6 @@ public class MediaSessionActivity extends WizardActivity {
 	public List<? extends WizardStep> getWizardSteps() {
 		if (steps == null) {
 			steps = Lists.newArrayList();
-			// TODO Add the correct steps here
 			steps.add(new WizardStep() {
 				
 				@Override
@@ -34,14 +33,14 @@ public class MediaSessionActivity extends WizardActivity {
 				
 				@Override
 				public Fragment createFragment(Object args) {
-					return new MediaSessionSetupFragment();
+					return new MediaSessionFriendsFragment();
 				}
 			});
 			steps.add(new WizardStep() {
 				
 				@Override
 				public Fragment createFragment(Object args) {
-					return new MediaSessionSetupFragment();
+					return new MediaSessionWatchablesFragment();
 				}
 			});
 		}

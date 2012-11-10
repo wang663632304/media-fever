@@ -1,8 +1,6 @@
 package com.mediafever.android.ui.session;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import com.jdroid.android.fragment.DatePickerDialogFragment.OnDateSetListener;
 import com.jdroid.android.fragment.TimePickerDialogFragment.OnTimeSetListener;
 import com.jdroid.android.view.DateButton;
 import com.jdroid.android.view.TimeButton;
-import com.jdroid.java.collections.Lists;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.R;
 import com.mediafever.domain.watchable.WatchableType;
@@ -44,8 +41,11 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	@InjectView(R.id.time)
 	private TimeButton timeEditText;
 	
-	@InjectView(R.id.defined)
-	private RadioButton defined;
+	@InjectView(R.id.onDate)
+	private RadioButton onDate;
+	
+	@InjectView(R.id.atTime)
+	private RadioButton atTime;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -84,36 +84,63 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		Date now = DateUtils.now();
-		dateEditText.init(this, now);
-		timeEditText.init(this, now);
-		
-		defined.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		movies.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				dateEditText.setEnabled(isChecked);
-				timeEditText.setEnabled(isChecked);
+				if (isChecked) {
+					mediaSessionSetupUseCase.addWatchableType(WatchableType.MOVIE);
+				} else {
+					mediaSessionSetupUseCase.removeWatchableType(WatchableType.MOVIE);
+				}
 			}
 		});
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onResume()
-	 */
-	@Override
-	public void onResume() {
-		super.onResume();
-		onResumeUseCase(mediaSessionSetupUseCase, this);
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onPause()
-	 */
-	@Override
-	public void onPause() {
-		super.onPause();
-		onPauseUseCase(mediaSessionSetupUseCase, this);
+		
+		series.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					mediaSessionSetupUseCase.addWatchableType(WatchableType.SERIES);
+				} else {
+					mediaSessionSetupUseCase.removeWatchableType(WatchableType.SERIES);
+				}
+			}
+		});
+		
+		Date now = DateUtils.now();
+		dateEditText.init(this, now);
+		dateEditText.setDate(now);
+		
+		timeEditText.init(this, now);
+		
+		onDate.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					dateEditText.setVisibility(View.VISIBLE);
+					mediaSessionSetupUseCase.setDate(dateEditText.getDate());
+				} else {
+					dateEditText.setVisibility(View.GONE);
+					mediaSessionSetupUseCase.setDate(null);
+				}
+			}
+		});
+		
+		atTime.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					timeEditText.setVisibility(View.VISIBLE);
+					mediaSessionSetupUseCase.setTime(timeEditText.getTime());
+				} else {
+					timeEditText.setVisibility(View.GONE);
+					mediaSessionSetupUseCase.setTime(null);
+				}
+			}
+		});
 	}
 	
 	/**
@@ -122,6 +149,7 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	@Override
 	public void onDateSet(Date date, int requestCode) {
 		dateEditText.setDate(date);
+		mediaSessionSetupUseCase.setDate(date);
 	}
 	
 	/**
@@ -130,32 +158,7 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	@Override
 	public void onTimeSet(Date time) {
 		timeEditText.setTime(time);
-	}
-	
-	private void next() {
-		
-		if (defined.isChecked()) {
-			Date date = dateEditText.getDate();
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(date);
-			Date time = timeEditText.getTime();
-			calendar.set(Calendar.HOUR_OF_DAY, DateUtils.getHour(time, true));
-			calendar.set(Calendar.MINUTE, DateUtils.getMinute(time));
-			mediaSessionSetupUseCase.setDate(calendar.getTime());
-		} else {
-			mediaSessionSetupUseCase.setDate(null);
-		}
-		
-		List<WatchableType> watchableTypes = Lists.newArrayList();
-		if (movies.isChecked()) {
-			watchableTypes.add(WatchableType.MOVIE);
-		}
-		if (series.isChecked()) {
-			watchableTypes.add(WatchableType.SERIES);
-		}
-		mediaSessionSetupUseCase.setWatchableTypes(watchableTypes);
-		
-		executeUseCase(mediaSessionSetupUseCase);
+		mediaSessionSetupUseCase.setTime(time);
 	}
 	
 	/**
