@@ -11,12 +11,8 @@
         <fileSet>
             <directory>target</directory>
             <includes>
-                <include>*.war</include>
+                <include>*.apk</include>
             </includes>
-            <outputDirectory/>
-        </fileSet>
-        <fileSet>
-            <directory>etc</directory>
             <outputDirectory/>
         </fileSet>
     </fileSets>

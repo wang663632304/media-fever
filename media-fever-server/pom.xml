@@ -1,37 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mediafever</groupId>
 	<artifactId>media-fever-server</artifactId>
-	<packaging>war</packaging>
 	<version>0.1.0</version>
+	<packaging>war</packaging>
 	<name>Media Fever Server</name>
-	<url>http://maven.apache.org</url>
+	<parent>
+		<groupId>com.mediafever</groupId>
+		<artifactId>media-fever-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<resteasy.version>2.3.4.Final</resteasy.version>
 		<hibernate.version>3.5.6-Final</hibernate.version>
 		<spring.version>3.0.6.RELEASE</spring.version>
 	</properties>
-
-	<repositories>
-		<repository>
-			<id>maven</id>
-			<name>Maven Repository</name>
-			<url>http://repo1.maven.org/maven2/</url>
-		</repository>
-		<repository>
-			<id>jboss-artifactory-all</id>
-			<name>JBoss Maven Repository</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
-		</repository>
-		<repository>
-			<id>dropbox-maven-repository</id>
-			<name>Dropbox Maven Repository</name>
-			<url>http://dl.dropbox.com/u/8520947/maven-repository/</url>
-		</repository>
-	</repositories>
 
 	<build>
 		<finalName>${project.artifactId}-v${project.version}-${environment.name}</finalName>
@@ -64,17 +50,6 @@
 			</testResource>
 		</testResources>
 		<plugins>
-
-			<!-- Compiler Plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
 
 			<!-- SQL Plugin -->
 			<plugin>
@@ -140,7 +115,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.6</version>
+				<version>${eclipse.plugin.version}</version>
 				<configuration>
 					<ajdtVersion>none</ajdtVersion>
 					<additionalProjectnatures>
@@ -189,41 +164,6 @@
 					</webResources>
 				</configuration>
 			</plugin>
-
-			<!-- Assembly Plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2.1</version>
-				<configuration>
-					<finalName>${project.artifactId}-v${project.version}</finalName>
-					<descriptors>
-						<descriptor>assembly.xml</descriptor>
-					</descriptors>
-				</configuration>
-			</plugin>
-
-			<!-- Git commit id Plugin -->
-			<plugin>
-				<groupId>pl.project13.maven</groupId>
-				<artifactId>git-commit-id-plugin</artifactId>
-				<version>2.0.2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>revision</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<prefix>git</prefix>
-					<dateFormat>dd.MM.yyyy HH:mm:ss z</dateFormat>
-					<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-					<skipPomProjects>true</skipPomProjects>
-					<generateGitPropertiesFile>${git.properties.enabled}</generateGitPropertiesFile>
-					<generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -233,7 +173,7 @@
 		<dependency>
 			<groupId>com.jdroid</groupId>
 			<artifactId>jdroid-javaweb</artifactId>
-			<version>1.0.0</version>
+			<version>${jdroid.version}</version>
 		</dependency>
 
 		<!-- Logging -->

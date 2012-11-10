@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.mediafever"
-	android:versionCode="1500100" android:versionName="0.1.0" xmlns:tools="http://schemas.android.com/tools">
+	android:versionCode="160010000" android:versionName="0.1.0" xmlns:tools="http://schemas.android.com/tools">
 
 	<!-- Google Cloud Messaging permissions -->
 	<permission android:name="com.mediafever.permission.C2D_MESSAGE" android:protectionLevel="signature" />
