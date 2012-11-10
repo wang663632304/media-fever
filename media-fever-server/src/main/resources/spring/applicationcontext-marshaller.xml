@@ -33,6 +33,9 @@
 				<entry key="com.mediafever.core.domain.FriendRequest">
 					<bean class="com.mediafever.api.marshaller.json.FriendRequestJsonMarshaller" />
 				</entry>
+				<entry key="com.mediafever.core.domain.FacebookAccount">
+					<bean class="com.mediafever.api.marshaller.json.FacebookAccountJsonMarshaller" />
+				</entry>
 				<entry key="com.mediafever.core.domain.watchable.Movie">
 					<bean class="com.mediafever.api.marshaller.json.MovieJsonMarshaller" />
 				</entry>

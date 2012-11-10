@@ -7,6 +7,7 @@ import com.mediafever.domain.FriendRequest;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
 import com.mediafever.domain.session.MediaSession;
+import com.mediafever.domain.social.FacebookAccount;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
 
@@ -92,6 +93,14 @@ public interface APIService {
 	 * @param userId The user id.
 	 */
 	public void disconnectFromFacebook(Long userId);
+	
+	/**
+	 * Gets the user's {@link FacebookAccount} if any is linked.
+	 * 
+	 * @param userId The user id.
+	 * @return The {@link FacebookAccount}.
+	 */
+	public FacebookAccount getFacebookAccount(Long userId);
 	
 	public void markAsWatched(Long userId, List<Long> watchablesIds, Boolean watched);
 	

@@ -80,6 +80,17 @@ public class UserService {
 	}
 	
 	/**
+	 * Returns the {@link User}'s {@link FacebookAccount}.
+	 * 
+	 * @param userId The user id.
+	 * @return The {@link FacebookAccount}.
+	 */
+	public FacebookAccount getFacebookAccount(Long userId) {
+		User user = userRepository.get(userId);
+		return user.getFacebookAccount();
+	}
+	
+	/**
 	 * Return all the friends of the user
 	 * 
 	 * @param userId The user id
