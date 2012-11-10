@@ -32,6 +32,4 @@
 		</LinearLayout>
 	</RelativeLayout>
 
-	<include layout="@layout/previous_next_buttons" />
-
 </LinearLayout>

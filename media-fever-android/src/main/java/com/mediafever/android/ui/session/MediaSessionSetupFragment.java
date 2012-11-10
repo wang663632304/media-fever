@@ -7,9 +7,7 @@ import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -48,9 +46,6 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	
 	@InjectView(R.id.defined)
 	private RadioButton defined;
-	
-	@InjectView(R.id.next)
-	private Button next;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -99,14 +94,6 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				dateEditText.setEnabled(isChecked);
 				timeEditText.setEnabled(isChecked);
-			}
-		});
-		
-		next.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				next();
 			}
 		});
 	}
