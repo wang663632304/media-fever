@@ -13,6 +13,7 @@ import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.facebook.FacebookConnector;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.utils.ToastUtils;
+import com.jdroid.android.view.SwitchButton;
 import com.mediafever.R;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.domain.social.FacebookAccount;
@@ -32,7 +33,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 	private FacebookConnector facebookConnector = new FacebookConnector(ApplicationContext.get().getFacebookAppId());;
 	
 	@InjectView(R.id.connectToFacebook)
-	private CompoundButton connectButton;
+	private SwitchButton connectButton;
 	
 	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
