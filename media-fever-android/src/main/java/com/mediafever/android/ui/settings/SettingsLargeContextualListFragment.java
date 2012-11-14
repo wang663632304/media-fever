@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.jdroid.android.R;
 import com.jdroid.android.contextual.ContextualListFragment;
 import com.jdroid.android.images.CustomImageView;
 import com.jdroid.android.tabs.TabAction;
+import com.mediafever.R;
 
 /**
  * 
