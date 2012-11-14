@@ -14,6 +14,8 @@ public class FacebookAccount extends Entity {
 	
 	private String accessToken;
 	
+	private Long accessExpiresIn;
+	
 	/**
 	 * Default constructor.
 	 */
@@ -22,9 +24,10 @@ public class FacebookAccount extends Entity {
 		// Required by Hibernate.
 	}
 	
-	public FacebookAccount(String userId, String accessToken) {
+	public FacebookAccount(String userId, String accessToken, Long accessExpiresIn) {
 		this.userId = userId;
 		this.accessToken = accessToken;
+		this.accessExpiresIn = accessExpiresIn;
 	}
 	
 	public String getProfilePictureURL() {
@@ -36,5 +39,12 @@ public class FacebookAccount extends Entity {
 	 */
 	public String getAccessToken() {
 		return accessToken;
+	}
+	
+	/**
+	 * @return the accessExpiresIn
+	 */
+	public Long getAccessExpiresIn() {
+		return accessExpiresIn;
 	}
 }

@@ -108,9 +108,18 @@ public class User extends Entity {
 	 * 
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
+	 * @param facebookAccessExpiresIn FB session's expiration time (in milliseconds since Unix epoch), or 0 if the
+	 *            session doesn't expire.
 	 */
-	public void linkToFacebookAccount(String facebookUserId, String facebookAccessToken) {
-		socialAccount = new FacebookAccount(facebookUserId, facebookAccessToken);
+	public void linkToFacebookAccount(String facebookUserId, String facebookAccessToken, Long facebookAccessExpiresIn) {
+		socialAccount = new FacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpiresIn);
+	}
+	
+	/**
+	 * Unlinks the {@link User} to his {@link FacebookAccount}.
+	 */
+	public void unlinkFacebookAccount() {
+		socialAccount = null;
 	}
 	
 	public String getEmail() {
@@ -211,5 +220,12 @@ public class User extends Entity {
 	
 	public FileEntity getImage() {
 		return image;
+	}
+	
+	/**
+	 * @return the linked {@link FacebookAccount}.
+	 */
+	public FacebookAccount getFacebookAccount() {
+		return socialAccount;
 	}
 }

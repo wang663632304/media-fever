@@ -24,8 +24,8 @@ import com.jdroid.javaweb.controller.AbstractController;
 import com.jdroid.javaweb.domain.FileEntity;
 import com.jdroid.javaweb.search.Filter;
 import com.mediafever.api.controller.parser.FacebookAccountParser;
-import com.mediafever.api.controller.parser.UserParser;
 import com.mediafever.api.controller.parser.FacebookAccountParser.FacebookAccountJson;
+import com.mediafever.api.controller.parser.UserParser;
 import com.mediafever.api.controller.parser.UserParser.UserJson;
 import com.mediafever.core.domain.User;
 import com.mediafever.core.domain.watchable.WatchableType;
@@ -93,7 +93,22 @@ public class UserController extends AbstractController {
 	@GZIP
 	public void linkFacebookAccount(@PathParam("id") Long userId, String facebookAccountJSON) {
 		FacebookAccountJson facebookAccountJson = (FacebookAccountJson)(new FacebookAccountParser().parse(facebookAccountJSON));
-		userService.linkToFacebookAccount(userId, facebookAccountJson.getUserId(), facebookAccountJson.getAccessToken());
+		userService.linkToFacebookAccount(userId, facebookAccountJson.getUserId(),
+			facebookAccountJson.getAccessToken(), facebookAccountJson.getAccessExpiresIn());
+	}
+	
+	@GET
+	@Path("{id}/facebook")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String getFacebookAccount(@PathParam("id") Long userId) {
+		return marshallSimple(userService.getFacebookAccount(userId));
+	}
+	
+	@DELETE
+	@Path("{id}/facebook")
+	public void unlinkFacebookAccount(@PathParam("id") Long userId) {
+		userService.unlinkFacebookAccount(userId);
 	}
 	
 	@GET

@@ -58,11 +58,36 @@ public class UserService {
 	 * @param userId The user id.
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
+	 * @param facebookAccessExpiresIn The FB session's expiration time (in milliseconds since Unix epoch), or 0 if the
+	 *            session doesn't expire.
 	 */
 	@Transactional
-	public void linkToFacebookAccount(Long userId, String facebookUserId, String facebookAccessToken) {
+	public void linkToFacebookAccount(Long userId, String facebookUserId, String facebookAccessToken,
+			Long facebookAccessExpiresIn) {
 		User user = userRepository.get(userId);
-		user.linkToFacebookAccount(facebookUserId, facebookAccessToken);
+		user.linkToFacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpiresIn);
+	}
+	
+	/**
+	 * Unlinks a {@link User} from his {@link FacebookAccount}.
+	 * 
+	 * @param userId The user id.
+	 */
+	@Transactional
+	public void unlinkFacebookAccount(Long userId) {
+		User user = userRepository.get(userId);
+		user.unlinkFacebookAccount();
+	}
+	
+	/**
+	 * Returns the {@link User}'s {@link FacebookAccount}.
+	 * 
+	 * @param userId The user id.
+	 * @return The {@link FacebookAccount}.
+	 */
+	public FacebookAccount getFacebookAccount(Long userId) {
+		User user = userRepository.get(userId);
+		return user.getFacebookAccount();
 	}
 	
 	/**

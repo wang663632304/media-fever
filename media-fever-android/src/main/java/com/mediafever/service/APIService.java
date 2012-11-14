@@ -7,6 +7,7 @@ import com.mediafever.domain.FriendRequest;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
 import com.mediafever.domain.session.MediaSession;
+import com.mediafever.domain.social.FacebookAccount;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
 
@@ -76,13 +77,30 @@ public interface APIService {
 	public UserImpl editUser(Long userId, UserImpl user, FileContent avatar);
 	
 	/**
-	 * Links an user account to his facebook account.
+	 * Links an user account to his Facebook account.
 	 * 
 	 * @param userId The user id.
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
+	 * @param facebookExpiresIn FB session's expiration time (in milliseconds since Unix epoch), or 0 if the session
+	 *            doesn't expire.
 	 */
-	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken);
+	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken, Long facebookExpiresIn);
+	
+	/**
+	 * Disconnects an user account from its Facebook profile.
+	 * 
+	 * @param userId The user id.
+	 */
+	public void disconnectFromFacebook(Long userId);
+	
+	/**
+	 * Gets the user's {@link FacebookAccount} if any is linked.
+	 * 
+	 * @param userId The user id.
+	 * @return The {@link FacebookAccount}.
+	 */
+	public FacebookAccount getFacebookAccount(Long userId);
 	
 	public void markAsWatched(Long userId, List<Long> watchablesIds, Boolean watched);
 	
