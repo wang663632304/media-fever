@@ -1,8 +1,8 @@
 package com.mediafever.usecase;
 
-import com.jdroid.android.usecase.AbstractApiUseCase;
-import com.jdroid.android.utils.AndroidUtils;
 import com.google.inject.Inject;
+import com.jdroid.android.AbstractApplication;
+import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.mediafever.service.APIService;
 
 /**
@@ -23,7 +23,7 @@ public class LogoutUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		getApiService().disableDevice(AndroidUtils.getInstallationId(), userToken);
+		getApiService().disableDevice(AbstractApplication.get().getInstallationId(), userToken);
 	}
 	
 	public void setUserToken(String userToken) {

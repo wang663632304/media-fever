@@ -3,12 +3,12 @@ package com.mediafever.android.service;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import com.jdroid.android.context.SecurityContext;
-import com.jdroid.android.service.WorkerService;
-import com.jdroid.android.utils.AndroidUtils;
-import com.jdroid.android.utils.IntentRetryUtils;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.inject.Inject;
+import com.jdroid.android.AbstractApplication;
+import com.jdroid.android.context.SecurityContext;
+import com.jdroid.android.service.WorkerService;
+import com.jdroid.android.utils.IntentRetryUtils;
 import com.jdroid.java.exception.ApplicationException;
 import com.mediafever.android.gcm.GcmService;
 import com.mediafever.service.APIService;
@@ -32,7 +32,7 @@ public class EnableDeviceService extends WorkerService {
 		if (SecurityContext.get().isAuthenticated()) {
 			try {
 				String registrationId = GCMRegistrar.getRegistrationId(getApplicationContext());
-				apiService.enableDevice(AndroidUtils.getInstallationId(), registrationId);
+				apiService.enableDevice(AbstractApplication.get().getInstallationId(), registrationId);
 				GCMRegistrar.setRegisteredOnServer(getApplicationContext(), true);
 			} catch (ApplicationException e) {
 				Log.w(TAG, "Failed to register the device on server. Will retry later.");
