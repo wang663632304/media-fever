@@ -18,10 +18,11 @@ public class MediaSession extends Entity {
 	private List<WatchableType> watchableTypes;
 	private Boolean accepted;
 	
-	public MediaSession(Long id, Date date, List<MediaSessionUser> users, List<WatchableType> watchableTypes,
-			Boolean accepted) {
+	public MediaSession(Long id, Date date, Date time, List<MediaSessionUser> users,
+			List<WatchableType> watchableTypes, Boolean accepted) {
 		super(id);
 		this.date = date;
+		this.time = time;
 		this.users = users;
 		this.watchableTypes = watchableTypes;
 		this.accepted = accepted;

@@ -163,6 +163,7 @@ CREATE TABLE UserWatchable (
 CREATE TABLE MediaSession (
 	id		 			bigint(20) 		NOT NULL auto_increment,
 	date				DATETIME		NULL,
+	time				DATETIME		NULL,
 	PRIMARY KEY  		(id)
 );
 

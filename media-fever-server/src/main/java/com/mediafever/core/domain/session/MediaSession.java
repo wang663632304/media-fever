@@ -22,6 +22,8 @@ public class MediaSession extends Entity {
 	
 	private Date date;
 	
+	private Date time;
+	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "mediaSessionId")
 	private List<MediaSessionUser> users;
@@ -52,6 +54,10 @@ public class MediaSession extends Entity {
 	
 	public Date getDate() {
 		return date;
+	}
+	
+	public Date getTime() {
+		return time;
 	}
 	
 	public List<MediaSessionUser> getUsers() {

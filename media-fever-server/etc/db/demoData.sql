@@ -268,19 +268,19 @@ INSERT INTO UserWatchable VALUES ('33', false, true, '16', '1');
 -- --------------------
 -- MEDIA_SESSION
 -- --------------------
-INSERT INTO MediaSession VALUES ('1', DATE_ADD(now(), INTERVAL 2 HOUR));
-INSERT INTO MediaSession VALUES ('2', DATE_ADD(now(), INTERVAL -1 HOUR));
-INSERT INTO MediaSession VALUES ('3', now());
-INSERT INTO MediaSession VALUES ('4', DATE_ADD(now(), INTERVAL 2 DAY));
-INSERT INTO MediaSession VALUES ('5', DATE_ADD(now(), INTERVAL 3 DAY));
-INSERT INTO MediaSession VALUES ('6', DATE_ADD(now(), INTERVAL 31 DAY));
-INSERT INTO MediaSession VALUES ('7', DATE_ADD(now(), INTERVAL 31 DAY));
-INSERT INTO MediaSession VALUES ('8', DATE_ADD(now(), INTERVAL 31 DAY));
-INSERT INTO MediaSession VALUES ('9', DATE_ADD(now(), INTERVAL 31 DAY));
-INSERT INTO MediaSession VALUES ('10', DATE_ADD(now(), INTERVAL 31 DAY));
-INSERT INTO MediaSession VALUES ('11', DATE_ADD(now(), INTERVAL 31 DAY));
-INSERT INTO MediaSession VALUES ('12', DATE_ADD(now(), INTERVAL 31 DAY));
-INSERT INTO MediaSession VALUES ('13', DATE_ADD(now(), INTERVAL 31 DAY));
+INSERT INTO MediaSession VALUES ('1', now(), DATE_ADD(now(), INTERVAL 2 HOUR));
+INSERT INTO MediaSession VALUES ('2', now(), DATE_ADD(now(), INTERVAL -1 HOUR));
+INSERT INTO MediaSession VALUES ('3', now(), now());
+INSERT INTO MediaSession VALUES ('4', DATE_ADD(now(), INTERVAL 2 DAY), now());
+INSERT INTO MediaSession VALUES ('5', DATE_ADD(now(), INTERVAL 3 DAY), now());
+INSERT INTO MediaSession VALUES ('6', DATE_ADD(now(), INTERVAL 31 DAY), now());
+INSERT INTO MediaSession VALUES ('7', DATE_ADD(now(), INTERVAL 31 DAY), null);
+INSERT INTO MediaSession VALUES ('8', DATE_ADD(now(), INTERVAL 31 DAY), now());
+INSERT INTO MediaSession VALUES ('9', DATE_ADD(now(), INTERVAL 31 DAY), now());
+INSERT INTO MediaSession VALUES ('10', DATE_ADD(now(), INTERVAL 31 DAY), now());
+INSERT INTO MediaSession VALUES ('11', DATE_ADD(now(), INTERVAL 31 DAY), null);
+INSERT INTO MediaSession VALUES ('12', null, null);
+INSERT INTO MediaSession VALUES ('13', null, now());
 
 -- --------------------
 -- MEDIASESSION_WATCHABLETYPE

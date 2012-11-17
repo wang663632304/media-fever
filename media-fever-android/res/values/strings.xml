@@ -65,7 +65,8 @@
 	<string name="viewTrailer">View Trailer</string>
 	<string name="addToWatched">Add to Watched</string>
 	<string name="removeFromWatched">Remove from Watched</string>
-	<string name="todayDateFormat">Today %1$s</string>
+	<string name="todayDateTimeFormat">Today %1$s</string>
+	<string name="todayDateFormat">Today</string>
 
 	<!-- Watchable Social -->
 	<string name="social">Social</string>
