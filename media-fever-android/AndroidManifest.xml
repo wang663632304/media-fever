@@ -21,7 +21,7 @@
 	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
 
 	<application android:icon="@drawable/ic_launcher" android:logo="@drawable/logo" android:label="@string/appName"
-	android:name="com.mediafever.android.AndroidApplication" android:hardwareAccelerated="true" android:theme="@style/Theme.Sherlock">
+		android:name="com.mediafever.android.AndroidApplication" android:hardwareAccelerated="true" android:theme="@style/Theme.Sherlock">
 
 		<!-- enable the search dialog to send searches to SearchableActivity -->
 		<meta-data android:name="android.app.default_searchable" android:value="com.mediafever.android.ui.watchable.search.SearchableActivity" />
@@ -48,7 +48,7 @@
 		<activity android:name="com.mediafever.android.ui.watchable.wishlist.WishListActivity" android:label="@string/wishList" />
 		<activity android:name="com.mediafever.android.ui.watchable.watched.WatchedListActivity" android:label="@string/watched" />
 		<activity android:name="com.mediafever.android.ui.session.MediaSessionListActivity" android:label="@string/mediaSessions" />
-		<activity android:name="com.mediafever.android.ui.session.MediaSessionActivity" android:label="@string/mediaSessions" />
+		<activity android:name="com.mediafever.android.ui.session.MediaSessionActivity" android:label="@string/newMediaSession" />
 		<activity android:name="com.mediafever.android.ui.watchable.whattowatch.WhatToWatchActivity" android:label="@string/whatToWatch" />
 		<activity android:name="com.mediafever.android.ui.friends.FriendsActivity" android:label="@string/friends" />
 		<activity android:name="com.mediafever.android.ui.friends.FriendsListActivity" android:label="@string/friends" />
@@ -91,7 +91,8 @@
 			</intent-filter>
 		</receiver>
 
-		<provider android:name="com.mediafever.android.contentprovider.WatchablesSuggestionsProvider" android:authorities="com.mediafever.watchablessuggestionsprovider" />
+		<provider android:name="com.mediafever.android.contentprovider.WatchablesSuggestionsProvider"
+			android:authorities="com.mediafever.watchablessuggestionsprovider" />
 
 	</application>
 

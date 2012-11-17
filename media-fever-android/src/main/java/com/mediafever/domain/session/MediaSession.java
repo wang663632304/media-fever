@@ -13,6 +13,7 @@ import com.mediafever.domain.watchable.WatchableType;
 public class MediaSession extends Entity {
 	
 	private Date date;
+	private Date time;
 	private List<MediaSessionUser> users;
 	private List<WatchableType> watchableTypes;
 	private Boolean accepted;
@@ -26,16 +27,22 @@ public class MediaSession extends Entity {
 		this.accepted = accepted;
 	}
 	
-	public MediaSession(Date date, List<WatchableType> watchableTypes) {
+	public MediaSession(Date date, Date time, List<WatchableType> watchableTypes, List<MediaSessionUser> users) {
 		if (watchableTypes.isEmpty()) {
 			throw AndroidErrorCode.REQUIRED_SESSION_TYPE.newBusinessException();
 		}
 		this.date = date;
+		this.time = time;
+		this.users = users;
 		this.watchableTypes = watchableTypes;
 	}
 	
 	public Date getDate() {
 		return date;
+	}
+	
+	public Date getTime() {
+		return time;
 	}
 	
 	public List<MediaSessionUser> getUsers() {

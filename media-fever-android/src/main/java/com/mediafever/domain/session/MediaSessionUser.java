@@ -14,6 +14,10 @@ public class MediaSessionUser extends Entity {
 	private Integer pendingThumbsUp;
 	private Integer pendingThumbsDown;
 	
+	public MediaSessionUser(User user) {
+		this.user = user;
+	}
+	
 	public MediaSessionUser(User user, Boolean accepted, Integer pendingThumbsUp, Integer pendingThumbsDown) {
 		this.user = user;
 		this.accepted = accepted;

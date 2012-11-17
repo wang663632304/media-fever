@@ -51,7 +51,7 @@
 	<string name="newWaysToConnect">Look for new ways to connect in the future!</string>
 	<string name="accountConnected">Your account has been connected to Facebook successfully!</string>
 	<string name="accountDisconnected">Your account has been disconnected from Facebook.</string>
-	
+
 
 	<!-- Seasons Fragment -->
 	<string name="seasons">Seasons</string>
@@ -99,6 +99,7 @@
 
 	<!-- Media Sessions -->
 	<string name="mediaSessions">Media Sessions</string>
+	<string name="newMediaSession">New Media Session</string>
 	<string name="noResultsMediaSessions">There are no media sessions</string>
 	<string name="pendingSessions">Pending Sessions</string>
 	<string name="acceptedSessions">Accepted Sessions</string>
@@ -110,6 +111,7 @@
 	<string name="at">At</string>
 	<string name="notDefined">Not Defined</string>
 	<string name="requiredSessionType">You must pick at least one session type</string>
+	<string name="mediaSessionFriendsHeader">Pick the friends you want to invite to this media session</string>
 
 	<!-- Notifications -->
 	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>
