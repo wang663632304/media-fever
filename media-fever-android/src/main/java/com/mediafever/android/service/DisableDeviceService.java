@@ -2,12 +2,12 @@ package com.mediafever.android.service;
 
 import android.content.Context;
 import android.content.Intent;
+import com.google.android.gcm.GCMRegistrar;
+import com.google.inject.Inject;
+import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.domain.User;
 import com.jdroid.android.service.WorkerService;
-import com.jdroid.android.utils.AndroidUtils;
-import com.google.android.gcm.GCMRegistrar;
-import com.google.inject.Inject;
 import com.mediafever.service.APIService;
 
 /**
@@ -39,7 +39,7 @@ public class DisableDeviceService extends WorkerService {
 			// get a "NotRegistered" error message and should unregister the device.
 			// DisableDeviceUseCase useCase = AbstractApplication.getInstance(DisableDeviceUseCase.class);
 			// useCase.run();
-			apiService.disableDevice(AndroidUtils.getInstallationId(), userToken);
+			apiService.disableDevice(AbstractApplication.get().getInstallationId(), userToken);
 			GCMRegistrar.setRegisteredOnServer(getApplicationContext(), false);
 		}
 		userToken = null;
