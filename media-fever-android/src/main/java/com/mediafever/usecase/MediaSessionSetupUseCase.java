@@ -38,7 +38,7 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 			mediaSessionUsers.add(new MediaSessionUser(user));
 		}
 		mediaSession = new MediaSession(date, time, watchableTypes, mediaSessionUsers);
-		// TODO Implement API call here
+		getApiService().createMediaSession(mediaSession);
 	}
 	
 	public void setDate(Date date) {

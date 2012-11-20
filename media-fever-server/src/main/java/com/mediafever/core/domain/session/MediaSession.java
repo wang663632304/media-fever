@@ -10,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import org.apache.commons.collections.CollectionUtils;
+import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.domain.Entity;
 import com.mediafever.core.domain.watchable.WatchableType;
 
@@ -46,9 +48,14 @@ public class MediaSession extends Entity {
 		// Do nothing, is required by hibernate
 	}
 	
-	public MediaSession(List<WatchableType> watchableTypes, Date date, List<MediaSessionUser> users) {
-		this.watchableTypes = watchableTypes;
+	public MediaSession(List<WatchableType> watchableTypes, Date date, Date time, List<MediaSessionUser> users) {
+		if (CollectionUtils.isEmpty(watchableTypes)) {
+			this.watchableTypes = Lists.newArrayList(WatchableType.MOVIE, WatchableType.SERIES);
+		} else {
+			this.watchableTypes = watchableTypes;
+		}
 		this.date = date;
+		this.time = time;
 		this.users = users;
 	}
 	

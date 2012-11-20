@@ -1,8 +1,8 @@
 package com.mediafever.android;
 
+import com.google.inject.Singleton;
 import com.jdroid.android.DefaultAndroidModule;
 import com.jdroid.android.repository.UserRepository;
-import com.google.inject.Singleton;
 import com.mediafever.android.repository.UserRepositoryImpl;
 import com.mediafever.repository.FriendRequestsRepository;
 import com.mediafever.repository.FriendsRepository;

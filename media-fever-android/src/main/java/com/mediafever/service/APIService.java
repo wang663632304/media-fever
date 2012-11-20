@@ -110,4 +110,6 @@ public interface APIService {
 	
 	public void rejectMediaSession(MediaSession mediaSession);
 	
+	public void createMediaSession(MediaSession mediaSession);
+	
 }

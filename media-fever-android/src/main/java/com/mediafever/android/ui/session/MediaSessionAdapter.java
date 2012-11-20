@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
+import com.jdroid.android.domain.User;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.java.utils.DateUtils;
 import com.jdroid.java.utils.StringUtils;
@@ -14,6 +15,7 @@ import com.mediafever.R;
 import com.mediafever.android.ui.BorderImage;
 import com.mediafever.android.ui.session.MediaSessionAdapter.MediaSessionHolder;
 import com.mediafever.domain.session.MediaSession;
+import com.mediafever.domain.session.MediaSessionUser;
 
 /**
  * 
@@ -22,9 +24,11 @@ import com.mediafever.domain.session.MediaSession;
 public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, MediaSessionHolder> {
 	
 	private static final String SEPARATOR = ", ";
+	private User user;
 	
-	public MediaSessionAdapter(Activity context, List<MediaSession> items) {
+	public MediaSessionAdapter(Activity context, List<MediaSession> items, User user) {
 		super(context, items, R.layout.media_session_item);
+		this.user = user;
 	}
 	
 	@Override
@@ -34,19 +38,28 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			holder.date.setText(getDateString(mediaSession.getDate(), mediaSession.getTime()));
 			holder.date.setVisibility(View.VISIBLE);
 		} else {
-			holder.date.setVisibility(View.GONE);
+			holder.date.setVisibility(View.INVISIBLE);
 		}
 		
 		holder.users.removeAllViews();
 		
-		int max = Math.min(mediaSession.getUsers().size(), 5);
+		int max = 5;
 		if (AndroidUtils.isLargeScreenOrBigger()) {
 			max = mediaSession.getUsers().size();
 		}
-		for (int i = 0; i < max; i++) {
-			BorderImage borderImage = new BorderImage(getContext(), R.dimen.rowSamllImageDim, R.dimen.rowSamllImageDim);
-			borderImage.setImageContent(mediaSession.getUsers().get(i).getUser().getImage(), R.drawable.user_default);
-			holder.users.addView(borderImage);
+		
+		int usersAdded = 0;
+		for (MediaSessionUser mediaSessionUser : mediaSession.getUsers()) {
+			if (usersAdded < max) {
+				User user = mediaSessionUser.getUser();
+				if (!user.getId().equals(this.user.getId())) {
+					BorderImage borderImage = new BorderImage(getContext(), R.dimen.rowSamllImageDim,
+							R.dimen.rowSamllImageDim);
+					borderImage.setImageContent(user.getImage(), R.drawable.user_default);
+					holder.users.addView(borderImage);
+					usersAdded++;
+				}
+			}
 		}
 	}
 	

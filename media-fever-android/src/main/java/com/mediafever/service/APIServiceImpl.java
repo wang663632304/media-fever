@@ -38,6 +38,7 @@ import com.mediafever.service.marshaller.FriendRequestJsonMarshaller;
 import com.mediafever.service.marshaller.LoginJsonMarshaller;
 import com.mediafever.service.marshaller.MarkAsWatchedJsonMarshaller;
 import com.mediafever.service.marshaller.MarkAsWatchedJsonMarshaller.MarkAsWatched;
+import com.mediafever.service.marshaller.MediaSessionJsonMarshaller;
 import com.mediafever.service.marshaller.UserJsonMarshaller;
 import com.mediafever.service.marshaller.UserWatchableJsonMarshaller;
 
@@ -88,6 +89,7 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 		MarshallerProvider.get().addMarshaller(UserWatchable.class, new UserWatchableJsonMarshaller());
 		MarshallerProvider.get().addMarshaller(FriendRequest.class, new FriendRequestJsonMarshaller());
 		MarshallerProvider.get().addMarshaller(MarkAsWatched.class, new MarkAsWatchedJsonMarshaller());
+		MarshallerProvider.get().addMarshaller(MediaSession.class, new MediaSessionJsonMarshaller());
 	}
 	
 	/**
@@ -359,6 +361,16 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 		WebService webservice = newGetService(MEDIA_SESSIONS);
 		webservice.addQueryParameter(USER_ID, userId);
 		return webservice.execute(new JsonArrayParser(new MediaSessionParser()));
+	}
+	
+	/**
+	 * @see com.mediafever.service.APIService#createMediaSession(com.mediafever.domain.session.MediaSession)
+	 */
+	@Override
+	public void createMediaSession(MediaSession mediaSession) {
+		EntityEnclosingWebService webservice = newPostService(MEDIA_SESSIONS);
+		marshall(webservice, mediaSession);
+		webservice.execute();
 	}
 	
 	/**

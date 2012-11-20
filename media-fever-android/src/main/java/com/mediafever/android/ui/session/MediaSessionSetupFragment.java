@@ -26,8 +26,6 @@ import com.mediafever.usecase.MediaSessionSetupUseCase;
  */
 public class MediaSessionSetupFragment extends AbstractFragment implements OnDateSetListener, OnTimeSetListener {
 	
-	private MediaSessionSetupUseCase mediaSessionSetupUseCase;
-	
 	@InjectView(R.id.movies)
 	private CheckBox movies;
 	
@@ -56,18 +54,6 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onActivityCreated(android.os.Bundle)
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		
-		if (mediaSessionSetupUseCase == null) {
-			mediaSessionSetupUseCase = getInstance(MediaSessionSetupUseCase.class);
-		}
-	}
-	
-	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
 	 *      android.os.Bundle)
 	 */
@@ -88,9 +74,9 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
-					mediaSessionSetupUseCase.addWatchableType(WatchableType.MOVIE);
+					getMediaSessionSetupUseCase().addWatchableType(WatchableType.MOVIE);
 				} else {
-					mediaSessionSetupUseCase.removeWatchableType(WatchableType.MOVIE);
+					getMediaSessionSetupUseCase().removeWatchableType(WatchableType.MOVIE);
 				}
 			}
 		});
@@ -100,9 +86,9 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
-					mediaSessionSetupUseCase.addWatchableType(WatchableType.SERIES);
+					getMediaSessionSetupUseCase().addWatchableType(WatchableType.SERIES);
 				} else {
-					mediaSessionSetupUseCase.removeWatchableType(WatchableType.SERIES);
+					getMediaSessionSetupUseCase().removeWatchableType(WatchableType.SERIES);
 				}
 			}
 		});
@@ -119,10 +105,10 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					dateEditText.setVisibility(View.VISIBLE);
-					mediaSessionSetupUseCase.setDate(dateEditText.getDate());
+					getMediaSessionSetupUseCase().setDate(dateEditText.getDate());
 				} else {
 					dateEditText.setVisibility(View.GONE);
-					mediaSessionSetupUseCase.setDate(null);
+					getMediaSessionSetupUseCase().setDate(null);
 				}
 			}
 		});
@@ -133,10 +119,10 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
 					timeEditText.setVisibility(View.VISIBLE);
-					mediaSessionSetupUseCase.setTime(timeEditText.getTime());
+					getMediaSessionSetupUseCase().setTime(timeEditText.getTime());
 				} else {
 					timeEditText.setVisibility(View.GONE);
-					mediaSessionSetupUseCase.setTime(null);
+					getMediaSessionSetupUseCase().setTime(null);
 				}
 			}
 		});
@@ -148,7 +134,7 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	@Override
 	public void onDateSet(Date date, int requestCode) {
 		dateEditText.setDate(date);
-		mediaSessionSetupUseCase.setDate(date);
+		getMediaSessionSetupUseCase().setDate(date);
 	}
 	
 	/**
@@ -157,6 +143,10 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	@Override
 	public void onTimeSet(Date time) {
 		timeEditText.setTime(time);
-		mediaSessionSetupUseCase.setTime(time);
+		getMediaSessionSetupUseCase().setTime(time);
+	}
+	
+	public MediaSessionSetupUseCase getMediaSessionSetupUseCase() {
+		return ((MediaSessionActivity)getActivity()).getMediaSessionSetupUseCase();
 	}
 }

@@ -17,7 +17,6 @@ import com.mediafever.usecase.MediaSessionSetupUseCase;
  */
 public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> {
 	
-	private MediaSessionSetupUseCase mediaSessionSetupUseCase;
 	private FriendsUseCase friendsUseCase;
 	
 	/**
@@ -27,10 +26,6 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
-		
-		if (mediaSessionSetupUseCase == null) {
-			mediaSessionSetupUseCase = getInstance(MediaSessionSetupUseCase.class);
-		}
 		
 		if (friendsUseCase == null) {
 			friendsUseCase = getInstance(FriendsUseCase.class);
@@ -105,21 +100,25 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 					
 					@Override
 					protected void onUserChecked(UserImpl user) {
-						mediaSessionSetupUseCase.addUser(user);
+						getMediaSessionSetupUseCase().addUser(user);
 					}
 					
 					@Override
 					protected void onUserUnChecked(UserImpl user) {
-						mediaSessionSetupUseCase.removeUser(user);
+						getMediaSessionSetupUseCase().removeUser(user);
 					}
 					
 					@Override
 					protected Boolean isUserChecked(UserImpl user) {
-						return mediaSessionSetupUseCase.containsUser(user);
+						return getMediaSessionSetupUseCase().containsUser(user);
 					}
 				});
 				dismissLoading();
 			}
 		});
+	}
+	
+	public MediaSessionSetupUseCase getMediaSessionSetupUseCase() {
+		return ((MediaSessionActivity)getActivity()).getMediaSessionSetupUseCase();
 	}
 }

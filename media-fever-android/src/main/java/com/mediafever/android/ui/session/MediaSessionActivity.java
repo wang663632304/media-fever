@@ -1,11 +1,14 @@
 package com.mediafever.android.ui.session;
 
 import java.util.List;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.jdroid.android.ActivityLauncher;
+import com.jdroid.android.fragment.UseCaseFragment;
 import com.jdroid.android.wizard.WizardActivity;
 import com.jdroid.android.wizard.WizardStep;
 import com.jdroid.java.collections.Lists;
+import com.mediafever.usecase.MediaSessionSetupUseCase;
 
 /**
  * 
@@ -47,12 +50,60 @@ public class MediaSessionActivity extends WizardActivity {
 		return steps;
 	}
 	
+	public static class MediaSessionSetupUseCaseFragment extends UseCaseFragment<MediaSessionSetupUseCase> {
+		
+		/**
+		 * @see com.jdroid.android.fragment.UseCaseFragment#getUseCaseClass()
+		 */
+		@Override
+		protected Class<MediaSessionSetupUseCase> getUseCaseClass() {
+			return MediaSessionSetupUseCase.class;
+		}
+		
+		/**
+		 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
+		 */
+		@Override
+		public void onFinishUseCase() {
+			executeOnUIThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					getActivity().finish();
+					ActivityLauncher.launchActivity(MediaSessionListActivity.class);
+				}
+			});
+		}
+		
+		/**
+		 * @see com.jdroid.android.fragment.UseCaseFragment#executeOnInit()
+		 */
+		@Override
+		protected Boolean executeOnInit() {
+			return false;
+		}
+	}
+	
+	/**
+	 * @see com.jdroid.android.wizard.WizardActivity#onCreate(android.os.Bundle)
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		loadUseCaseFragment(savedInstanceState, MediaSessionSetupUseCaseFragment.class);
+	}
+	
 	/**
 	 * @see com.jdroid.android.wizard.WizardActivity#onfinishWizard()
 	 */
 	@Override
 	protected void onfinishWizard() {
-		// TODO Auto-generated method stub
-		ActivityLauncher.launchHomeActivity();
+		MediaSessionSetupUseCaseFragment useCaseFragment = (MediaSessionSetupUseCaseFragment)getUseCaseUseCaseFragment(MediaSessionSetupUseCaseFragment.class);
+		useCaseFragment.executeUseCase();
+	}
+	
+	public MediaSessionSetupUseCase getMediaSessionSetupUseCase() {
+		return ((MediaSessionSetupUseCaseFragment)getUseCaseUseCaseFragment(MediaSessionSetupUseCaseFragment.class)).getUseCase();
 	}
 }

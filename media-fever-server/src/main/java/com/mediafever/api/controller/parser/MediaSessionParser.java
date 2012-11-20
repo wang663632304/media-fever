@@ -3,6 +3,7 @@ package com.mediafever.api.controller.parser;
 import java.util.Date;
 import java.util.List;
 import org.json.JSONException;
+import com.jdroid.java.collections.Lists;
 import com.jdroid.java.parser.json.JsonObjectWrapper;
 import com.jdroid.java.parser.json.JsonParser;
 import com.jdroid.javaweb.utils.CSVUtils;
@@ -15,6 +16,7 @@ import com.mediafever.core.domain.watchable.WatchableType;
 public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 	
 	private static final String DATE = "date";
+	private static final String TIME = "time";
 	private static final String WATCHABLE_TYPE = "watchableTypes";
 	private static final String USER_IDS = "usersIds";
 	
@@ -24,30 +26,42 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 	@Override
 	public Object parse(JsonObjectWrapper json) throws JSONException {
 		// TODO This is just a patch. We should fix the way we send the array
-		String csv = json.getString(WATCHABLE_TYPE).toString();
-		csv = csv.replace("[", "");
-		csv = csv.replace("]", "");
-		List<WatchableType> watchableTypes = WatchableType.findByNames(csv);
+		List<WatchableType> watchableTypes = null;
+		if (json.has(WATCHABLE_TYPE)) {
+			String csv = json.getString(WATCHABLE_TYPE).toString();
+			csv = csv.replace("[", "");
+			csv = csv.replace("]", "");
+			csv = csv.replace(" ", "");
+			watchableTypes = WatchableType.findByNames(csv);
+		}
 		
-		csv = json.getString(USER_IDS).toString();
-		csv = csv.replace("[", "");
-		csv = csv.replace("]", "");
-		List<Long> usersIds = CSVUtils.fromCSV(csv, CSVUtils.LongConverter.get());
+		List<Long> usersIds = Lists.newArrayList();
+		if (json.has(USER_IDS)) {
+			String csv = json.getString(USER_IDS).toString();
+			csv = csv.replace("[", "");
+			csv = csv.replace("]", "");
+			usersIds = CSVUtils.fromCSV(csv, CSVUtils.LongConverter.get());
+		}
 		
-		return new MediaSessionJson(json.getDate(DATE), watchableTypes, usersIds);
+		return new MediaSessionJson(json.getDate(DATE), json.getDate(TIME), watchableTypes, usersIds);
 	}
 	
 	public class MediaSessionJson {
 		
 		private Date date;
-		
+		private Date time;
 		private List<WatchableType> watchableTypes;
 		private List<Long> usersIds;
 		
-		public MediaSessionJson(Date date, List<WatchableType> watchableTypes, List<Long> usersIds) {
+		public MediaSessionJson(Date date, Date time, List<WatchableType> watchableTypes, List<Long> usersIds) {
 			this.date = date;
+			this.time = time;
 			this.watchableTypes = watchableTypes;
 			this.usersIds = usersIds;
+		}
+		
+		public Date getTime() {
+			return time;
 		}
 		
 		public Date getDate() {

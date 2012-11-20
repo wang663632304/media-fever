@@ -28,10 +28,7 @@ public enum AndroidErrorCode implements ErrorCode {
 	REQUIRED_CONFIRM_PASSWORD(R.string.requiredConfirmPassword),
 	EMAILS_DONT_MATCH(R.string.emailsDoNotMatch),
 	PASSWORDS_DONT_MATCH(R.string.passwordsDoNotMatch),
-	DUPLICATED_USERNAME(R.string.duplicatedUsername, 201),
-	
-	// Media Session
-	REQUIRED_SESSION_TYPE(R.string.requiredSessionType);
+	DUPLICATED_USERNAME(R.string.duplicatedUsername, 201);
 	
 	private Integer resourceId;
 	private Integer statusCode;

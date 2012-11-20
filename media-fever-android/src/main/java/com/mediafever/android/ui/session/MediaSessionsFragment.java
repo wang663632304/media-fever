@@ -117,13 +117,13 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 				if (!mediaSessionsUseCase.getPendingMediaSessions().isEmpty()) {
 					mergeAdapter.addView(new ListSeparatorView(activity, R.string.pendingSessions));
 					mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
-							mediaSessionsUseCase.getPendingMediaSessions()));
+							mediaSessionsUseCase.getPendingMediaSessions(), getUser()));
 				}
 				
 				if (!mediaSessionsUseCase.getAcceptedMediaSessions().isEmpty()) {
 					mergeAdapter.addView(new ListSeparatorView(activity, R.string.acceptedSessions));
 					mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
-							mediaSessionsUseCase.getAcceptedMediaSessions()));
+							mediaSessionsUseCase.getAcceptedMediaSessions(), getUser()));
 				}
 				
 				setListAdapter(mergeAdapter);

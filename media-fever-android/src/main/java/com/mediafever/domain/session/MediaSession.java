@@ -3,7 +3,6 @@ package com.mediafever.domain.session;
 import java.util.Date;
 import java.util.List;
 import com.jdroid.android.domain.Entity;
-import com.mediafever.android.AndroidErrorCode;
 import com.mediafever.domain.watchable.WatchableType;
 
 /**
@@ -29,9 +28,6 @@ public class MediaSession extends Entity {
 	}
 	
 	public MediaSession(Date date, Date time, List<WatchableType> watchableTypes, List<MediaSessionUser> users) {
-		if (watchableTypes.isEmpty()) {
-			throw AndroidErrorCode.REQUIRED_SESSION_TYPE.newBusinessException();
-		}
 		this.date = date;
 		this.time = time;
 		this.users = users;

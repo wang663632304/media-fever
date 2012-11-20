@@ -111,7 +111,6 @@
 	<string name="on">On</string>
 	<string name="at">At</string>
 	<string name="notDefined">Not Defined</string>
-	<string name="requiredSessionType">You must pick at least one session type</string>
 	<string name="mediaSessionFriendsHeader">Pick the friends you want to invite to this media session</string>
 
 	<!-- Notifications -->

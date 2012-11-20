@@ -2,6 +2,7 @@ package com.mediafever.core.service;
 
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ public class MediaSessionService {
 	private PushService pushService;
 	
 	@Transactional
-	public void createMediaSession(Date date, List<WatchableType> watchableTypes, List<Long> usersIds) {
+	public void createMediaSession(Date date, Date time, List<WatchableType> watchableTypes, List<Long> usersIds) {
 		List<MediaSessionUser> users = Lists.newArrayList();
 		for (Long id : usersIds) {
 			users.add(new MediaSessionUser(userRepository.get(id)));
@@ -41,10 +42,13 @@ public class MediaSessionService {
 		User creator = ApplicationContext.get().getSecurityContext().getUser();
 		users.add(new MediaSessionUser(creator, true));
 		
-		MediaSession mediaSession = new MediaSession(watchableTypes, date, users);
+		MediaSession mediaSession = new MediaSession(watchableTypes, date, time, users);
 		mediaSessionRepository.add(mediaSession);
 		
-		pushService.send(new MediaSessionInvitationGcmMessage(creator.getFullName(), creator.getImageUrl()), usersIds);
+		if (CollectionUtils.isNotEmpty(usersIds)) {
+			pushService.send(new MediaSessionInvitationGcmMessage(creator.getFullName(), creator.getImageUrl()),
+				usersIds);
+		}
 	}
 	
 	public List<MediaSession> getAll(Long userId) {

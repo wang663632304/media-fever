@@ -34,8 +34,8 @@ public class MediaSessionController extends AbstractController {
 	@GZIP
 	public void createMediaSession(String mediaSessionJSON) {
 		MediaSessionJson mediaSessionJson = (MediaSessionJson)(new MediaSessionParser().parse(mediaSessionJSON));
-		mediaSessionService.createMediaSession(mediaSessionJson.getDate(), mediaSessionJson.getWatchableTypes(),
-			mediaSessionJson.getUsersIds());
+		mediaSessionService.createMediaSession(mediaSessionJson.getDate(), mediaSessionJson.getTime(),
+			mediaSessionJson.getWatchableTypes(), mediaSessionJson.getUsersIds());
 	}
 	
 	@GET
