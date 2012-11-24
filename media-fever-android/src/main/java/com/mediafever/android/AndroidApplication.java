@@ -3,6 +3,7 @@ package com.mediafever.android;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -131,5 +132,10 @@ public class AndroidApplication extends AbstractApplication {
 	@Override
 	public Boolean isGcmEnabled() {
 		return true;
+	}
+	
+	public Boolean isLeftNavBarEnabled() {
+		return AndroidUtils.isGoogleTV()
+				|| (AndroidUtils.isXLargeScreenOrBigger() && (AndroidUtils.getApiLevel() >= Build.VERSION_CODES.HONEYCOMB));
 	}
 }

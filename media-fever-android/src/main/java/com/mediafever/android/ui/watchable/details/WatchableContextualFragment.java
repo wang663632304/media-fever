@@ -15,6 +15,7 @@ import com.jdroid.android.tabs.TabAction;
 import com.mediafever.R;
 import com.mediafever.domain.UserWatchable;
 import com.mediafever.domain.watchable.Movie;
+import com.mediafever.domain.watchable.Series;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
 
@@ -87,16 +88,18 @@ public class WatchableContextualFragment extends AbstractFragment {
 				});
 				viewTrailer.setVisibility(View.VISIBLE);
 			}
-			seasons.setVisibility(View.GONE);
 		} else if (watchableType.equals(WatchableType.SERIES)) {
-			seasons.setOnClickListener(new OnClickListener() {
-				
-				@SuppressWarnings("unchecked")
-				@Override
-				public void onClick(View v) {
-					((OnItemSelectedListener<TabAction>)getActivity()).onItemSelected(WatchableContextualItem.SEASONS);
-				}
-			});
+			if (((Series)watchable).hasSeasons()) {
+				seasons.setOnClickListener(new OnClickListener() {
+					
+					@SuppressWarnings("unchecked")
+					@Override
+					public void onClick(View v) {
+						((OnItemSelectedListener<TabAction>)getActivity()).onItemSelected(WatchableContextualItem.SEASONS);
+					}
+				});
+				seasons.setVisibility(View.VISIBLE);
+			}
 		}
 		
 		overview.setOnClickListener(new OnClickListener() {

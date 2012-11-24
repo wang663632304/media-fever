@@ -29,10 +29,8 @@ public class MediaSessionListActivity extends FragmentContainerActivity {
 		int menuResourceId = 0;
 		if (AndroidUtils.isGoogleTV()) {
 			menuResourceId = R.menu.media_sessions_google_tv_menu;
-		} else if (AndroidUtils.isLargeScreenOrBigger()) {
-			menuResourceId = R.menu.media_sessions_tablet_menu;
 		} else {
-			menuResourceId = R.menu.media_sessions_handset_menu;
+			menuResourceId = R.menu.media_sessions_menu;
 		}
 		return menuResourceId;
 	}

@@ -3,7 +3,7 @@
 	android:layout_width="match_parent" android:layout_height="match_parent">
 
 	<RelativeLayout android:id="@+id/mediaSessions" android:layout_width="match_parent"
-		android:layout_height="75dp" android:layout_margin="5dp">
+		android:layout_height="0dp" android:layout_weight="0.3" android:layout_margin="5dp">
 
 		<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
 			android:layout_width="match_parent" android:scaleType="fitXY" android:src="@drawable/watchable_default" />
@@ -13,9 +13,9 @@
 			android:layout_alignParentBottom="true" android:padding="5dp" />
 	</RelativeLayout>
 
-	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+	<LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="0.3"
 		android:orientation="horizontal" android:baselineAligned="false">
-		<RelativeLayout android:id="@+id/watched" android:layout_width="0dp" android:layout_height="80dp"
+		<RelativeLayout android:id="@+id/watched" android:layout_width="0dp" android:layout_height="match_parent"
 			android:layout_weight="0.5" android:layout_margin="5dp">
 
 			<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
@@ -26,7 +26,7 @@
 				android:layout_alignParentBottom="true" android:padding="5dp" />
 		</RelativeLayout>
 
-		<RelativeLayout android:id="@+id/wishList" android:layout_width="0dp" android:layout_height="80dp"
+		<RelativeLayout android:id="@+id/wishList" android:layout_width="0dp" android:layout_height="match_parent"
 			android:layout_weight="0.5" android:layout_margin="5dp">
 
 			<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
@@ -39,9 +39,9 @@
 
 	</LinearLayout>
 
-	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+	<LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="0.3"
 		android:orientation="horizontal" android:baselineAligned="false">
-		<RelativeLayout android:id="@+id/whatToWatch" android:layout_width="0dp" android:layout_height="80dp"
+		<RelativeLayout android:id="@+id/whatToWatch" android:layout_width="0dp" android:layout_height="match_parent"
 			android:layout_weight="0.5" android:layout_margin="5dp">
 
 			<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
@@ -52,7 +52,7 @@
 				android:layout_alignParentBottom="true" android:padding="5dp" />
 		</RelativeLayout>
 
-		<RelativeLayout android:id="@+id/friends" android:layout_width="0dp" android:layout_height="80dp"
+		<RelativeLayout android:id="@+id/friends" android:layout_width="0dp" android:layout_height="match_parent"
 			android:layout_weight="0.5" android:layout_margin="5dp">
 
 			<com.jdroid.android.images.CustomImageView android:layout_height="match_parent"
