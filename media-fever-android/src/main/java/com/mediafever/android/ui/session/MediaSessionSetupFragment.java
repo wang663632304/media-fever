@@ -10,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
-import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.fragment.DatePickerDialogFragment.OnDateSetListener;
 import com.jdroid.android.fragment.TimePickerDialogFragment.OnTimeSetListener;
@@ -159,14 +158,5 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	public void onTimeSet(Date time) {
 		timeEditText.setTime(time);
 		mediaSessionSetupUseCase.setTime(time);
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
-	 */
-	@Override
-	public void onFinishUseCase() {
-		// TODO Change this target activity
-		ActivityLauncher.launchHomeActivity();
 	}
 }

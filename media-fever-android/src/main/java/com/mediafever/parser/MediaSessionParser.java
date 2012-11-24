@@ -19,6 +19,7 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 	
 	private static final String ID = "id";
 	private static final String DATE = "date";
+	private static final String TIME = "time";
 	private static final String USERS = "users";
 	private static final String WATCHABLES_TYPES = "watchablesTypes";
 	
@@ -29,6 +30,7 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 	public Object parse(JsonObjectWrapper json) throws JSONException {
 		Long id = json.getLong(ID);
 		Date date = json.getDate(DATE);
+		Date time = json.getDate(TIME);
 		List<MediaSessionUser> users = parseList(json.getJSONArray(USERS), new MediaSessionUserParser());
 		List<WatchableType> watchablesTypes = Lists.newArrayList();
 		for (String watchableType : parseListString(json.getJSONArray(WATCHABLES_TYPES))) {
@@ -41,6 +43,6 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 				break;
 			}
 		}
-		return new MediaSession(id, date, users, watchablesTypes, accepted);
+		return new MediaSession(id, date, time, users, watchablesTypes, accepted);
 	}
 }

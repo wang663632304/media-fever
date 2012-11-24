@@ -14,6 +14,7 @@ public class MediaSessionJsonMarshaller implements Marshaller<MediaSession, Json
 	
 	private static final String ID = "id";
 	private static final String DATE = "date";
+	private static final String TIME = "time";
 	private static final String USERS = "users";
 	private static final String SELECTIONS = "selections";
 	private static final String WATCHABLES_TYPES = "watchablesTypes";
@@ -27,6 +28,7 @@ public class MediaSessionJsonMarshaller implements Marshaller<MediaSession, Json
 		JsonMap map = new JsonMap(mode, extras);
 		map.put(ID, mediaSession.getId());
 		map.put(DATE, mediaSession.getDate());
+		map.put(TIME, mediaSession.getTime());
 		map.put(USERS, mediaSession.getUsers());
 		if (MarshallerMode.COMPLETE.equals(mode)) {
 			map.put(SELECTIONS, mediaSession.getSelections());
