@@ -22,7 +22,6 @@ import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.pager.OnPageSelectedListener;
 import com.jdroid.android.tabs.TabAction;
 import com.jdroid.android.utils.AndroidUtils;
-import com.google.ads.AdSize;
 import com.jdroid.java.collections.Lists;
 import com.mediafever.R;
 import com.mediafever.domain.UserWatchable;
@@ -95,14 +94,6 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(markAsWachedUseCase, this);
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
-	 */
-	@Override
-	public AdSize getAdSize() {
-		return AndroidUtils.isLargeScreenOrBigger() ? AdSize.IAB_BANNER : AdSize.SMART_BANNER;
 	}
 	
 	/**

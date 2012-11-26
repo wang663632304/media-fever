@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.AbstractFragment;
-import com.jdroid.android.utils.AndroidUtils;
-import com.google.ads.AdSize;
 import com.mediafever.R;
 import com.mediafever.usecase.SignUpUseCase;
 
@@ -63,14 +61,6 @@ public class SignUpFragment extends AbstractFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.signup_fragment, container, false);
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
-	 */
-	@Override
-	public AdSize getAdSize() {
-		return AndroidUtils.isLargeScreenOrBigger() ? AdSize.IAB_LEADERBOARD : AdSize.SMART_BANNER;
 	}
 	
 	/**

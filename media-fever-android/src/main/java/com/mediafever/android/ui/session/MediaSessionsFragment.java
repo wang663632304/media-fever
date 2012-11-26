@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.commonsware.cwac.merge.MergeAdapter;
-import com.google.ads.AdSize;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.AbstractListFragment;
-import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.view.ListSeparatorView;
 import com.mediafever.R;
 import com.mediafever.android.ui.home.HomeActivity;
@@ -61,14 +59,6 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 		} else {
 			AcceptRejectSessionDialogFragment.show(mediaSession, this);
 		}
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
-	 */
-	@Override
-	public AdSize getAdSize() {
-		return AndroidUtils.isLargeScreenOrBigger() ? AdSize.IAB_BANNER : AdSize.SMART_BANNER;
 	}
 	
 	/**

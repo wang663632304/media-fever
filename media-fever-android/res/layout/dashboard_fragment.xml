@@ -64,4 +64,5 @@
 		</RelativeLayout>
 
 	</LinearLayout>
+	<include layout="@layout/ad_view_container" />
 </LinearLayout>

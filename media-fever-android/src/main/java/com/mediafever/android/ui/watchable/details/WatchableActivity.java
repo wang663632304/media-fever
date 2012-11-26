@@ -108,7 +108,8 @@ public class WatchableActivity extends AbstractFragmentActivity implements
 	 */
 	@Override
 	public int getContentView() {
-		return com.mediafever.R.layout.watchable_activity;
+		return AndroidUtils.isLargeScreenOrBigger() ? R.layout.contextual_activity
+				: com.mediafever.R.layout.watchable_activity;
 	}
 	
 	/**
