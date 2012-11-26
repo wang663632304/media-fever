@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -45,7 +46,7 @@ public class AndroidBaseActivity extends BaseActivity {
 		
 		ActionBar actionBar = getActivityIf().getSupportActionBar();
 		if (actionBar != null) {
-			if (AndroidUtils.isLargeScreenOrBigger()) {
+			if (AndroidApplication.get().isLeftNavBarEnabled()) {
 				actionBar.setDisplayShowHomeEnabled(false);
 			} else {
 				actionBar.setDisplayUseLogoEnabled(false);
@@ -60,42 +61,45 @@ public class AndroidBaseActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		if (AndroidUtils.isLargeScreenOrBigger() && getActivityIf().requiresAuthentication()) {
-			
-			leftNavBar = new LeftNavBar(getActivity());
-			leftNavBar.setOnClickHomeListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					ActivityLauncher.launchHomeActivity();
-				}
-			});
-			leftNavBar.setBackgroundDrawable(getActivity().getResources().getDrawable(
-				R.drawable.leftnav_bar_background_dark));
-			if (ApplicationContext.get().isFreeApp()) {
-				View customView = inflate(R.layout.leftnavbar_custom_view);
-				View buyFullApp = customView.findViewById(R.id.buyFullApp);
-				buyFullApp.setOnClickListener(new BuyFullAppOnClickListener());
-				leftNavBar.setDisplayShowCustomEnabled(true);
-				leftNavBar.setCustomView(customView);
-			}
-			leftNavBar.setTitle(getActivity().getTitle());
-			leftNavBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-			leftNavBar.flipOption(ActionBar.DISPLAY_SHOW_TITLE);
-			if (AndroidUtils.isGoogleTV()) {
-				leftNavBar.flipOption(LeftNavBar.DISPLAY_AUTO_EXPAND);
-			}
-			leftNavBar.flipOption(LeftNavBar.DISPLAY_USE_LOGO_WHEN_EXPANDED);
-			
-			for (LeftAction leftAction : LeftAction.values()) {
-				addTab(leftAction);
-			}
-			
+		if (AndroidApplication.get().isLeftNavBarEnabled() && getActivityIf().requiresAuthentication()) {
+			loadLeftNavBar();
 		}
 	}
 	
-	@TargetApi(11)
-	private void addTab(final TabAction leftAction) {
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void loadLeftNavBar() {
+		leftNavBar = new LeftNavBar(getActivity());
+		leftNavBar.setOnClickHomeListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ActivityLauncher.launchHomeActivity();
+			}
+		});
+		leftNavBar.setBackgroundDrawable(getActivity().getResources().getDrawable(
+			R.drawable.leftnav_bar_background_dark));
+		if (ApplicationContext.get().isFreeApp()) {
+			View customView = inflate(R.layout.leftnavbar_custom_view);
+			View buyFullApp = customView.findViewById(R.id.buyFullApp);
+			buyFullApp.setOnClickListener(new BuyFullAppOnClickListener());
+			leftNavBar.setDisplayShowCustomEnabled(true);
+			leftNavBar.setCustomView(customView);
+		}
+		leftNavBar.setTitle(getActivity().getTitle());
+		leftNavBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		leftNavBar.flipOption(ActionBar.DISPLAY_SHOW_TITLE);
+		if (AndroidUtils.isGoogleTV()) {
+			leftNavBar.flipOption(LeftNavBar.DISPLAY_AUTO_EXPAND);
+		}
+		leftNavBar.flipOption(LeftNavBar.DISPLAY_USE_LOGO_WHEN_EXPANDED);
+		
+		for (LeftAction leftAction : LeftAction.values()) {
+			addLeftNavBarTab(leftAction);
+		}
+	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void addLeftNavBarTab(final TabAction leftAction) {
 		Tab tab = leftNavBar.newTab();
 		tab.setText(leftAction.getNameResource());
 		tab.setIcon(leftAction.getIconResource());
@@ -189,17 +193,11 @@ public class AndroidBaseActivity extends BaseActivity {
 		if (getActivityIf().requiresAuthentication()) {
 			if (AndroidUtils.isGoogleTV()) {
 				menuResourceId = R.menu.google_tv_menu;
-			} else if (AndroidUtils.isLargeScreenOrBigger()) {
-				menuResourceId = R.menu.tablet_menu;
 			} else {
-				menuResourceId = R.menu.handset_menu;
+				menuResourceId = R.menu.menu;
 			}
 		} else {
-			if (AndroidUtils.isLargeScreenOrBigger()) {
-				menuResourceId = R.menu.not_authenticated_menu;
-			} else {
-				menuResourceId = R.menu.not_authenticated_handset_menu;
-			}
+			menuResourceId = R.menu.not_authenticated_menu;
 		}
 		return menuResourceId;
 	}
@@ -210,7 +208,8 @@ public class AndroidBaseActivity extends BaseActivity {
 	@Override
 	@TargetApi(11)
 	public void doOnCreateOptionsMenu(Menu menu) {
-		if (getActivityIf().requiresAuthentication() && AndroidUtils.isLargeScreenOrBigger()) {
+		if (getActivityIf().requiresAuthentication()
+				&& (AndroidUtils.isGoogleTV() || AndroidUtils.isXLargeScreenOrBigger())) {
 			SearchView searchView = (SearchView)menu.findItem(R.id.searchItem).getActionView();
 			searchView.setFocusable(true);
 			searchView.setSubmitButtonEnabled(true);

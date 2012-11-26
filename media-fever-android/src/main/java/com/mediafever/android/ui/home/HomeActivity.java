@@ -3,8 +3,8 @@ package com.mediafever.android.ui.home;
 import android.os.Bundle;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.AbstractFragmentActivity;
-import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
+import com.mediafever.android.AndroidApplication;
 import com.mediafever.android.ui.login.LoginActivity;
 
 /**
@@ -46,7 +46,7 @@ public class HomeActivity extends AbstractFragmentActivity {
 		
 		if (savedInstanceState == null) {
 			commitFragment(R.id.latestFragmentContainer, new LatestWatchablesFragment());
-			if (!AndroidUtils.isLargeScreenOrBigger()) {
+			if (!AndroidApplication.get().isLeftNavBarEnabled()) {
 				commitFragment(R.id.dashboardFragmentContainer, new DashboardFragment());
 			}
 		}

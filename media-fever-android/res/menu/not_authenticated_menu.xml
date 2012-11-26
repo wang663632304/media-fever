@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@+id/devSettingsItem" android:icon="@android:drawable/ic_menu_preferences" android:title="@string/settings"
-		android:showAsAction="ifRoom|withText" />
-	<item android:id="@+id/aboutItem" android:showAsAction="ifRoom|withText" android:icon="@android:drawable/ic_menu_info_details"
-		android:title="@string/about" />
+		android:showAsAction="ifRoom" />
+	<item android:id="@+id/aboutItem" android:showAsAction="ifRoom" android:icon="@android:drawable/ic_menu_info_details"
+	android:title="@string/about" />
 </menu>

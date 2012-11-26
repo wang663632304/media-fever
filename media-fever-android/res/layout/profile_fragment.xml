@@ -20,11 +20,12 @@
 			</RelativeLayout>
 
 			<TextView style="@style/textView" android:text="@string/firstName" />
-			<EditText android:id="@+id/firstName" style="@style/editText" android:inputType="text"
+			<EditText android:id="@+id/firstName" style="@style/editText" android:inputType="textPersonName"
 				android:nextFocusDown="@+id/lastName" />
 
 			<TextView style="@style/textView" android:text="@string/lastName" />
-			<EditText android:id="@+id/lastName" style="@style/editText" android:inputType="text" android:nextFocusDown="@+id/email" />
+			<EditText android:id="@+id/lastName" style="@style/editText" android:inputType="textPersonName"
+				android:nextFocusDown="@+id/email" />
 
 			<TextView style="@style/textView" android:text="@string/email" />
 			<EditText android:id="@+id/email" style="@style/editText" android:inputType="textEmailAddress" />
