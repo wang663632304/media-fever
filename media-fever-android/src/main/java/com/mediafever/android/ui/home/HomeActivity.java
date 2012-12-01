@@ -3,8 +3,8 @@ package com.mediafever.android.ui.home;
 import android.os.Bundle;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.AbstractFragmentActivity;
+import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
-import com.mediafever.android.AndroidApplication;
 import com.mediafever.android.ui.login.LoginActivity;
 
 /**
@@ -18,7 +18,7 @@ public class HomeActivity extends AbstractFragmentActivity {
 	 */
 	@Override
 	public int getContentView() {
-		return R.layout.home_activity;
+		return AndroidUtils.isGoogleTV() ? R.layout.home_activity_tv : R.layout.home_activity;
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class HomeActivity extends AbstractFragmentActivity {
 		
 		if (savedInstanceState == null) {
 			commitFragment(R.id.latestFragmentContainer, new LatestWatchablesFragment());
-			if (!AndroidApplication.get().isLeftNavBarEnabled()) {
+			if (findView(R.id.dashboardFragmentContainer) != null) {
 				commitFragment(R.id.dashboardFragmentContainer, new DashboardFragment());
 			}
 		}

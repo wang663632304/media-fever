@@ -2,7 +2,7 @@
 <resources>
 
 	<!-- CoverFlow -->
-	<dimen name="coverFlowWidth">200px</dimen>
-	<dimen name="coverFlowHeight">300px</dimen>
+	<dimen name="coverFlowWidth">120dp</dimen>
+	<dimen name="coverFlowHeight">180dp</dimen>
 
 </resources>

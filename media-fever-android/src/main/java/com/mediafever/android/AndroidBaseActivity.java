@@ -23,6 +23,7 @@ import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.AboutDialogFragment;
 import com.mediafever.android.ui.friends.FriendsActivity;
+import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.android.ui.listener.BuyFullAppOnClickListener;
 import com.mediafever.android.ui.session.MediaSessionListActivity;
 import com.mediafever.android.ui.settings.DevSettingsActivity;
@@ -61,7 +62,8 @@ public class AndroidBaseActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		if (AndroidApplication.get().isLeftNavBarEnabled() && getActivityIf().requiresAuthentication()) {
+		if (AndroidApplication.get().isLeftNavBarEnabled() && getActivityIf().requiresAuthentication()
+				&& !getActivity().getClass().equals(HomeActivity.class)) {
 			loadLeftNavBar();
 		}
 	}

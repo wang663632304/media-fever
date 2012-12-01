@@ -2,50 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
 	android:layout_width="match_parent" android:layout_height="match_parent" android:padding="2dp">
 
-	<RelativeLayout android:id="@+id/mediaSessions" android:layout_width="match_parent"
-		android:layout_height="0dp" android:layout_weight="0.3" android:layout_margin="2dp" android:background="@color/grey">
-
-		<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/mediaSessions"
-			android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
-			android:layout_alignParentBottom="true" android:padding="5dp" />
+	<RelativeLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="0.3"
+		android:layout_margin="2dp">
+		<ImageView android:layout_width="match_parent" android:layout_height="wrap_content" android:src="@drawable/movies_background"
+			android:scaleType="fitXY" />
+		<RelativeLayout android:id="@+id/mediaSessions" android:layout_width="match_parent"
+			android:layout_height="match_parent" android:background="@drawable/dashboard_selector" android:focusable="true">
+			<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/mediaSessions"
+				android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+				android:layout_alignParentBottom="true" android:padding="5dp" />
+		</RelativeLayout>
 	</RelativeLayout>
 
 	<LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="0.3"
 		android:orientation="horizontal" android:baselineAligned="false">
-		<RelativeLayout android:id="@+id/watched" android:layout_width="0dp" android:layout_height="match_parent"
-			android:layout_weight="0.5" android:layout_margin="2dp" android:background="@color/grey">
-
-			<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/watched"
-				android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
-				android:layout_alignParentBottom="true" android:padding="5dp" />
+		<RelativeLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5"
+			android:layout_margin="2dp">
+			<ImageView android:layout_width="match_parent" android:layout_height="wrap_content" android:src="@drawable/movies_background"
+				android:scaleType="fitXY" />
+			<RelativeLayout android:id="@+id/watched" android:layout_width="match_parent" android:layout_height="match_parent"
+				android:background="@drawable/dashboard_selector" android:focusable="true">
+				<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/watched"
+					android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+					android:layout_alignParentBottom="true" android:padding="5dp" />
+			</RelativeLayout>
 		</RelativeLayout>
 
-		<RelativeLayout android:id="@+id/wishList" android:layout_width="0dp" android:layout_height="match_parent"
-			android:layout_weight="0.5" android:layout_margin="2dp" android:background="@color/grey">
-
-			<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/wishList"
-				android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
-				android:layout_alignParentBottom="true" android:padding="5dp" />
+		<RelativeLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5"
+			android:layout_margin="2dp">
+			<ImageView android:layout_width="match_parent" android:layout_height="wrap_content" android:src="@drawable/wish_list"
+				android:scaleType="fitXY" />
+			<RelativeLayout android:id="@+id/wishList" android:layout_width="match_parent" android:layout_height="match_parent"
+				android:background="@drawable/dashboard_selector" android:focusable="true">
+				<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/wishList"
+					android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+					android:layout_alignParentBottom="true" android:padding="5dp" />
+			</RelativeLayout>
 		</RelativeLayout>
 
 	</LinearLayout>
 
 	<LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="0.3"
 		android:orientation="horizontal" android:baselineAligned="false">
-		<RelativeLayout android:id="@+id/whatToWatch" android:layout_width="0dp" android:layout_height="match_parent"
-			android:layout_weight="0.5" android:layout_margin="2dp" android:background="@color/grey">
 
-			<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/whatToWatch"
-				android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
-				android:layout_alignParentBottom="true" android:padding="5dp" />
+		<RelativeLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5"
+			android:layout_margin="2dp">
+			<ImageView android:layout_width="match_parent" android:layout_height="wrap_content" android:src="@drawable/movies_background"
+				android:scaleType="fitXY" />
+			<RelativeLayout android:id="@+id/whatToWatch" android:layout_width="match_parent"
+				android:layout_height="match_parent" android:background="@drawable/dashboard_selector" android:focusable="true">
+				<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/whatToWatch"
+					android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+					android:layout_alignParentBottom="true" android:padding="5dp" />
+			</RelativeLayout>
 		</RelativeLayout>
 
-		<RelativeLayout android:id="@+id/friends" android:layout_width="0dp" android:layout_height="match_parent"
-			android:layout_weight="0.5" android:layout_margin="2dp" android:background="@color/grey">
-
-			<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/friends"
-				android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
-				android:layout_alignParentBottom="true" android:padding="5dp" />
+		<RelativeLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5"
+			android:layout_margin="2dp">
+			<ImageView android:layout_width="match_parent" android:layout_height="wrap_content" android:src="@drawable/movies_background"
+				android:scaleType="fitXY" />
+			<RelativeLayout android:id="@+id/friends" android:layout_width="match_parent" android:layout_height="match_parent"
+				android:background="@drawable/dashboard_selector" android:focusable="true">
+				<TextView android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/friends"
+					android:textStyle="bold" android:textSize="13sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+					android:layout_alignParentBottom="true" android:padding="5dp" />
+			</RelativeLayout>
 		</RelativeLayout>
 
 	</LinearLayout>

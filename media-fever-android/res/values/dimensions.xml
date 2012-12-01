@@ -12,7 +12,7 @@
 	<dimen name="left_nav_expanded_apparent_width">218dip</dimen>
 
 	<!-- CoverFlow -->
-	<dimen name="coverFlowWidth">120px</dimen>
-	<dimen name="coverFlowHeight">180px</dimen>
+	<dimen name="coverFlowWidth">90dp</dimen>
+	<dimen name="coverFlowHeight">130dp</dimen>
 
 </resources>
