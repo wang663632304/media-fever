@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import com.jdroid.android.coverflow.CoverFlow;
 import com.jdroid.android.coverflow.CoverFlowImageAdapter;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.fragment.AbstractFragment;
+import com.jdroid.android.images.ReflectedRemoteImageResolver;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
 import com.mediafever.domain.watchable.Watchable;
@@ -55,6 +58,10 @@ public class LatestWatchablesFragment extends AbstractFragment {
 		if (latestWatchablesUseCase == null) {
 			latestWatchablesUseCase = getInstance(LatestWatchablesUseCase.class);
 		}
+		
+		float height = getResources().getDimensionPixelSize(R.dimen.coverFlowHeight)
+				* (1 + ReflectedRemoteImageResolver.get().getImageReflectionRatio());
+		coverflow.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)height));
 	}
 	
 	/**
@@ -73,6 +80,14 @@ public class LatestWatchablesFragment extends AbstractFragment {
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(latestWatchablesUseCase, this);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onStartUseCase()
+	 */
+	@Override
+	public void onStartUseCase() {
+		// Do nothing
 	}
 	
 	/**
@@ -102,8 +117,6 @@ public class LatestWatchablesFragment extends AbstractFragment {
 				
 				coverflow.setSelection(latestWatchablesUseCase.getWatchables().size() / 2, true);
 				setupListeners(coverflow);
-				
-				dismissLoading();
 			}
 		});
 	}

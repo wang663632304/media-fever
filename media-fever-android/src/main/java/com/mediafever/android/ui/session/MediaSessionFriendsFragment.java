@@ -34,14 +34,6 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onActivityCreated(android.os.Bundle)
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
-	
-	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
 	 *      android.os.Bundle)
 	 */
@@ -51,13 +43,14 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 * @see com.jdroid.android.fragment.AbstractFragment#onActivityCreated(android.os.Bundle)
 	 */
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 		getListView().addHeaderView(
 			LayoutInflater.from(getActivity()).inflate(R.layout.media_session_friends_header_fragment, null));
+		loadFriends();
 	}
 	
 	/**
@@ -95,27 +88,41 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 			
 			@Override
 			public void run() {
-				setListAdapter(new UserCheckeableAdapter(MediaSessionFriendsFragment.this.getActivity(),
-						friendsUseCase.getFriends()) {
-					
-					@Override
-					protected void onUserChecked(UserImpl user) {
-						getMediaSessionSetupUseCase().addUser(user);
-					}
-					
-					@Override
-					protected void onUserUnChecked(UserImpl user) {
-						getMediaSessionSetupUseCase().removeUser(user);
-					}
-					
-					@Override
-					protected Boolean isUserChecked(UserImpl user) {
-						return getMediaSessionSetupUseCase().containsUser(user);
-					}
-				});
+				loadFriends();
 				dismissLoading();
 			}
+			
 		});
+	}
+	
+	private void loadFriends() {
+		setListAdapter(new UserCheckeableAdapter(MediaSessionFriendsFragment.this.getActivity(),
+				friendsUseCase.getFriends()) {
+			
+			@Override
+			protected void onUserChecked(UserImpl user) {
+				getMediaSessionSetupUseCase().addUser(user);
+			}
+			
+			@Override
+			protected void onUserUnChecked(UserImpl user) {
+				getMediaSessionSetupUseCase().removeUser(user);
+			}
+			
+			@Override
+			protected Boolean isUserChecked(UserImpl user) {
+				return getMediaSessionSetupUseCase().containsUser(user);
+			}
+		});
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractListFragment#onDestroyView()
+	 */
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		setListAdapter(null);
 	}
 	
 	public MediaSessionSetupUseCase getMediaSessionSetupUseCase() {

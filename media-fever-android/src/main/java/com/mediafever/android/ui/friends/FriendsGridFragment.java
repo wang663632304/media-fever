@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.ads.AdSize;
 import com.jdroid.android.AndroidUseCaseListener;
 import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.fragment.AbstractGridFragment;
@@ -155,5 +156,13 @@ public class FriendsGridFragment extends AbstractGridFragment<UserImpl> {
 				dismissLoading();
 			}
 		});
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
+	 */
+	@Override
+	public AdSize getAdSize() {
+		return null;
 	}
 }

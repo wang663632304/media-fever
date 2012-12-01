@@ -27,7 +27,7 @@
 		<meta-data android:name="android.app.default_searchable" android:value="com.mediafever.android.ui.watchable.search.SearchableActivity" />
 
 		<activity android:name="com.mediafever.android.ui.login.LoginActivity" android:windowSoftInputMode="adjustPan" />
-		<activity android:name="com.mediafever.android.ui.home.HomeActivity">
+		<activity android:name="com.mediafever.android.ui.home.HomeActivity" android:configChanges="orientation|keyboardHidden|screenSize">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -45,12 +45,16 @@
 		</activity>
 
 		<activity android:name="com.mediafever.android.ui.watchable.details.WatchableActivity" />
-		<activity android:name="com.mediafever.android.ui.watchable.wishlist.WishListActivity" android:label="@string/wishList" />
-		<activity android:name="com.mediafever.android.ui.watchable.watched.WatchedListActivity" android:label="@string/watched" />
+		<activity android:name="com.mediafever.android.ui.watchable.wishlist.WishListActivity" android:label="@string/wishList"
+			android:configChanges="orientation|keyboardHidden|screenSize" />
+		<activity android:name="com.mediafever.android.ui.watchable.watched.WatchedListActivity" android:label="@string/watched"
+			android:configChanges="orientation|keyboardHidden|screenSize" />
 		<activity android:name="com.mediafever.android.ui.session.MediaSessionListActivity" android:label="@string/mediaSessions" />
 		<activity android:name="com.mediafever.android.ui.session.MediaSessionActivity" android:label="@string/newMediaSession" />
-		<activity android:name="com.mediafever.android.ui.watchable.whattowatch.WhatToWatchActivity" android:label="@string/whatToWatch" />
-		<activity android:name="com.mediafever.android.ui.friends.FriendsActivity" android:label="@string/friends" />
+		<activity android:name="com.mediafever.android.ui.watchable.whattowatch.WhatToWatchActivity" android:label="@string/whatToWatch"
+			android:configChanges="orientation|keyboardHidden|screenSize" />
+		<activity android:name="com.mediafever.android.ui.friends.FriendsActivity" android:label="@string/friends"
+			android:configChanges="orientation|keyboardHidden|screenSize" />
 		<activity android:name="com.mediafever.android.ui.friends.FriendsListActivity" android:label="@string/friends" />
 		<activity android:name="com.mediafever.android.ui.friends.FriendsRequestsActivity" android:label="@string/friendsRequests" />
 		<activity android:name="com.mediafever.android.ui.settings.SettingsActivity" android:label="@string/settings" />
