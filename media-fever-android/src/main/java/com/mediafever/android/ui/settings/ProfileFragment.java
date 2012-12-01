@@ -11,13 +11,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
-import com.google.ads.AdSize;
 import com.jdroid.android.activity.PictureDialogFragment;
 import com.jdroid.android.activity.PicturePickerListener;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.images.CustomImageView;
-import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
 import com.mediafever.domain.UserImpl;
@@ -73,14 +71,6 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.profile_fragment, container, false);
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
-	 */
-	@Override
-	public AdSize getAdSize() {
-		return AndroidUtils.isLargeScreenOrBigger() ? AdSize.IAB_LEADERBOARD : AdSize.SMART_BANNER;
 	}
 	
 	/**

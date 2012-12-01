@@ -25,6 +25,8 @@ import com.mediafever.domain.watchable.WatchableType;
  */
 public class WatchableContextualFragment extends AbstractFragment {
 	
+	private static final String USER_WATCHABLE_EXTRA = "userWatchable";
+	
 	@InjectView(R.id.image)
 	private CustomImageView image;
 	
@@ -44,15 +46,25 @@ public class WatchableContextualFragment extends AbstractFragment {
 	
 	public WatchableContextualFragment(UserWatchable<Watchable> userWatchable) {
 		this.userWatchable = userWatchable;
+		
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(USER_WATCHABLE_EXTRA, userWatchable);
+		setArguments(bundle);
 	}
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+		
+		Bundle args = getArguments();
+		if (args != null) {
+			userWatchable = (UserWatchable<Watchable>)args.getSerializable(USER_WATCHABLE_EXTRA);
+		}
 	}
 	
 	/**

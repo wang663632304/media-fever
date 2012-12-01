@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.jdroid.android.fragment.AbstractListFragment;
-import com.jdroid.android.utils.AndroidUtils;
-import com.google.ads.AdSize;
 import com.mediafever.R;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.usecase.AcceptFriendRequestUseCase;
@@ -64,14 +62,6 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 		super.onPause();
 		onPauseUseCase(friendRequestsUseCase, this);
 		onPauseUseCase(acceptFriendRequestUseCase, this);
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
-	 */
-	@Override
-	public AdSize getAdSize() {
-		return AndroidUtils.isLargeScreenOrBigger() ? AdSize.IAB_BANNER : AdSize.SMART_BANNER;
 	}
 	
 	/**
