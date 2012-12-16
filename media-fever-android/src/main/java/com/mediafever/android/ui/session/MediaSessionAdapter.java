@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.android.domain.User;
+import com.jdroid.android.utils.AndroidDateUtils;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.java.utils.DateUtils;
 import com.jdroid.java.utils.StringUtils;
@@ -65,7 +66,7 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 	
 	private String getDateString(Date date, Date time) {
 		
-		String dateString = null;
+		StringBuilder dateBuilder = new StringBuilder();
 		if (date != null) {
 			
 			Date fullDate = DateUtils.getDate(date, time);
@@ -75,32 +76,22 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			Boolean isCurrentDay = DateUtils.getDay(now) == DateUtils.getDay(fullDate);
 			
 			if ((absSecondsToDate < DateUtils.DAY) && isCurrentDay) {
-				if (time != null) {
-					dateString = getContext().getString(R.string.todayDateTimeFormat,
-						DateUtils.format(time, DateUtils.HHMMAA_DATE_FORMAT));
-				} else {
-					dateString = getContext().getString(R.string.todayDateFormat);
-				}
+				dateBuilder.append(getContext().getString(R.string.todayDateFormat));
 			} else if (absSecondsToDate < DateUtils.WEEK) {
-				if (time != null) {
-					dateString = DateUtils.format(fullDate, DateUtils.EHHMMAA_DATE_FORMAT);
-				} else {
-					dateString = DateUtils.format(fullDate, DateUtils.E_DATE_FORMAT);
-				}
+				dateBuilder.append(DateUtils.format(fullDate, DateUtils.E_DATE_FORMAT));
 			} else {
 				Boolean isCurrentYear = DateUtils.getYear(now) == DateUtils.getYear(fullDate);
-				if (time != null) {
-					dateString = DateUtils.format(fullDate, isCurrentYear ? DateUtils.MMMDHHMMAA_DATE_FORMAT
-							: DateUtils.MMMDYYYYHHMMAA_DATE_FORMAT);
-				} else {
-					dateString = DateUtils.format(fullDate, isCurrentYear ? DateUtils.MMMD_DATE_FORMAT
-							: DateUtils.MMMDYYYY_DATE_FORMAT);
-				}
+				dateBuilder.append(DateUtils.format(fullDate, isCurrentYear ? DateUtils.MMMD_DATE_FORMAT
+						: DateUtils.MMMDYYYY_DATE_FORMAT));
 			}
-		} else {
-			dateString = DateUtils.format(time, DateUtils.HHMMAA_DATE_FORMAT);
 		}
-		return dateString;
+		if (time != null) {
+			if (date != null) {
+				dateBuilder.append(StringUtils.SPACE);
+			}
+			dateBuilder.append(AndroidDateUtils.formatTime(time));
+		}
+		return dateBuilder.toString();
 	}
 	
 	@Override

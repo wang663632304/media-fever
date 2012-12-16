@@ -85,9 +85,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 		
 	}
 	
-	/**
-	 * 
-	 */
+	// TODO Use the onResumeUseCase & onPauseUseCase methods
 	private void initConnectToFacebookUseCase() {
 		if (connectToFacebookUseCase == null) {
 			connectToFacebookUseCase = getInstance(ConnectToFacebookUseCase.class);
@@ -100,6 +98,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 		}
 	}
 	
+	// TODO Use the onResumeUseCase & onPauseUseCase methods
 	private void initFacebookAccountUseCase() {
 		if (facebookAccountUseCase == null) {
 			facebookAccountUseCase = getInstance(FacebookAccountUseCase.class);

@@ -56,8 +56,8 @@ public class User extends Entity {
 	private Boolean publicProfile;
 	
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "socialAccountId", nullable = true)
-	private FacebookAccount socialAccount;
+	@JoinColumn(name = "facebookAccountId", nullable = true)
+	private FacebookAccount facebookAccount;
 	
 	/**
 	 * Default constructor.
@@ -112,14 +112,14 @@ public class User extends Entity {
 	 *            session doesn't expire.
 	 */
 	public void linkToFacebookAccount(String facebookUserId, String facebookAccessToken, Long facebookAccessExpiresIn) {
-		socialAccount = new FacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpiresIn);
+		facebookAccount = new FacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpiresIn);
 	}
 	
 	/**
 	 * Unlinks the {@link User} to his {@link FacebookAccount}.
 	 */
 	public void unlinkFacebookAccount() {
-		socialAccount = null;
+		facebookAccount = null;
 	}
 	
 	public String getEmail() {
@@ -164,7 +164,7 @@ public class User extends Entity {
 	}
 	
 	private String getFacebookImageUrl() {
-		return socialAccount != null ? socialAccount.getProfilePictureURL() : null;
+		return facebookAccount != null ? facebookAccount.getProfilePictureURL() : null;
 	}
 	
 	public Set<FriendRequest> getFriendRequests() {
@@ -226,6 +226,6 @@ public class User extends Entity {
 	 * @return the linked {@link FacebookAccount}.
 	 */
 	public FacebookAccount getFacebookAccount() {
-		return socialAccount;
+		return facebookAccount;
 	}
 }

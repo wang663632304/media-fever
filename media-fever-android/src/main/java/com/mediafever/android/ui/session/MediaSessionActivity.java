@@ -1,10 +1,12 @@
 package com.mediafever.android.ui.session;
 
 import java.util.List;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.UseCaseFragment;
+import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.wizard.WizardActivity;
 import com.jdroid.android.wizard.WizardStep;
 import com.jdroid.java.collections.Lists;
@@ -36,7 +38,9 @@ public class MediaSessionActivity extends WizardActivity {
 				
 				@Override
 				public Fragment createFragment(Object args) {
-					return new MediaSessionFriendsFragment();
+					return AndroidUtils.isLargeScreenOrBigger()
+							&& (AndroidUtils.getApiLevel() >= Build.VERSION_CODES.HONEYCOMB) ? new MediaSessionFriendsGridFragment()
+							: new MediaSessionFriendsFragment();
 				}
 			});
 			steps.add(new WizardStep() {

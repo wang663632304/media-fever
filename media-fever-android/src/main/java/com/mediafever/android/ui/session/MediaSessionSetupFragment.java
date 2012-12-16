@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.RadioButton;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.fragment.DatePickerDialogFragment.OnDateSetListener;
 import com.jdroid.android.fragment.TimePickerDialogFragment.OnTimeSetListener;
@@ -38,11 +37,11 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	@InjectView(R.id.time)
 	private TimeButton timeEditText;
 	
-	@InjectView(R.id.onDate)
-	private RadioButton onDate;
+	@InjectView(R.id.anyDate)
+	private CheckBox anyDate;
 	
-	@InjectView(R.id.atTime)
-	private RadioButton atTime;
+	@InjectView(R.id.anyTime)
+	private CheckBox anyTime;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -99,30 +98,30 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 		
 		timeEditText.init(this, now);
 		
-		onDate.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		anyDate.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
-					dateEditText.setVisibility(View.VISIBLE);
-					getMediaSessionSetupUseCase().setDate(dateEditText.getDate());
-				} else {
 					dateEditText.setVisibility(View.GONE);
 					getMediaSessionSetupUseCase().setDate(null);
+				} else {
+					dateEditText.setVisibility(View.VISIBLE);
+					getMediaSessionSetupUseCase().setDate(dateEditText.getDate());
 				}
 			}
 		});
 		
-		atTime.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		anyTime.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
-					timeEditText.setVisibility(View.VISIBLE);
-					getMediaSessionSetupUseCase().setTime(timeEditText.getTime());
-				} else {
 					timeEditText.setVisibility(View.GONE);
 					getMediaSessionSetupUseCase().setTime(null);
+				} else {
+					timeEditText.setVisibility(View.VISIBLE);
+					getMediaSessionSetupUseCase().setTime(timeEditText.getTime());
 				}
 			}
 		});

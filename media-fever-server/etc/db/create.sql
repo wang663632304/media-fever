@@ -105,19 +105,19 @@ CREATE TABLE FacebookAccount (
 -- USER
 -- --------------------
 CREATE TABLE User (
-	id		 		bigint(20) 			NOT NULL auto_increment,
-	email			VARCHAR(255)		NOT NULL,
-	userToken		VARCHAR(255) 		NOT NULL,
-	hashedPassword	VARCHAR(255) 		NOT NULL,
-	firstName		VARCHAR(255) 		NOT NULL,
-	lastName		VARCHAR(255)		NOT NULL,
-	imageId	 		bigint(20) 			NULL,
-	socialAccountId	bigint(20)			NULL,
-	publicProfile	BOOLEAN				NOT NULL,
-	PRIMARY KEY  	(id),
-	FOREIGN KEY 	(imageId) 			REFERENCES FileEntity (id),
-	FOREIGN KEY		(socialAccountId)	REFERENCES FacebookAccount (id),
-	UNIQUE			(email)
+	id		 			bigint(20) 			NOT NULL auto_increment,
+	email				VARCHAR(255)		NOT NULL,
+	userToken			VARCHAR(255) 		NOT NULL,
+	hashedPassword		VARCHAR(255) 		NOT NULL,
+	firstName			VARCHAR(255) 		NOT NULL,
+	lastName			VARCHAR(255)		NOT NULL,
+	imageId	 			bigint(20) 			NULL,
+	facebookAccountId	bigint(20)			NULL,
+	publicProfile		BOOLEAN				NOT NULL,
+	PRIMARY KEY  		(id),
+	FOREIGN KEY 		(imageId) 			REFERENCES FileEntity (id),
+	FOREIGN KEY			(facebookAccountId)	REFERENCES FacebookAccount (id),
+	UNIQUE				(email)
 );
 
 -- --------------------

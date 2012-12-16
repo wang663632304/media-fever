@@ -65,7 +65,6 @@
 	<string name="viewTrailer">View Trailer</string>
 	<string name="addToWatched">Add to Watched</string>
 	<string name="removeFromWatched">Remove from Watched</string>
-	<string name="todayDateTimeFormat">Today %1$s</string>
 	<string name="todayDateFormat">Today</string>
 
 	<!-- Watchable Social -->
@@ -107,10 +106,8 @@
 	<string name="addMediaSession">Add Media Session</string>
 	<string name="sessionType">Media type</string>
 	<string name="sessionDate">Session date</string>
-	<string name="sessionTime">Session time</string>
-	<string name="on">On</string>
-	<string name="at">At</string>
-	<string name="notDefined">Not Defined</string>
+	<string name="anyDate">Any Date</string>
+	<string name="anyTime">Any Time</string>
 	<string name="mediaSessionFriendsHeader">Pick the friends you want to invite to this media session</string>
 
 	<!-- Notifications -->
