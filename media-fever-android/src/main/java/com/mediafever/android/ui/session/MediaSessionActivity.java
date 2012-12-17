@@ -47,7 +47,7 @@ public class MediaSessionActivity extends WizardActivity {
 				
 				@Override
 				public Fragment createFragment(Object args) {
-					return new MediaSessionWatchablesFragment();
+					return new MediaSelectionsFragment();
 				}
 			});
 		}

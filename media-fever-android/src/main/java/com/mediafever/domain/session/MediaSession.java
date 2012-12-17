@@ -16,6 +16,7 @@ public class MediaSession extends Entity {
 	private List<MediaSessionUser> users;
 	private List<WatchableType> watchableTypes;
 	private Boolean accepted;
+	private List<MediaSelection> selections;
 	
 	public MediaSession(Long id, Date date, Date time, List<MediaSessionUser> users,
 			List<WatchableType> watchableTypes, Boolean accepted) {
@@ -27,11 +28,13 @@ public class MediaSession extends Entity {
 		this.accepted = accepted;
 	}
 	
-	public MediaSession(Date date, Date time, List<WatchableType> watchableTypes, List<MediaSessionUser> users) {
+	public MediaSession(Date date, Date time, List<WatchableType> watchableTypes, List<MediaSessionUser> users,
+			List<MediaSelection> selections) {
 		this.date = date;
 		this.time = time;
 		this.users = users;
 		this.watchableTypes = watchableTypes;
+		this.selections = selections;
 	}
 	
 	public Date getDate() {
@@ -54,4 +57,7 @@ public class MediaSession extends Entity {
 		return (accepted != null) && accepted;
 	}
 	
+	public List<MediaSelection> getSelections() {
+		return selections;
+	}
 }
