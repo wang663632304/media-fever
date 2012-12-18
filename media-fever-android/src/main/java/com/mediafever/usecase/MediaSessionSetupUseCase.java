@@ -35,8 +35,8 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 		// TODO Mocked data
 		User user = SecurityContext.get().getUser();
 		selections.add(new MediaSelection(new Watchable(null, "Aquí Entre Nos",
-				"http://cf2.imgobject.com/t/p/w92/eh8LW9tqihgQx1raVmrxnXkjMJ4.jpg", null, null, null, null), user,
-				null, null));
+				"http://cf2.imgobject.com/t/p/w92/eh8LW9tqihgQx1raVmrxnXkjMJ4.jpg", null, null, null, null),
+				new UserImpl("a", "p", "John", "Locke", null, true), null, null));
 		selections.add(new MediaSelection(new Watchable(null, "Pasanga",
 				"http://cf2.imgobject.com/t/p/w92/7X7eNyxKG44MXfOjtERPSnPbvPK.jpg", null, null, null, null), user,
 				null, null));

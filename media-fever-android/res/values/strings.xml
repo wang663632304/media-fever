@@ -111,6 +111,16 @@
 	<string name="mediaSessionFriendsHeader">Pick the friends you want to invite to this media session</string>
 	<string name="mediaSelectionsHeader">Pick the movie or series you want to add to this media session</string>
 	<string name="addNewSelection">+</string>
+	<string name="details">Details</string>
+	<string name="change">Change</string>
+	<string name="thumbsUp">Thumbs Up</string>
+	<string name="thumbsDown">Thumbs Down</string>
+	<string name="selection">Selection</string>
+	<string name="manualSelection">Manual Selection</string>
+	<string name="manualSelectionDescription">You decide which is the next movie or series to watch.</string>
+	<string name="smartSelection">SMART Selection</string>
+	<string name="smartSelectionDescription">Let us decide for you which is the best movie or series to watch according to your preferences.
+	</string>
 
 	<!-- Notifications -->
 	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>
@@ -133,5 +143,4 @@
 	<string name="shareContent">Organize movies or series sessions with your friends.
 		Download it from Google Play.
 		https://play.google.com/store/apps/details?id=%1$s</string>
-
 </resources>

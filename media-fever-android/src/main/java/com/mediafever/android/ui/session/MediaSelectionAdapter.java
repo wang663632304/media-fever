@@ -90,8 +90,4 @@ public class MediaSelectionAdapter extends BaseHolderArrayAdapter<MediaSelection
 		protected TextView fullName;
 		protected TextView thumbs;
 	}
-	
-	public static void onItemClick(Activity activity, Watchable watchable) {
-		// TODO Implement this
-	}
 }

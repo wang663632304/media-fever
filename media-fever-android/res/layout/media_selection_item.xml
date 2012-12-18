@@ -29,6 +29,6 @@
 		android:layout_below="@+id/userContainer" android:layout_alignParentRight="true" android:padding="5dp" />
 
 	<TextView android:id="@+id/addNew" android:layout_height="match_parent" android:layout_width="match_parent"
-		android:textStyle="bold" android:textSize="60sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
+		android:textStyle="bold" android:textSize="60sp" android:textColor="@android:color/white" android:background="@color/dashboardPressed"
 		android:gravity="center_vertical|center_horizontal" android:text="@string/addNewSelection" android:visibility="gone" />
 </RelativeLayout>

@@ -47,4 +47,15 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		return ((MediaSessionActivity)getActivity()).getMediaSessionSetupUseCase();
 	}
 	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractGridFragment#onItemSelected(java.lang.Object)
+	 */
+	@Override
+	public void onItemSelected(MediaSelection item) {
+		if (item.getWatchable() != null) {
+			MediaSelectionDialogFragment.show(this, item);
+		} else {
+			MediaSelectionPickerDialogFragment.show(this);
+		}
+	}
 }
