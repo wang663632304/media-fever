@@ -50,7 +50,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void onClick(View v) {
-				
+				// TODO
 			}
 		});
 		
@@ -59,7 +59,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void onClick(View v) {
-				
+				// TODO
 			}
 		});
 		

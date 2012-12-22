@@ -17,7 +17,7 @@ import com.jdroid.android.view.TimeButton;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.R;
 import com.mediafever.domain.watchable.WatchableType;
-import com.mediafever.usecase.MediaSessionSetupUseCase;
+import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
 /**
  * 

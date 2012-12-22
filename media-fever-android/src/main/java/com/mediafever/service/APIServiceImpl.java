@@ -20,6 +20,7 @@ import com.mediafever.context.ApplicationContext;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
+import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.social.FacebookAccount;
 import com.mediafever.domain.watchable.Watchable;
@@ -371,6 +372,10 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 		EntityEnclosingWebService webservice = newPostService(MEDIA_SESSIONS);
 		marshall(webservice, mediaSession);
 		webservice.execute();
+	}
+	
+	public void voteMediaSelection(MediaSelection mediaSelection, Boolean thumbsUp) {
+		// TODO Implement this
 	}
 	
 	/**

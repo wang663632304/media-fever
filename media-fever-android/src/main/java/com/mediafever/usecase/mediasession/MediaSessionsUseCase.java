@@ -1,4 +1,4 @@
-package com.mediafever.usecase;
+package com.mediafever.usecase.mediasession;
 
 import java.util.List;
 import com.google.inject.Inject;

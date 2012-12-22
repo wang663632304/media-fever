@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.android.images.CustomImageView;
-import com.jdroid.java.utils.CollectionUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.session.MediaSelectionAdapter.MediaSelectionHolder;
@@ -37,7 +36,8 @@ public class MediaSelectionAdapter extends BaseHolderArrayAdapter<MediaSelection
 			holder.userImage.setImageContent(mediaSelection.getOwner().getImage(), R.drawable.user_default);
 			holder.fullName.setText(mediaSelection.getOwner().getFullname());
 			
-			String thumbs = getThumbs(mediaSelection);
+			String thumbs = getThumbs(mediaSelection.getThumbsUpUsers().size(),
+				mediaSelection.getThumbsDownUsers().size());
 			holder.thumbs.setText(thumbs);
 			holder.thumbs.setVisibility(StringUtils.isBlank(thumbs) ? View.GONE : View.VISIBLE);
 			
@@ -51,17 +51,17 @@ public class MediaSelectionAdapter extends BaseHolderArrayAdapter<MediaSelection
 		}
 	}
 	
-	private String getThumbs(MediaSelection mediaSelection) {
+	public static String getThumbs(Integer thumbsUp, Integer thumbsDown) {
 		StringBuilder builder = new StringBuilder();
-		if (CollectionUtils.isNotEmpty(mediaSelection.getThumbsUpUsers())) {
-			builder.append(mediaSelection.getThumbsUpUsers().size());
+		if (thumbsUp > 0) {
+			builder.append(thumbsUp);
 			builder.append("+");
 		}
-		if (CollectionUtils.isNotEmpty(mediaSelection.getThumbsDownUsers())) {
+		if (thumbsDown > 0) {
 			if (builder.length() > 0) {
 				builder.append(StringUtils.EMPTY);
 			}
-			builder.append(mediaSelection.getThumbsDownUsers().size());
+			builder.append(thumbsDown);
 			builder.append("-");
 		}
 		return builder.toString();

@@ -13,7 +13,7 @@ import com.mediafever.R;
 import com.mediafever.android.ui.UserAdapter;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.usecase.FriendsUseCase;
-import com.mediafever.usecase.MediaSessionSetupUseCase;
+import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
 /**
  * 

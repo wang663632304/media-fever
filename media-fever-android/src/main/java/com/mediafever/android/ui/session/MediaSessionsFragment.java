@@ -12,7 +12,7 @@ import com.jdroid.android.view.ListSeparatorView;
 import com.mediafever.R;
 import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.usecase.MediaSessionsUseCase;
+import com.mediafever.usecase.mediasession.MediaSessionsUseCase;
 
 /**
  * 

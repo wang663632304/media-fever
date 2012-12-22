@@ -10,7 +10,7 @@ import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.wizard.WizardActivity;
 import com.jdroid.android.wizard.WizardStep;
 import com.jdroid.java.collections.Lists;
-import com.mediafever.usecase.MediaSessionSetupUseCase;
+import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
 /**
  * 
