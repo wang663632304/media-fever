@@ -4,9 +4,10 @@ import java.util.Date;
 import com.google.inject.Inject;
 import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.mediafever.domain.UserImpl;
-import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
+import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
+import com.mediafever.repository.MediaSessionsRepository;
 import com.mediafever.service.APIService;
 
 /**
@@ -15,11 +16,13 @@ import com.mediafever.service.APIService;
  */
 public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	
+	private MediaSessionsRepository mediaSessionsRepository;
 	private MediaSession mediaSession;
 	
 	@Inject
-	public MediaSessionSetupUseCase(APIService apiService) {
+	public MediaSessionSetupUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
 		super(apiService);
+		this.mediaSessionsRepository = mediaSessionsRepository;
 		mediaSession = new MediaSession();
 	}
 	
@@ -29,9 +32,10 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	@Override
 	protected void doExecute() {
 		if (mediaSession.getId() != null) {
-			// TODO immplement edition
+			// TODO update api call
 		} else {
-			getApiService().createMediaSession(mediaSession);
+			mediaSession = getApiService().createMediaSession(mediaSession);
+			mediaSessionsRepository.add(mediaSession);
 		}
 	}
 	
@@ -71,7 +75,11 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 		mediaSession.setTime(time);
 	}
 	
-	public void addSelection(MediaSelection selection) {
-		mediaSession.addSelection(selection);
+	public void addSelection(Watchable watchable) {
+		mediaSession.addSelection(watchable);
+	}
+	
+	public void removeSelection(Watchable watchable) {
+		mediaSession.removeSelection(watchable);
 	}
 }

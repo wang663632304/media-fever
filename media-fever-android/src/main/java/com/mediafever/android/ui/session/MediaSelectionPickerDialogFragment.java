@@ -10,12 +10,16 @@ import android.view.ViewGroup;
 import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
+import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
+import com.mediafever.usecase.mediasession.SmartSelectionUseCase;
 
 /**
  * 
  * @author Maxi Rosson
  */
 public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
+	
+	private SmartSelectionUseCase smartSelectionUseCase;
 	
 	public static void show(Fragment targetFragment) {
 		FragmentManager fm = targetFragment.getActivity().getSupportFragmentManager();
@@ -34,6 +38,11 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 		// Google TV is not displaying the title of the dialog.
 		if (AndroidUtils.isGoogleTV()) {
 			setStyle(STYLE_NO_TITLE, 0);
+		}
+		
+		if (smartSelectionUseCase == null) {
+			smartSelectionUseCase = getInstance(SmartSelectionUseCase.class);
+			smartSelectionUseCase.setMediaSession(getMediaSessionSetupUseCase().getMediaSession());
 		}
 	}
 	
@@ -59,11 +68,50 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO
+				executeUseCase(smartSelectionUseCase);
 			}
 		});
 		
 		getDialog().setTitle(R.string.selection);
 		return view;
+	}
+	
+	/**
+	 * @see android.support.v4.app.Fragment#onResume()
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
+		onResumeUseCase(smartSelectionUseCase, this);
+	}
+	
+	/**
+	 * @see android.support.v4.app.Fragment#onPause()
+	 */
+	@Override
+	public void onPause() {
+		super.onPause();
+		onPauseUseCase(smartSelectionUseCase, this);
+	}
+	
+	/**
+	 * @see com.jdroid.android.dialog.AbstractDialogFragment#onFinishUseCase()
+	 */
+	@Override
+	public void onFinishUseCase() {
+		executeOnUIThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				getMediaSessionSetupUseCase().addSelection(smartSelectionUseCase.getWatchable());
+				((MediaSelectionsFragment)getTargetFragment()).refresh();
+				dismissLoading();
+				dismiss();
+			}
+		});
+	}
+	
+	public MediaSessionSetupUseCase getMediaSessionSetupUseCase() {
+		return ((MediaSessionActivity)getActivity()).getMediaSessionSetupUseCase();
 	}
 }

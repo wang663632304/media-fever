@@ -111,8 +111,12 @@ public interface APIService {
 	
 	public void rejectMediaSession(MediaSession mediaSession);
 	
-	public void createMediaSession(MediaSession mediaSession);
+	public MediaSession createMediaSession(MediaSession mediaSession);
 	
 	public void voteMediaSelection(MediaSelection mediaSelection, Boolean thumbsUp);
+	
+	public Watchable getSmartSelection(Long mediaSessionId);
+	
+	public MediaSession getMediaSession(Long mediaSessionId);
 	
 }

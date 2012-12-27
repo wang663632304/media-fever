@@ -79,6 +79,8 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
+		movies.setChecked(getMediaSessionSetupUseCase().getMediaSession().getWatchableTypes().contains(
+			WatchableType.MOVIE));
 		
 		series.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
@@ -91,13 +93,12 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
+		series.setChecked(getMediaSessionSetupUseCase().getMediaSession().getWatchableTypes().contains(
+			WatchableType.SERIES));
 		
 		Date now = DateUtils.now();
-		dateEditText.init(this, now);
-		dateEditText.setDate(now);
 		
-		timeEditText.init(this, now);
-		
+		// Date
 		anyDate.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -111,7 +112,17 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
+		if (getMediaSessionSetupUseCase().getMediaSession().getDate() != null) {
+			dateEditText.init(this, getMediaSessionSetupUseCase().getMediaSession().getDate());
+			dateEditText.setVisibility(View.VISIBLE);
+			anyDate.setChecked(false);
+		} else {
+			dateEditText.init(this, now);
+			dateEditText.setVisibility(View.GONE);
+			anyDate.setChecked(true);
+		}
 		
+		// Time
 		anyTime.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -125,6 +136,15 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
+		if (getMediaSessionSetupUseCase().getMediaSession().getTime() != null) {
+			timeEditText.init(this, getMediaSessionSetupUseCase().getMediaSession().getTime());
+			timeEditText.setVisibility(View.VISIBLE);
+			anyTime.setChecked(false);
+		} else {
+			timeEditText.init(this, now);
+			timeEditText.setVisibility(View.GONE);
+			anyTime.setChecked(true);
+		}
 	}
 	
 	/**

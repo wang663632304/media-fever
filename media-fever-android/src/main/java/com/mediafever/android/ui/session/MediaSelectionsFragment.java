@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.jdroid.android.adapter.BaseArrayAdapter;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.mediafever.R;
 import com.mediafever.domain.session.MediaSelection;
@@ -44,8 +43,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		setListAdapter(new MediaSelectionAdapter(MediaSelectionsFragment.this.getActivity(),
-				getMediaSessionSetupUseCase().getMediaSession().getSelections()));
 		pendingThumbs = (TextView)view.findViewById(R.id.pendingThumbs);
 		refresh();
 	}
@@ -66,11 +63,11 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		}
 	}
 	
-	@SuppressWarnings("rawtypes")
 	public void refresh() {
 		MediaSessionUser mediaSessionUser = getMediaSessionSetupUseCase().getMediaSession().getMe();
 		pendingThumbs.setText(MediaSelectionAdapter.getThumbs(mediaSessionUser.getPendingThumbsUp(),
 			mediaSessionUser.getPendingThumbsDown()));
-		((BaseArrayAdapter)getGridView().getAdapter()).notifyDataSetChanged();
+		setListAdapter(new MediaSelectionAdapter(MediaSelectionsFragment.this.getActivity(),
+				getMediaSessionSetupUseCase().getMediaSession().getSelections()));
 	}
 }

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.mediafever.R;
-import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.AcceptMediaSessionUseCase;
 
 /**
@@ -19,16 +18,16 @@ import com.mediafever.usecase.AcceptMediaSessionUseCase;
  */
 public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 	
-	private static final String MEDIA_SESSION_EXTRA = "mediaSession";
+	private static final String MEDIA_SESSION_ID_EXTRA = "mediaSessionId";
 	
-	private MediaSession mediaSession;
+	private Long mediaSessionId;
 	private AcceptMediaSessionUseCase acceptMediaSessionUseCase;
 	private Button accept;
 	private Button reject;
 	
-	public static void show(MediaSession mediaSession, Fragment targetFragment) {
+	public static void show(Long mediaSessionId, Fragment targetFragment) {
 		FragmentManager fm = targetFragment.getActivity().getSupportFragmentManager();
-		AcceptRejectSessionDialogFragment dialogFragment = new AcceptRejectSessionDialogFragment(mediaSession);
+		AcceptRejectSessionDialogFragment dialogFragment = new AcceptRejectSessionDialogFragment(mediaSessionId);
 		dialogFragment.setTargetFragment(targetFragment, 1);
 		dialogFragment.show(fm, AcceptRejectSessionDialogFragment.class.getSimpleName());
 	}
@@ -36,11 +35,11 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 	public AcceptRejectSessionDialogFragment() {
 	}
 	
-	public AcceptRejectSessionDialogFragment(MediaSession mediaSession) {
-		this.mediaSession = mediaSession;
+	public AcceptRejectSessionDialogFragment(Long mediaSessionId) {
+		this.mediaSessionId = mediaSessionId;
 		
 		Bundle bundle = new Bundle();
-		bundle.putSerializable(MEDIA_SESSION_EXTRA, mediaSession);
+		bundle.putSerializable(MEDIA_SESSION_ID_EXTRA, mediaSessionId);
 		setArguments(bundle);
 	}
 	
@@ -66,7 +65,7 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 		
 		Bundle args = getArguments();
 		if (args != null) {
-			mediaSession = (MediaSession)args.getSerializable(MEDIA_SESSION_EXTRA);
+			mediaSessionId = args.getLong(MEDIA_SESSION_ID_EXTRA);
 		}
 	}
 	
@@ -79,13 +78,13 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 		
 		if (acceptMediaSessionUseCase == null) {
 			acceptMediaSessionUseCase = getInstance(AcceptMediaSessionUseCase.class);
+			acceptMediaSessionUseCase.setMediaSessionId(mediaSessionId);
 		}
 		
 		accept.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				acceptMediaSessionUseCase.setMediaSession(mediaSession);
 				acceptMediaSessionUseCase.setAsAccepted();
 				executeUseCase(acceptMediaSessionUseCase);
 			}
@@ -95,7 +94,6 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void onClick(View v) {
-				acceptMediaSessionUseCase.setMediaSession(mediaSession);
 				acceptMediaSessionUseCase.setAsRejected();
 				executeUseCase(acceptMediaSessionUseCase);
 			}

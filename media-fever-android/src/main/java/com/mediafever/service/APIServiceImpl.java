@@ -270,6 +270,18 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 		return webservice.execute(new PagedResultParser(new WatchableParser()));
 	}
 	
+	/**
+	 * @see com.mediafever.service.APIService#getSmartSelection(java.lang.Long)
+	 */
+	@Override
+	public Watchable getSmartSelection(Long mediaSessionId) {
+		// TODO
+		mediaSessionId = 1L;
+		
+		WebService webservice = newGetService(MEDIA_SESSIONS, mediaSessionId, "selection", "smart");
+		return webservice.execute(new WatchableParser());
+	}
+	
 	private void addPagination(WebService webservice) {
 		webservice.addQueryParameter(PAGE, DEFAULT_PAGE_VALUE);
 		webservice.addQueryParameter(PAGE_SIZE, DEFAULT_PAGE_SIZE_VALUE);
@@ -365,15 +377,25 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
+	 * @see com.mediafever.service.APIService#getMediaSession(java.lang.Long)
+	 */
+	@Override
+	public MediaSession getMediaSession(Long mediaSessionId) {
+		WebService webservice = newGetService(MEDIA_SESSIONS, mediaSessionId);
+		return webservice.execute(new MediaSessionParser());
+	}
+	
+	/**
 	 * @see com.mediafever.service.APIService#createMediaSession(com.mediafever.domain.session.MediaSession)
 	 */
 	@Override
-	public void createMediaSession(MediaSession mediaSession) {
+	public MediaSession createMediaSession(MediaSession mediaSession) {
 		EntityEnclosingWebService webservice = newPostService(MEDIA_SESSIONS);
 		marshall(webservice, mediaSession);
-		webservice.execute();
+		return webservice.execute(new MediaSessionParser());
 	}
 	
+	@Override
 	public void voteMediaSelection(MediaSelection mediaSelection, Boolean thumbsUp) {
 		// TODO Implement this
 	}

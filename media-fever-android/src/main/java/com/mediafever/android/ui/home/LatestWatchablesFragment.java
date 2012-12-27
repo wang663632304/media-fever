@@ -13,6 +13,7 @@ import com.jdroid.android.coverflow.CoverFlow;
 import com.jdroid.android.coverflow.CoverFlowImageAdapter;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.fragment.AbstractFragment;
+import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.images.ReflectedRemoteImageResolver;
 import com.jdroid.java.utils.CollectionUtils;
 import com.mediafever.R;
@@ -72,7 +73,7 @@ public class LatestWatchablesFragment extends AbstractFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(latestWatchablesUseCase, this, true);
+		onResumeUseCase(latestWatchablesUseCase, this, UseCaseTrigger.ONCE);
 	}
 	
 	/**

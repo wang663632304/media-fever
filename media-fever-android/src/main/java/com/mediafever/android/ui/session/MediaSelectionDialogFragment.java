@@ -103,14 +103,17 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 				
 				@Override
 				public void onClick(View v) {
-					// TODO
+					getMediaSessionSetupUseCase().removeSelection(mediaSelection.getWatchable());
+					((MediaSelectionsFragment)getTargetFragment()).refresh();
+					dismiss();
+					
 				}
 			});
 			change.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					// MediaSelectionPickerDialogFragment.show(this);
+					MediaSelectionPickerDialogFragment.show(getTargetFragment());
 				}
 			});
 			

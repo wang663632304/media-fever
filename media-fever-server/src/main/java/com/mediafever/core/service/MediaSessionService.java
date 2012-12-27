@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.jdroid.java.collections.Lists;
+import com.jdroid.java.utils.IdGenerator;
 import com.jdroid.javaweb.push.PushService;
+import com.jdroid.javaweb.search.Filter;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.core.domain.User;
 import com.mediafever.core.domain.session.MediaSession;
 import com.mediafever.core.domain.session.MediaSessionUser;
+import com.mediafever.core.domain.watchable.Watchable;
 import com.mediafever.core.domain.watchable.WatchableType;
+import com.mediafever.core.repository.CustomFilterKey;
 import com.mediafever.core.repository.MediaSessionRepository;
 import com.mediafever.core.repository.UserRepository;
 import com.mediafever.core.service.push.gcm.MediaSessionInvitationGcmMessage;
@@ -28,27 +32,41 @@ public class MediaSessionService {
 	private MediaSessionRepository mediaSessionRepository;
 	
 	@Autowired
+	private WatchableService watchableService;
+	
+	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
 	private PushService pushService;
 	
 	@Transactional
-	public void createMediaSession(Date date, Date time, List<WatchableType> watchableTypes, List<Long> usersIds) {
+	public MediaSession createMediaSession(Date date, Date time, List<WatchableType> watchableTypes, List<Long> usersIds) {
+		
+		User creator = ApplicationContext.get().getSecurityContext().getUser();
 		List<MediaSessionUser> users = Lists.newArrayList();
 		for (Long id : usersIds) {
-			users.add(new MediaSessionUser(userRepository.get(id)));
+			if (id.equals(creator.getId())) {
+				users.add(new MediaSessionUser(creator, true));
+			} else {
+				users.add(new MediaSessionUser(userRepository.get(id)));
+			}
 		}
-		User creator = ApplicationContext.get().getSecurityContext().getUser();
-		users.add(new MediaSessionUser(creator, true));
 		
 		MediaSession mediaSession = new MediaSession(watchableTypes, date, time, users);
 		mediaSessionRepository.add(mediaSession);
 		
-		if (CollectionUtils.isNotEmpty(usersIds)) {
+		List<Long> recipientsIds = Lists.newArrayList(usersIds);
+		recipientsIds.remove(creator.getId());
+		if (CollectionUtils.isNotEmpty(recipientsIds)) {
 			pushService.send(new MediaSessionInvitationGcmMessage(creator.getFullName(), creator.getImageUrl()),
-				usersIds);
+				recipientsIds);
 		}
+		return mediaSession;
+	}
+	
+	public MediaSession get(Long mediaSessionId) {
+		return mediaSessionRepository.get(mediaSessionId);
 	}
 	
 	public List<MediaSession> getAll(Long userId) {
@@ -75,5 +93,17 @@ public class MediaSessionService {
 				break;
 			}
 		}
+	}
+	
+	public Watchable getSmartSelection(Long id) {
+		
+		MediaSession mediaSession = mediaSessionRepository.get(id);
+		
+		// TODO Use the SMART Selection algorithm here
+		Filter filter = new Filter(1, 1000);
+		filter.addValue(CustomFilterKey.WATCHABLE_TYPES, mediaSession.getWatchableTypes());
+		List<Watchable> watchables = watchableService.searchWatchable(filter).getData();
+		int random = IdGenerator.getRandomIntId() % watchables.size();
+		return watchables.get(random);
 	}
 }

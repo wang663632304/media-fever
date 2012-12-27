@@ -1,15 +1,17 @@
 package com.mediafever.android.ui.session;
 
 import java.util.List;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import com.jdroid.android.ActivityLauncher;
+import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.fragment.UseCaseFragment;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.wizard.WizardActivity;
 import com.jdroid.android.wizard.WizardStep;
 import com.jdroid.java.collections.Lists;
+import com.mediafever.usecase.mediasession.GetMediaSessionUseCase;
 import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
 /**
@@ -17,6 +19,8 @@ import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
  * @author Maxi Rosson
  */
 public class MediaSessionActivity extends WizardActivity {
+	
+	public final static String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
 	
 	private List<WizardStep> steps;
 	
@@ -54,6 +58,41 @@ public class MediaSessionActivity extends WizardActivity {
 		return steps;
 	}
 	
+	public static class GetMediaSessionCaseFragment extends UseCaseFragment<GetMediaSessionUseCase> {
+		
+		/**
+		 * @see com.jdroid.android.fragment.UseCaseFragment#getUseCaseClass()
+		 */
+		@Override
+		protected Class<GetMediaSessionUseCase> getUseCaseClass() {
+			return GetMediaSessionUseCase.class;
+		}
+		
+		/**
+		 * @see com.jdroid.android.fragment.UseCaseFragment#intializeUseCase(com.jdroid.android.usecase.DefaultAbstractUseCase)
+		 */
+		@Override
+		protected void intializeUseCase(GetMediaSessionUseCase useCase) {
+			useCase.setMediaSessionId(getActivity().getIntent().getLongExtra(MEDIA_SESSION_ID_EXTRA, 0L));
+		}
+		
+		/**
+		 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
+		 */
+		@Override
+		public void onFinishUseCase() {
+			executeOnUIThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					MediaSessionActivity activity = ((MediaSessionActivity)getActivity());
+					activity.getMediaSessionSetupUseCase().setMediaSession(getUseCase().getMediaSession());
+					activity.loadWizard();
+				}
+			});
+		}
+	}
+	
 	public static class MediaSessionSetupUseCaseFragment extends UseCaseFragment<MediaSessionSetupUseCase> {
 		
 		/**
@@ -74,17 +113,20 @@ public class MediaSessionActivity extends WizardActivity {
 				@Override
 				public void run() {
 					getActivity().finish();
-					ActivityLauncher.launchActivity(MediaSessionListActivity.class);
+					Intent intent = new Intent(getActivity(), MediaSessionListActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+					startActivity(intent);
+					// TODO The MediaSessionListActivity should refresh the sessions list
 				}
 			});
 		}
 		
 		/**
-		 * @see com.jdroid.android.fragment.UseCaseFragment#executeOnInit()
+		 * @see com.jdroid.android.fragment.UseCaseFragment#getuseCaseTrigger()
 		 */
 		@Override
-		protected Boolean executeOnInit() {
-			return false;
+		protected UseCaseTrigger getuseCaseTrigger() {
+			return UseCaseTrigger.MANUAL;
 		}
 	}
 	
@@ -96,6 +138,13 @@ public class MediaSessionActivity extends WizardActivity {
 		super.onCreate(savedInstanceState);
 		
 		loadUseCaseFragment(savedInstanceState, MediaSessionSetupUseCaseFragment.class);
+		getSupportFragmentManager().executePendingTransactions();
+		if (getIntent().hasExtra(MEDIA_SESSION_ID_EXTRA)
+				&& (getMediaSessionSetupUseCase().getMediaSession().getId() == null)) {
+			loadUseCaseFragment(savedInstanceState, GetMediaSessionCaseFragment.class);
+		} else {
+			loadWizard();
+		}
 	}
 	
 	/**

@@ -16,6 +16,7 @@ import com.jdroid.javaweb.controller.AbstractController;
 import com.mediafever.api.controller.parser.MediaSessionParser;
 import com.mediafever.api.controller.parser.MediaSessionParser.MediaSessionJson;
 import com.mediafever.context.ApplicationContext;
+import com.mediafever.core.domain.session.MediaSession;
 import com.mediafever.core.service.MediaSessionService;
 
 /**
@@ -31,11 +32,13 @@ public class MediaSessionController extends AbstractController {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	@GZIP
-	public void createMediaSession(String mediaSessionJSON) {
+	public String createMediaSession(String mediaSessionJSON) {
 		MediaSessionJson mediaSessionJson = (MediaSessionJson)(new MediaSessionParser().parse(mediaSessionJSON));
-		mediaSessionService.createMediaSession(mediaSessionJson.getDate(), mediaSessionJson.getTime(),
-			mediaSessionJson.getWatchableTypes(), mediaSessionJson.getUsersIds());
+		MediaSession mediaSession = mediaSessionService.createMediaSession(mediaSessionJson.getDate(),
+			mediaSessionJson.getTime(), mediaSessionJson.getWatchableTypes(), mediaSessionJson.getUsersIds());
+		return marshall(mediaSession);
 	}
 	
 	@GET
@@ -43,6 +46,14 @@ public class MediaSessionController extends AbstractController {
 	@GZIP
 	public String getAll(@QueryParam("userId") Long userId) {
 		return marshallSimple(mediaSessionService.getAll(userId));
+	}
+	
+	@GET
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String get(@PathParam("id") Long id) {
+		return marshall(mediaSessionService.get(id));
 	}
 	
 	@PUT
@@ -57,5 +68,13 @@ public class MediaSessionController extends AbstractController {
 	@GZIP
 	public void rejectMediaSession(@PathParam("id") Long id) {
 		mediaSessionService.rejectMediaSession(id, ApplicationContext.get().getSecurityContext().getUser().getId());
+	}
+	
+	@GET
+	@Path("{id}/selection/smart")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String getSmartSelection(@PathParam("id") Long id) {
+		return marshallSimple(mediaSessionService.getSmartSelection(id));
 	}
 }

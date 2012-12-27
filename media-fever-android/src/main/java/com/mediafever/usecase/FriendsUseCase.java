@@ -1,8 +1,8 @@
 package com.mediafever.usecase;
 
 import java.util.List;
-import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.google.inject.Inject;
+import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.repository.FriendsRepository;
 import com.mediafever.service.APIService;

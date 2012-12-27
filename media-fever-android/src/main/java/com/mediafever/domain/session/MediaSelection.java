@@ -1,6 +1,7 @@
 package com.mediafever.domain.session;
 
 import java.util.List;
+import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.domain.Entity;
 import com.jdroid.android.domain.User;
 import com.jdroid.java.collections.Lists;
@@ -18,11 +19,15 @@ public class MediaSelection extends Entity {
 	private User owner;
 	
 	public MediaSelection() {
-		
 	}
 	
-	public MediaSelection(Watchable watchable, User owner, List<MediaSessionUser> thumbsUpUsers,
+	public MediaSelection(Watchable watchable) {
+		this(null, watchable, SecurityContext.get().getUser(), null, null);
+	}
+	
+	public MediaSelection(Long id, Watchable watchable, User owner, List<MediaSessionUser> thumbsUpUsers,
 			List<MediaSessionUser> thumbsDownUsers) {
+		super(id);
 		this.watchable = watchable;
 		this.owner = owner;
 		this.thumbsUpUsers = Lists.safeArrayList(thumbsUpUsers);

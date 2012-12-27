@@ -8,6 +8,8 @@ import com.mediafever.repository.FriendRequestsRepository;
 import com.mediafever.repository.FriendsRepository;
 import com.mediafever.repository.InMemoryFriendRequestsRepository;
 import com.mediafever.repository.InMemoryFriendsRepository;
+import com.mediafever.repository.InMemoryMediaSessionsRepository;
+import com.mediafever.repository.MediaSessionsRepository;
 import com.mediafever.service.APIService;
 import com.mediafever.service.APIServiceImpl;
 
@@ -24,6 +26,7 @@ public class AndroidModule extends DefaultAndroidModule {
 	protected void configure() {
 		super.configure();
 		
+		this.bind(MediaSessionsRepository.class).to(InMemoryMediaSessionsRepository.class).in(Singleton.class);
 		this.bind(FriendsRepository.class).to(InMemoryFriendsRepository.class).in(Singleton.class);
 		this.bind(FriendRequestsRepository.class).to(InMemoryFriendRequestsRepository.class).in(Singleton.class);
 		this.bind(UserRepository.class).to(UserRepositoryImpl.class).in(Singleton.class);

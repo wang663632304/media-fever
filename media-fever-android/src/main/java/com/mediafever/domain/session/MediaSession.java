@@ -8,7 +8,6 @@ import com.jdroid.android.domain.User;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.domain.UserImpl;
-import com.mediafever.domain.watchable.Movie;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
 
@@ -16,7 +15,7 @@ import com.mediafever.domain.watchable.WatchableType;
  * 
  * @author Maxi Rosson
  */
-public class MediaSession extends Entity {
+public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	private Date date;
 	private Date time;
@@ -25,12 +24,16 @@ public class MediaSession extends Entity {
 	private Boolean accepted;
 	private List<MediaSelection> selections;
 	
-	public MediaSession(Long id, Date date, Date time, List<MediaSessionUser> users,
+	public MediaSession(Long id, Date date, Date time, List<MediaSessionUser> users, List<MediaSelection> selections,
 			List<WatchableType> watchableTypes, Boolean accepted) {
 		super(id);
 		this.date = date;
 		this.time = time;
 		this.users = users;
+		this.selections = Lists.newArrayList(new MediaSelection());
+		if (selections != null) {
+			this.selections.addAll(selections);
+		}
 		this.watchableTypes = watchableTypes;
 		this.accepted = accepted;
 	}
@@ -40,25 +43,6 @@ public class MediaSession extends Entity {
 		users = Lists.newArrayList(new MediaSessionUser(SecurityContext.get().getUser()));
 		watchableTypes = Lists.newArrayList(WatchableType.MOVIE);
 		selections = Lists.newArrayList(new MediaSelection());
-		
-		// TODO Mocked data
-		User user = SecurityContext.get().getUser();
-		selections.add(new MediaSelection(new Movie(1L, "Aquí Entre Nos", null,
-				"http://cf2.imgobject.com/t/p/w92/eh8LW9tqihgQx1raVmrxnXkjMJ4.jpg", null, null, null, null, null),
-				new UserImpl("a", "p", "John", "Locke", null, true), null, null));
-		selections.add(new MediaSelection(new Movie(2L, "Pasanga", null,
-				"http://cf2.imgobject.com/t/p/w92/7X7eNyxKG44MXfOjtERPSnPbvPK.jpg", null, null, null, null, null),
-				user, null, null));
-		selections.add(new MediaSelection(new Movie(3L, "Les Enfoirés 2012 - Le Bal des Enfoirés", null,
-				"http://cf2.imgobject.com/t/p/w92/yyMqWI6u3ssCmJudQZsUCkw8nuz.jpg", null, null, null, null, null),
-				user, null, null));
-		selections.add(new MediaSelection(new Movie(4L, "Oar", null,
-				"http://cf2.imgobject.com/t/p/w92/vlZXD0zjDk6tUA4TLePvYX5Bw1R.jpg", null, null, null, null, null),
-				user, null, null));
-		selections.add(new MediaSelection(new Movie(5L, "Blek Giek", null,
-				"http://cf2.imgobject.com/t/p/w92/d7osS0KQhmuU2RA6nXNeJ7iUWHB.jpg", null, null, null, null, null),
-				user, null, null));
-		
 	}
 	
 	public void thumbsUp(Watchable watchable) {
@@ -110,6 +94,10 @@ public class MediaSession extends Entity {
 		return watchableTypes;
 	}
 	
+	public void accept() {
+		accepted = true;
+	}
+	
 	public Boolean isAccepted() {
 		return (accepted != null) && accepted;
 	}
@@ -158,8 +146,54 @@ public class MediaSession extends Entity {
 		return false;
 	}
 	
-	public void addSelection(MediaSelection selection) {
-		selections.add(selection);
+	public void addSelection(Watchable watchable) {
+		selections.add(new MediaSelection(watchable));
+	}
+	
+	public void removeSelection(Watchable watchable) {
+		MediaSelection mediaSelection = findMediaSelection(watchable);
+		selections.remove(mediaSelection);
+	}
+	
+	/**
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(MediaSession another) {
+		int result = 0;
+		
+		// Order example:
+		// AnyDate AnyTime
+		// AnyDate 14:00
+		// AnyDate 23:30
+		// Today AnyTime
+		// Today 23:30
+		// Tomorrow AnyTime
+		// Tomorrow 23:30
+		
+		if ((date == null) && (another.date != null)) {
+			result = -1;
+		} else if ((date != null) && (another.date == null)) {
+			result = 1;
+		} else if ((date != null) && (another.date != null)) {
+			Date date1 = DateUtils.truncate(date);
+			Date date2 = DateUtils.truncate(another.date);
+			result = date1.compareTo(date2);
+		}
+		
+		if (result == 0) {
+			if ((time == null) && (another.time != null)) {
+				result = -1;
+			} else if ((time != null) && (another.time == null)) {
+				result = 1;
+			} else if ((time != null) && (another.time != null)) {
+				Date now = DateUtils.now();
+				Date time1 = DateUtils.getDate(now, time);
+				Date time2 = DateUtils.getDate(now, another.time);
+				result = time1.compareTo(time2);
+			}
+		}
+		return result;
 	}
 	
 }

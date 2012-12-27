@@ -7,6 +7,7 @@ import com.jdroid.android.context.SecurityContext;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.java.parser.json.JsonObjectWrapper;
 import com.jdroid.java.parser.json.JsonParser;
+import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.session.MediaSessionUser;
 import com.mediafever.domain.watchable.WatchableType;
@@ -21,6 +22,7 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 	private static final String DATE = "date";
 	private static final String TIME = "time";
 	private static final String USERS = "users";
+	private static final String SELECTIONS = "selections";
 	private static final String WATCHABLES_TYPES = "watchablesTypes";
 	
 	/**
@@ -32,6 +34,11 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 		Date date = json.getDate(DATE);
 		Date time = json.getDate(TIME);
 		List<MediaSessionUser> users = parseList(json.getJSONArray(USERS), new MediaSessionUserParser());
+		
+		List<MediaSelection> selections = null;
+		if (json.has(SELECTIONS)) {
+			selections = parseList(json.getJSONArray(SELECTIONS), new MediaSelectionParser(users));
+		}
 		List<WatchableType> watchablesTypes = Lists.newArrayList();
 		for (String watchableType : parseListString(json.getJSONArray(WATCHABLES_TYPES))) {
 			watchablesTypes.add(WatchableType.find(watchableType));
@@ -43,6 +50,6 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 				break;
 			}
 		}
-		return new MediaSession(id, date, time, users, watchablesTypes, accepted);
+		return new MediaSession(id, date, time, users, selections, watchablesTypes, accepted);
 	}
 }

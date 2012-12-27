@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.jdroid.android.fragment.AbstractListFragment;
+import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.usecase.AcceptFriendRequestUseCase;
@@ -50,7 +51,7 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(friendRequestsUseCase, this, true);
+		onResumeUseCase(friendRequestsUseCase, this, UseCaseTrigger.ONCE);
 		onResumeUseCase(acceptFriendRequestUseCase, this);
 	}
 	
