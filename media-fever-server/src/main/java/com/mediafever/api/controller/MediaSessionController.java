@@ -41,6 +41,32 @@ public class MediaSessionController extends AbstractController {
 		return marshall(mediaSession);
 	}
 	
+	@PUT
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@GZIP
+	public void updateMediaSession(@PathParam("id") Long id, String mediaSessionJSON) {
+		MediaSessionJson mediaSessionJson = (MediaSessionJson)(new MediaSessionParser().parse(mediaSessionJSON));
+		mediaSessionService.updateMediaSession(id, mediaSessionJson.getDate(), mediaSessionJson.getTime(),
+			mediaSessionJson.getWatchableTypes(), mediaSessionJson.getUsersIds());
+	}
+	
+	@PUT
+	@Path("{id}/thumbsUp/{mediaSelectionId}")
+	@GZIP
+	public void thumbsUpMediaSelection(@PathParam("id") Long id, @PathParam("id") Long mediaSelectionId) {
+		mediaSessionService.thumbsUpMediaSelection(id, mediaSelectionId,
+			ApplicationContext.get().getSecurityContext().getUser().getId());
+	}
+	
+	@PUT
+	@Path("{id}/thumbsDown/{mediaSelectionId}")
+	@GZIP
+	public void thumbsDownMediaSelection(@PathParam("id") Long id, @PathParam("id") Long mediaSelectionId) {
+		mediaSessionService.thumbsDownMediaSelection(id, mediaSelectionId,
+			ApplicationContext.get().getSecurityContext().getUser().getId());
+	}
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@GZIP

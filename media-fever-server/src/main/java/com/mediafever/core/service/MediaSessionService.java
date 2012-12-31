@@ -12,6 +12,7 @@ import com.jdroid.javaweb.push.PushService;
 import com.jdroid.javaweb.search.Filter;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.core.domain.User;
+import com.mediafever.core.domain.session.MediaSelection;
 import com.mediafever.core.domain.session.MediaSession;
 import com.mediafever.core.domain.session.MediaSessionUser;
 import com.mediafever.core.domain.watchable.Watchable;
@@ -63,6 +64,70 @@ public class MediaSessionService {
 				recipientsIds);
 		}
 		return mediaSession;
+	}
+	
+	@Transactional
+	public void updateMediaSession(Long mediaSessionId, Date date, Date time, List<WatchableType> watchableTypes,
+			List<Long> usersIds) {
+		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		
+		List<Long> currentUsersIds = Lists.newArrayList();
+		for (MediaSessionUser mediaSessionUser : mediaSession.getUsers()) {
+			currentUsersIds.add(mediaSessionUser.getUser().getId());
+		}
+		
+		List<MediaSessionUser> newUsers = Lists.newArrayList();
+		for (Long id : usersIds) {
+			if (!currentUsersIds.contains(id)) {
+				newUsers.add(new MediaSessionUser(userRepository.get(id)));
+			}
+		}
+		
+		List<WatchableType> newWatchableTypes = Lists.newArrayList(watchableTypes);
+		newWatchableTypes.removeAll(mediaSession.getWatchableTypes());
+		
+		mediaSession.modify(newWatchableTypes, date, time, newUsers);
+	}
+	
+	private MediaSessionUser find(MediaSession mediaSession, Long userId) {
+		MediaSessionUser mediaSessionUser = null;
+		for (MediaSessionUser each : mediaSession.getUsers()) {
+			if (each.getId().equals(userId)) {
+				mediaSessionUser = each;
+				break;
+			}
+		}
+		return mediaSessionUser;
+	}
+	
+	@Transactional
+	public void thumbsUpMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
+		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		MediaSessionUser mediaSessionUser = find(mediaSession, userId);
+		MediaSelection mediaSelection = null;
+		for (MediaSelection each : mediaSession.getSelections()) {
+			if (each.getId().equals(mediaSelectionId)) {
+				mediaSelection = each;
+			}
+		}
+		if (mediaSelection != null) {
+			mediaSession.thumbsUp(mediaSelection, mediaSessionUser);
+		}
+	}
+	
+	@Transactional
+	public void thumbsDownMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
+		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		MediaSessionUser mediaSessionUser = find(mediaSession, userId);
+		MediaSelection mediaSelection = null;
+		for (MediaSelection each : mediaSession.getSelections()) {
+			if (each.getId().equals(mediaSelectionId)) {
+				mediaSelection = each;
+			}
+		}
+		if (mediaSelection != null) {
+			mediaSession.thumbsDown(mediaSelection, mediaSessionUser);
+		}
 	}
 	
 	public MediaSession get(Long mediaSessionId) {

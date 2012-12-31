@@ -16,6 +16,7 @@ import com.jdroid.android.view.DateButton;
 import com.jdroid.android.view.TimeButton;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.R;
+import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.watchable.WatchableType;
 import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
@@ -68,6 +69,7 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
+		MediaSession mediaSession = getMediaSessionSetupUseCase().getMediaSession();
 		movies.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -79,8 +81,8 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
-		movies.setChecked(getMediaSessionSetupUseCase().getMediaSession().getWatchableTypes().contains(
-			WatchableType.MOVIE));
+		movies.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.MOVIE));
+		movies.setEnabled((mediaSession.getId() != null) && movies.isChecked() ? false : true);
 		
 		series.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
@@ -93,8 +95,8 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
-		series.setChecked(getMediaSessionSetupUseCase().getMediaSession().getWatchableTypes().contains(
-			WatchableType.SERIES));
+		series.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.SERIES));
+		series.setEnabled((mediaSession.getId() != null) && series.isChecked() ? false : true);
 		
 		Date now = DateUtils.now();
 		
@@ -112,8 +114,8 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
-		if (getMediaSessionSetupUseCase().getMediaSession().getDate() != null) {
-			dateEditText.init(this, getMediaSessionSetupUseCase().getMediaSession().getDate());
+		if (mediaSession.getDate() != null) {
+			dateEditText.init(this, mediaSession.getDate());
 			dateEditText.setVisibility(View.VISIBLE);
 			anyDate.setChecked(false);
 		} else {
@@ -136,8 +138,8 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
-		if (getMediaSessionSetupUseCase().getMediaSession().getTime() != null) {
-			timeEditText.init(this, getMediaSessionSetupUseCase().getMediaSession().getTime());
+		if (mediaSession.getTime() != null) {
+			timeEditText.init(this, mediaSession.getTime());
 			timeEditText.setVisibility(View.VISIBLE);
 			anyTime.setChecked(false);
 		} else {

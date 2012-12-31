@@ -47,8 +47,16 @@ public class MediaSessionUser extends Entity {
 		return pendingThumbsUp;
 	}
 	
+	public void decrementPendingThumbsUp() {
+		pendingThumbsUp--;
+	}
+	
 	public Integer getPendingThumbsDown() {
 		return pendingThumbsDown;
+	}
+	
+	public void decrementPendingThumbsDown() {
+		pendingThumbsDown--;
 	}
 	
 	public Boolean isAccepted() {

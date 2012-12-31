@@ -26,11 +26,12 @@ public class VoteMediaSelectionUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		getApiService().voteMediaSelection(mediaSelection, thumbsUp);
 		
 		if (thumbsUp) {
+			getApiService().thumbsUpMediaSelection(mediaSession, mediaSelection);
 			mediaSession.thumbsUp(mediaSelection.getWatchable());
 		} else {
+			getApiService().thumbsDownMediaSelection(mediaSession, mediaSelection);
 			mediaSession.thumbsDown(mediaSelection.getWatchable());
 		}
 	}

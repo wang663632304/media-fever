@@ -196,4 +196,19 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return result;
 	}
 	
+	public void setUsers(List<MediaSessionUser> users) {
+		this.users = users;
+	}
+	
+	public void setWatchableTypes(List<WatchableType> watchableTypes) {
+		this.watchableTypes = watchableTypes;
+	}
+	
+	public void setAccepted(Boolean accepted) {
+		this.accepted = accepted;
+	}
+	
+	public void setSelections(List<MediaSelection> selections) {
+		this.selections = selections;
+	}
 }

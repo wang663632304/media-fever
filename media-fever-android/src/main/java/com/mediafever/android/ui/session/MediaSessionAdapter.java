@@ -46,7 +46,7 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		
 		int max = 5;
 		if (AndroidUtils.isLargeScreenOrBigger()) {
-			max = mediaSession.getUsers().size();
+			max = 10;
 		}
 		
 		int usersAdded = 0;

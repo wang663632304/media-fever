@@ -32,7 +32,7 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	@Override
 	protected void doExecute() {
 		if (mediaSession.getId() != null) {
-			// TODO update api call
+			getApiService().updateMediaSession(mediaSession);
 		} else {
 			mediaSession = getApiService().createMediaSession(mediaSession);
 			mediaSessionsRepository.add(mediaSession);

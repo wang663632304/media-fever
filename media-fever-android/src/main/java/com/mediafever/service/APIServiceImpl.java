@@ -76,6 +76,9 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	private static final String FRIENDS = "friends";
 	private static final String FRIEND_REQUESTS = "friendRequests";
 	private static final String MEDIA_SESSIONS = "mediaSessions";
+	private static final String VOTE = "vote";
+	private static final String THUMBS_UP = "thumbsUp";
+	private static final String THUMBS_DOWN = "thumbsDown";
 	private static final String ACCEPT = "accept";
 	private static final String REJECT = "reject";
 	private static final String DEVICES = "devices";
@@ -377,12 +380,12 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#getMediaSession(java.lang.Long)
+	 * @see com.mediafever.service.APIService#getMediaSession(com.mediafever.domain.session.MediaSession)
 	 */
 	@Override
-	public MediaSession getMediaSession(Long mediaSessionId) {
-		WebService webservice = newGetService(MEDIA_SESSIONS, mediaSessionId);
-		return webservice.execute(new MediaSessionParser());
+	public MediaSession getMediaSession(MediaSession mediaSession) {
+		WebService webservice = newGetService(MEDIA_SESSIONS, mediaSession.getId());
+		return webservice.execute(new MediaSessionParser(mediaSession));
 	}
 	
 	/**
@@ -395,9 +398,36 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 		return webservice.execute(new MediaSessionParser());
 	}
 	
+	/**
+	 * @see com.mediafever.service.APIService#updateMediaSession(com.mediafever.domain.session.MediaSession)
+	 */
 	@Override
-	public void voteMediaSelection(MediaSelection mediaSelection, Boolean thumbsUp) {
-		// TODO Implement this
+	public void updateMediaSession(MediaSession mediaSession) {
+		EntityEnclosingWebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId());
+		marshall(webservice, mediaSession);
+		webservice.execute();
+	}
+	
+	/**
+	 * @see com.mediafever.service.APIService#thumbsUpMediaSelection(com.mediafever.domain.session.MediaSession,
+	 *      com.mediafever.domain.session.MediaSelection)
+	 */
+	@Override
+	public void thumbsUpMediaSelection(MediaSession mediaSession, MediaSelection mediaSelection) {
+		EntityEnclosingWebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), VOTE,
+			mediaSelection.getId(), THUMBS_UP);
+		webservice.execute();
+	}
+	
+	/**
+	 * @see com.mediafever.service.APIService#thumbsDownMediaSelection(com.mediafever.domain.session.MediaSession,
+	 *      com.mediafever.domain.session.MediaSelection)
+	 */
+	@Override
+	public void thumbsDownMediaSelection(MediaSession mediaSession, MediaSelection mediaSelection) {
+		EntityEnclosingWebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), VOTE,
+			mediaSelection.getId(), THUMBS_DOWN);
+		webservice.execute();
 	}
 	
 	/**

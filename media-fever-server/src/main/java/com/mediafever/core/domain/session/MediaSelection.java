@@ -45,6 +45,20 @@ public class MediaSelection extends Entity {
 		this.watchable = watchable;
 	}
 	
+	public void thumbsUp(MediaSessionUser mediaSessionUser) {
+		thumbsDownUsers.remove(mediaSessionUser);
+		if (!thumbsUpUsers.contains(mediaSessionUser)) {
+			thumbsUpUsers.add(mediaSessionUser);
+		}
+	}
+	
+	public void thumbsDown(MediaSessionUser mediaSessionUser) {
+		thumbsUpUsers.remove(mediaSessionUser);
+		if (!thumbsDownUsers.contains(mediaSessionUser)) {
+			thumbsDownUsers.add(mediaSessionUser);
+		}
+	}
+	
 	public Watchable getWatchable() {
 		return watchable;
 	}

@@ -11,7 +11,7 @@ import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.wizard.WizardActivity;
 import com.jdroid.android.wizard.WizardStep;
 import com.jdroid.java.collections.Lists;
-import com.mediafever.usecase.mediasession.GetMediaSessionUseCase;
+import com.mediafever.usecase.mediasession.MediaSessionDetailsUseCase;
 import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
 /**
@@ -58,21 +58,21 @@ public class MediaSessionActivity extends WizardActivity {
 		return steps;
 	}
 	
-	public static class GetMediaSessionCaseFragment extends UseCaseFragment<GetMediaSessionUseCase> {
+	public static class MediaSessionDetailsUseCaseFragment extends UseCaseFragment<MediaSessionDetailsUseCase> {
 		
 		/**
 		 * @see com.jdroid.android.fragment.UseCaseFragment#getUseCaseClass()
 		 */
 		@Override
-		protected Class<GetMediaSessionUseCase> getUseCaseClass() {
-			return GetMediaSessionUseCase.class;
+		protected Class<MediaSessionDetailsUseCase> getUseCaseClass() {
+			return MediaSessionDetailsUseCase.class;
 		}
 		
 		/**
 		 * @see com.jdroid.android.fragment.UseCaseFragment#intializeUseCase(com.jdroid.android.usecase.DefaultAbstractUseCase)
 		 */
 		@Override
-		protected void intializeUseCase(GetMediaSessionUseCase useCase) {
+		protected void intializeUseCase(MediaSessionDetailsUseCase useCase) {
 			useCase.setMediaSessionId(getActivity().getIntent().getLongExtra(MEDIA_SESSION_ID_EXTRA, 0L));
 		}
 		
@@ -116,7 +116,6 @@ public class MediaSessionActivity extends WizardActivity {
 					Intent intent = new Intent(getActivity(), MediaSessionListActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 					startActivity(intent);
-					// TODO The MediaSessionListActivity should refresh the sessions list
 				}
 			});
 		}
@@ -141,7 +140,7 @@ public class MediaSessionActivity extends WizardActivity {
 		getSupportFragmentManager().executePendingTransactions();
 		if (getIntent().hasExtra(MEDIA_SESSION_ID_EXTRA)
 				&& (getMediaSessionSetupUseCase().getMediaSession().getId() == null)) {
-			loadUseCaseFragment(savedInstanceState, GetMediaSessionCaseFragment.class);
+			loadUseCaseFragment(savedInstanceState, MediaSessionDetailsUseCaseFragment.class);
 		} else {
 			loadWizard();
 		}

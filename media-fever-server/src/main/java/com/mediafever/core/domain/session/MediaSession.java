@@ -59,6 +59,23 @@ public class MediaSession extends Entity {
 		this.users = users;
 	}
 	
+	public void modify(List<WatchableType> newWatchableTypes, Date date, Date time, List<MediaSessionUser> newUsers) {
+		watchableTypes.addAll(newWatchableTypes);
+		this.date = date;
+		this.time = time;
+		users.addAll(newUsers);
+	}
+	
+	public void thumbsUp(MediaSelection mediaSelection, MediaSessionUser mediaSessionUser) {
+		mediaSelection.thumbsUp(mediaSessionUser);
+		mediaSessionUser.decrementPendingThumbsUp();
+	}
+	
+	public void thumbsDown(MediaSelection mediaSelection, MediaSessionUser mediaSessionUser) {
+		mediaSelection.thumbsDown(mediaSessionUser);
+		mediaSessionUser.decrementPendingThumbsDown();
+	}
+	
 	public Date getDate() {
 		return date;
 	}
