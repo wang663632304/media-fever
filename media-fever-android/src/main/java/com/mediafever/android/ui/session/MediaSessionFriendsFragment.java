@@ -5,11 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.jdroid.android.fragment.AbstractListFragment;
+import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserCheckeableAdapter;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.usecase.FriendsUseCase;
-import com.mediafever.usecase.MediaSessionSetupUseCase;
+import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
 /**
  * 
@@ -59,7 +60,7 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(friendsUseCase, this, true);
+		onResumeUseCase(friendsUseCase, this, UseCaseTrigger.ONCE);
 	}
 	
 	/**

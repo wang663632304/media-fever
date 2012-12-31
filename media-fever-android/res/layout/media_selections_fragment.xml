@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<LinearLayout android:id="@+id/remainingHeader" android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:orientation="horizontal" android:gravity="right">
+		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="10dp"
+			android:text="@string/remainingVotes" android:textStyle="bold" />
+
+		<TextView android:id="@+id/pendingThumbs" android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:padding="5dp" />
+	</LinearLayout>
+
+	<TextView android:id="@+id/header" android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:padding="10dp" android:text="@string/mediaSelectionsHeader" android:textStyle="bold" android:layout_below="@+id/remainingHeader" />
+
+	<GridView android:id="@+id/grid" android:layout_width="match_parent" android:layout_height="match_parent"
+		android:layout_below="@+id/header" android:layout_above="@+id/adViewContainer" android:verticalSpacing="20dp"
+		android:horizontalSpacing="5dp" android:gravity="center" android:numColumns="auto_fit" android:columnWidth="150dp"
+		android:stretchMode="columnWidth" style="@style/defaultGrid" android:layout_margin="5dp" />
+
+	<TextView android:id="@id/android:empty" android:text="@string/noResultsSearch" style="@style/noResultsText"
+		android:textSize="20sp" />
+
+	<include layout="@layout/ad_view_container" />
+
+</RelativeLayout>

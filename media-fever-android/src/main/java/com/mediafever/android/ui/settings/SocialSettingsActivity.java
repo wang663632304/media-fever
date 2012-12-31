@@ -10,15 +10,12 @@ import com.jdroid.android.activity.FragmentContainerActivity;
  */
 public class SocialSettingsActivity extends FragmentContainerActivity {
 	
-	Fragment fragment;
-	
 	/**
 	 * @see com.jdroid.android.activity.FragmentContainerActivity#createNewFragment()
 	 */
 	@Override
 	protected Fragment createNewFragment() {
-		fragment = new SocialSettingsFragment();
-		return fragment;
+		return new SocialSettingsFragment();
 	}
 	
 	/**
@@ -26,6 +23,6 @@ public class SocialSettingsActivity extends FragmentContainerActivity {
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		fragment.onActivityResult(requestCode, resultCode, data);
+		getFragment().onActivityResult(requestCode, resultCode, data);
 	}
 }

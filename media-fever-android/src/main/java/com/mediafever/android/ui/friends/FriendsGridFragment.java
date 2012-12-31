@@ -12,6 +12,7 @@ import com.google.ads.AdSize;
 import com.jdroid.android.AndroidUseCaseListener;
 import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.fragment.AbstractGridFragment;
+import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserAdapter;
@@ -76,7 +77,7 @@ public class FriendsGridFragment extends AbstractGridFragment<UserImpl> {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(friendsUseCase, this, true);
+		onResumeUseCase(friendsUseCase, this, UseCaseTrigger.ONCE);
 		onResumeUseCase(removeFriendUseCase, removeFriendUseCaseListener);
 	}
 	

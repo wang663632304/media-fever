@@ -65,7 +65,6 @@
 	<string name="viewTrailer">View Trailer</string>
 	<string name="addToWatched">Add to Watched</string>
 	<string name="removeFromWatched">Remove from Watched</string>
-	<string name="todayDateTimeFormat">Today %1$s</string>
 	<string name="todayDateFormat">Today</string>
 
 	<!-- Watchable Social -->
@@ -107,11 +106,22 @@
 	<string name="addMediaSession">Add Media Session</string>
 	<string name="sessionType">Media type</string>
 	<string name="sessionDate">Session date</string>
-	<string name="sessionTime">Session time</string>
-	<string name="on">On</string>
-	<string name="at">At</string>
-	<string name="notDefined">Not Defined</string>
+	<string name="anyDate">Any Date</string>
+	<string name="anyTime">Any Time</string>
 	<string name="mediaSessionFriendsHeader">Pick the friends you want to invite to this media session</string>
+	<string name="mediaSelectionsHeader">Pick the movie or series you want to add to this media session</string>
+	<string name="addNewSelection">+</string>
+	<string name="details">Details</string>
+	<string name="change">Change</string>
+	<string name="remainingVotes">"Remaining votes: "</string>
+	<string name="thumbsUp">Thumbs Up</string>
+	<string name="thumbsDown">Thumbs Down</string>
+	<string name="selection">Selection</string>
+	<string name="manualSelection">Manual Selection</string>
+	<string name="manualSelectionDescription">You decide which is the next movie or series to watch.</string>
+	<string name="smartSelection">SMART Selection</string>
+	<string name="smartSelectionDescription">Let us decide for you which is the best movie or series to watch according to your preferences.
+	</string>
 
 	<!-- Notifications -->
 	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>

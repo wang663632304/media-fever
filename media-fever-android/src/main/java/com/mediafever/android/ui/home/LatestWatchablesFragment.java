@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import com.jdroid.android.coverflow.CoverFlow;
 import com.jdroid.android.coverflow.CoverFlowImageAdapter;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.fragment.AbstractFragment;
+import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.images.ReflectedRemoteImageResolver;
+import com.jdroid.java.utils.CollectionUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
 import com.mediafever.domain.watchable.Watchable;
@@ -61,7 +63,8 @@ public class LatestWatchablesFragment extends AbstractFragment {
 		
 		float height = getResources().getDimensionPixelSize(R.dimen.coverFlowHeight)
 				* (1 + ReflectedRemoteImageResolver.get().getImageReflectionRatio());
-		coverflow.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)height));
+		coverflow.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)height));
+		loadCoverflow();
 	}
 	
 	/**
@@ -70,7 +73,7 @@ public class LatestWatchablesFragment extends AbstractFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(latestWatchablesUseCase, this, true);
+		onResumeUseCase(latestWatchablesUseCase, this, UseCaseTrigger.ONCE);
 	}
 	
 	/**
@@ -99,26 +102,31 @@ public class LatestWatchablesFragment extends AbstractFragment {
 			
 			@Override
 			public void run() {
-				
-				coverflow.setAdapter(new CoverFlowImageAdapter<Watchable>(getActivity(),
-						latestWatchablesUseCase.getWatchables(), getResources().getDimensionPixelSize(
-							R.dimen.coverFlowWidth), getResources().getDimensionPixelSize(R.dimen.coverFlowHeight)) {
-					
-					@Override
-					protected FileContent getFileContent(Watchable item) {
-						return item.getImage();
-					}
-					
-					@Override
-					protected int getDefaultDrawableId() {
-						return R.drawable.watchable_coverflow_default;
-					}
-				});
-				
-				coverflow.setSelection(latestWatchablesUseCase.getWatchables().size() / 2, true);
-				setupListeners(coverflow);
+				loadCoverflow();
 			}
 		});
+	}
+	
+	private void loadCoverflow() {
+		if (CollectionUtils.isNotEmpty(latestWatchablesUseCase.getWatchables())) {
+			coverflow.setAdapter(new CoverFlowImageAdapter<Watchable>(getActivity(),
+					latestWatchablesUseCase.getWatchables(), getResources().getDimensionPixelSize(
+						R.dimen.coverFlowWidth), getResources().getDimensionPixelSize(R.dimen.coverFlowHeight)) {
+				
+				@Override
+				protected FileContent getFileContent(Watchable item) {
+					return item.getImage();
+				}
+				
+				@Override
+				protected int getDefaultDrawableId() {
+					return R.drawable.watchable_coverflow_default;
+				}
+			});
+			coverflow.setSelection(latestWatchablesUseCase.getWatchables().size() / 2, true);
+			setupListeners(coverflow);
+		}
+		
 	}
 	
 	/**

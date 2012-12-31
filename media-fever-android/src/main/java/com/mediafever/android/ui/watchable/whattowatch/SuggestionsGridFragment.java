@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.jdroid.android.fragment.AbstractGridFragment;
+import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
 import com.mediafever.domain.watchable.Watchable;
@@ -47,7 +48,7 @@ public class SuggestionsGridFragment extends AbstractGridFragment<Watchable> {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(suggestionsUseCase, this, true);
+		onResumeUseCase(suggestionsUseCase, this, UseCaseTrigger.ONCE);
 	}
 	
 	/**

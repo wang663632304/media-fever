@@ -1,10 +1,10 @@
-package com.mediafever.usecase;
+package com.mediafever.usecase.mediasession;
 
 import java.util.List;
 import com.google.inject.Inject;
 import com.jdroid.android.usecase.AbstractApiUseCase;
-import com.jdroid.java.collections.Lists;
 import com.mediafever.domain.session.MediaSession;
+import com.mediafever.repository.MediaSessionsRepository;
 import com.mediafever.service.APIService;
 
 /**
@@ -13,13 +13,13 @@ import com.mediafever.service.APIService;
  */
 public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 	
+	private MediaSessionsRepository mediaSessionsRepository;
 	private Long userId;
-	private List<MediaSession> pendingMediaSessions;
-	private List<MediaSession> acceptedMediaSessions;
 	
 	@Inject
-	public MediaSessionsUseCase(APIService apiService) {
+	public MediaSessionsUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
 		super(apiService);
+		this.mediaSessionsRepository = mediaSessionsRepository;
 	}
 	
 	/**
@@ -27,15 +27,9 @@ public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		pendingMediaSessions = Lists.newArrayList();
-		acceptedMediaSessions = Lists.newArrayList();
-		List<MediaSession> mediaSessions = getApiService().getMediaSessions(userId);
-		for (MediaSession mediaSession : mediaSessions) {
-			if (mediaSession.isAccepted()) {
-				acceptedMediaSessions.add(mediaSession);
-			} else {
-				pendingMediaSessions.add(mediaSession);
-			}
+		if (mediaSessionsRepository.isOutdated()) {
+			List<MediaSession> mediaSessions = getApiService().getMediaSessions(userId);
+			mediaSessionsRepository.replaceAll(mediaSessions);
 		}
 	}
 	
@@ -44,10 +38,10 @@ public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 	}
 	
 	public List<MediaSession> getPendingMediaSessions() {
-		return pendingMediaSessions;
+		return mediaSessionsRepository.getPendingMediaSessions();
 	}
 	
 	public List<MediaSession> getAcceptedMediaSessions() {
-		return acceptedMediaSessions;
+		return mediaSessionsRepository.getAcceptedMediaSessions();
 	}
 }

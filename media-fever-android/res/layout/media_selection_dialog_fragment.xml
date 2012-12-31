@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent"
+	android:layout_width="match_parent" android:orientation="vertical" android:gravity="center_vertical"
+	android:paddingTop="20dp" android:paddingBottom="20dp" android:paddingLeft="10dp" android:paddingRight="10dp"
+	android:layout_margin="15dp" android:minWidth="400dp">
+
+	<Button android:id="@+id/details" android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_margin="3dp" android:text="@string/details" android:textSize="18sp" android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" />
+	<Button android:id="@+id/remove" android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_margin="3dp" android:text="@string/remove" android:textSize="18sp" android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" />
+	<Button android:id="@+id/change" android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_margin="3dp" android:text="@string/change" android:textSize="18sp" android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" />
+	<Button android:id="@+id/thumbsUp" android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_margin="3dp" android:text="@string/thumbsUp" android:textSize="18sp" android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" />
+	<Button android:id="@+id/thumbsDown" android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_margin="3dp" android:text="@string/thumbsDown" android:textSize="18sp" android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" />
+
+</LinearLayout>

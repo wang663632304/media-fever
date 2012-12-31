@@ -7,6 +7,9 @@
 	<color name="grey">#357EC7</color>
 	<color name="lightWhite">#DBDBDB</color>
 
+	<color name="dashboardPressed">#44FFFFFF</color>
+	<color name="dashboardFocused">#44AAAAAA</color>
+
 	<color name="pagerTabBackground">#33b5e5</color>
 
 

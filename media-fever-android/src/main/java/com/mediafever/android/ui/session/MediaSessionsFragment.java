@@ -1,5 +1,6 @@
 package com.mediafever.android.ui.session;
 
+import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,11 +9,11 @@ import android.view.ViewGroup;
 import com.commonsware.cwac.merge.MergeAdapter;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.AbstractListFragment;
+import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.view.ListSeparatorView;
 import com.mediafever.R;
-import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.usecase.MediaSessionsUseCase;
+import com.mediafever.usecase.mediasession.MediaSessionsUseCase;
 
 /**
  * 
@@ -54,10 +55,10 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	public void onItemSelected(MediaSession mediaSession) {
 		
 		if (mediaSession.isAccepted()) {
-			// TODO Change the target activity
-			ActivityLauncher.launchActivity(HomeActivity.class);
+			ActivityLauncher.launchActivity(MediaSessionActivity.class, MediaSessionActivity.MEDIA_SESSION_ID_EXTRA,
+				mediaSession.getId());
 		} else {
-			AcceptRejectSessionDialogFragment.show(mediaSession, this);
+			AcceptRejectSessionDialogFragment.show(mediaSession.getId(), this);
 		}
 	}
 	
@@ -75,7 +76,7 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(mediaSessionsUseCase, this, true);
+		onResumeUseCase(mediaSessionsUseCase, this, UseCaseTrigger.ALWAYS);
 	}
 	
 	/**
@@ -104,16 +105,16 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 				MergeAdapter mergeAdapter = new MergeAdapter();
 				
 				Activity activity = MediaSessionsFragment.this.getActivity();
-				if (!mediaSessionsUseCase.getPendingMediaSessions().isEmpty()) {
+				List<MediaSession> pendingMediaSessions = mediaSessionsUseCase.getPendingMediaSessions();
+				if (!pendingMediaSessions.isEmpty()) {
 					mergeAdapter.addView(new ListSeparatorView(activity, R.string.pendingSessions));
-					mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
-							mediaSessionsUseCase.getPendingMediaSessions(), getUser()));
+					mergeAdapter.addAdapter(new MediaSessionAdapter(activity, pendingMediaSessions, getUser()));
 				}
 				
-				if (!mediaSessionsUseCase.getAcceptedMediaSessions().isEmpty()) {
+				List<MediaSession> acceptedMediaSessions = mediaSessionsUseCase.getAcceptedMediaSessions();
+				if (!acceptedMediaSessions.isEmpty()) {
 					mergeAdapter.addView(new ListSeparatorView(activity, R.string.acceptedSessions));
-					mergeAdapter.addAdapter(new MediaSessionAdapter(activity,
-							mediaSessionsUseCase.getAcceptedMediaSessions(), getUser()));
+					mergeAdapter.addAdapter(new MediaSessionAdapter(activity, acceptedMediaSessions, getUser()));
 				}
 				
 				setListAdapter(mergeAdapter);

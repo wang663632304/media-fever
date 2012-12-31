@@ -13,33 +13,20 @@
 				android:text="@string/series" />
 
 			<TextView style="@style/wizardPageTitle" android:text="@string/sessionDate" android:layout_marginTop="15dp" />
-			<RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-				<RadioGroup android:id="@+id/dateRadioGroup" android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:layout_below="@+id/watchableTypeContainer">
-					<RadioButton android:id="@+id/onDate" android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:text="@string/on" android:checked="true" />
-					<RadioButton android:id="@+id/notDefinedDate" android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:text="@string/notDefined" />
-				</RadioGroup>
-
+			<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:orientation="horizontal">
+				<CheckBox android:id="@+id/anyDate" android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="@string/anyDate" android:layout_margin="5dp" android:checked="true" />
+				<CheckBox android:id="@+id/anyTime" android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="@string/anyTime" android:layout_margin="5dp" android:checked="true" />
+			</LinearLayout>
+			<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:orientation="horizontal">
 				<com.jdroid.android.view.DateButton android:id="@+id/date" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:layout_toRightOf="@+id/dateRadioGroup" android:layout_marginLeft="5dp"
-					android:textSize="12sp" />
-			</RelativeLayout>
-
-			<TextView style="@style/wizardPageTitle" android:text="@string/sessionTime" />
-			<RelativeLayout android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1">
-				<RadioGroup android:id="@+id/timeRadioGroup" android:layout_width="wrap_content" android:layout_height="wrap_content">
-					<RadioButton android:id="@+id/atTime" android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:text="@string/at" />
-					<RadioButton android:id="@+id/notDefinedTime" android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:text="@string/notDefined" android:checked="true" />
-				</RadioGroup>
-
+					android:layout_height="wrap_content" android:layout_margin="5dp" />
 				<com.jdroid.android.view.TimeButton android:id="@+id/time" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:layout_toRightOf="@+id/timeRadioGroup" android:layout_marginLeft="5dp"
-					android:textSize="12sp" android:visibility="gone" />
-			</RelativeLayout>
+					android:layout_height="wrap_content" android:paddingLeft="30dp" android:paddingRight="30dp" android:layout_margin="5dp" />
+			</LinearLayout>
 
 		</LinearLayout>
 	</ScrollView>

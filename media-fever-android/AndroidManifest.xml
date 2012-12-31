@@ -27,7 +27,7 @@
 		<meta-data android:name="android.app.default_searchable" android:value="com.mediafever.android.ui.watchable.search.SearchableActivity" />
 
 		<activity android:name="com.mediafever.android.ui.login.LoginActivity" android:windowSoftInputMode="adjustPan" />
-		<activity android:name="com.mediafever.android.ui.home.HomeActivity" android:configChanges="orientation|keyboardHidden|screenSize">
+		<activity android:name="com.mediafever.android.ui.home.HomeActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />

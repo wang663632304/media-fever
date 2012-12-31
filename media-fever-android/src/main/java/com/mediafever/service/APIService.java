@@ -6,6 +6,7 @@ import com.jdroid.android.search.PagedResult;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
+import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.social.FacebookAccount;
 import com.mediafever.domain.watchable.Watchable;
@@ -110,6 +111,12 @@ public interface APIService {
 	
 	public void rejectMediaSession(MediaSession mediaSession);
 	
-	public void createMediaSession(MediaSession mediaSession);
+	public MediaSession createMediaSession(MediaSession mediaSession);
+	
+	public void voteMediaSelection(MediaSelection mediaSelection, Boolean thumbsUp);
+	
+	public Watchable getSmartSelection(Long mediaSessionId);
+	
+	public MediaSession getMediaSession(Long mediaSessionId);
 	
 }

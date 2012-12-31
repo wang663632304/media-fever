@@ -2,7 +2,6 @@ package com.mediafever.core.repository;
 
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import com.mediafever.core.domain.session.MediaSession;
 
@@ -26,7 +25,6 @@ public class MediaSessionHibernateRepository extends HibernateRepository<MediaSe
 		DetachedCriteria usersCriteria = criteria.createCriteria("users");
 		usersCriteria.createCriteria("user").add(Restrictions.eq("id", userId));
 		usersCriteria.add(Restrictions.or(Restrictions.isNull("accepted"), Restrictions.eq("accepted", true)));
-		criteria.addOrder(Order.asc("date"));
 		return find(criteria);
 	}
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.jdroid.android.AndroidUseCaseListener;
 import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.fragment.AbstractListFragment;
+import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserAdapter;
@@ -73,7 +74,7 @@ public class FriendsListFragment extends AbstractListFragment<UserImpl> {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(friendsUseCase, this, true);
+		onResumeUseCase(friendsUseCase, this, UseCaseTrigger.ONCE);
 		onResumeUseCase(removeFriendUseCase, removeFriendUseCaseListener);
 	}
 	
