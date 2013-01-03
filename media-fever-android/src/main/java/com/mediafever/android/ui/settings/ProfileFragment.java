@@ -11,11 +11,11 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
-import com.jdroid.android.activity.PictureDialogFragment;
-import com.jdroid.android.activity.PicturePickerListener;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.images.CustomImageView;
+import com.jdroid.android.picture.PictureDialogFragment;
+import com.jdroid.android.picture.PicturePickerListener;
 import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
 import com.mediafever.domain.UserImpl;
@@ -173,7 +173,7 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	}
 	
 	/**
-	 * @see com.jdroid.android.activity.PicturePickerListener#onPicturePicked(com.jdroid.android.domain.FileContent)
+	 * @see com.jdroid.android.picture.PicturePickerListener#onPicturePicked(com.jdroid.android.domain.FileContent)
 	 */
 	@Override
 	public void onPicturePicked(FileContent fileContent) {

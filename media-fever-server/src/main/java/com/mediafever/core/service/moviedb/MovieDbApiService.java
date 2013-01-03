@@ -98,7 +98,7 @@ public class MovieDbApiService extends AbstractApiService {
 	protected String getBaseURL(String serverUrl, Object... urlSegments) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(serverUrl);
-		builder.append(SEPARATOR);
+		builder.append(StringUtils.SLASH);
 		builder.append(urlSegments[0]);
 		builder.append(".");
 		builder.append(urlSegments[1]);

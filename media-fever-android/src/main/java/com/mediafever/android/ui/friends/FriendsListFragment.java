@@ -16,8 +16,8 @@ import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserAdapter;
 import com.mediafever.domain.UserImpl;
-import com.mediafever.usecase.FriendsUseCase;
-import com.mediafever.usecase.RemoveFriendUseCase;
+import com.mediafever.usecase.friends.FriendsUseCase;
+import com.mediafever.usecase.friends.RemoveFriendUseCase;
 
 /**
  * 

@@ -9,7 +9,7 @@ import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserCheckeableAdapter;
 import com.mediafever.domain.UserImpl;
-import com.mediafever.usecase.FriendsUseCase;
+import com.mediafever.usecase.friends.FriendsUseCase;
 import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
 /**

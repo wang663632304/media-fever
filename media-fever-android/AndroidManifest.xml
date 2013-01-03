@@ -21,7 +21,8 @@
 	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
 
 	<application android:icon="@drawable/ic_launcher" android:logo="@drawable/logo" android:label="@string/appName"
-		android:name="com.mediafever.android.AndroidApplication" android:hardwareAccelerated="true" android:theme="@style/Theme.Sherlock">
+		android:allowBackup="true" android:name="com.mediafever.android.AndroidApplication" android:hardwareAccelerated="true"
+		android:theme="@style/Theme.Sherlock">
 
 		<!-- enable the search dialog to send searches to SearchableActivity -->
 		<meta-data android:name="android.app.default_searchable" android:value="com.mediafever.android.ui.watchable.search.SearchableActivity" />

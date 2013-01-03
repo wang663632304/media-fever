@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import com.jdroid.android.date.DateButton;
+import com.jdroid.android.date.TimeButton;
+import com.jdroid.android.date.DatePickerDialogFragment.OnDateSetListener;
+import com.jdroid.android.date.TimePickerDialogFragment.OnTimeSetListener;
 import com.jdroid.android.fragment.AbstractFragment;
-import com.jdroid.android.fragment.DatePickerDialogFragment.OnDateSetListener;
-import com.jdroid.android.fragment.TimePickerDialogFragment.OnTimeSetListener;
-import com.jdroid.android.view.DateButton;
-import com.jdroid.android.view.TimeButton;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.R;
 import com.mediafever.domain.session.MediaSession;
@@ -70,6 +70,7 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 		super.onViewCreated(view, savedInstanceState);
 		
 		MediaSession mediaSession = getMediaSessionSetupUseCase().getMediaSession();
+		movies.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.MOVIE));
 		movies.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -81,9 +82,9 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
-		movies.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.MOVIE));
 		movies.setEnabled((mediaSession.getId() != null) && movies.isChecked() ? false : true);
 		
+		series.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.SERIES));
 		series.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -95,7 +96,6 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 				}
 			}
 		});
-		series.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.SERIES));
 		series.setEnabled((mediaSession.getId() != null) && series.isChecked() ? false : true);
 		
 		Date now = DateUtils.now();
@@ -150,7 +150,7 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.DatePickerDialogFragment.OnDateSetListener#onDateSet(java.util.Date, int)
+	 * @see com.jdroid.android.date.DatePickerDialogFragment.OnDateSetListener#onDateSet(java.util.Date, int)
 	 */
 	@Override
 	public void onDateSet(Date date, int requestCode) {
@@ -159,7 +159,7 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.TimePickerDialogFragment.OnTimeSetListener#onTimeSet(java.util.Date)
+	 * @see com.jdroid.android.date.TimePickerDialogFragment.OnTimeSetListener#onTimeSet(java.util.Date)
 	 */
 	@Override
 	public void onTimeSet(Date time) {

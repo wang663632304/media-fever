@@ -2,7 +2,6 @@ package com.mediafever.android.ui.session;
 
 import java.util.List;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
@@ -42,8 +41,7 @@ public class MediaSessionActivity extends WizardActivity {
 				
 				@Override
 				public Fragment createFragment(Object args) {
-					return AndroidUtils.isLargeScreenOrBigger()
-							&& (AndroidUtils.getApiLevel() >= Build.VERSION_CODES.HONEYCOMB) ? new MediaSessionFriendsGridFragment()
+					return AndroidUtils.isLargeScreenOrBigger() && !AndroidUtils.isPreHoneycomb() ? new MediaSessionFriendsGridFragment()
 							: new MediaSessionFriendsFragment();
 				}
 			});

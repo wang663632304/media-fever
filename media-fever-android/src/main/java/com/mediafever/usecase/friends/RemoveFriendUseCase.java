@@ -1,4 +1,4 @@
-package com.mediafever.usecase;
+package com.mediafever.usecase.friends;
 
 import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.google.inject.Inject;

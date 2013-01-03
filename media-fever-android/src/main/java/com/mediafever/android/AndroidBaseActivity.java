@@ -251,7 +251,7 @@ public class AndroidBaseActivity extends BaseActivity {
 			case R.id.devSettingsItem:
 				
 				Class<? extends Activity> targetActivity;
-				if (AndroidUtils.getApiLevel() < 11) {
+				if (AndroidUtils.isPreHoneycomb()) {
 					targetActivity = PreHoneycombDevSettingsActivity.class;
 				} else {
 					targetActivity = DevSettingsActivity.class;

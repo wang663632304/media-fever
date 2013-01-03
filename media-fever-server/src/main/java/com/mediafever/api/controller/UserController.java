@@ -67,6 +67,7 @@ public class UserController extends AbstractController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes("multipart/form-data")
 	@GZIP
+	@SuppressWarnings("resource")
 	public String editProfile(@PathParam("id") Long id, MultipartFormDataInput input) throws IOException {
 		
 		FileEntity image = null;

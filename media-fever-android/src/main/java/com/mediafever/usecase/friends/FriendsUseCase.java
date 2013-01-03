@@ -1,4 +1,4 @@
-package com.mediafever.usecase;
+package com.mediafever.usecase.friends;
 
 import java.util.List;
 import com.google.inject.Inject;

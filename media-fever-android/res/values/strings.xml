@@ -32,7 +32,7 @@
 	<string name="email">Email</string>
 	<string name="publicProfile">Public Profile</string>
 	<string name="publicProfileDescription">If you set this flag, your profile will be visible by users that are not your friends</string>
-	<string name="userProfileSaved">Your profile was succesfully saved</string>
+	<string name="userProfileSaved">Your profile was successfully saved</string>
 	<string name="confirmEmail">Confirm Email</string>
 	<string name="changePassword">Change Password</string>
 	<string name="confirmPassword">Confirm Password</string>

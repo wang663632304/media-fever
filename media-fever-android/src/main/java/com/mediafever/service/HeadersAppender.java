@@ -6,6 +6,7 @@ import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.domain.User;
 import com.jdroid.java.http.HttpWebService;
 import com.jdroid.java.http.HttpWebServiceProcessor;
+import com.jdroid.java.http.MimeType;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.utils.Hasher;
 import com.mediafever.context.ApplicationContext;
@@ -48,8 +49,8 @@ public class HeadersAppender implements HttpWebServiceProcessor {
 		// API Version header
 		webService.addHeader(API_VERSION_HEADER, API_VERSION_HEADER_VALUE);
 		
-		webService.addHeader(HttpWebService.CONTENT_TYPE_HEADER, HttpWebService.JSON_CONTENT_TYPE);
-		webService.addHeader(HttpWebService.ACCEPT_HEADER, HttpWebService.JSON_CONTENT_TYPE);
+		webService.addHeader(HttpWebService.CONTENT_TYPE_HEADER, MimeType.JSON.toString());
+		webService.addHeader(HttpWebService.ACCEPT_HEADER, MimeType.JSON.toString());
 		webService.addHeader(HttpWebService.ACCEPT_ENCODING_HEADER, HttpWebService.GZIP_ENCODING);
 		
 		// Time sync header. (time in milliseconds)

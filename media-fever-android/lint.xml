@@ -15,7 +15,13 @@
         <ignore path="res\layout\toast_custom.xml" />
         <ignore path="res/layout/toast_custom.xml" />
     </issue>
+    <issue id="TypographyDashes">
+        <ignore path="res\values\analytics.xml" />
+    </issue>
     <issue id="UnknownIdInLayout" severity="ignore" />
     <issue id="UnusedIds" severity="warning" />
+    <issue id="UnusedResources">
+        <ignore path="res\values\analytics.xml" />
+    </issue>
     <issue id="UseCompoundDrawables" severity="ignore" />
 </lint>

@@ -2,20 +2,18 @@ package com.mediafever.android;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.inject.AbstractModule;
 import com.jdroid.android.AbstractApplication;
+import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.BaseActivity;
 import com.jdroid.android.context.DefaultApplicationContext;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.exception.ExceptionHandler;
 import com.jdroid.android.fragment.BaseFragment;
-import com.jdroid.android.intent.LogoutIntent;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.NotificationUtils;
 import com.mediafever.R;
@@ -71,7 +69,7 @@ public class AndroidApplication extends AbstractApplication {
 	 * @see com.jdroid.android.AbstractApplication#createExceptionHandler()
 	 */
 	@Override
-	public ExceptionHandler createExceptionHandler() {
+	protected ExceptionHandler createExceptionHandler() {
 		return new AndroidExceptionHandler();
 	}
 	
@@ -92,14 +90,7 @@ public class AndroidApplication extends AbstractApplication {
 		SecurityContext.get().detachUser();
 		NotificationUtils.cancelAllNotifications();
 		
-		Intent intent = new Intent(AndroidApplication.this, LoginActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		if (AndroidUtils.getApiLevel() >= 11) {
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-		} else {
-			LogoutIntent.execute();
-		}
-		startActivity(intent);
+		ActivityLauncher.launchActivityClearTask(LoginActivity.class, true);
 	}
 	
 	/**
@@ -135,7 +126,6 @@ public class AndroidApplication extends AbstractApplication {
 	}
 	
 	public Boolean isLeftNavBarEnabled() {
-		return AndroidUtils.isGoogleTV()
-				|| (AndroidUtils.isXLargeScreenOrBigger() && (AndroidUtils.getApiLevel() >= Build.VERSION_CODES.HONEYCOMB));
+		return AndroidUtils.isGoogleTV() || (AndroidUtils.isXLargeScreenOrBigger() && !AndroidUtils.isPreHoneycomb());
 	}
 }

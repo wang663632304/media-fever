@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.dialog.AbstractDialogFragment;
-import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
 import com.mediafever.domain.session.MediaSelection;
@@ -39,7 +38,7 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	public MediaSelectionDialogFragment() {
 	}
 	
-	public MediaSelectionDialogFragment(MediaSelection mediaSelection) {
+	private MediaSelectionDialogFragment(MediaSelection mediaSelection) {
 		this.mediaSelection = mediaSelection;
 		
 		Bundle bundle = new Bundle();
@@ -58,11 +57,6 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
-		
-		// Google TV is not displaying the title of the dialog.
-		if (AndroidUtils.isGoogleTV()) {
-			setStyle(STYLE_NO_TITLE, 0);
-		}
 		
 		Bundle args = getArguments();
 		if (args != null) {

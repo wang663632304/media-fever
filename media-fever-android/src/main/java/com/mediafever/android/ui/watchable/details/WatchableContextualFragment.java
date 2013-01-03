@@ -39,6 +39,9 @@ public class WatchableContextualFragment extends AbstractFragment {
 	@InjectView(R.id.viewTrailer)
 	private Button viewTrailer;
 	
+	@InjectView(R.id.mediaSession)
+	private Button mediaSession;
+	
 	private UserWatchable<Watchable> userWatchable;
 	
 	public WatchableContextualFragment() {
@@ -129,6 +132,14 @@ public class WatchableContextualFragment extends AbstractFragment {
 			@Override
 			public void onClick(View v) {
 				((OnItemSelectedListener<TabAction>)getActivity()).onItemSelected(WatchableContextualItem.SOCIAL);
+			}
+		});
+		
+		mediaSession.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Implement this
 			}
 		});
 		

@@ -1,4 +1,4 @@
-package com.mediafever.usecase;
+package com.mediafever.usecase.mediasession;
 
 import com.google.inject.Inject;
 import com.jdroid.android.usecase.AbstractApiUseCase;

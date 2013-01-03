@@ -1,0 +1,32 @@
+[
+	{
+		"id": "1",
+		"sender": {
+			"id": "20",
+			"email": "user20@email.com",
+			"firstName": "LongFirstName",
+			"lastName": "LongLastName",
+			"publicProfile": true
+		}
+	},
+	{
+		"id": "2",
+		"sender": {
+			"id": "19",
+			"email": "user19@email.com",
+			"firstName": "First19",
+			"lastName": "Last19",
+			"publicProfile": true
+		}
+	},
+	{
+		"id": "3",
+		"sender": {
+			"id": "18",
+			"email": "user18@email.com",
+			"firstName": "First18",
+			"lastName": "Last18",
+			"publicProfile": true
+		}
+	}
+]

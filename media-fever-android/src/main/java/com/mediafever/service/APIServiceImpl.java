@@ -7,8 +7,8 @@ import com.jdroid.android.utils.BitmapUtils;
 import com.jdroid.java.api.AbstractApiService;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.java.http.HttpClientFactory;
-import com.jdroid.java.http.HttpWebService;
 import com.jdroid.java.http.HttpWebServiceProcessor;
+import com.jdroid.java.http.MimeType;
 import com.jdroid.java.http.MultipartWebService;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.http.mock.AbstractMockWebService;
@@ -125,8 +125,8 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 		MultipartWebService webservice = newMultipartPutService(USERS_MODULE, userId);
 		webservice.addJsonPart(PROFILE, user);
 		if (avatar != null) {
-			webservice.addPart(IMAGE, BitmapUtils.toPNGInputStream(avatar.getUri(), 120, 120),
-				HttpWebService.PNG_CONTENT_TYPE, "photo.png");
+			webservice.addPart(IMAGE, BitmapUtils.toPNGInputStream(avatar.getUri(), 120, 120), MimeType.PNG.toString(),
+				"photo.png");
 		}
 		return webservice.execute(new UserParser());
 	}

@@ -8,8 +8,8 @@ import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.domain.FriendRequest;
-import com.mediafever.usecase.AcceptFriendRequestUseCase;
-import com.mediafever.usecase.FriendRequestsUseCase;
+import com.mediafever.usecase.friends.AcceptFriendRequestUseCase;
+import com.mediafever.usecase.friends.FriendRequestsUseCase;
 
 /**
  * 

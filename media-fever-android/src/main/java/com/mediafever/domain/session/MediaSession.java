@@ -30,10 +30,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		this.date = date;
 		this.time = time;
 		this.users = users;
-		this.selections = Lists.newArrayList(new MediaSelection());
-		if (selections != null) {
-			this.selections.addAll(selections);
-		}
+		setSelections(selections);
 		this.watchableTypes = watchableTypes;
 		this.accepted = accepted;
 	}
@@ -209,6 +206,9 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	}
 	
 	public void setSelections(List<MediaSelection> selections) {
-		this.selections = selections;
+		this.selections = Lists.newArrayList(new MediaSelection());
+		if (selections != null) {
+			this.selections.addAll(selections);
+		}
 	}
 }

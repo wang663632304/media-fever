@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.mediafever.R;
-import com.mediafever.usecase.AcceptMediaSessionUseCase;
+import com.mediafever.usecase.mediasession.AcceptMediaSessionUseCase;
 
 /**
  * 
@@ -35,7 +35,7 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 	public AcceptRejectSessionDialogFragment() {
 	}
 	
-	public AcceptRejectSessionDialogFragment(Long mediaSessionId) {
+	private AcceptRejectSessionDialogFragment(Long mediaSessionId) {
 		this.mediaSessionId = mediaSessionId;
 		
 		Bundle bundle = new Bundle();

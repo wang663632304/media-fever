@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.jdroid.android.dialog.AbstractDialogFragment;
-import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
 import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 import com.mediafever.usecase.mediasession.SmartSelectionUseCase;
@@ -35,11 +34,6 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// Google TV is not displaying the title of the dialog.
-		if (AndroidUtils.isGoogleTV()) {
-			setStyle(STYLE_NO_TITLE, 0);
-		}
-		
 		if (smartSelectionUseCase == null) {
 			smartSelectionUseCase = getInstance(SmartSelectionUseCase.class);
 			smartSelectionUseCase.setMediaSession(getMediaSessionSetupUseCase().getMediaSession());
@@ -59,7 +53,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO
+				// TODO Implement manual selection
 			}
 		});
 		

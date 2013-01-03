@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.mediafever.R;
@@ -118,7 +119,7 @@ public class SignUpFragment extends AbstractFragment {
 			public void run() {
 				getActivity().finish();
 				dismissLoading();
-				ActivityLauncher.launchHomeActivity();
+				ActivityLauncher.launchActivityClearTask(AbstractApplication.get().getHomeActivityClass(), true);
 			}
 		});
 	}

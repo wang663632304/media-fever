@@ -3,7 +3,6 @@ package com.mediafever.android.ui;
 import com.jdroid.android.dialog.AbstractAboutDialogFragment;
 import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
-import com.mediafever.android.AndroidApplication;
 import com.mediafever.context.ApplicationContext;
 
 /**
@@ -17,8 +16,7 @@ public class AboutDialogFragment extends AbstractAboutDialogFragment {
 	 */
 	@Override
 	protected String getAppName() {
-		return getString(AndroidApplication.get().getAndroidApplicationContext().isFreeApp() ? R.string.appNameFree
-				: R.string.appName);
+		return getString(getAndroidApplicationContext().isFreeApp() ? R.string.appNameFree : R.string.appName);
 	}
 	
 	/**
