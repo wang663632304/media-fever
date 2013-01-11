@@ -22,9 +22,9 @@
 			</LinearLayout>
 			<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 				android:orientation="horizontal">
-				<com.jdroid.android.view.DateButton android:id="@+id/date" android:layout_width="wrap_content"
+				<com.jdroid.android.date.DateButton android:id="@+id/date" android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:layout_margin="5dp" />
-				<com.jdroid.android.view.TimeButton android:id="@+id/time" android:layout_width="wrap_content"
+				<com.jdroid.android.date.TimeButton android:id="@+id/time" android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:paddingLeft="30dp" android:paddingRight="30dp" android:layout_margin="5dp" />
 			</LinearLayout>
 

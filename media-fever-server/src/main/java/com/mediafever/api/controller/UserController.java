@@ -120,6 +120,16 @@ public class UserController extends AbstractController {
 		return marshallSimple(userService.getFriends(id));
 	}
 	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String search(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize,
+			@QueryParam("query") String query) {
+		Filter filter = new Filter(page, pageSize);
+		filter.addValue(CustomFilterKey.USER_QUERY, query);
+		return marshallSimple(userService.search(filter));
+	}
+	
 	@DELETE
 	@Path("{id}/friends/{friendId}")
 	@GZIP

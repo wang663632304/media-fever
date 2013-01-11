@@ -182,8 +182,8 @@ INSERT INTO User VALUES ('15', 'user15@email.com', 'userToken15', 'c7ad44cbad762
 INSERT INTO User VALUES ('16', 'user16@email.com', 'userToken16', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'Matu', 'Pope', null, null, true);
 INSERT INTO User VALUES ('17', 'user17@email.com', 'userToken17', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'First17', 'Last17', null, null, true);
 INSERT INTO User VALUES ('18', 'user18@email.com', 'userToken18', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'First18', 'Last18', null, null, true);
-INSERT INTO User VALUES ('19', 'user19@email.com', 'userToken19', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'First19', 'Last19', null, null, true);
-INSERT INTO User VALUES ('20', 'user20@email.com', 'userToken20', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'LongFirstName', 'LongLastName', null, null, true);
+INSERT INTO User VALUES ('19', 'user19@email.com', 'userToken19', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'First19', 'Last19', null, null, false);
+INSERT INTO User VALUES ('20', 'user20@email.com', 'userToken20', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec', 'LongFirstName', 'LongLastName', null, null, false);
 
 -- --------------------
 -- FRIENDSHIP

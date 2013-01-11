@@ -6,6 +6,8 @@ public enum CustomFilterKey implements FilterKey {
 	
 	NAME,
 	USER_ID,
+	USER_QUERY,
+	USER_PUBLIC_PROFILE,
 	WATCHED,
 	IS_IN_WISHLIST,
 	WATCHABLE_TYPES,

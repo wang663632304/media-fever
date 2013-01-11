@@ -1,11 +1,12 @@
 package com.mediafever.core.repository;
 
-import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import com.jdroid.java.repository.ObjectNotFoundException;
 import com.jdroid.java.utils.StringUtils;
+import com.jdroid.javaweb.search.Filter;
+import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.User;
 
 public class UserHibernateRepository extends HibernateRepository<User> implements UserRepository {
@@ -39,15 +40,22 @@ public class UserHibernateRepository extends HibernateRepository<User> implement
 	}
 	
 	/**
-	 * @see com.mediafever.core.repository.UserRepository#autocomplete(java.lang.String)
+	 * @see com.mediafever.core.repository.UserRepository#search(com.jdroid.javaweb.search.Filter)
 	 */
 	@Override
-	public List<User> autocomplete(String input) {
+	public PagedResult<User> search(Filter filter) {
 		DetachedCriteria usersCriteria = createDetachedCriteria();
-		for (String word : StringUtils.splitToCollection(input, StringUtils.SPACE)) {
-			usersCriteria.add(Restrictions.or(Restrictions.like("firstName", word, MatchMode.ANYWHERE).ignoreCase(),
-				Restrictions.like("lastName", word, MatchMode.ANYWHERE).ignoreCase()));
+		
+		String query = filter.getStringValue(CustomFilterKey.USER_QUERY);
+		if (StringUtils.isNotBlank(query)) {
+			for (String word : StringUtils.splitToCollection(query, StringUtils.SPACE)) {
+				usersCriteria.add(Restrictions.or(Restrictions.or(
+					Restrictions.like("firstName", word, MatchMode.ANYWHERE).ignoreCase(),
+					Restrictions.like("lastName", word, MatchMode.ANYWHERE).ignoreCase()),
+					Restrictions.like("email", word, MatchMode.ANYWHERE).ignoreCase()));
+			}
 		}
-		return find(usersCriteria);
+		usersCriteria.add(Restrictions.eq("publicProfile", true));
+		return this.find(usersCriteria, filter.getPager(), filter.getSorting());
 	}
 }

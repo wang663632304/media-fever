@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.jdroid.javaweb.domain.FileEntity;
+import com.jdroid.javaweb.search.Filter;
+import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.api.exception.ServerErrorCode;
 import com.mediafever.core.domain.FacebookAccount;
 import com.mediafever.core.domain.User;
+import com.mediafever.core.repository.CustomFilterKey;
 import com.mediafever.core.repository.UserRepository;
 
 /**
@@ -99,6 +102,11 @@ public class UserService {
 	public List<User> getFriends(Long userId) {
 		User user = userRepository.get(userId);
 		return user.getFriends();
+	}
+	
+	public PagedResult<User> search(Filter filter) {
+		filter.addValue(CustomFilterKey.USER_PUBLIC_PROFILE, true);
+		return userRepository.search(filter);
 	}
 	
 	/**

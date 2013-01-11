@@ -1,8 +1,9 @@
 package com.mediafever.core.repository;
 
-import java.util.List;
 import com.jdroid.java.repository.ObjectNotFoundException;
 import com.jdroid.java.repository.Repository;
+import com.jdroid.javaweb.search.Filter;
+import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.User;
 
 /**
@@ -32,9 +33,9 @@ public interface UserRepository extends Repository<User> {
 	public Boolean existsWithEmail(String email);
 	
 	/**
-	 * @param input
+	 * @param filter
 	 * @return The {@link User}s
 	 */
-	public List<User> autocomplete(String input);
+	public PagedResult<User> search(Filter filter);
 	
 }
