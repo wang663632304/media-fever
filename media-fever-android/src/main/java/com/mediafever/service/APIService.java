@@ -53,6 +53,8 @@ public interface APIService {
 	
 	public List<UserImpl> getFriends(Long userId);
 	
+	public List<UserImpl> searchUsers(String query);
+	
 	public void removeFriend(Long userId, Long friendId);
 	
 	public PagedResult<Watchable> getLatestWatchables();

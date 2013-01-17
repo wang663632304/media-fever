@@ -39,7 +39,7 @@ public enum FriendsContextualItem implements TabAction {
 		
 		@Override
 		public Fragment createFragment(Object args) {
-			return new SocialSettingsFragment();
+			return new SearchUsersFragment();
 		}
 	};
 	

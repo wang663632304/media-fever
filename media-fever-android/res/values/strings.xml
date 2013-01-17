@@ -92,6 +92,8 @@
 	<string name="facebook">Facebook</string>
 	<string name="requests">Requests</string>
 	<string name="searchUsers">Search Users</string>
+	<string name="friendRequest">Friend Request</string>
+	<string name="addUser">Do you want to add %1$s as a friend?</string>
 
 	<!-- Friends Requests -->
 	<string name="friendsRequests">Friends Requests</string>

@@ -1,6 +1,7 @@
 package com.mediafever.parser;
 
 import org.json.JSONException;
+import com.jdroid.android.context.SecurityContext;
 import com.jdroid.java.parser.json.JsonObjectWrapper;
 import com.jdroid.java.parser.json.JsonParser;
 import com.mediafever.domain.FriendRequest;
@@ -20,8 +21,8 @@ public class FriendRequestParser extends JsonParser<JsonObjectWrapper> {
 	 */
 	@Override
 	public Object parse(JsonObjectWrapper json) throws JSONException {
-		UserImpl user = (UserImpl)(new UserParser().parse(json.getJSONObject(SENDER)));
-		return new FriendRequest(json.optLong(ID), user);
+		UserImpl sender = (UserImpl)(new UserParser().parse(json.getJSONObject(SENDER)));
+		return new FriendRequest(json.optLong(ID), (UserImpl)SecurityContext.get().getUser(), sender);
 	}
 	
 }
