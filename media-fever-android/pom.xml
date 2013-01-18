@@ -79,7 +79,7 @@
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
-				<version>3.4.0</version>
+				<version>3.5.0</version>
 				<configuration>
 					<sdk>
 						<path>${android.sdk.path}</path>
@@ -104,80 +104,16 @@
 				<executions>
 					<execution>
 						<id>update-manifest</id>
-						<goals>
-							<goal>manifest-update</goal>
-						</goals>
-						<configuration>
-							<manifest>
-								<debuggable>${android.manifest.debuggable}</debuggable>
-							</manifest>
-						</configuration>
-					</execution>
+							<goals>
+								<goal>manifest-update</goal>
+							</goals>
+ 					</execution>
 					<execution>
 						<id>alignApk</id>
 						<phase>install</phase>
 						<goals>
 							<goal>zipalign</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.gmaven</groupId>
-				<artifactId>gmaven-plugin</artifactId>
-				<version>1.4</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<source>
-								def manifestFile = new File("./AndroidManifest.xml")
-								def ns = new groovy.xml.Namespace("http://schemas.android.com/apk/res/android", "ns")
-								def parser = new groovy.util.XmlParser(false, true)
-								def rootNode = parser.parse(manifestFile)
-								def childrensIterator =	rootNode.children().iterator()
-								
-								while(childrensIterator.hasNext()) {
-									def children = childrensIterator.next();
-									if(children.name() == 'application') {
-										def childrenAttributes = children.attributes()
-										childrenAttributes[ns.label] = "${app.name}"
-										
-										def applicationIterator = children.iterator()
-										while(applicationIterator.hasNext()) {
-											def applicationChildren = applicationIterator.next();
-											if(applicationChildren.name() == 'activity') {
-											
-												def activityAttributes = applicationChildren.attributes()
-												def intentFilter = applicationChildren.'intent-filter'
-												if (intentFilter != null) {
-													def action = intentFilter.'action'[0]
-													def category = intentFilter.'category'[0]
-													if (action != null &amp;&amp; category != null) {
-														if (action.attributes()[ns.name] == "android.intent.action.MAIN" 
-																&amp;&amp; category.attributes()[ns.name] == "android.intent.category.LAUNCHER") {
-															activityAttributes[ns.label] = "${app.name}"
-															break
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-								
-								def writer = new groovy.io.GroovyPrintWriter(manifestFile)
-								writer.println('&lt;?xml version="1.0" encoding="UTF-8"?&gt;')
-								def xmlWriter = new groovy.util.XmlNodePrinter(writer)
-								xmlWriter.setPreserveWhitespace(false)
-								xmlWriter.setNamespaceAware(true)
-								xmlWriter.print(rootNode)
-							</source>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -218,7 +154,7 @@
 		<profile>
 			<id>media-fever-free</id>
 			<properties>
-				<app.name>@string/appNameFree</app.name>
+				<android.manifest.applicationLabel>@string/appNameFree</android.manifest.applicationLabel>
 				<manifest.package>com.mediafever.lite</manifest.package>
 				<apk.suffix>free</apk.suffix>
 				<free.app>true</free.app>
@@ -234,7 +170,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<app.name>@string/appName</app.name>
+				<android.manifest.applicationLabel>@string/appName</android.manifest.applicationLabel>
 				<manifest.package>com.mediafever</manifest.package>
 				<apk.suffix>paid</apk.suffix>
 				<free.app>false</free.app>
