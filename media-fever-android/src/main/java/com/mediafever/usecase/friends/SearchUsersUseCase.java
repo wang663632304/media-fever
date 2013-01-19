@@ -1,6 +1,7 @@
 package com.mediafever.usecase.friends;
 
 import com.google.inject.Inject;
+import com.jdroid.android.domain.User;
 import com.jdroid.android.search.SearchResult;
 import com.jdroid.android.usecase.SearchUseCase;
 import com.mediafever.domain.UserImpl;
@@ -13,6 +14,7 @@ import com.mediafever.service.APIService;
 public class SearchUsersUseCase extends SearchUseCase<UserImpl> {
 	
 	private APIService apiService;
+	private User user;
 	
 	@Inject
 	public SearchUsersUseCase(APIService apiService) {
@@ -24,7 +26,14 @@ public class SearchUsersUseCase extends SearchUseCase<UserImpl> {
 	 */
 	@Override
 	protected SearchResult<UserImpl> doSearch(String searchValue) {
-		return SearchResult.getInstance(apiService.searchUsers(searchValue));
+		return SearchResult.getInstance(apiService.searchUsers(user.getId(), searchValue));
+	}
+	
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 }

@@ -12,6 +12,7 @@ import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.adapter.BaseArrayAdapter;
 import com.jdroid.android.fragment.AbstractSearchFragment;
 import com.jdroid.android.usecase.SearchUseCase;
+import com.jdroid.android.utils.ToastUtils;
 import com.jdroid.java.collections.Lists;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserAdapter;
@@ -50,6 +51,7 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 		
 		if (searchUsersUseCase == null) {
 			searchUsersUseCase = getInstance(SearchUsersUseCase.class);
+			searchUsersUseCase.setUser(getUser());
 		}
 		
 		if (createFriendRequestUseCase == null) {
@@ -58,7 +60,20 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 				
 				@Override
 				public void onFinishUseCase() {
-					dismissLoadingOnUIThread();
+					executeOnUIThread(new Runnable() {
+						
+						@Override
+						public void run() {
+							dismissLoading();
+							if (createFriendRequestUseCase.wasAddAsFriend()) {
+								ToastUtils.showInfoToast(getString(R.string.addedAsFriend,
+									createFriendRequestUseCase.getUser().getFullname()));
+							} else {
+								ToastUtils.showInfoToast(getString(R.string.invitedToBeYourFriend,
+									createFriendRequestUseCase.getUser().getFullname()));
+							}
+						}
+					});
 				}
 				
 				@Override

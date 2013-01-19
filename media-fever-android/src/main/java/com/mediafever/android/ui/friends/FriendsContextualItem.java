@@ -35,7 +35,7 @@ public enum FriendsContextualItem implements TabAction {
 			return new SocialSettingsFragment();
 		}
 	},
-	SEARCH_USERS(R.string.searchUsers, R.drawable.friends_contextual_selector, SocialSettingsActivity.class) {
+	SEARCH_USERS(R.string.searchUsers, R.drawable.friends_contextual_selector, SearchUsersActivity.class) {
 		
 		@Override
 		public Fragment createFragment(Object args) {

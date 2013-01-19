@@ -20,6 +20,7 @@ import com.jdroid.javaweb.domain.FileEntity;
 import com.jdroid.javaweb.domain.Password;
 import com.jdroid.javaweb.exception.InvalidAuthenticationException;
 import com.jdroid.javaweb.guava.predicate.EqualsPropertyPredicate;
+import com.jdroid.javaweb.utils.CollectionUtils;
 import com.mediafever.api.exception.ServerErrorCode;
 import com.mediafever.context.ApplicationContext;
 
@@ -175,6 +176,10 @@ public class User extends Entity {
 		return Iterables.any(friendRequests, new EqualsPropertyPredicate<FriendRequest>("sender", user));
 	}
 	
+	public FriendRequest getFriendRequest(User user) {
+		return CollectionUtils.find(friendRequests, new EqualsPropertyPredicate<FriendRequest>("sender", user));
+	}
+	
 	/**
 	 * Request a user to be his friend. If I have already asked him, then we do nothing.
 	 * 
@@ -183,10 +188,16 @@ public class User extends Entity {
 	 */
 	public FriendRequest inviteFriend(User friend) {
 		FriendRequest friendRequest = null;
-		// Don't invite a user that already have a pending request or is my friend
-		if (!hasFriendRequest(friend) && !friend.hasFriendRequest(this) && !friends.contains(friend)) {
+		// Don't invite a user that is my friend.
+		if (!friend.hasFriendRequest(this) && !friends.contains(friend)) {
 			friendRequest = new FriendRequest(friend, this);
 			friend.friendRequests.add(friendRequest);
+		} else {
+			// Add friend if the already have a pending request
+			FriendRequest friendRequestToAccept = getFriendRequest(friend);
+			if (friendRequestToAccept != null) {
+				friendRequestToAccept.accept();
+			}
 		}
 		return friendRequest;
 	}

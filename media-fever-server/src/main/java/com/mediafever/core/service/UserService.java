@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.domain.FileEntity;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
@@ -104,9 +105,14 @@ public class UserService {
 		return user.getFriends();
 	}
 	
-	public PagedResult<User> search(Filter filter) {
+	public PagedResult<User> search(Long userId, Filter filter) {
 		filter.addValue(CustomFilterKey.USER_PUBLIC_PROFILE, true);
-		return userRepository.search(filter);
+		PagedResult<User> result = userRepository.search(filter);
+		User user = userRepository.get(userId);
+		List<User> excludedUsers = Lists.newArrayList(user);
+		excludedUsers.addAll(user.getFriends());
+		result.getData().removeAll(excludedUsers);
+		return result;
 	}
 	
 	/**

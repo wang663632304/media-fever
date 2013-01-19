@@ -177,11 +177,11 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#searchUsers(java.lang.String)
+	 * @see com.mediafever.service.APIService#searchUsers(java.lang.Long, java.lang.String)
 	 */
 	@Override
-	public List<UserImpl> searchUsers(String query) {
-		WebService webservice = newGetService(USERS_MODULE);
+	public List<UserImpl> searchUsers(Long userId, String query) {
+		WebService webservice = newGetService(USERS_MODULE, userId);
 		webservice.addQueryParameter(PAGE, DEFAULT_PAGE_VALUE);
 		webservice.addQueryParameter(PAGE_SIZE, 100);
 		webservice.addQueryParameter("query", query);

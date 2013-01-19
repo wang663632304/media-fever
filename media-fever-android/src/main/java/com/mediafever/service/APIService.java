@@ -53,7 +53,7 @@ public interface APIService {
 	
 	public List<UserImpl> getFriends(Long userId);
 	
-	public List<UserImpl> searchUsers(String query);
+	public List<UserImpl> searchUsers(Long userId, String query);
 	
 	public void removeFriend(Long userId, Long friendId);
 	

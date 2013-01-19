@@ -121,13 +121,14 @@ public class UserController extends AbstractController {
 	}
 	
 	@GET
+	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GZIP
-	public String search(@QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize,
-			@QueryParam("query") String query) {
+	public String search(@PathParam("id") Long id, @QueryParam("page") Integer page,
+			@QueryParam("pageSize") Integer pageSize, @QueryParam("query") String query) {
 		Filter filter = new Filter(page, pageSize);
 		filter.addValue(CustomFilterKey.USER_QUERY, query);
-		return marshallSimple(userService.search(filter));
+		return marshallSimple(userService.search(id, filter));
 	}
 	
 	@DELETE
