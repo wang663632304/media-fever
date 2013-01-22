@@ -74,7 +74,7 @@ public class WatchableSocialFragment extends AbstractListFragment<User> {
 			mergeAdapter.addView(new ListSeparatorView(getActivity(), getString(resId,
 				userWatchable.getWatchedBy().size())));
 			mergeAdapter.addAdapter(new UserAdapter(getActivity(), userWatchable.getWatchedBy(),
-					R.layout.user_small_item));
+					R.layout.user_small_item, false));
 		}
 		
 		if (CollectionUtils.isNotEmpty(userWatchable.getOnTheWishListOf())) {

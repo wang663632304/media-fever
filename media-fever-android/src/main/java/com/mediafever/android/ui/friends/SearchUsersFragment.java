@@ -47,6 +47,8 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
+		getSupportActionBar().setTitle(R.string.searchUsers);
+		
 		setThreshold(3);
 		
 		if (searchUsersUseCase == null) {

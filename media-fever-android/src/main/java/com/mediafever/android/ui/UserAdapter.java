@@ -16,8 +16,15 @@ import com.mediafever.domain.UserImpl;
  */
 public class UserAdapter extends BaseHolderArrayAdapter<UserImpl, UserHolder> {
 	
+	private Boolean clickable = true;
+	
 	public UserAdapter(Activity context, List<UserImpl> items, int resource) {
 		super(context, items, resource);
+	}
+	
+	public UserAdapter(Activity context, List<UserImpl> items, int resource, Boolean clickable) {
+		super(context, items, resource);
+		this.clickable = clickable;
 	}
 	
 	public UserAdapter(Activity context, List<UserImpl> items) {
@@ -36,6 +43,14 @@ public class UserAdapter extends BaseHolderArrayAdapter<UserImpl, UserHolder> {
 		holder.image = findView(convertView, R.id.image);
 		holder.fullName = findView(convertView, R.id.fullName);
 		return holder;
+	}
+	
+	/**
+	 * @see android.widget.BaseAdapter#isEnabled(int)
+	 */
+	@Override
+	public boolean isEnabled(int position) {
+		return clickable;
 	}
 	
 	public static class UserHolder {

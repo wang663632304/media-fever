@@ -33,14 +33,7 @@ public class AcceptFriendRequestUseCase extends AbstractApiUseCase<APIService> {
 	protected void doExecute() {
 		if (accept) {
 			getApiService().acceptFriendRequest(friendRequest);
-			Long lastUpdateTimestamp = friendsRepository.getLastUpdateTimestamp();
 			friendsRepository.add(friendRequest.getSender());
-			
-			// If the friends repository was never loaded, we revert to null the lastUpdateTimestamp, so the next time
-			// it will be loaded
-			if (lastUpdateTimestamp == null) {
-				friendsRepository.resetLastUpdateTimestamp();
-			}
 		} else {
 			getApiService().rejectFriendRequest(friendRequest);
 		}

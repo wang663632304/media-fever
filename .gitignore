@@ -8,7 +8,6 @@ media-fever-server/.settings/org.maven.ide.eclipse.prefs
 media-fever-server/src/main/resources/settings.local.properties
 media-fever-server/src/main/resources/git.properties
 media-fever-server/src/main/resources/log4j.xml
-media-fever-server/src/main/webapp/META-INF/context.xml
 media-fever-server/src/main/webapp/.#webclasspath
 
 media-fever-android/bin/

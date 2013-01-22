@@ -1,8 +1,8 @@
 package com.mediafever.usecase.friends;
 
 import java.util.List;
-import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.google.inject.Inject;
+import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.repository.FriendRequestsRepository;
 import com.mediafever.service.APIService;
@@ -30,6 +30,7 @@ public class FriendRequestsUseCase extends AbstractApiUseCase<APIService> {
 		if (friendRequestsRepository.isOutdated()) {
 			List<FriendRequest> friendRequests = getApiService().getFriendRequests(userId);
 			friendRequestsRepository.replaceAll(friendRequests);
+			friendRequestsRepository.resetLastUpdateTimestamp();
 		}
 	}
 	
