@@ -17,5 +17,13 @@ public class DevSettingsFragment extends AbstractPreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.dev_preferences);
+		
+		// TODO Make it work
+		// View header = inflate(R.layout.device_info_header);
+		// ((TextView)header.findViewById(R.id.screenSize)).setText("Screen Size: " + AndroidUtils.getScreenSize());
+		// ((TextView)header.findViewById(R.id.screenDensity)).setText("Screen Density: "
+		// + AndroidUtils.getScreenDensity());
+		//
+		// getListView().addFooterView(header);
 	}
 }
