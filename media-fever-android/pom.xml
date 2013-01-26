@@ -204,7 +204,6 @@
 				<apk.suffix>free</apk.suffix>
 				<free.app>true</free.app>
 				<ads.enabled>true</ads.enabled>
-				<facebook.app.id>253164851452906</facebook.app.id>
 			</properties>
 		</profile>
 
@@ -220,7 +219,6 @@
 				<apk.suffix>paid</apk.suffix>
 				<free.app>false</free.app>
 				<ads.enabled>false</ads.enabled>
-				<facebook.app.id>253164851452906</facebook.app.id>
 			</properties>
 		</profile>
 
@@ -232,12 +230,10 @@
 			</activation>
 			<properties>
 				<environment.name>DEV</environment.name>
-				<server.url>http://192.168.1.4:8080/media-fever-server/api</server.url>
 				<debug.settings>true</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
-				<facebook.app.id>253164851452906</facebook.app.id>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
 				<android.sign.debug>true</android.sign.debug>
 				<android.zipalign.skip>true</android.zipalign.skip>
@@ -261,7 +257,6 @@
 			<id>media-fever-qa</id>
 			<properties>
 				<environment.name>QA</environment.name>
-				<server.url>http://10.0.2.2:8080/media-fever-server/api</server.url>
 				<debug.settings>true</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
@@ -289,7 +284,6 @@
 			<id>media-fever-uat</id>
 			<properties>
 				<environment.name>UAT</environment.name>
-				<server.url>http://10.0.2.2:8080/media-fever-server/api</server.url>
 				<debug.settings>false</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
@@ -319,7 +313,6 @@
 			<id>media-fever-prod</id>
 			<properties>
 				<environment.name>PROD</environment.name>
-				<server.url>http://10.0.2.2:8080/media-fever-server/api</server.url>
 				<debug.settings>false</debug.settings>
 				<analytics.enabled>true</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
