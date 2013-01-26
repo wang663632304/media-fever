@@ -2,7 +2,6 @@ package com.mediafever.android;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
@@ -16,7 +15,6 @@ import com.jdroid.android.exception.ExceptionHandler;
 import com.jdroid.android.fragment.BaseFragment;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.NotificationUtils;
-import com.mediafever.R;
 import com.mediafever.android.exception.AndroidExceptionHandler;
 import com.mediafever.android.service.DisableDeviceService;
 import com.mediafever.android.service.EnableDeviceService;
@@ -42,8 +40,6 @@ public class AndroidApplication extends AbstractApplication {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
-		PreferenceManager.setDefaultValues(this, R.xml.dev_preferences, false);
 		
 		if (SecurityContext.get().isAuthenticated()) {
 			if (GCMRegistrar.isRegistered(this)) {

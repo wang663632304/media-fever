@@ -26,8 +26,6 @@ import com.mediafever.android.ui.friends.FriendsActivity;
 import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.android.ui.listener.BuyFullAppOnClickListener;
 import com.mediafever.android.ui.session.MediaSessionListActivity;
-import com.mediafever.android.ui.settings.DevSettingsActivity;
-import com.mediafever.android.ui.settings.PreHoneycombDevSettingsActivity;
 import com.mediafever.android.ui.settings.SettingsActivity;
 import com.mediafever.android.ui.watchable.watched.WatchedListActivity;
 import com.mediafever.android.ui.watchable.whattowatch.WhatToWatchActivity;
@@ -210,6 +208,7 @@ public class AndroidBaseActivity extends BaseActivity {
 	@Override
 	@TargetApi(11)
 	public void doOnCreateOptionsMenu(Menu menu) {
+		super.doOnCreateOptionsMenu(menu);
 		if (getActivityIf().requiresAuthentication()
 				&& (AndroidUtils.isGoogleTV() || AndroidUtils.isXLargeScreenOrBigger())) {
 			SearchView searchView = (SearchView)menu.findItem(R.id.searchItem).getActionView();
@@ -220,13 +219,6 @@ public class AndroidBaseActivity extends BaseActivity {
 			SearchManager searchManager = (SearchManager)getActivity().getSystemService(Context.SEARCH_SERVICE);
 			searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 			searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-		}
-		
-		if (!ApplicationContext.get().displayDevSettings()) {
-			MenuItem menuItem = menu.findItem(R.id.devSettingsItem);
-			if (menuItem != null) {
-				menuItem.setVisible(false);
-			}
 		}
 	}
 	
@@ -247,16 +239,6 @@ public class AndroidBaseActivity extends BaseActivity {
 				return true;
 			case R.id.logoutItem:
 				AndroidApplication.get().logout();
-				return true;
-			case R.id.devSettingsItem:
-				
-				Class<? extends Activity> targetActivity;
-				if (AndroidUtils.isPreHoneycomb()) {
-					targetActivity = PreHoneycombDevSettingsActivity.class;
-				} else {
-					targetActivity = DevSettingsActivity.class;
-				}
-				ActivityLauncher.launchActivity(targetActivity);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

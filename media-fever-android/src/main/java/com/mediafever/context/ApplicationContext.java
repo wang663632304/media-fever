@@ -1,7 +1,5 @@
 package com.mediafever.context;
 
-import android.preference.PreferenceManager;
-import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.context.DefaultApplicationContext;
 import com.jdroid.java.utils.PropertiesUtils;
 
@@ -28,17 +26,6 @@ public class ApplicationContext extends DefaultApplicationContext {
 		contactUsEmail = PropertiesUtils.getStringProperty("mail.contact");
 		serverApiURL = PropertiesUtils.getStringProperty("server.url");
 		serverTokenSecret = PropertiesUtils.getStringProperty("server.token.secret");
-	}
-	
-	public Boolean isHttpMockEnabled() {
-		return !isProductionEnvironment()
-				&& PreferenceManager.getDefaultSharedPreferences(AbstractApplication.get()).getBoolean(
-					"httpMockEnabled", false);
-	}
-	
-	public Integer getHttpMockSleepDuration() {
-		return PreferenceManager.getDefaultSharedPreferences(AbstractApplication.get()).getBoolean("httpMockSleep",
-			false) ? 10 : null;
 	}
 	
 	/**

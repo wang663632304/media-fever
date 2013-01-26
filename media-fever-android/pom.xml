@@ -188,7 +188,7 @@
 			<properties>
 				<environment.name>DEV</environment.name>
 				<server.url>http://192.168.1.4:8080/media-fever-server/api</server.url>
-				<dev.settings>true</dev.settings>
+				<debug.settings>true</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
@@ -217,7 +217,7 @@
 			<properties>
 				<environment.name>QA</environment.name>
 				<server.url>http://10.0.2.2:8080/media-fever-server/api</server.url>
-				<dev.settings>true</dev.settings>
+				<debug.settings>true</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
@@ -245,7 +245,7 @@
 			<properties>
 				<environment.name>UAT</environment.name>
 				<server.url>http://10.0.2.2:8080/media-fever-server/api</server.url>
-				<dev.settings>false</dev.settings>
+				<debug.settings>false</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
@@ -275,7 +275,7 @@
 			<properties>
 				<environment.name>PROD</environment.name>
 				<server.url>http://10.0.2.2:8080/media-fever-server/api</server.url>
-				<dev.settings>false</dev.settings>
+				<debug.settings>false</debug.settings>
 				<analytics.enabled>true</analytics.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
