@@ -74,6 +74,51 @@
 					<downloadJavadocs>false</downloadJavadocs>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<source>
+								def manifestFile = new File("./AndroidManifest.xml")
+								def ns = new groovy.xml.Namespace("http://schemas.android.com/apk/res/android", "ns")
+								def parser = new groovy.util.XmlParser(false, true)
+								def rootNode = parser.parse(manifestFile)
+								def childrensIterator =	rootNode.children().iterator()
+								
+								while(childrensIterator.hasNext()) {
+									def children = childrensIterator.next();
+									if(children.name() == 'application') {
+										def applicationIterator = children.iterator()
+										while(applicationIterator.hasNext()) {
+											def applicationChildren = applicationIterator.next();
+											if (applicationChildren.name() == 'provider') {
+												def metaDataAttributes = applicationChildren.attributes()
+												if (metaDataAttributes[ns.name].contains(".android.contentprovider.WatchablesSuggestionsProvider")) {
+													childrenAttributes[ns.name] = "${manifest.package}" + ".android.contentprovider.WatchablesSuggestionsProvider"
+												}
+											}
+										}
+									}
+								}
+								def writer = new groovy.io.GroovyPrintWriter(manifestFile)
+								writer.println('&lt;?xml version="1.0" encoding="UTF-8"?&gt;')
+								def xmlWriter = new groovy.util.XmlNodePrinter(writer)
+								xmlWriter.setPreserveWhitespace(false)
+								xmlWriter.setNamespaceAware(true)
+								xmlWriter.print(rootNode)
+							</source>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 			<!-- Android Maven Plugin -->
 			<plugin>
