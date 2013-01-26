@@ -19,8 +19,6 @@ import com.mediafever.usecase.WatchablesSuggestionsUseCase;
  */
 public class WatchablesSuggestionsProvider extends ReadOnlyContentProvider implements DefaultUseCaseListener {
 	
-	public static final Uri CONTENT_URI = Uri.parse("content://com.mediafever.watchablessuggestionsprovider");
-	
 	private WatchablesSuggestionsUseCase watchablesSuggestionsUseCase;
 	
 	/**

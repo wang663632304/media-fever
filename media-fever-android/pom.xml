@@ -101,8 +101,18 @@
 											def applicationChildren = applicationIterator.next();
 											if (applicationChildren.name() == 'provider') {
 												def metaDataAttributes = applicationChildren.attributes()
-												if (metaDataAttributes[ns.name].contains(".android.contentprovider.WatchablesSuggestionsProvider")) {
-													metaDataAttributes[ns.name] = "${manifest.package}" + ".android.contentprovider.WatchablesSuggestionsProvider"
+												if (metaDataAttributes[ns.name] == 'com.mediafever.android.contentprovider.WatchablesSuggestionsProvider') {
+													metaDataAttributes[ns.authorities] = "${manifest.package}" + ".watchablessuggestionsprovider"
+												}
+											} else if(applicationChildren.name() == 'activity') {
+
+												def activityAttributes = applicationChildren.attributes()
+												def metaData = applicationChildren.'meta-data'[0]
+												if (metaData != null) {
+													if (metaData.attributes()[ns.name] == "android.app.searchable") {
+														metaData.attributes()[ns.resource] = "@xml/searchable_" + "${apk.suffix}"
+														break
+													}
 												}
 											}
 										}

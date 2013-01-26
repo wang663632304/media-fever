@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<searchable xmlns:android="http://schemas.android.com/apk/res/android" android:label="@string/appName"
+	android:hint="@string/searchHint" android:voiceSearchMode="showVoiceSearchButton|launchRecognizer" android:searchMode="queryRewriteFromText"
+	android:searchSuggestAuthority="com.mediafever.lite.watchablessuggestionsprovider" android:searchSuggestIntentAction="android.intent.action.VIEW"
+	android:searchSuggestSelection=" ?" android:includeInGlobalSearch="true" android:searchSettingsDescription="@string/searchDescription">
+</searchable>
