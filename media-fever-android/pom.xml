@@ -98,7 +98,7 @@
 									if(children.name() == 'application') {
 										def applicationIterator = children.iterator()
 										while(applicationIterator.hasNext()) {
-											def applicationChildren = applicationIterator.next();
+											def applicationChildren = applicationIterator.next()
 											if (applicationChildren.name() == 'provider') {
 												def metaDataAttributes = applicationChildren.attributes()
 												if (metaDataAttributes[ns.name] == 'com.mediafever.android.contentprovider.WatchablesSuggestionsProvider') {
@@ -111,7 +111,6 @@
 												if (metaData != null) {
 													if (metaData.attributes()[ns.name] == "android.app.searchable") {
 														metaData.attributes()[ns.resource] = "@xml/searchable_" + "${apk.suffix}"
-														break
 													}
 												}
 											}
