@@ -102,7 +102,7 @@
 											if (applicationChildren.name() == 'provider') {
 												def metaDataAttributes = applicationChildren.attributes()
 												if (metaDataAttributes[ns.name].contains(".android.contentprovider.WatchablesSuggestionsProvider")) {
-													childrenAttributes[ns.name] = "${manifest.package}" + ".android.contentprovider.WatchablesSuggestionsProvider"
+													metaDataAttributes[ns.name] = "${manifest.package}" + ".android.contentprovider.WatchablesSuggestionsProvider"
 												}
 											}
 										}
