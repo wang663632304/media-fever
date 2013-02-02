@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
+import com.jdroid.android.utils.AnimationUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
 import com.mediafever.domain.watchable.Watchable;
@@ -71,6 +72,7 @@ public class WishListGridFragment extends AbstractGridFragment<Watchable> {
 			public void run() {
 				setListAdapter(new WatchableAdapter(WishListGridFragment.this.getActivity(),
 						wishListUseCase.getWatchables()));
+				AnimationUtils.makeViewGroupAnimation(getGridView());
 				dismissLoading();
 			}
 		});

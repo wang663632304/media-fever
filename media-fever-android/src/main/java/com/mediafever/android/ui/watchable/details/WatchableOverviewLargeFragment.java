@@ -134,7 +134,10 @@ public class WatchableOverviewLargeFragment extends AbstractFragment {
 		
 		if (WatchableType.MOVIE.match(watchable)) {
 			Movie movie = Movie.class.cast(watchable);
-			tagline.setText(movie.getTagline());
+			if (StringUtils.isNotBlank(movie.getTagline())) {
+				tagline.setText(movie.getTagline());
+				tagline.setVisibility(View.VISIBLE);
+			}
 		}
 		
 		if (updateUserWatchableUseCase == null) {

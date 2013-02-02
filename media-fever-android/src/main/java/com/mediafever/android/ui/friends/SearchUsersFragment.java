@@ -87,6 +87,14 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractSearchFragment#getSearchEditTextHintResId()
+	 */
+	@Override
+	protected int getSearchEditTextHintResId() {
+		return R.string.searchBy;
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractSearchFragment#onResume()
 	 */
 	@Override

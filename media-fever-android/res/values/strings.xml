@@ -14,9 +14,9 @@
 	<string name="reject">Reject</string>
 
 	<!-- Login -->
-	<string name="requiredEmail">Email is required</string>
-	<string name="invalidEmail">The Email is not valid</string>
-	<string name="requiredPassword">Password is required</string>
+	<string name="requiredEmail">The email is required</string>
+	<string name="invalidEmail">The email is not valid</string>
+	<string name="requiredPassword">The password is required</string>
 	<string name="invalidCredentials">Invalid Credentials</string>
 	<string name="invalidPassword">The password must be at least %1$s characters</string>
 	<string name="password">Password</string>
@@ -36,22 +36,21 @@
 	<string name="confirmEmail">Confirm Email</string>
 	<string name="changePassword">Change Password</string>
 	<string name="confirmPassword">Confirm Password</string>
-	<string name="requiredFirstName">First name is required</string>
-	<string name="requiredLastName">Last name is required</string>
-	<string name="requiredConfirmEmail">Email confirmation is required</string>
-	<string name="requiredConfirmPassword">Password confirmation is required</string>
+	<string name="requiredFirstName">The first name is required</string>
+	<string name="requiredLastName">The last name is required</string>
+	<string name="requiredConfirmEmail">The email confirmation is required</string>
+	<string name="requiredConfirmPassword">The password confirmation is required</string>
 	<string name="emailsDoNotMatch">Emails do not match</string>
 	<string name="passwordsDoNotMatch">Passwords do not match</string>
 	<string name="duplicatedUsername">Email already registered</string>
 
 	<!-- Social Fragment -->
 	<string name="social">Social</string>
-	<string name="linkAccount">Link your account to your favorite social network for an improved experience..</string>
+	<string name="linkAccount">Link your account to Facebook for an improved experience</string>
 	<string name="linkToFacebook">Link to Facebook</string>
 	<string name="newWaysToConnect">Look for new ways to connect in the future!</string>
 	<string name="accountConnected">Your account has been connected to Facebook successfully!</string>
 	<string name="accountDisconnected">Your account has been disconnected from Facebook.</string>
-
 
 	<!-- Seasons Fragment -->
 	<string name="seasons">Seasons</string>
@@ -101,6 +100,9 @@
 	<string name="friendsRequests">Friends Requests</string>
 	<string name="noResultsFriendsRequests">There are no pending friends\' requests</string>
 
+	<!-- Search Users -->
+	<string name="searchBy">Search by name or email</string>
+
 	<!-- Media Sessions -->
 	<string name="mediaSessions">Media Sessions</string>
 	<string name="newMediaSession">New Media Session</string>
@@ -117,7 +119,7 @@
 	<string name="addNewSelection">+</string>
 	<string name="details">Details</string>
 	<string name="change">Change</string>
-	<string name="remainingVotes">"Remaining votes: "</string>
+	<string name="remainingVotes">Remaining votes: </string>
 	<string name="thumbsUp">Thumbs Up</string>
 	<string name="thumbsDown">Thumbs Down</string>
 	<string name="selection">Selection</string>
@@ -141,10 +143,10 @@
 	<!-- Search -->
 	<string name="search">Search</string>
 	<string name="searchHint">Search movies &amp; series</string>
-	<string name="searchDescription">Movies and Series</string>
+	<string name="searchDescription">Movies &amp; Series</string>
 
 	<!-- About -->
-	<string name="shareSubject">Tp Prof</string>
+	<string name="shareSubject">Media Fever</string>
 	<string name="shareContent">Organize movies or series sessions with your friends.
 		Download it from Google Play.
 		https://play.google.com/store/apps/details?id=%1$s</string>

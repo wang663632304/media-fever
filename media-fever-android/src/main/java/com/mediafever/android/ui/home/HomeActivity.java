@@ -43,6 +43,7 @@ public class HomeActivity extends AbstractFragmentActivity {
 		
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		getSupportActionBar().setDisplayUseLogoEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(false);
 		
 		if (savedInstanceState == null) {
 			commitFragment(R.id.latestFragmentContainer, new LatestWatchablesFragment());
