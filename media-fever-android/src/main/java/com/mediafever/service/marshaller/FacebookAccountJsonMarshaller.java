@@ -1,5 +1,6 @@
 package com.mediafever.service.marshaller;
 
+import java.util.Date;
 import com.jdroid.java.json.JsonMap;
 
 /**
@@ -11,17 +12,17 @@ public class FacebookAccountJsonMarshaller {
 	
 	private final static String USER_ID = "userId";
 	private final static String ACCESS_TOKEN = "accessToken";
-	private final static String EXPIRES_IN = "accessExpiresIn";
+	private final static String EXPIRATION_DATE = "accessExpirationDate";
 	
-	public String marshall(String userId, String accessToken, Long expiresIn) {
-		return doMarshall(userId, accessToken, expiresIn).toString();
+	public String marshall(String userId, String accessToken, Date expirationDate) {
+		return doMarshall(userId, accessToken, expirationDate).toString();
 	}
 	
-	protected JsonMap doMarshall(String userId, String accessToken, Long expiresIn) {
+	protected JsonMap doMarshall(String userId, String accessToken, Date expiresIn) {
 		JsonMap map = new JsonMap();
 		map.put(USER_ID, userId);
 		map.put(ACCESS_TOKEN, accessToken);
-		map.put(EXPIRES_IN, expiresIn);
+		map.put(EXPIRATION_DATE, expiresIn);
 		return map;
 	}
 }

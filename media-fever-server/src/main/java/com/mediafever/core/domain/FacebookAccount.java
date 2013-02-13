@@ -1,5 +1,6 @@
 package com.mediafever.core.domain;
 
+import java.util.Date;
 import com.jdroid.javaweb.domain.Entity;
 
 /**
@@ -14,7 +15,7 @@ public class FacebookAccount extends Entity {
 	
 	private String accessToken;
 	
-	private Long accessExpiresIn;
+	private Date accessExpirationDate;
 	
 	/**
 	 * Default constructor.
@@ -24,10 +25,21 @@ public class FacebookAccount extends Entity {
 		// Required by Hibernate.
 	}
 	
-	public FacebookAccount(String userId, String accessToken, Long accessExpiresIn) {
+	public FacebookAccount(String userId, String accessToken, Date accessExpirationDate) {
 		this.userId = userId;
 		this.accessToken = accessToken;
-		this.accessExpiresIn = accessExpiresIn;
+		this.accessExpirationDate = accessExpirationDate;
+	}
+	
+	/**
+	 * Updates the account with a new access token and expiration date.
+	 * 
+	 * @param accessToken
+	 * @param accessExpirationDate
+	 */
+	public void update(String accessToken, Date accessExpirationDate) {
+		this.accessToken = accessToken;
+		this.accessExpirationDate = accessExpirationDate;
 	}
 	
 	public String getProfilePictureURL() {
@@ -42,9 +54,9 @@ public class FacebookAccount extends Entity {
 	}
 	
 	/**
-	 * @return the accessExpiresIn
+	 * @return the access expiration date for the token.
 	 */
-	public Long getAccessExpiresIn() {
-		return accessExpiresIn;
+	public Date getAccessExpirationDate() {
+		return accessExpirationDate;
 	}
 }

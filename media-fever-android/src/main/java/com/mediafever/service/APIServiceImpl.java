@@ -1,5 +1,6 @@
 package com.mediafever.service;
 
+import java.util.Date;
 import java.util.List;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.search.PagedResult;
@@ -133,13 +134,14 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	
 	/**
 	 * @see com.mediafever.service.APIService#connectToFacebook(java.lang.Long, java.lang.String, java.lang.String,
-	 *      java.lang.Long)
+	 *      java.util.Date)
 	 */
 	@Override
-	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken, Long facebookExpiresIn) {
+	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken,
+			Date facebookExpirationDate) {
 		EntityEnclosingWebService webservice = newPostService(USERS_MODULE, userId, FACEBOOK);
 		webservice.setEntity(new FacebookAccountJsonMarshaller().marshall(facebookUserId, facebookAccessToken,
-			facebookExpiresIn));
+			facebookExpirationDate));
 		webservice.execute();
 	}
 	

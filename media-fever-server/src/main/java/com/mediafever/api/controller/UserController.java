@@ -95,7 +95,9 @@ public class UserController extends AbstractController {
 	public void linkFacebookAccount(@PathParam("id") Long userId, String facebookAccountJSON) {
 		FacebookAccountJson facebookAccountJson = (FacebookAccountJson)(new FacebookAccountParser().parse(facebookAccountJSON));
 		userService.linkToFacebookAccount(userId, facebookAccountJson.getUserId(),
-			facebookAccountJson.getAccessToken(), facebookAccountJson.getAccessExpiresIn());
+			facebookAccountJson.getAccessToken(), facebookAccountJson.getAccessExpirationDate());
+		
+		// userService.unlinkFacebookAccount(userId);
 	}
 	
 	@GET

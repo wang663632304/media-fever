@@ -1,5 +1,7 @@
 package com.mediafever.domain.social;
 
+import java.util.Date;
+
 /**
  * Represents an user's Facebook account.
  * 
@@ -8,18 +10,18 @@ package com.mediafever.domain.social;
 public class FacebookAccount {
 	
 	private String accessToken;
-	private Long accessExpiresIn;
+	private Date accessExpirationDate;
 	
-	public FacebookAccount(String accessToken, Long accessExpiresIn) {
+	public FacebookAccount(String accessToken, Date accessExpirationDate) {
 		this.accessToken = accessToken;
-		this.accessExpiresIn = accessExpiresIn;
+		this.accessExpirationDate = accessExpirationDate;
 	}
 	
 	/**
-	 * @return the accessExpiresIn
+	 * @return the access expiration date
 	 */
-	public Long getAccessExpiresIn() {
-		return accessExpiresIn;
+	public Date getAccessExpirationDate() {
+		return accessExpirationDate;
 	}
 	
 	/**

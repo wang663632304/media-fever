@@ -94,11 +94,11 @@ CREATE TABLE FileEntity (
 -- FACEBOOK ACCOUNT
 -- --------------------
 CREATE TABLE FacebookAccount (
-	id				bigint(20)		NOT NULL auto_increment,
-	userId			VARCHAR(255)	NOT NULL,
-	accessToken		VARCHAR(255)	NOT NULL,
-	accessExpiresIn	bigint(20)		NOT NULL,
-	PRIMARY KEY		(id)
+	id						bigint(20)		NOT NULL auto_increment,
+	userId					VARCHAR(255)	NOT NULL,
+	accessToken				VARCHAR(255)	NOT NULL,
+	accessExpirationDate	DATETIME		NOT NULL,
+	PRIMARY KEY				(id)
 );
 
 -- --------------------

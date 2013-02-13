@@ -1,5 +1,6 @@
 package com.mediafever.core.service;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,14 +63,13 @@ public class UserService {
 	 * @param userId The user id.
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
-	 * @param facebookAccessExpiresIn The FB session's expiration time (in milliseconds since Unix epoch), or 0 if the
-	 *            session doesn't expire.
+	 * @param facebookAccessExpirationDate The FB session's expiration date.
 	 */
 	@Transactional
 	public void linkToFacebookAccount(Long userId, String facebookUserId, String facebookAccessToken,
-			Long facebookAccessExpiresIn) {
+			Date facebookAccessExpirationDate) {
 		User user = userRepository.get(userId);
-		user.linkToFacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpiresIn);
+		user.linkToFacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpirationDate);
 	}
 	
 	/**
