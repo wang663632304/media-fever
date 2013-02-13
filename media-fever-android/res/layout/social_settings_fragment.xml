@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-    xmlns:jdroid="http://schemas.android.com/apk/res/com.mediafever" 
+    
     android:layout_width="match_parent" android:layout_height="match_parent"
 	android:orientation="vertical">
+
+<!--     xmlns:jdroid="http://schemas.android.com/apk/res/com.mediafever"  -->
 
 	<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/linkAccount"
 		android:layout_margin="10dp" android:textSize="20sp"/>
 
-	<com.jdroid.android.view.SwitchButton android:id="@+id/connectToFacebook" 
-	    android:layout_margin="10dp" jdroid:label="@string/linkToFacebook"
-	    android:layout_height="wrap_content" android:layout_width="match_parent"/>
+<!-- 	<com.jdroid.android.view.SwitchButton android:id="@+id/connectToFacebook"  -->
+<!-- 	    android:layout_margin="10dp" jdroid:label="@string/linkToFacebook" -->
+<!-- 	    android:layout_height="wrap_content" android:layout_width="match_parent"/> -->
+	<com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        />
 
 	<TextView android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="10dp"
 		android:text="@string/newWaysToConnect" android:textSize="15sp" android:gravity="bottom"/>
