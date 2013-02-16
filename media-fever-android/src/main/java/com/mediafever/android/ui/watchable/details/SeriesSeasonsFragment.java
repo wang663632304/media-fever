@@ -47,15 +47,12 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	private Object actionMode;
 	private List<UserWatchable<Episode>> episodesUserWatchables = Lists.newArrayList();
 	
-	public SeriesSeasonsFragment() {
-	}
-	
-	public SeriesSeasonsFragment(UserWatchable<Series> userWatchable) {
-		this.userWatchable = userWatchable;
-		
+	public static SeriesSeasonsFragment instance(UserWatchable<Series> userWatchable) {
+		SeriesSeasonsFragment fragment = new SeriesSeasonsFragment();
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(USER_WATCHABLE_EXTRA, userWatchable);
-		setArguments(bundle);
+		fragment.setArguments(bundle);
+		return fragment;
 	}
 	
 	/**

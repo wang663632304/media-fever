@@ -124,12 +124,11 @@ public class AndroidBaseActivity extends BaseActivity {
 	}
 	
 	public enum LeftAction implements TabAction {
-		
-		// TODO Replace the friends action selector once we have all the action's images
-		WATCHED(R.drawable.friends_action_selector, R.string.watched, WatchedListActivity.class),
-		WISHLIST(R.drawable.friends_action_selector, R.string.wishList, WishListActivity.class),
-		MEDIA_SESSIONS(R.drawable.friends_action_selector, R.string.mediaSessions, MediaSessionListActivity.class),
-		WATCH_TO_WATCH(R.drawable.friends_action_selector, R.string.whatToWatch, WhatToWatchActivity.class),
+		WATCHED(R.drawable.watched_action_selector, R.string.watched, WatchedListActivity.class),
+		WISHLIST(R.drawable.wishlist_action_selector, R.string.wishList, WishListActivity.class),
+		MEDIA_SESSIONS(R.drawable.media_sessions_action_selector, R.string.mediaSessions,
+				MediaSessionListActivity.class),
+		WATCH_TO_WATCH(R.drawable.what_to_watch_action_selector, R.string.whatToWatch, WhatToWatchActivity.class),
 		FRIENDS(R.drawable.friends_action_selector, R.string.friends, FriendsActivity.class);
 		
 		private int iconResource;

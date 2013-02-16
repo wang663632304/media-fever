@@ -32,7 +32,7 @@ public enum WatchableContextualItem implements TabAction {
 		@SuppressWarnings("unchecked")
 		@Override
 		public Fragment createFragment(Object args) {
-			return new WatchableSocialFragment((UserWatchable<Watchable>)args);
+			return WatchableSocialFragment.instance((UserWatchable<Watchable>)args);
 		}
 	},
 	SEASONS(R.string.seasons) {
@@ -40,7 +40,7 @@ public enum WatchableContextualItem implements TabAction {
 		@SuppressWarnings("unchecked")
 		@Override
 		public Fragment createFragment(Object args) {
-			return new SeriesSeasonsFragment((UserWatchable<Series>)args);
+			return SeriesSeasonsFragment.instance((UserWatchable<Series>)args);
 		}
 	};
 	

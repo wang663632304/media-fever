@@ -20,22 +20,21 @@ public enum FriendsContextualItem implements TabAction {
 			return new FriendsGridFragment();
 		}
 	},
-	REQUESTS(R.string.requests, R.drawable.friends_contextual_selector, FriendsRequestsActivity.class) {
+	REQUESTS(R.string.requests, R.drawable.friends_request_contextual_selector, FriendsRequestsActivity.class) {
 		
 		@Override
 		public Fragment createFragment(Object args) {
 			return new FriendsRequestsFragment();
 		}
 	},
-	// TODO Add proper activities and fragments
-	FACEBOOK(R.string.facebook, R.drawable.friends_contextual_selector, SocialSettingsActivity.class) {
+	FACEBOOK(R.string.facebook, R.drawable.facebook_contextual_selector, SocialSettingsActivity.class) {
 		
 		@Override
 		public Fragment createFragment(Object args) {
 			return new SocialSettingsFragment();
 		}
 	},
-	SEARCH_USERS(R.string.searchUsers, R.drawable.friends_contextual_selector, SearchUsersActivity.class) {
+	SEARCH_USERS(R.string.searchUsers, R.drawable.search_users_contextual_selector, SearchUsersActivity.class) {
 		
 		@Override
 		public Fragment createFragment(Object args) {

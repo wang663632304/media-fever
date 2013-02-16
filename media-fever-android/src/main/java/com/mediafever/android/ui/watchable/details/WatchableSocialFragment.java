@@ -25,15 +25,12 @@ public class WatchableSocialFragment extends AbstractListFragment<User> {
 	
 	private UserWatchable<Watchable> userWatchable;
 	
-	public WatchableSocialFragment() {
-	}
-	
-	public WatchableSocialFragment(UserWatchable<Watchable> userWatchable) {
-		this.userWatchable = userWatchable;
-		
+	public static WatchableSocialFragment instance(UserWatchable<Watchable> userWatchable) {
+		WatchableSocialFragment fragment = new WatchableSocialFragment();
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(USER_WATCHABLE_EXTRA, userWatchable);
-		setArguments(bundle);
+		fragment.setArguments(bundle);
+		return fragment;
 	}
 	
 	/**
@@ -83,7 +80,7 @@ public class WatchableSocialFragment extends AbstractListFragment<User> {
 			mergeAdapter.addView(new ListSeparatorView(getActivity(), getString(resId,
 				userWatchable.getOnTheWishListOf().size())));
 			mergeAdapter.addAdapter(new UserAdapter(getActivity(), userWatchable.getOnTheWishListOf(),
-					R.layout.user_small_item));
+					R.layout.user_small_item, false));
 		}
 		setListAdapter(mergeAdapter);
 	}

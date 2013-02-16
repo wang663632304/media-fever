@@ -11,14 +11,14 @@ import com.mediafever.R;
  */
 public enum SettingsContextualItem implements TabAction {
 	
-	PROFILE(R.string.profile, R.drawable.friends_contextual_selector, ProfileActivity.class) {
+	PROFILE(R.string.profile, R.drawable.profile_contextual_selector, ProfileActivity.class) {
 		
 		@Override
 		public Fragment createFragment(Object args) {
 			return new ProfileFragment();
 		}
 	},
-	SOCIAL(R.string.social, R.drawable.friends_contextual_selector, SocialSettingsActivity.class) {
+	SOCIAL(R.string.facebook, R.drawable.facebook_contextual_selector, SocialSettingsActivity.class) {
 		
 		@Override
 		public Fragment createFragment(Object args) {
