@@ -58,21 +58,15 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	/**
 	 * @see com.jdroid.android.fragment.AbstractListFragment#onCreate(android.os.Bundle)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		Bundle args = getArguments();
-		if (args != null) {
-			userWatchable = (UserWatchable<Series>)args.getSerializable(USER_WATCHABLE_EXTRA);
-		}
+		userWatchable = getArgument(USER_WATCHABLE_EXTRA);
 		
-		if (markAsWachedUseCase == null) {
-			markAsWachedUseCase = getInstance(MarkAsWachedUseCase.class);
-			markAsWachedUseCase.setUserId(getUser().getId());
-		}
+		markAsWachedUseCase = getInstance(MarkAsWachedUseCase.class);
+		markAsWachedUseCase.setUserId(getUser().getId());
 	}
 	
 	/**
@@ -103,11 +97,11 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#onActivityCreated(android.os.Bundle)
+	 * @see com.jdroid.android.fragment.AbstractListFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		
 		((WatchableActivity)getActivity()).setOnPageSelectedListener(this);
 		

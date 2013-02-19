@@ -43,7 +43,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		pendingThumbs = (TextView)view.findViewById(R.id.pendingThumbs);
+		pendingThumbs = findView(R.id.pendingThumbs);
 		refresh();
 	}
 	

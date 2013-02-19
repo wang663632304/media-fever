@@ -8,6 +8,7 @@ import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
+import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.usecase.SuggestionsUseCase;
 
@@ -20,15 +21,6 @@ public class SuggestionsListFragment extends AbstractListFragment<Watchable> {
 	private SuggestionsUseCase suggestionsUseCase;
 	
 	/**
-	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 *      android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.list_fragment, container, false);
-	}
-	
-	/**
 	 * @see android.app.Fragment#onCreate(android.os.Bundle)
 	 */
 	@Override
@@ -36,10 +28,17 @@ public class SuggestionsListFragment extends AbstractListFragment<Watchable> {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		if (suggestionsUseCase == null) {
-			suggestionsUseCase = getInstance(SuggestionsUseCase.class);
-			suggestionsUseCase.setUserId(getUser().getId());
-		}
+		suggestionsUseCase = getInstance(SuggestionsUseCase.class);
+		suggestionsUseCase.setUserId(getUser().getId());
+	}
+	
+	/**
+	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 *      android.os.Bundle)
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.list_fragment, container, false);
 	}
 	
 	/**
@@ -69,8 +68,7 @@ public class SuggestionsListFragment extends AbstractListFragment<Watchable> {
 			
 			@Override
 			public void run() {
-				setListAdapter(new WatchableAdapter(SuggestionsListFragment.this.getActivity(),
-						suggestionsUseCase.getWatchables()));
+				setListAdapter(new WatchableAdapter(getActivity(), suggestionsUseCase.getWatchables()));
 				dismissLoading();
 			}
 		});
@@ -81,6 +79,6 @@ public class SuggestionsListFragment extends AbstractListFragment<Watchable> {
 	 */
 	@Override
 	public void onItemSelected(Watchable watchable) {
-		WatchableAdapter.onItemClick(this.getActivity(), watchable);
+		WatchableActivity.start(getActivity(), watchable);
 	}
 }

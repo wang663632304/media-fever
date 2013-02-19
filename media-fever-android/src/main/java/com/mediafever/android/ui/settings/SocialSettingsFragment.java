@@ -36,15 +36,6 @@ public class SocialSettingsFragment extends AbstractFragment {
 	private SwitchButton connectButton;
 	
 	/**
-	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 *      android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.social_settings_fragment, container, false);
-	}
-	
-	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
 	 */
 	@Override
@@ -54,11 +45,20 @@ public class SocialSettingsFragment extends AbstractFragment {
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onActivityCreated(android.os.Bundle)
+	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 *      android.os.Bundle)
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.social_settings_fragment, container, false);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		
 		initFacebookAccountUseCase();
 		initConnectToFacebookUseCase();

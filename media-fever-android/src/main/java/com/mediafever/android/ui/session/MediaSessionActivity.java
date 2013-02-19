@@ -119,10 +119,10 @@ public class MediaSessionActivity extends WizardActivity {
 		}
 		
 		/**
-		 * @see com.jdroid.android.fragment.UseCaseFragment#getuseCaseTrigger()
+		 * @see com.jdroid.android.fragment.UseCaseFragment#getUseCaseTrigger()
 		 */
 		@Override
-		protected UseCaseTrigger getuseCaseTrigger() {
+		protected UseCaseTrigger getUseCaseTrigger() {
 			return UseCaseTrigger.MANUAL;
 		}
 	}

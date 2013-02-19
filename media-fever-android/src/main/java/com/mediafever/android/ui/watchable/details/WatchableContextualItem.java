@@ -23,8 +23,8 @@ public enum WatchableContextualItem implements TabAction {
 		@SuppressWarnings("unchecked")
 		@Override
 		public Fragment createFragment(Object args) {
-			return AndroidUtils.isLargeScreenOrBigger() ? new WatchableOverviewLargeFragment(
-					(UserWatchable<Watchable>)args) : new WatchableOverviewFragment((UserWatchable<Watchable>)args);
+			return AndroidUtils.isLargeScreenOrBigger() ? WatchableOverviewLargeFragment.instance((UserWatchable<Watchable>)args)
+					: WatchableOverviewFragment.instance((UserWatchable<Watchable>)args);
 		}
 	},
 	SOCIAL(R.string.social) {

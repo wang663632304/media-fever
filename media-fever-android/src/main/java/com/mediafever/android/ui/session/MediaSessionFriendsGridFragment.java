@@ -38,10 +38,8 @@ public class MediaSessionFriendsGridFragment extends AbstractGridFragment<UserIm
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		if (friendsUseCase == null) {
-			friendsUseCase = getInstance(FriendsUseCase.class);
-			friendsUseCase.setUserId(getUser().getId());
-		}
+		friendsUseCase = getInstance(FriendsUseCase.class);
+		friendsUseCase.setUserId(getUser().getId());
 	}
 	
 	/**
@@ -54,12 +52,11 @@ public class MediaSessionFriendsGridFragment extends AbstractGridFragment<UserIm
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onActivityCreated(android.os.Bundle)
+	 * @see com.jdroid.android.fragment.AbstractGridFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
-	
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		loadFriends();
 		getGridView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 	}

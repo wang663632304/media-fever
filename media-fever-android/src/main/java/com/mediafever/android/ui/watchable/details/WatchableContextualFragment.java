@@ -44,30 +44,23 @@ public class WatchableContextualFragment extends AbstractFragment {
 	
 	private UserWatchable<Watchable> userWatchable;
 	
-	public WatchableContextualFragment() {
-	}
-	
-	public WatchableContextualFragment(UserWatchable<Watchable> userWatchable) {
-		this.userWatchable = userWatchable;
-		
+	public static WatchableContextualFragment instance(UserWatchable<Watchable> userWatchable) {
+		WatchableContextualFragment fragment = new WatchableContextualFragment();
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(USER_WATCHABLE_EXTRA, userWatchable);
-		setArguments(bundle);
+		fragment.setArguments(bundle);
+		return fragment;
 	}
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		Bundle args = getArguments();
-		if (args != null) {
-			userWatchable = (UserWatchable<Watchable>)args.getSerializable(USER_WATCHABLE_EXTRA);
-		}
+		userWatchable = getArgument(USER_WATCHABLE_EXTRA);
 	}
 	
 	/**
@@ -80,11 +73,11 @@ public class WatchableContextualFragment extends AbstractFragment {
 	}
 	
 	/**
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see com.jdroid.android.fragment.AbstractFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		
 		Watchable watchable = userWatchable.getWatchable();
 		image.setImageContent(watchable.getImage(), R.drawable.watchable_default);
@@ -142,6 +135,5 @@ public class WatchableContextualFragment extends AbstractFragment {
 				// TODO Implement this
 			}
 		});
-		
 	}
 }

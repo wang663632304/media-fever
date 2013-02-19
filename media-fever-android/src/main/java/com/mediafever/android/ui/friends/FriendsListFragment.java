@@ -37,35 +37,49 @@ public class FriendsListFragment extends AbstractListFragment<UserImpl> {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		if (friendsUseCase == null) {
-			friendsUseCase = getInstance(FriendsUseCase.class);
-			friendsUseCase.setUserId(getUser().getId());
-		}
+		friendsUseCase = getInstance(FriendsUseCase.class);
+		friendsUseCase.setUserId(getUser().getId());
 		
-		if (removeFriendUseCase == null) {
-			removeFriendUseCase = getInstance(RemoveFriendUseCase.class);
-			removeFriendUseCaseListener = new AndroidUseCaseListener() {
-				
-				@Override
-				public void onFinishUseCase() {
-					executeOnUIThread(new Runnable() {
-						
-						@Override
-						public void run() {
-							ToastUtils.showInfoToast(R.string.friendRemoved);
-							executeUseCase(friendsUseCase);
-							dismissLoading();
-						}
-					});
-				}
-				
-				@Override
-				protected ActivityIf getActivityIf() {
-					return (ActivityIf)getActivity();
-				}
-			};
-			removeFriendUseCase.setUserId(getUser().getId());
-		}
+		removeFriendUseCase = getInstance(RemoveFriendUseCase.class);
+		removeFriendUseCaseListener = new AndroidUseCaseListener() {
+			
+			@Override
+			public void onFinishUseCase() {
+				executeOnUIThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						ToastUtils.showInfoToast(R.string.friendRemoved);
+						executeUseCase(friendsUseCase);
+						dismissLoading();
+					}
+				});
+			}
+			
+			@Override
+			protected ActivityIf getActivityIf() {
+				return (ActivityIf)getActivity();
+			}
+		};
+		removeFriendUseCase.setUserId(getUser().getId());
+	}
+	
+	/**
+	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 *      android.os.Bundle)
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.list_fragment, container, false);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractListFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		registerForContextMenu(getListView());
 	}
 	
 	/**
@@ -86,24 +100,6 @@ public class FriendsListFragment extends AbstractListFragment<UserImpl> {
 		super.onPause();
 		onPauseUseCase(friendsUseCase, this);
 		onPauseUseCase(removeFriendUseCase, removeFriendUseCaseListener);
-	}
-	
-	/**
-	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 *      android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.list_fragment, container, false);
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#onActivityCreated(android.os.Bundle)
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		registerForContextMenu(getListView());
 	}
 	
 	/**
@@ -150,7 +146,7 @@ public class FriendsListFragment extends AbstractListFragment<UserImpl> {
 			
 			@Override
 			public void run() {
-				setListAdapter(new UserAdapter(FriendsListFragment.this.getActivity(), friendsUseCase.getFriends()));
+				setListAdapter(new UserAdapter(getActivity(), friendsUseCase.getFriends()));
 				dismissLoading();
 			}
 		});

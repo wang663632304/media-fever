@@ -2,8 +2,6 @@ package com.mediafever.android.ui.watchable;
 
 import java.util.List;
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
@@ -12,7 +10,6 @@ import com.jdroid.android.utils.LocalizationUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter.WatchableHolder;
-import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
 
@@ -51,13 +48,6 @@ public class WatchableAdapter extends BaseHolderArrayAdapter<Watchable, Watchabl
 		protected CustomImageView image;
 		protected TextView name;
 		protected TextView description;
-	}
-	
-	public static void onItemClick(Activity activity, Watchable watchable) {
-		Intent intent = new Intent(activity, WatchableActivity.class);
-		intent.setData(Uri.parse(watchable.getId().toString()));
-		intent.putExtra(WatchableActivity.WATCHABLE_TYPE_EXTRA, WatchableType.find(watchable));
-		activity.startActivity(intent);
 	}
 	
 	public static String getWatchableDescription(Watchable watchable) {

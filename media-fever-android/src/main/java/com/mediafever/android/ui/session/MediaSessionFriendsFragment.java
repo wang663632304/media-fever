@@ -28,10 +28,8 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		if (friendsUseCase == null) {
-			friendsUseCase = getInstance(FriendsUseCase.class);
-			friendsUseCase.setUserId(getUser().getId());
-		}
+		friendsUseCase = getInstance(FriendsUseCase.class);
+		friendsUseCase.setUserId(getUser().getId());
 	}
 	
 	/**
@@ -44,11 +42,11 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onActivityCreated(android.os.Bundle)
+	 * @see com.jdroid.android.fragment.AbstractListFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		getListView().addHeaderView(
 			LayoutInflater.from(getActivity()).inflate(R.layout.media_session_friends_header_fragment, null));
 		loadFriends();

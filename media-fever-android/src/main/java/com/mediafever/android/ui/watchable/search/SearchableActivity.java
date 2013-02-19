@@ -60,7 +60,6 @@ public class SearchableActivity extends AbstractFragmentActivity {
 			watchableIntent.putExtra(WatchableActivity.WATCHABLE_TYPE_EXTRA, watchableType);
 			startActivity(watchableIntent);
 			finish();
-			
 		}
 	}
 	
@@ -96,8 +95,8 @@ public class SearchableActivity extends AbstractFragmentActivity {
 						R.id.fragmentContainer);
 					List<Watchable> watchables = getUseCase().getWatchables();
 					if (reloadable == null) {
-						reloadable = AndroidUtils.isLargeScreenOrBigger() ? new WatchablesGridFragment(watchables)
-								: new WatchablesListFragment(watchables);
+						reloadable = AndroidUtils.isLargeScreenOrBigger() ? WatchablesGridFragment.instance(watchables)
+								: WatchablesListFragment.instance(watchables);
 						activity.commitFragment((Fragment)reloadable);
 					} else {
 						reloadable.reload(watchables);

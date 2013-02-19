@@ -20,39 +20,20 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 	
 	private static final String MEDIA_SESSION_ID_EXTRA = "mediaSessionId";
 	
-	private Long mediaSessionId;
 	private AcceptMediaSessionUseCase acceptMediaSessionUseCase;
 	private Button accept;
 	private Button reject;
 	
 	public static void show(Long mediaSessionId, Fragment targetFragment) {
 		FragmentManager fm = targetFragment.getActivity().getSupportFragmentManager();
-		AcceptRejectSessionDialogFragment dialogFragment = new AcceptRejectSessionDialogFragment(mediaSessionId);
-		dialogFragment.setTargetFragment(targetFragment, 1);
-		dialogFragment.show(fm, AcceptRejectSessionDialogFragment.class.getSimpleName());
-	}
-	
-	public AcceptRejectSessionDialogFragment() {
-	}
-	
-	private AcceptRejectSessionDialogFragment(Long mediaSessionId) {
-		this.mediaSessionId = mediaSessionId;
 		
+		AcceptRejectSessionDialogFragment dialogFragment = new AcceptRejectSessionDialogFragment();
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(MEDIA_SESSION_ID_EXTRA, mediaSessionId);
-		setArguments(bundle);
-	}
-	
-	/**
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 *      android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.accept_reject_dialog_fragment, container, false);
-		accept = (Button)view.findViewById(R.id.accept);
-		reject = (Button)view.findViewById(R.id.reject);
-		return view;
+		dialogFragment.setArguments(bundle);
+		
+		dialogFragment.setTargetFragment(targetFragment, 1);
+		dialogFragment.show(fm, AcceptRejectSessionDialogFragment.class.getSimpleName());
 	}
 	
 	/**
@@ -63,10 +44,19 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 		super.onCreate(savedInstanceState);
 		setStyle(STYLE_NO_TITLE, 0);
 		
-		Bundle args = getArguments();
-		if (args != null) {
-			mediaSessionId = args.getLong(MEDIA_SESSION_ID_EXTRA);
-		}
+		Long mediaSessionId = getArgument(MEDIA_SESSION_ID_EXTRA);
+		
+		acceptMediaSessionUseCase = getInstance(AcceptMediaSessionUseCase.class);
+		acceptMediaSessionUseCase.setMediaSessionId(mediaSessionId);
+	}
+	
+	/**
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 *      android.os.Bundle)
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.accept_reject_dialog_fragment, container, false);
 	}
 	
 	/**
@@ -76,11 +66,7 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		if (acceptMediaSessionUseCase == null) {
-			acceptMediaSessionUseCase = getInstance(AcceptMediaSessionUseCase.class);
-			acceptMediaSessionUseCase.setMediaSessionId(mediaSessionId);
-		}
-		
+		accept = findView(R.id.accept);
 		accept.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -90,6 +76,7 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 			}
 		});
 		
+		reject = findView(R.id.reject);
 		reject.setOnClickListener(new OnClickListener() {
 			
 			@Override

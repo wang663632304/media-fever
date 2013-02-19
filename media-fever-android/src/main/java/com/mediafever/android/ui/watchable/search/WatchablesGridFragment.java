@@ -10,6 +10,7 @@ import com.jdroid.android.fragment.AbstractGridFragment;
 import com.mediafever.R;
 import com.mediafever.android.ui.Reloadable;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
+import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.Watchable;
 
 /**
@@ -21,15 +22,23 @@ public class WatchablesGridFragment extends AbstractGridFragment<Watchable> impl
 	private static final String WATCHABLES_EXTRA = "watchables";
 	private List<Watchable> watchables;
 	
-	public WatchablesGridFragment() {
-	}
-	
-	public WatchablesGridFragment(List<Watchable> watchables) {
-		this.watchables = watchables;
-		
+	public static WatchablesGridFragment instance(List<Watchable> watchables) {
+		WatchablesGridFragment fragment = new WatchablesGridFragment();
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(WATCHABLES_EXTRA, (Serializable)watchables);
-		setArguments(bundle);
+		fragment.setArguments(bundle);
+		return fragment;
+	}
+	
+	/**
+	 * @see android.app.Fragment#onCreate(android.os.Bundle)
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		
+		watchables = getArgument(WATCHABLES_EXTRA);
 	}
 	
 	/**
@@ -42,26 +51,11 @@ public class WatchablesGridFragment extends AbstractGridFragment<Watchable> impl
 	}
 	
 	/**
-	 * @see android.app.Fragment#onCreate(android.os.Bundle)
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-		
-		Bundle args = getArguments();
-		if (args != null) {
-			watchables = (List<Watchable>)args.getSerializable(WATCHABLES_EXTRA);
-		}
-	}
-	
-	/**
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see com.jdroid.android.fragment.AbstractGridFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		reload(watchables);
 	}
 	
@@ -79,6 +73,6 @@ public class WatchablesGridFragment extends AbstractGridFragment<Watchable> impl
 	 */
 	@Override
 	public void onItemSelected(Watchable watchable) {
-		WatchableAdapter.onItemClick(this.getActivity(), watchable);
+		WatchableActivity.start(getActivity(), watchable);
 	}
 }

@@ -34,10 +34,8 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		if (smartSelectionUseCase == null) {
-			smartSelectionUseCase = getInstance(SmartSelectionUseCase.class);
-			smartSelectionUseCase.setMediaSession(getMediaSessionSetupUseCase().getMediaSession());
-		}
+		smartSelectionUseCase = getInstance(SmartSelectionUseCase.class);
+		smartSelectionUseCase.setMediaSession(getMediaSessionSetupUseCase().getMediaSession());
 	}
 	
 	/**
@@ -46,9 +44,17 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.media_selection_picker_dialog_fragment, container, false);
+		return inflater.inflate(R.layout.media_selection_picker_dialog_fragment, container, false);
+	}
+	
+	/**
+	 * @see com.jdroid.android.dialog.AbstractDialogFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		
-		View manualSelection = view.findViewById(R.id.manualSelection);
+		View manualSelection = findView(R.id.manualSelection);
 		manualSelection.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -57,7 +63,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			}
 		});
 		
-		View smartSelection = view.findViewById(R.id.smartSelection);
+		View smartSelection = findView(R.id.smartSelection);
 		smartSelection.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -67,7 +73,6 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 		});
 		
 		getDialog().setTitle(R.string.selection);
-		return view;
 	}
 	
 	/**

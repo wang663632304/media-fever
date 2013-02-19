@@ -65,7 +65,5 @@ public class DashboardFragment extends AbstractFragment {
 		watched.setOnClickListener(new LaunchOnClickListener(WatchedListActivity.class));
 		mediaSessions.setOnClickListener(new LaunchOnClickListener(MediaSessionListActivity.class));
 		whatToWatch.setOnClickListener(new LaunchOnClickListener(WhatToWatchActivity.class));
-		
 	}
-	
 }

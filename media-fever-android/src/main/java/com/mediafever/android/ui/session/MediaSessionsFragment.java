@@ -33,10 +33,8 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 		
 		getSupportActionBar().setTitle(R.string.mediaSessions);
 		
-		if (mediaSessionsUseCase == null) {
-			mediaSessionsUseCase = getInstance(MediaSessionsUseCase.class);
-			mediaSessionsUseCase.setUserId(getUser().getId());
-		}
+		mediaSessionsUseCase = getInstance(MediaSessionsUseCase.class);
+		mediaSessionsUseCase.setUserId(getUser().getId());
 	}
 	
 	/**
@@ -76,7 +74,7 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(mediaSessionsUseCase, this, UseCaseTrigger.ALWAYS);
+		onResumeUseCase(mediaSessionsUseCase, this, UseCaseTrigger.ONCE);
 	}
 	
 	/**

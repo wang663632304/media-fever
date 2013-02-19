@@ -2,6 +2,9 @@ package com.mediafever.android.ui.watchable.details;
 
 import java.util.List;
 import roboguice.inject.InjectExtra;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -38,6 +41,9 @@ public class WatchableActivity extends AbstractFragmentActivity implements
 			return UserWatchableUseCase.class;
 		}
 		
+		/**
+		 * @see com.jdroid.android.fragment.UseCaseFragment#intializeUseCase(com.jdroid.android.usecase.DefaultAbstractUseCase)
+		 */
 		@Override
 		protected void intializeUseCase(UserWatchableUseCase watchableUseCase) {
 			watchableUseCase.setUserId(getUser().getId());
@@ -60,8 +66,8 @@ public class WatchableActivity extends AbstractFragmentActivity implements
 					if (AndroidUtils.isLargeScreenOrBigger()) {
 						
 						WatchableContextualItem defaultWatchableContextualItem = WatchableContextualItem.OVERVIEW;
-						fragmentTransaction.add(R.id.contextualFragmentContainer, new WatchableContextualFragment(
-								userWatchable));
+						fragmentTransaction.add(R.id.contextualFragmentContainer,
+							WatchableContextualFragment.instance(userWatchable));
 						fragmentTransaction.add(R.id.detailsFragmentContainer,
 							defaultWatchableContextualItem.createFragment(userWatchable),
 							defaultWatchableContextualItem.getName());
@@ -102,6 +108,17 @@ public class WatchableActivity extends AbstractFragmentActivity implements
 	private WatchableType watchableType;
 	
 	private OnPageSelectedListener onPageSelectedListener;
+	
+	public static void start(Context context, Watchable watchable) {
+		start(context, watchable.getId(), WatchableType.find(watchable));
+	}
+	
+	public static void start(Context context, Long watchableId, WatchableType watchableType) {
+		Intent intent = new Intent(context, WatchableActivity.class);
+		intent.setData(Uri.parse(watchableId.toString()));
+		intent.putExtra(WatchableActivity.WATCHABLE_TYPE_EXTRA, watchableType);
+		context.startActivity(intent);
+	}
 	
 	/**
 	 * @see com.jdroid.android.activity.ActivityIf#getContentView()
