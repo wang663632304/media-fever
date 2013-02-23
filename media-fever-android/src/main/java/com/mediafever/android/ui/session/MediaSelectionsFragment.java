@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.mediafever.R;
 import com.mediafever.domain.session.MediaSelection;
-import com.mediafever.domain.session.MediaSessionUser;
 import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
 /**
@@ -16,8 +14,6 @@ import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
  * @author Maxi Rosson
  */
 public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection> {
-	
-	private TextView pendingThumbs;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -43,7 +39,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		pendingThumbs = findView(R.id.pendingThumbs);
 		refresh();
 	}
 	
@@ -64,9 +59,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	}
 	
 	public void refresh() {
-		MediaSessionUser mediaSessionUser = getMediaSessionSetupUseCase().getMediaSession().getMe();
-		pendingThumbs.setText(MediaSelectionAdapter.getThumbs(mediaSessionUser.getPendingThumbsUp(),
-			mediaSessionUser.getPendingThumbsDown()));
 		setListAdapter(new MediaSelectionAdapter(MediaSelectionsFragment.this.getActivity(),
 				getMediaSessionSetupUseCase().getMediaSession().getSelections()));
 	}

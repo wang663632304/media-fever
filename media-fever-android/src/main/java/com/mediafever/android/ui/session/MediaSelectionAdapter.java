@@ -4,10 +4,10 @@ import java.util.List;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.android.images.CustomImageView;
-import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.session.MediaSelectionAdapter.MediaSelectionHolder;
 import com.mediafever.domain.session.MediaSelection;
@@ -36,35 +36,37 @@ public class MediaSelectionAdapter extends BaseHolderArrayAdapter<MediaSelection
 			holder.userImage.setImageContent(mediaSelection.getOwner().getImage(), R.drawable.user_default);
 			holder.fullName.setText(mediaSelection.getOwner().getFullname());
 			
-			String thumbs = getThumbs(mediaSelection.getThumbsUpUsers().size(),
-				mediaSelection.getThumbsDownUsers().size());
-			holder.thumbs.setText(thumbs);
-			holder.thumbs.setVisibility(StringUtils.isBlank(thumbs) ? View.GONE : View.VISIBLE);
+			Integer thumbsUp = mediaSelection.getThumbsUpUsers().size();
+			if (thumbsUp > 0) {
+				holder.thumbsUp.setText(thumbsUp.toString());
+				holder.thumbsUp.setVisibility(View.VISIBLE);
+				holder.thumbsUpIcon.setVisibility(View.VISIBLE);
+			} else {
+				holder.thumbsUp.setVisibility(View.GONE);
+				holder.thumbsUpIcon.setVisibility(View.GONE);
+			}
+			
+			Integer thumbsDown = mediaSelection.getThumbsDownUsers().size();
+			if (thumbsDown > 0) {
+				holder.thumbsDown.setText(thumbsDown.toString());
+				holder.thumbsDown.setVisibility(View.VISIBLE);
+				holder.thumbsDownIcon.setVisibility(View.VISIBLE);
+			} else {
+				holder.thumbsDown.setVisibility(View.GONE);
+				holder.thumbsDownIcon.setVisibility(View.GONE);
+			}
 			
 			holder.addNew.setVisibility(View.GONE);
 		} else {
 			holder.name.setVisibility(View.GONE);
 			holder.image.setVisibility(View.GONE);
 			holder.userContainer.setVisibility(View.GONE);
-			holder.thumbs.setVisibility(View.GONE);
+			holder.thumbsUp.setVisibility(View.GONE);
+			holder.thumbsUpIcon.setVisibility(View.GONE);
+			holder.thumbsDown.setVisibility(View.GONE);
+			holder.thumbsDownIcon.setVisibility(View.GONE);
 			holder.addNew.setVisibility(View.VISIBLE);
 		}
-	}
-	
-	public static String getThumbs(Integer thumbsUp, Integer thumbsDown) {
-		StringBuilder builder = new StringBuilder();
-		if (thumbsUp > 0) {
-			builder.append(thumbsUp);
-			builder.append("+");
-		}
-		if (thumbsDown > 0) {
-			if (builder.length() > 0) {
-				builder.append(StringUtils.EMPTY);
-			}
-			builder.append(thumbsDown);
-			builder.append("-");
-		}
-		return builder.toString();
 	}
 	
 	@Override
@@ -76,7 +78,10 @@ public class MediaSelectionAdapter extends BaseHolderArrayAdapter<MediaSelection
 		holder.userContainer = findView(convertView, R.id.userContainer);
 		holder.userImage = findView(convertView, R.id.userImage);
 		holder.fullName = findView(convertView, R.id.fullName);
-		holder.thumbs = findView(convertView, R.id.thumbs);
+		holder.thumbsUp = findView(convertView, R.id.thumbsUp);
+		holder.thumbsUpIcon = findView(convertView, R.id.thumbsUpIcon);
+		holder.thumbsDown = findView(convertView, R.id.thumbsDown);
+		holder.thumbsDownIcon = findView(convertView, R.id.thumbsDownIcon);
 		return holder;
 	}
 	
@@ -88,6 +93,9 @@ public class MediaSelectionAdapter extends BaseHolderArrayAdapter<MediaSelection
 		protected ViewGroup userContainer;
 		protected CustomImageView userImage;
 		protected TextView fullName;
-		protected TextView thumbs;
+		protected TextView thumbsUp;
+		protected ImageView thumbsUpIcon;
+		protected TextView thumbsDown;
+		protected ImageView thumbsDownIcon;
 	}
 }

@@ -15,6 +15,7 @@
         <ignore path="res\layout\toast_custom.xml" />
         <ignore path="res/layout/toast_custom.xml" />
     </issue>
+    <issue id="SelectableText" severity="ignore" />
     <issue id="TypographyDashes">
         <ignore path="res\values\analytics.xml" />
     </issue>
