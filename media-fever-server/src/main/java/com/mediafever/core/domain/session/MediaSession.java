@@ -68,12 +68,14 @@ public class MediaSession extends Entity {
 	
 	public void thumbsUp(MediaSelection mediaSelection, MediaSessionUser mediaSessionUser) {
 		mediaSelection.thumbsUp(mediaSessionUser);
-		mediaSessionUser.decrementPendingThumbsUp();
 	}
 	
 	public void thumbsDown(MediaSelection mediaSelection, MediaSessionUser mediaSessionUser) {
 		mediaSelection.thumbsDown(mediaSessionUser);
-		mediaSessionUser.decrementPendingThumbsDown();
+	}
+	
+	public void removeSelection(MediaSelection mediaSelection) {
+		selections.remove(mediaSelection);
 	}
 	
 	public Date getDate() {

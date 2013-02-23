@@ -195,8 +195,6 @@ CREATE TABLE MediaSelection (
 CREATE TABLE MediaSessionUser (
 	id		 				bigint(20) 		NOT NULL auto_increment,
 	userId		 			bigint(20) 		NOT NULL,
-	pendingThumbsUp			bigint(20)		NOT NULL,
-	pendingThumbsDown		bigint(20)		NOT NULL,
 	accepted				BOOLEAN			NULL,
 	mediaSessionId			bigint(20)		NULL,
 	PRIMARY KEY  			(id),

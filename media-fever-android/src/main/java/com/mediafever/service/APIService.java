@@ -121,6 +121,8 @@ public interface APIService {
 	
 	public void thumbsDownMediaSelection(MediaSession mediaSession, MediaSelection mediaSelection);
 	
+	public void removeMediaSelection(MediaSession mediaSession, MediaSelection mediaSelection);
+	
 	public Watchable getSmartSelection(Long mediaSessionId);
 	
 	public MediaSession getMediaSession(MediaSession mediaSession);

@@ -48,6 +48,14 @@ public class MediaSelection extends Entity {
 		}
 	}
 	
+	public Boolean isThumbsUp(MediaSessionUser mediaSessionUser) {
+		return thumbsUpUsers.contains(mediaSessionUser);
+	}
+	
+	public Boolean isThumbsDown(MediaSessionUser mediaSessionUser) {
+		return thumbsDownUsers.contains(mediaSessionUser);
+	}
+	
 	/**
 	 * @return the watchable
 	 */

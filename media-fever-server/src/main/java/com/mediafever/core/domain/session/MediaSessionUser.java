@@ -17,8 +17,6 @@ public class MediaSessionUser extends Entity {
 	private User user;
 	
 	private Boolean accepted;
-	private Integer pendingThumbsUp;
-	private Integer pendingThumbsDown;
 	
 	/**
 	 * Default constructor.
@@ -30,8 +28,6 @@ public class MediaSessionUser extends Entity {
 	
 	public MediaSessionUser(User user, Boolean accepted) {
 		this.user = user;
-		pendingThumbsUp = 10;
-		pendingThumbsDown = 10;
 		this.accepted = accepted;
 	}
 	
@@ -41,22 +37,6 @@ public class MediaSessionUser extends Entity {
 	
 	public User getUser() {
 		return user;
-	}
-	
-	public Integer getPendingThumbsUp() {
-		return pendingThumbsUp;
-	}
-	
-	public void decrementPendingThumbsUp() {
-		pendingThumbsUp--;
-	}
-	
-	public Integer getPendingThumbsDown() {
-		return pendingThumbsDown;
-	}
-	
-	public void decrementPendingThumbsDown() {
-		pendingThumbsDown--;
 	}
 	
 	public Boolean isAccepted() {

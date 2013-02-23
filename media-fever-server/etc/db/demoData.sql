@@ -303,27 +303,27 @@ INSERT INTO MediaSession_WatchableType VALUES ('13', 'SERIES');
 -- --------------------
 -- MEDIA_SESSION_USER
 -- --------------------
-INSERT INTO MediaSessionUser VALUES ('1', '1', 10, 10, true, '1');
-INSERT INTO MediaSessionUser VALUES ('2', '2', 10, 10, true, '1');
-INSERT INTO MediaSessionUser VALUES ('3', '1', 10, 10, null, '2');
-INSERT INTO MediaSessionUser VALUES ('4', '3', 10, 10, null, '2');
-INSERT INTO MediaSessionUser VALUES ('5', '4', 10, 10, null, '2');
-INSERT INTO MediaSessionUser VALUES ('6', '5', 10, 10, null, '2');
-INSERT INTO MediaSessionUser VALUES ('7', '6', 10, 10, null, '2');
-INSERT INTO MediaSessionUser VALUES ('8', '7', 10, 10, null, '2');
-INSERT INTO MediaSessionUser VALUES ('9', '8', 10, 10, null, '2');
-INSERT INTO MediaSessionUser VALUES ('10', '2', 10, 10, true, '2');
-INSERT INTO MediaSessionUser VALUES ('11', '3', 10, 10, true, '3');
-INSERT INTO MediaSessionUser VALUES ('12', '1', 10, 10, true, '4');
-INSERT INTO MediaSessionUser VALUES ('13', '1', 10, 10, true, '5');
-INSERT INTO MediaSessionUser VALUES ('14', '1', 10, 10, true, '6');
-INSERT INTO MediaSessionUser VALUES ('15', '1', 10, 10, true, '7');
-INSERT INTO MediaSessionUser VALUES ('16', '1', 10, 10, true, '8');
-INSERT INTO MediaSessionUser VALUES ('17', '1', 10, 10, true, '9');
-INSERT INTO MediaSessionUser VALUES ('18', '1', 10, 10, true, '10');
-INSERT INTO MediaSessionUser VALUES ('19', '1', 10, 10, true, '11');
-INSERT INTO MediaSessionUser VALUES ('20', '1', 10, 10, true, '12');
-INSERT INTO MediaSessionUser VALUES ('21', '1', 10, 10, true, '13');
+INSERT INTO MediaSessionUser VALUES ('1', '1', true, '1');
+INSERT INTO MediaSessionUser VALUES ('2', '2', true, '1');
+INSERT INTO MediaSessionUser VALUES ('3', '1', null, '2');
+INSERT INTO MediaSessionUser VALUES ('4', '3', null, '2');
+INSERT INTO MediaSessionUser VALUES ('5', '4', null, '2');
+INSERT INTO MediaSessionUser VALUES ('6', '5', null, '2');
+INSERT INTO MediaSessionUser VALUES ('7', '6', null, '2');
+INSERT INTO MediaSessionUser VALUES ('8', '7', null, '2');
+INSERT INTO MediaSessionUser VALUES ('9', '8', null, '2');
+INSERT INTO MediaSessionUser VALUES ('10', '2', true, '2');
+INSERT INTO MediaSessionUser VALUES ('11', '3', true, '3');
+INSERT INTO MediaSessionUser VALUES ('12', '1', true, '4');
+INSERT INTO MediaSessionUser VALUES ('13', '1', true, '5');
+INSERT INTO MediaSessionUser VALUES ('14', '1', true, '6');
+INSERT INTO MediaSessionUser VALUES ('15', '1', true, '7');
+INSERT INTO MediaSessionUser VALUES ('16', '1', true, '8');
+INSERT INTO MediaSessionUser VALUES ('17', '1', true, '9');
+INSERT INTO MediaSessionUser VALUES ('18', '1', true, '10');
+INSERT INTO MediaSessionUser VALUES ('19', '1', true, '11');
+INSERT INTO MediaSessionUser VALUES ('20', '1', true, '12');
+INSERT INTO MediaSessionUser VALUES ('21', '1', true, '13');
 
 -- --------------------
 -- MEDIA_SELECTION

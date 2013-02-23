@@ -104,12 +104,7 @@ public class MediaSessionService {
 	public void thumbsUpMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
 		MediaSessionUser mediaSessionUser = find(mediaSession, userId);
-		MediaSelection mediaSelection = null;
-		for (MediaSelection each : mediaSession.getSelections()) {
-			if (each.getId().equals(mediaSelectionId)) {
-				mediaSelection = each;
-			}
-		}
+		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
 			mediaSession.thumbsUp(mediaSelection, mediaSessionUser);
 		}
@@ -119,15 +114,30 @@ public class MediaSessionService {
 	public void thumbsDownMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
 		MediaSessionUser mediaSessionUser = find(mediaSession, userId);
+		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
+		if (mediaSelection != null) {
+			mediaSession.thumbsDown(mediaSelection, mediaSessionUser);
+		}
+	}
+	
+	@Transactional
+	public void removeMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
+		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
+		if (mediaSelection != null) {
+			mediaSession.removeSelection(mediaSelection);
+		}
+	}
+	
+	private MediaSelection findMediaSelection(Long mediaSelectionId, MediaSession mediaSession) {
 		MediaSelection mediaSelection = null;
 		for (MediaSelection each : mediaSession.getSelections()) {
 			if (each.getId().equals(mediaSelectionId)) {
 				mediaSelection = each;
+				break;
 			}
 		}
-		if (mediaSelection != null) {
-			mediaSession.thumbsDown(mediaSelection, mediaSessionUser);
-		}
+		return mediaSelection;
 	}
 	
 	public MediaSession get(Long mediaSessionId) {

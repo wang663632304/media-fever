@@ -46,14 +46,12 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
 		MediaSessionUser mediaSessionUser = getMe();
 		mediaSelection.thumbsUp(mediaSessionUser);
-		mediaSessionUser.decrementPendingThumbsUp();
 	}
 	
 	public void thumbsDown(Watchable watchable) {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
 		MediaSessionUser mediaSessionUser = getMe();
 		mediaSelection.thumbsDown(mediaSessionUser);
-		mediaSessionUser.decrementPendingThumbsDown();
 	}
 	
 	private MediaSelection findMediaSelection(Watchable watchable) {
@@ -147,8 +145,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		selections.add(new MediaSelection(watchable));
 	}
 	
-	public void removeSelection(Watchable watchable) {
-		MediaSelection mediaSelection = findMediaSelection(watchable);
+	public void removeSelection(MediaSelection mediaSelection) {
 		selections.remove(mediaSelection);
 	}
 	

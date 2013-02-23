@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
 import com.mediafever.repository.MediaSessionsRepository;
 import com.mediafever.service.APIService;
@@ -73,13 +72,5 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	
 	public void setTime(Date time) {
 		mediaSession.setTime(time);
-	}
-	
-	public void addSelection(Watchable watchable) {
-		mediaSession.addSelection(watchable);
-	}
-	
-	public void removeSelection(Watchable watchable) {
-		mediaSession.removeSelection(watchable);
 	}
 }

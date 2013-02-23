@@ -9,7 +9,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.mediafever.R;
-import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
+import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.SmartSelectionUseCase;
 
 /**
@@ -18,11 +18,17 @@ import com.mediafever.usecase.mediasession.SmartSelectionUseCase;
  */
 public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	
-	private SmartSelectionUseCase smartSelectionUseCase;
+	private static final String MEDIA_SESSION_EXTRA = "mediaSession";
 	
-	public static void show(Fragment targetFragment) {
+	private SmartSelectionUseCase smartSelectionUseCase;
+	private MediaSession mediaSession;
+	
+	public static void show(Fragment targetFragment, MediaSession mediaSession) {
 		FragmentManager fm = targetFragment.getActivity().getSupportFragmentManager();
 		MediaSelectionPickerDialogFragment dialogFragment = new MediaSelectionPickerDialogFragment();
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(MEDIA_SESSION_EXTRA, mediaSession);
+		dialogFragment.setArguments(bundle);
 		dialogFragment.setTargetFragment(targetFragment, 1);
 		dialogFragment.show(fm, MediaSelectionPickerDialogFragment.class.getSimpleName());
 	}
@@ -34,8 +40,9 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
 		smartSelectionUseCase = getInstance(SmartSelectionUseCase.class);
-		smartSelectionUseCase.setMediaSession(getMediaSessionSetupUseCase().getMediaSession());
+		smartSelectionUseCase.setMediaSession(mediaSession);
 	}
 	
 	/**
@@ -102,15 +109,12 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void run() {
-				getMediaSessionSetupUseCase().addSelection(smartSelectionUseCase.getWatchable());
+				// TODO Implement media selection add use case
+				// getMediaSessionSetupUseCase().addSelection(smartSelectionUseCase.getWatchable());
 				((MediaSelectionsFragment)getTargetFragment()).refresh();
 				dismissLoading();
 				dismiss();
 			}
 		});
-	}
-	
-	public MediaSessionSetupUseCase getMediaSessionSetupUseCase() {
-		return ((MediaSessionActivity)getActivity()).getMediaSessionSetupUseCase();
 	}
 }

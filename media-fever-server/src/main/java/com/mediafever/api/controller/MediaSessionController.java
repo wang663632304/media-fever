@@ -1,6 +1,7 @@
 package com.mediafever.api.controller;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -54,7 +55,7 @@ public class MediaSessionController extends AbstractController {
 	@PUT
 	@Path("{id}/thumbsUp/{mediaSelectionId}")
 	@GZIP
-	public void thumbsUpMediaSelection(@PathParam("id") Long id, @PathParam("id") Long mediaSelectionId) {
+	public void thumbsUpMediaSelection(@PathParam("id") Long id, @PathParam("mediaSelectionId") Long mediaSelectionId) {
 		mediaSessionService.thumbsUpMediaSelection(id, mediaSelectionId,
 			ApplicationContext.get().getSecurityContext().getUser().getId());
 	}
@@ -62,8 +63,16 @@ public class MediaSessionController extends AbstractController {
 	@PUT
 	@Path("{id}/thumbsDown/{mediaSelectionId}")
 	@GZIP
-	public void thumbsDownMediaSelection(@PathParam("id") Long id, @PathParam("id") Long mediaSelectionId) {
+	public void thumbsDownMediaSelection(@PathParam("id") Long id, @PathParam("mediaSelectionId") Long mediaSelectionId) {
 		mediaSessionService.thumbsDownMediaSelection(id, mediaSelectionId,
+			ApplicationContext.get().getSecurityContext().getUser().getId());
+	}
+	
+	@DELETE
+	@Path("{id}/mediaSelection/{mediaSelectionId}")
+	@GZIP
+	public void removeMediaSelection(@PathParam("id") Long id, @PathParam("mediaSelectionId") Long mediaSelectionId) {
+		mediaSessionService.removeMediaSelection(id, mediaSelectionId,
 			ApplicationContext.get().getSecurityContext().getUser().getId());
 	}
 	

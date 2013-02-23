@@ -13,8 +13,6 @@ import com.mediafever.domain.session.MediaSessionUser;
 public class MediaSessionUserParser extends JsonParser<JsonObjectWrapper> {
 	
 	private static final String USER = "user";
-	private static final String PENDING_THUMBS_UP = "pendingThumbsUp";
-	private static final String PENDING_THUMBS_DOWN = "pendingThumbsDown";
 	private static final String ACCEPTED = "accepted";
 	
 	/**
@@ -23,8 +21,7 @@ public class MediaSessionUserParser extends JsonParser<JsonObjectWrapper> {
 	@Override
 	public Object parse(JsonObjectWrapper json) throws JSONException {
 		User user = (User)new UserParser().parse(json.getJSONObject(USER));
-		return new MediaSessionUser(user, json.optBoolean(ACCEPTED), json.getInt(PENDING_THUMBS_UP),
-				json.getInt(PENDING_THUMBS_DOWN));
+		return new MediaSessionUser(user, json.optBoolean(ACCEPTED));
 	}
 	
 }
