@@ -14,8 +14,8 @@ import com.mediafever.domain.watchable.Watchable;
 public class MediaSelection extends Entity {
 	
 	private Watchable watchable;
-	private List<MediaSessionUser> thumbsUpUsers = Lists.newArrayList();
-	private List<MediaSessionUser> thumbsDownUsers = Lists.newArrayList();
+	private List<User> thumbsUpUsers = Lists.newArrayList();
+	private List<User> thumbsDownUsers = Lists.newArrayList();
 	private User owner;
 	
 	public MediaSelection() {
@@ -25,8 +25,7 @@ public class MediaSelection extends Entity {
 		this(null, watchable, SecurityContext.get().getUser(), null, null);
 	}
 	
-	public MediaSelection(Long id, Watchable watchable, User owner, List<MediaSessionUser> thumbsUpUsers,
-			List<MediaSessionUser> thumbsDownUsers) {
+	public MediaSelection(Long id, Watchable watchable, User owner, List<User> thumbsUpUsers, List<User> thumbsDownUsers) {
 		super(id);
 		this.watchable = watchable;
 		this.owner = owner;
@@ -34,26 +33,28 @@ public class MediaSelection extends Entity {
 		this.thumbsDownUsers = Lists.safeArrayList(thumbsDownUsers);
 	}
 	
-	public void thumbsUp(MediaSessionUser mediaSessionUser) {
-		thumbsDownUsers.remove(mediaSessionUser);
-		if (!thumbsUpUsers.contains(mediaSessionUser)) {
-			thumbsUpUsers.add(mediaSessionUser);
+	public void thumbsUp() {
+		User user = SecurityContext.get().getUser();
+		thumbsDownUsers.remove(user);
+		if (!thumbsUpUsers.contains(user)) {
+			thumbsUpUsers.add(user);
 		}
 	}
 	
-	public void thumbsDown(MediaSessionUser mediaSessionUser) {
-		thumbsUpUsers.remove(mediaSessionUser);
-		if (!thumbsDownUsers.contains(mediaSessionUser)) {
-			thumbsDownUsers.add(mediaSessionUser);
+	public void thumbsDown() {
+		User user = SecurityContext.get().getUser();
+		thumbsUpUsers.remove(user);
+		if (!thumbsDownUsers.contains(user)) {
+			thumbsDownUsers.add(user);
 		}
 	}
 	
-	public Boolean isThumbsUp(MediaSessionUser mediaSessionUser) {
-		return thumbsUpUsers.contains(mediaSessionUser);
+	public Boolean isThumbsUp() {
+		return thumbsUpUsers.contains(SecurityContext.get().getUser());
 	}
 	
-	public Boolean isThumbsDown(MediaSessionUser mediaSessionUser) {
-		return thumbsDownUsers.contains(mediaSessionUser);
+	public Boolean isThumbsDown() {
+		return thumbsDownUsers.contains(SecurityContext.get().getUser());
 	}
 	
 	/**
@@ -66,14 +67,14 @@ public class MediaSelection extends Entity {
 	/**
 	 * @return the thumbsUpUsers
 	 */
-	public List<MediaSessionUser> getThumbsUpUsers() {
+	public List<User> getThumbsUpUsers() {
 		return thumbsUpUsers;
 	}
 	
 	/**
 	 * @return the thumbsDownUsers
 	 */
-	public List<MediaSessionUser> getThumbsDownUsers() {
+	public List<User> getThumbsDownUsers() {
 		return thumbsDownUsers;
 	}
 	

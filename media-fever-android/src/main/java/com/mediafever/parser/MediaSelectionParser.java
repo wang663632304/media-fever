@@ -35,25 +35,25 @@ public class MediaSelectionParser extends JsonParser<JsonObjectWrapper> {
 	public Object parse(JsonObjectWrapper json) throws JSONException {
 		
 		Watchable watchable = (Watchable)new WatchableParser().parse(json.getJSONObject(WATCHABLE));
-		User owner = findMediaSessionUser(json.getLong(OWNER_ID)).getUser();
+		User owner = findUser(json.getLong(OWNER_ID));
 		
-		List<MediaSessionUser> thumbsUpUsers = Lists.newArrayList();
+		List<User> thumbsUpUsers = Lists.newArrayList();
 		for (Long userId : parseListLong(json.optJSONArray(THUMBS_UP_USERS))) {
-			thumbsUpUsers.add(findMediaSessionUser(userId));
+			thumbsUpUsers.add(findUser(userId));
 		}
 		
-		List<MediaSessionUser> thumbsDownUsers = Lists.newArrayList();
+		List<User> thumbsDownUsers = Lists.newArrayList();
 		for (Long userId : parseListLong(json.optJSONArray(THUMBS_DOWN_USERS))) {
-			thumbsDownUsers.add(findMediaSessionUser(userId));
+			thumbsDownUsers.add(findUser(userId));
 		}
 		
 		return new MediaSelection(json.getLong(ID), watchable, owner, thumbsUpUsers, thumbsDownUsers);
 	}
 	
-	private MediaSessionUser findMediaSessionUser(Long userId) {
+	private User findUser(Long userId) {
 		for (MediaSessionUser mediaSessionUser : mediaSessionUsers) {
 			if (mediaSessionUser.getUser().getId().equals(userId)) {
-				return mediaSessionUser;
+				return mediaSessionUser.getUser();
 			}
 		}
 		return null;

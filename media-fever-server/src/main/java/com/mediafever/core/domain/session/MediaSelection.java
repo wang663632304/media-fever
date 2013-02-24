@@ -7,6 +7,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import com.jdroid.javaweb.domain.Entity;
+import com.mediafever.core.domain.User;
 import com.mediafever.core.domain.watchable.Watchable;
 
 /**
@@ -17,18 +18,22 @@ import com.mediafever.core.domain.watchable.Watchable;
 public class MediaSelection extends Entity {
 	
 	@OneToOne
+	@JoinColumn(name = "ownerId", nullable = false)
+	private User owner;
+	
+	@OneToOne
 	@JoinColumn(name = "watchableId", nullable = false)
 	private Watchable watchable;
 	
-	@OneToMany(targetEntity = MediaSessionUser.class, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = User.class, fetch = FetchType.LAZY)
 	@JoinTable(name = "MediaSelection_ThumbsUpUsers", joinColumns = @JoinColumn(name = "mediaSelectionId"),
-			inverseJoinColumns = @JoinColumn(name = "mediaSessionUserId"))
-	private List<MediaSessionUser> thumbsUpUsers;
+			inverseJoinColumns = @JoinColumn(name = "userId"))
+	private List<User> thumbsUpUsers;
 	
-	@OneToMany(targetEntity = MediaSessionUser.class, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = User.class, fetch = FetchType.LAZY)
 	@JoinTable(name = "MediaSelection_ThumbsDownUsers", joinColumns = @JoinColumn(name = "mediaSelectionId"),
-			inverseJoinColumns = @JoinColumn(name = "mediaSessionUserId"))
-	private List<MediaSessionUser> thumbsDownUsers;
+			inverseJoinColumns = @JoinColumn(name = "userId"))
+	private List<User> thumbsDownUsers;
 	
 	/**
 	 * Default constructor.
@@ -42,17 +47,17 @@ public class MediaSelection extends Entity {
 		this.watchable = watchable;
 	}
 	
-	public void thumbsUp(MediaSessionUser mediaSessionUser) {
-		thumbsDownUsers.remove(mediaSessionUser);
-		if (!thumbsUpUsers.contains(mediaSessionUser)) {
-			thumbsUpUsers.add(mediaSessionUser);
+	public void thumbsUp(User user) {
+		thumbsDownUsers.remove(user);
+		if (!thumbsUpUsers.contains(user)) {
+			thumbsUpUsers.add(user);
 		}
 	}
 	
-	public void thumbsDown(MediaSessionUser mediaSessionUser) {
-		thumbsUpUsers.remove(mediaSessionUser);
-		if (!thumbsDownUsers.contains(mediaSessionUser)) {
-			thumbsDownUsers.add(mediaSessionUser);
+	public void thumbsDown(User user) {
+		thumbsUpUsers.remove(user);
+		if (!thumbsDownUsers.contains(user)) {
+			thumbsDownUsers.add(user);
 		}
 	}
 	
@@ -60,12 +65,16 @@ public class MediaSelection extends Entity {
 		return watchable;
 	}
 	
-	public List<MediaSessionUser> getThumbsUpUsers() {
+	public List<User> getThumbsUpUsers() {
 		return thumbsUpUsers;
 	}
 	
-	public List<MediaSessionUser> getThumbsDownUsers() {
+	public List<User> getThumbsDownUsers() {
 		return thumbsDownUsers;
+	}
+	
+	public User getOwner() {
+		return owner;
 	}
 	
 }

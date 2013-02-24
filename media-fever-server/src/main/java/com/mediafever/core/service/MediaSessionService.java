@@ -89,34 +89,23 @@ public class MediaSessionService {
 		mediaSession.modify(newWatchableTypes, date, time, newUsers);
 	}
 	
-	private MediaSessionUser find(MediaSession mediaSession, Long userId) {
-		MediaSessionUser mediaSessionUser = null;
-		for (MediaSessionUser each : mediaSession.getUsers()) {
-			if (each.getId().equals(userId)) {
-				mediaSessionUser = each;
-				break;
-			}
-		}
-		return mediaSessionUser;
-	}
-	
 	@Transactional
 	public void thumbsUpMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
-		MediaSessionUser mediaSessionUser = find(mediaSession, userId);
+		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
-			mediaSession.thumbsUp(mediaSelection, mediaSessionUser);
+			mediaSession.thumbsUp(mediaSelection, user);
 		}
 	}
 	
 	@Transactional
 	public void thumbsDownMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
-		MediaSessionUser mediaSessionUser = find(mediaSession, userId);
+		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
-			mediaSession.thumbsDown(mediaSelection, mediaSessionUser);
+			mediaSession.thumbsDown(mediaSelection, user);
 		}
 	}
 	

@@ -14,7 +14,6 @@ import com.mediafever.R;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.domain.session.MediaSessionUser;
 import com.mediafever.usecase.mediasession.RemoveMediaSelectionUseCase;
 import com.mediafever.usecase.mediasession.VoteMediaSelectionUseCase;
 
@@ -101,6 +100,8 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 					executeUseCase(removeMediaSelectionUseCase);
 				}
 			});
+			remove.setVisibility(View.VISIBLE);
+			
 			change.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -108,6 +109,7 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 					MediaSelectionPickerDialogFragment.show(getTargetFragment(), mediaSession);
 				}
 			});
+			change.setVisibility(View.VISIBLE);
 			
 			thumbsUp.setVisibility(View.GONE);
 			thumbsDown.setVisibility(View.GONE);
@@ -123,9 +125,7 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 					executeUseCase(voteMediaSelectionUseCase);
 				}
 			});
-			
-			MediaSessionUser mediaSessionUser = mediaSession.getMe();
-			thumbsUp.setVisibility(mediaSelection.isThumbsUp(mediaSessionUser) ? View.GONE : View.VISIBLE);
+			thumbsUp.setVisibility(mediaSelection.isThumbsUp() ? View.GONE : View.VISIBLE);
 			
 			thumbsDown.setOnClickListener(new OnClickListener() {
 				
@@ -135,7 +135,7 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 					executeUseCase(voteMediaSelectionUseCase);
 				}
 			});
-			thumbsDown.setVisibility(mediaSelection.isThumbsDown(mediaSessionUser) ? View.GONE : View.VISIBLE);
+			thumbsDown.setVisibility(mediaSelection.isThumbsDown() ? View.GONE : View.VISIBLE);
 		}
 		
 		getDialog().setTitle(mediaSelection.getWatchable().getName());

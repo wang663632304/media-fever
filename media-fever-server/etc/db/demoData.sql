@@ -328,13 +328,13 @@ INSERT INTO MediaSessionUser VALUES ('21', '1', true, '13');
 -- --------------------
 -- MEDIA_SELECTION
 -- --------------------
-INSERT INTO MediaSelection VALUES ('1', '1', '1');
-INSERT INTO MediaSelection VALUES ('2', '2', '1');
-INSERT INTO MediaSelection VALUES ('3', '3', '1');
-INSERT INTO MediaSelection VALUES ('4', '1', '2');
-INSERT INTO MediaSelection VALUES ('5', '2', '2');
-INSERT INTO MediaSelection VALUES ('6', '3', '2');
-INSERT INTO MediaSelection VALUES ('7', '4', '2');
+INSERT INTO MediaSelection VALUES ('1', '1', '1', '1');
+INSERT INTO MediaSelection VALUES ('2', '2', '2', '1');
+INSERT INTO MediaSelection VALUES ('3', '2', '3', '1');
+INSERT INTO MediaSelection VALUES ('4', '1', '1', '2');
+INSERT INTO MediaSelection VALUES ('5', '2', '2', '2');
+INSERT INTO MediaSelection VALUES ('6', '3', '3', '2');
+INSERT INTO MediaSelection VALUES ('7', '4', '4', '2');
 
 -- --------------------
 -- MEDIA_SELECTION_THUMBSUPSUSERS
@@ -343,16 +343,16 @@ INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('1', '1');
 INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('2', '1');
 INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('2', '2');
 INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('3', '2');
+INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('4', '2');
 INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('4', '3');
-INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('5', '3');
-INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('6', '3');
 INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('4', '4');
-INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('4', '5');
+INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('5', '1');
+INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('5', '2');
+INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('6', '1');
 
 -- --------------------
 -- MEDIA_SELECTION_THUMBSDOWNSUSERS
 -- --------------------
-INSERT INTO MediaSelection_ThumbsDownUsers VALUES ('4', '1');
-INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('7', '3');
-INSERT INTO MediaSelection_ThumbsUpUsers VALUES ('5', '4');
+INSERT INTO MediaSelection_ThumbsDownUsers VALUES ('4', '5');
+INSERT INTO MediaSelection_ThumbsDownUsers VALUES ('5', '3');
 

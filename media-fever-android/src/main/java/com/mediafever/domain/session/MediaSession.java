@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.domain.Entity;
-import com.jdroid.android.domain.User;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.domain.UserImpl;
@@ -44,30 +43,18 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public void thumbsUp(Watchable watchable) {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
-		MediaSessionUser mediaSessionUser = getMe();
-		mediaSelection.thumbsUp(mediaSessionUser);
+		mediaSelection.thumbsUp();
 	}
 	
 	public void thumbsDown(Watchable watchable) {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
-		MediaSessionUser mediaSessionUser = getMe();
-		mediaSelection.thumbsDown(mediaSessionUser);
+		mediaSelection.thumbsDown();
 	}
 	
 	private MediaSelection findMediaSelection(Watchable watchable) {
 		for (MediaSelection mediaSelection : selections) {
 			if ((mediaSelection.getWatchable() != null) && mediaSelection.getWatchable().equals(watchable)) {
 				return mediaSelection;
-			}
-		}
-		return null;
-	}
-	
-	public MediaSessionUser getMe() {
-		User user = SecurityContext.get().getUser();
-		for (MediaSessionUser mediaUser : users) {
-			if (mediaUser.getUser().equals(user)) {
-				return mediaUser;
 			}
 		}
 		return null;

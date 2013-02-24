@@ -76,7 +76,6 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	private static final String FRIENDS = "friends";
 	private static final String FRIEND_REQUESTS = "friendRequests";
 	private static final String MEDIA_SESSIONS = "mediaSessions";
-	private static final String VOTE = "vote";
 	private static final String THUMBS_UP = "thumbsUp";
 	private static final String THUMBS_DOWN = "thumbsDown";
 	private static final String ACCEPT = "accept";
@@ -427,8 +426,8 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	 */
 	@Override
 	public void thumbsUpMediaSelection(MediaSession mediaSession, MediaSelection mediaSelection) {
-		EntityEnclosingWebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), VOTE,
-			mediaSelection.getId(), THUMBS_UP);
+		EntityEnclosingWebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), THUMBS_UP,
+			mediaSelection.getId());
 		webservice.execute();
 	}
 	
@@ -438,8 +437,8 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	 */
 	@Override
 	public void thumbsDownMediaSelection(MediaSession mediaSession, MediaSelection mediaSelection) {
-		EntityEnclosingWebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), VOTE,
-			mediaSelection.getId(), THUMBS_DOWN);
+		EntityEnclosingWebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), THUMBS_DOWN,
+			mediaSelection.getId());
 		webservice.execute();
 	}
 	
