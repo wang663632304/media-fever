@@ -123,7 +123,7 @@ public interface APIService {
 	
 	public void removeMediaSelection(MediaSession mediaSession, MediaSelection mediaSelection);
 	
-	public Watchable getSmartSelection(Long mediaSessionId);
+	public MediaSelection addSmartSelection(MediaSession mediaSession);
 	
 	public MediaSession getMediaSession(MediaSession mediaSession);
 	

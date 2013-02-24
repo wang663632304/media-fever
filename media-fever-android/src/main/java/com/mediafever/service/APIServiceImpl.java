@@ -28,6 +28,7 @@ import com.mediafever.domain.watchable.WatchableType;
 import com.mediafever.parser.FacebookAccountParser;
 import com.mediafever.parser.FriendRequestParser;
 import com.mediafever.parser.InnerWatchableParser;
+import com.mediafever.parser.MediaSelectionParser;
 import com.mediafever.parser.MediaSessionParser;
 import com.mediafever.parser.PagedResultParser;
 import com.mediafever.parser.UserParser;
@@ -286,15 +287,12 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#getSmartSelection(java.lang.Long)
+	 * @see com.mediafever.service.APIService#addSmartSelection(com.mediafever.domain.session.MediaSession)
 	 */
 	@Override
-	public Watchable getSmartSelection(Long mediaSessionId) {
-		// TODO
-		mediaSessionId = 1L;
-		
-		WebService webservice = newGetService(MEDIA_SESSIONS, mediaSessionId, "selection", "smart");
-		return webservice.execute(new WatchableParser());
+	public MediaSelection addSmartSelection(MediaSession mediaSession) {
+		WebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), "mediaSelection", "smart");
+		return webservice.execute(new MediaSelectionParser(mediaSession.getUsers()));
 	}
 	
 	private void addPagination(WebService webservice) {

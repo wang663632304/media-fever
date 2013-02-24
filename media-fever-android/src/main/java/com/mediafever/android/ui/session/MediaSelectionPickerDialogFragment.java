@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.mediafever.R;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.usecase.mediasession.SmartSelectionUseCase;
+import com.mediafever.usecase.mediasession.AddSmartSelectionUseCase;
 
 /**
  * 
@@ -20,7 +20,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	
 	private static final String MEDIA_SESSION_EXTRA = "mediaSession";
 	
-	private SmartSelectionUseCase smartSelectionUseCase;
+	private AddSmartSelectionUseCase addSmartSelectionUseCase;
 	private MediaSession mediaSession;
 	
 	public static void show(Fragment targetFragment, MediaSession mediaSession) {
@@ -41,8 +41,8 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 		super.onCreate(savedInstanceState);
 		
 		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
-		smartSelectionUseCase = getInstance(SmartSelectionUseCase.class);
-		smartSelectionUseCase.setMediaSession(mediaSession);
+		addSmartSelectionUseCase = getInstance(AddSmartSelectionUseCase.class);
+		addSmartSelectionUseCase.setMediaSession(mediaSession);
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void onClick(View v) {
-				executeUseCase(smartSelectionUseCase);
+				executeUseCase(addSmartSelectionUseCase);
 			}
 		});
 		
@@ -88,7 +88,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(smartSelectionUseCase, this);
+		onResumeUseCase(addSmartSelectionUseCase, this);
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
-		onPauseUseCase(smartSelectionUseCase, this);
+		onPauseUseCase(addSmartSelectionUseCase, this);
 	}
 	
 	/**
@@ -109,9 +109,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void run() {
-				// TODO Implement media selection add use case
-				// getMediaSessionSetupUseCase().addSelection(smartSelectionUseCase.getWatchable());
-				((MediaSelectionsFragment)getTargetFragment()).refresh();
+				((MediaSelectionsFragment)getTargetFragment()).addMediaSelection(addSmartSelectionUseCase.getMediaSelection());
 				dismissLoading();
 				dismiss();
 			}

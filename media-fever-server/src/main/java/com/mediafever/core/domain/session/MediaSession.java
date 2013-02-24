@@ -14,6 +14,7 @@ import org.apache.commons.collections.CollectionUtils;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.domain.Entity;
 import com.mediafever.core.domain.User;
+import com.mediafever.core.domain.watchable.Watchable;
 import com.mediafever.core.domain.watchable.WatchableType;
 
 /**
@@ -73,6 +74,12 @@ public class MediaSession extends Entity {
 	
 	public void thumbsDown(MediaSelection mediaSelection, User user) {
 		mediaSelection.thumbsDown(user);
+	}
+	
+	public MediaSelection addSelection(User user, Watchable watchable) {
+		MediaSelection mediaSelection = new MediaSelection(user, watchable);
+		selections.add(mediaSelection);
+		return mediaSelection;
 	}
 	
 	public void removeSelection(MediaSelection mediaSelection) {

@@ -6,6 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.domain.Entity;
 import com.mediafever.core.domain.User;
 import com.mediafever.core.domain.watchable.Watchable;
@@ -43,8 +44,11 @@ public class MediaSelection extends Entity {
 		// Do nothing, is required by hibernate
 	}
 	
-	public MediaSelection(Watchable watchable) {
+	public MediaSelection(User owner, Watchable watchable) {
+		this.owner = owner;
 		this.watchable = watchable;
+		thumbsUpUsers = Lists.newArrayList();
+		thumbsDownUsers = Lists.newArrayList();
 	}
 	
 	public void thumbsUp(User user) {

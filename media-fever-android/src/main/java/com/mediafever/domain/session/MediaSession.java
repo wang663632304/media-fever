@@ -137,8 +137,8 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return false;
 	}
 	
-	public void addSelection(Watchable watchable) {
-		selections.add(new MediaSelection(watchable));
+	public void addSelection(MediaSelection mediaSelection) {
+		selections.add(mediaSelection);
 	}
 	
 	public void removeSelection(MediaSelection mediaSelection) {

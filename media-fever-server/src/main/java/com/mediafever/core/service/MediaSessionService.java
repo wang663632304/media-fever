@@ -159,15 +159,23 @@ public class MediaSessionService {
 		}
 	}
 	
-	public Watchable getSmartSelection(Long id) {
-		
+	@Transactional
+	public MediaSelection addSmartSelection(Long id, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
-		
+		User user = userRepository.get(userId);
+		Watchable watchable = getSmartSelection(mediaSession);
+		MediaSelection mediaSelection = mediaSession.addSelection(user, watchable);
+		return mediaSelection;
+	}
+	
+	private Watchable getSmartSelection(MediaSession mediaSession) {
 		// TODO Use the SMART Selection algorithm here
 		Filter filter = new Filter(1, 1000);
 		filter.addValue(CustomFilterKey.WATCHABLE_TYPES, mediaSession.getWatchableTypes());
 		List<Watchable> watchables = watchableService.searchWatchable(filter).getData();
 		int random = IdGenerator.getRandomIntId() % watchables.size();
-		return watchables.get(random);
+		Watchable watchable = watchables.get(random);
+		
+		return watchable;
 	}
 }
