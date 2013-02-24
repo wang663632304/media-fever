@@ -1,5 +1,6 @@
 package com.mediafever.domain.session;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import com.jdroid.android.context.SecurityContext;
@@ -38,7 +39,14 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		date = DateUtils.now();
 		users = Lists.newArrayList(new MediaSessionUser(SecurityContext.get().getUser()));
 		watchableTypes = Lists.newArrayList(WatchableType.MOVIE);
+		setSelections(null);
+	}
+	
+	public void setSelections(List<MediaSelection> mediaSelections) {
 		selections = Lists.newArrayList(new MediaSelection());
+		if (mediaSelections != null) {
+			selections.addAll(mediaSelections);
+		}
 	}
 	
 	public void thumbsUp(Watchable watchable) {
@@ -85,6 +93,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	}
 	
 	public List<MediaSelection> getSelections() {
+		Collections.sort(selections);
 		return selections;
 	}
 	
@@ -187,12 +196,5 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public void setAccepted(Boolean accepted) {
 		this.accepted = accepted;
-	}
-	
-	public void setSelections(List<MediaSelection> selections) {
-		this.selections = Lists.newArrayList(new MediaSelection());
-		if (selections != null) {
-			this.selections.addAll(selections);
-		}
 	}
 }

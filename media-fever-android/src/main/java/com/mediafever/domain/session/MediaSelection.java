@@ -11,7 +11,7 @@ import com.mediafever.domain.watchable.Watchable;
  * 
  * @author Maxi Rosson
  */
-public class MediaSelection extends Entity {
+public class MediaSelection extends Entity implements Comparable<MediaSelection> {
 	
 	private Watchable watchable;
 	private List<User> thumbsUpUsers = Lists.newArrayList();
@@ -83,5 +83,27 @@ public class MediaSelection extends Entity {
 	 */
 	public User getOwner() {
 		return owner;
+	}
+	
+	/**
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(MediaSelection another) {
+		Integer thumbsUp = thumbsUpUsers.size();
+		Integer anotherThumbsUp = another.thumbsUpUsers.size();
+		Integer thumbsDown = thumbsDownUsers.size();
+		Integer anotherThumbsDown = another.thumbsDownUsers.size();
+		if (getId() == null) {
+			return -1;
+		} else if (another.getId() == null) {
+			return 1;
+		} else {
+			int comp = anotherThumbsUp.compareTo(thumbsUp);
+			if (comp == 0) {
+				comp = thumbsDown.compareTo(anotherThumbsDown);
+			}
+			return comp;
+		}
 	}
 }
