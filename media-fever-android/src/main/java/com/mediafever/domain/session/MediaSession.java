@@ -84,6 +84,14 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return watchableTypes;
 	}
 	
+	public Boolean acceptOnlyMovies() {
+		return (watchableTypes.size() == 1) && watchableTypes.contains(WatchableType.MOVIE);
+	}
+	
+	public Boolean acceptOnlySeries() {
+		return (watchableTypes.size() == 1) && watchableTypes.contains(WatchableType.SERIES);
+	}
+	
 	public void accept() {
 		accepted = true;
 	}

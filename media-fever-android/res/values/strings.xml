@@ -116,7 +116,9 @@
 	<string name="anyDate">Any Date</string>
 	<string name="anyTime">Any Time</string>
 	<string name="mediaSessionFriendsHeader">Pick the friends you want to invite to this media session</string>
-	<string name="mediaSelectionsHeader">Pick the movie or series you want to add to this media session</string>
+	<string name="mediaSelectionsHeader">Pick the %1$s you want to add to this media session</string>
+	<string name="mediaSelectionsFooter">Starts: %1$s</string>
+	<string name="movieOrSeries">movie or series</string>
 	<string name="addNewSelection">+</string>
 	<string name="details">Details</string>
 	<string name="change">Change</string>
