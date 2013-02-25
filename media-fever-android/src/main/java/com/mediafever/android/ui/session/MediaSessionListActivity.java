@@ -2,7 +2,6 @@ package com.mediafever.android.ui.session;
 
 import android.support.v4.app.Fragment;
 import com.actionbarsherlock.view.MenuItem;
-import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.FragmentContainerActivity;
 import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
@@ -42,7 +41,7 @@ public class MediaSessionListActivity extends FragmentContainerActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.addMediaSessionItem:
-				ActivityLauncher.launchActivity(MediaSessionActivity.class);
+				MediaSessionActivity.start(this);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

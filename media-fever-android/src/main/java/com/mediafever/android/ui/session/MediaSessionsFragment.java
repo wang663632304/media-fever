@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.commonsware.cwac.merge.MergeAdapter;
-import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.view.ListSeparatorView;
@@ -51,10 +50,8 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	 */
 	@Override
 	public void onItemSelected(MediaSession mediaSession) {
-		
 		if (mediaSession.isAccepted()) {
-			ActivityLauncher.launchActivity(MediaSessionActivity.class, MediaSessionActivity.MEDIA_SESSION_ID_EXTRA,
-				mediaSession.getId());
+			MediaSelectionsActivity.start(getActivity(), mediaSession);
 		} else {
 			AcceptRejectSessionDialogFragment.show(mediaSession.getId(), this);
 		}

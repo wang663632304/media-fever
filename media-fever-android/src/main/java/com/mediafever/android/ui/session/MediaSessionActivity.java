@@ -1,6 +1,8 @@
 package com.mediafever.android.ui.session;
 
 import java.util.List;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
@@ -21,6 +23,18 @@ public class MediaSessionActivity extends WizardActivity {
 	public final static String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
 	
 	private List<WizardStep> steps;
+	
+	public static void start(Context context) {
+		start(context, null);
+	}
+	
+	public static void start(Context context, Long mediaSessionId) {
+		Intent intent = new Intent(context, MediaSessionActivity.class);
+		if (mediaSessionId != null) {
+			intent.putExtra(MediaSessionActivity.MEDIA_SESSION_ID_EXTRA, mediaSessionId);
+		}
+		context.startActivity(intent);
+	}
 	
 	/**
 	 * @see com.jdroid.android.wizard.WizardActivity#getWizardSteps()

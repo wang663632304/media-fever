@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.actionbarsherlock.view.MenuItem;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.mediafever.R;
 import com.mediafever.domain.session.MediaSelection;
@@ -34,6 +35,8 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		setRetainInstance(true);
 		
 		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
+		
+		setHasOptionsMenu(true);
 	}
 	
 	/**
@@ -52,6 +55,20 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		refresh();
+	}
+	
+	/**
+	 * @see com.jdroid.android.activity.BaseActivity#onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.editMediaSessionItem:
+				MediaSessionActivity.start(getActivity(), mediaSession.getId());
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	/**

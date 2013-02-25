@@ -30,9 +30,7 @@ public class MediaSessionJsonMarshaller implements Marshaller<MediaSession, Json
 		map.put(DATE, mediaSession.getDate());
 		map.put(TIME, mediaSession.getTime());
 		map.put(USERS, mediaSession.getUsers());
-		if (MarshallerMode.COMPLETE.equals(mode)) {
-			map.put(SELECTIONS, mediaSession.getSelections());
-		}
+		map.put(SELECTIONS, mediaSession.getSelections());
 		map.put(WATCHABLES_TYPES, mediaSession.getWatchableTypes());
 		return map;
 	}

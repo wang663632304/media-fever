@@ -110,6 +110,7 @@
 	<string name="pendingSessions">Pending Sessions</string>
 	<string name="acceptedSessions">Accepted Sessions</string>
 	<string name="addMediaSession">Add Media Session</string>
+	<string name="editMediaSession">Edit Media Session</string>
 	<string name="sessionType">Media type</string>
 	<string name="sessionDate">Session date</string>
 	<string name="anyDate">Any Date</string>
