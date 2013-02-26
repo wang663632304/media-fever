@@ -106,11 +106,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		}
 	}
 	
-	public void addMediaSelection(MediaSelection mediaSelection) {
-		mediaSession.addSelection(mediaSelection);
-		refresh();
-	}
-	
 	public void refresh() {
 		setListAdapter(new MediaSelectionAdapter(MediaSelectionsFragment.this.getActivity(),
 				mediaSession.getSelections()));

@@ -15,7 +15,7 @@
 
 	<TextView android:id="@+id/footer" android:layout_width="match_parent" android:layout_height="wrap_content"
 		android:padding="10dp" android:text="@string/mediaSelectionsFooter" android:textSize="20sp" android:textStyle="bold"
-		android:layout_above="@+id/adViewContainer" />
+		android:layout_above="@+id/adViewContainer" android:layout_alignParentBottom="true" />
 
 	<include layout="@layout/ad_view_container" />
 

@@ -109,7 +109,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void run() {
-				((MediaSelectionsFragment)getTargetFragment()).addMediaSelection(addSmartSelectionUseCase.getMediaSelection());
+				((MediaSelectionsFragment)getTargetFragment()).refresh();
 				dismissLoading();
 				dismiss();
 			}

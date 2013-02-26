@@ -71,7 +71,7 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(mediaSessionsUseCase, this, UseCaseTrigger.ONCE);
+		onResumeUseCase(mediaSessionsUseCase, this, UseCaseTrigger.ALWAYS);
 	}
 	
 	/**
