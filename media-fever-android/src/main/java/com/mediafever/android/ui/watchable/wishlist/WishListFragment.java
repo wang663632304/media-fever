@@ -8,6 +8,7 @@ import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
+import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.usecase.WishListUseCase;
 
@@ -18,6 +19,18 @@ import com.mediafever.usecase.WishListUseCase;
 public class WishListFragment extends AbstractListFragment<Watchable> {
 	
 	private WishListUseCase wishListUseCase;
+	
+	/**
+	 * @see android.app.Fragment#onCreate(android.os.Bundle)
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		
+		wishListUseCase = getInstance(WishListUseCase.class);
+		wishListUseCase.setUserId(getUser().getId());
+	}
 	
 	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
@@ -34,20 +47,6 @@ public class WishListFragment extends AbstractListFragment<Watchable> {
 	@Override
 	protected int getNoResultsText() {
 		return R.string.noResultsWishList;
-	}
-	
-	/**
-	 * @see android.app.Fragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-		
-		if (wishListUseCase == null) {
-			wishListUseCase = getInstance(WishListUseCase.class);
-			wishListUseCase.setUserId(getUser().getId());
-		}
 	}
 	
 	/**
@@ -77,8 +76,7 @@ public class WishListFragment extends AbstractListFragment<Watchable> {
 			
 			@Override
 			public void run() {
-				setListAdapter(new WatchableAdapter(WishListFragment.this.getActivity(),
-						wishListUseCase.getWatchables()));
+				setListAdapter(new WatchableAdapter(getActivity(), wishListUseCase.getWatchables()));
 				dismissLoading();
 			}
 		});
@@ -89,6 +87,6 @@ public class WishListFragment extends AbstractListFragment<Watchable> {
 	 */
 	@Override
 	public void onItemSelected(Watchable watchable) {
-		WatchableAdapter.onItemClick(this.getActivity(), watchable);
+		WatchableActivity.start(getActivity(), watchable);
 	}
 }

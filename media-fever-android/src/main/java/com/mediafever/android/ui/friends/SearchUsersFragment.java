@@ -31,15 +31,6 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 	private AndroidUseCaseListener createFriendRequestUseCaseListener;
 	
 	/**
-	 * @see android.support.v4.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 *      android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.search_fragment, container, false);
-	}
-	
-	/**
 	 * @see com.jdroid.android.fragment.AbstractSearchFragment#onCreate(android.os.Bundle)
 	 */
 	@Override
@@ -48,42 +39,46 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 		setRetainInstance(true);
 		
 		getSupportActionBar().setTitle(R.string.searchUsers);
-		
 		setThreshold(3);
 		
-		if (searchUsersUseCase == null) {
-			searchUsersUseCase = getInstance(SearchUsersUseCase.class);
-			searchUsersUseCase.setUser(getUser());
-		}
+		searchUsersUseCase = getInstance(SearchUsersUseCase.class);
+		searchUsersUseCase.setUser(getUser());
 		
-		if (createFriendRequestUseCase == null) {
-			createFriendRequestUseCase = getInstance(CreateFriendRequestUseCase.class);
-			createFriendRequestUseCaseListener = new AndroidUseCaseListener() {
-				
-				@Override
-				public void onFinishUseCase() {
-					executeOnUIThread(new Runnable() {
-						
-						@Override
-						public void run() {
-							dismissLoading();
-							if (createFriendRequestUseCase.wasAddAsFriend()) {
-								ToastUtils.showInfoToast(getString(R.string.addedAsFriend,
-									createFriendRequestUseCase.getUser().getFullname()));
-							} else {
-								ToastUtils.showInfoToast(getString(R.string.invitedToBeYourFriend,
-									createFriendRequestUseCase.getUser().getFullname()));
-							}
+		createFriendRequestUseCase = getInstance(CreateFriendRequestUseCase.class);
+		createFriendRequestUseCaseListener = new AndroidUseCaseListener() {
+			
+			@Override
+			public void onFinishUseCase() {
+				executeOnUIThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						dismissLoading();
+						if (createFriendRequestUseCase.wasAddAsFriend()) {
+							ToastUtils.showInfoToast(getString(R.string.addedAsFriend,
+								createFriendRequestUseCase.getUser().getFullname()));
+						} else {
+							ToastUtils.showInfoToast(getString(R.string.invitedToBeYourFriend,
+								createFriendRequestUseCase.getUser().getFullname()));
 						}
-					});
-				}
-				
-				@Override
-				protected ActivityIf getActivityIf() {
-					return (ActivityIf)getActivity();
-				}
-			};
-		}
+					}
+				});
+			}
+			
+			@Override
+			protected ActivityIf getActivityIf() {
+				return (ActivityIf)getActivity();
+			}
+		};
+	}
+	
+	/**
+	 * @see android.support.v4.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 *      android.os.Bundle)
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.search_fragment, container, false);
 	}
 	
 	/**

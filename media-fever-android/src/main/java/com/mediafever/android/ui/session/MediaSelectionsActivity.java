@@ -1,23 +1,31 @@
 package com.mediafever.android.ui.session;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
-import com.actionbarsherlock.view.MenuItem;
 import com.jdroid.android.activity.FragmentContainerActivity;
 import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
+import com.mediafever.domain.session.MediaSession;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class MediaSessionListActivity extends FragmentContainerActivity {
+public class MediaSelectionsActivity extends FragmentContainerActivity {
+	
+	public static void start(Context context, MediaSession mediaSession) {
+		Intent intent = new Intent(context, MediaSelectionsActivity.class);
+		intent.putExtra(MediaSelectionsFragment.MEDIA_SESSION_EXTRA, mediaSession);
+		context.startActivity(intent);
+	}
 	
 	/**
 	 * @see com.jdroid.android.activity.FragmentContainerActivity#createNewFragment()
 	 */
 	@Override
 	protected Fragment createNewFragment() {
-		return new MediaSessionsFragment();
+		return MediaSelectionsFragment.instance(getIntent().getExtras());
 	}
 	
 	/**
@@ -27,24 +35,10 @@ public class MediaSessionListActivity extends FragmentContainerActivity {
 	public int getMenuResourceId() {
 		int menuResourceId = 0;
 		if (AndroidUtils.isGoogleTV()) {
-			menuResourceId = R.menu.media_sessions_google_tv_menu;
+			menuResourceId = R.menu.media_session_google_tv_menu;
 		} else {
-			menuResourceId = R.menu.media_sessions_menu;
+			menuResourceId = R.menu.media_session_menu;
 		}
 		return menuResourceId;
-	}
-	
-	/**
-	 * @see com.jdroid.android.activity.BaseActivity#onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.addMediaSessionItem:
-				MediaSessionActivity.start(this);
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
 	}
 }

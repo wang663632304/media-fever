@@ -6,7 +6,6 @@ import com.jdroid.java.json.JsonMap;
 import com.jdroid.java.marshaller.Marshaller;
 import com.jdroid.java.marshaller.MarshallerMode;
 import com.jdroid.javaweb.guava.function.IdPropertyFunction;
-import com.mediafever.context.ApplicationContext;
 import com.mediafever.core.domain.session.MediaSelection;
 
 /**
@@ -29,12 +28,10 @@ public class MediaSelectionJsonMarshaller implements Marshaller<MediaSelection, 
 	public JsonMap marshall(MediaSelection mediaSelection, MarshallerMode mode, Map<String, String> extras) {
 		JsonMap map = new JsonMap(mode, extras);
 		map.put(ID, mediaSelection.getId());
+		map.put(OWNER_ID, mediaSelection.getOwner().getId());
 		map.put(WATCHABLE, mediaSelection.getWatchable(), MarshallerMode.SIMPLE);
 		map.put(THUMBS_UP_USERS, Lists.transform(mediaSelection.getThumbsUpUsers(), new IdPropertyFunction()));
 		map.put(THUMBS_DOWN_USERS, Lists.transform(mediaSelection.getThumbsDownUsers(), new IdPropertyFunction()));
-		
-		// TODO Add owner concept to MediaSelection
-		map.put(OWNER_ID, ApplicationContext.get().getSecurityContext().getUser().getId());
 		return map;
 	}
 }

@@ -9,6 +9,7 @@ import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.utils.AnimationUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
+import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.usecase.WishListUseCase;
 
@@ -21,15 +22,6 @@ public class WishListGridFragment extends AbstractGridFragment<Watchable> {
 	private WishListUseCase wishListUseCase;
 	
 	/**
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 *      android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.grid_fragment, container, false);
-	}
-	
-	/**
 	 * @see android.app.Fragment#onCreate(android.os.Bundle)
 	 */
 	@Override
@@ -37,10 +29,17 @@ public class WishListGridFragment extends AbstractGridFragment<Watchable> {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		if (wishListUseCase == null) {
-			wishListUseCase = getInstance(WishListUseCase.class);
-			wishListUseCase.setUserId(getUser().getId());
-		}
+		wishListUseCase = getInstance(WishListUseCase.class);
+		wishListUseCase.setUserId(getUser().getId());
+	}
+	
+	/**
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 *      android.os.Bundle)
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.grid_fragment, container, false);
 	}
 	
 	/**
@@ -70,8 +69,7 @@ public class WishListGridFragment extends AbstractGridFragment<Watchable> {
 			
 			@Override
 			public void run() {
-				setListAdapter(new WatchableAdapter(WishListGridFragment.this.getActivity(),
-						wishListUseCase.getWatchables()));
+				setListAdapter(new WatchableAdapter(getActivity(), wishListUseCase.getWatchables()));
 				AnimationUtils.makeViewGroupAnimation(getGridView());
 				dismissLoading();
 			}
@@ -83,6 +81,6 @@ public class WishListGridFragment extends AbstractGridFragment<Watchable> {
 	 */
 	@Override
 	public void onItemSelected(Watchable watchable) {
-		WatchableAdapter.onItemClick(this.getActivity(), watchable);
+		WatchableActivity.start(getActivity(), watchable);
 	}
 }

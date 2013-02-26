@@ -2,21 +2,21 @@ package com.mediafever.usecase.mediasession;
 
 import com.google.inject.Inject;
 import com.jdroid.android.usecase.AbstractApiUseCase;
+import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.service.APIService;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class SmartSelectionUseCase extends AbstractApiUseCase<APIService> {
+public class AddSmartSelectionUseCase extends AbstractApiUseCase<APIService> {
 	
 	private MediaSession mediaSession;
-	private Watchable watchable;
+	private MediaSelection mediaSelection;
 	
 	@Inject
-	public SmartSelectionUseCase(APIService apiService) {
+	public AddSmartSelectionUseCase(APIService apiService) {
 		super(apiService);
 	}
 	
@@ -25,7 +25,7 @@ public class SmartSelectionUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		watchable = getApiService().getSmartSelection(mediaSession.getId());
+		mediaSelection = getApiService().addSmartSelection(mediaSession);
 	}
 	
 	/**
@@ -36,10 +36,10 @@ public class SmartSelectionUseCase extends AbstractApiUseCase<APIService> {
 	}
 	
 	/**
-	 * @return the watchable
+	 * @return the mediaSelection
 	 */
-	public Watchable getWatchable() {
-		return watchable;
+	public MediaSelection getMediaSelection() {
+		return mediaSelection;
 	}
 	
 }

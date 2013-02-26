@@ -45,10 +45,7 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 		Date time = json.getDate(TIME);
 		List<MediaSessionUser> users = parseList(json.getJSONArray(USERS), new MediaSessionUserParser());
 		
-		List<MediaSelection> selections = null;
-		if (json.has(SELECTIONS)) {
-			selections = parseList(json.getJSONArray(SELECTIONS), new MediaSelectionParser(users));
-		}
+		List<MediaSelection> selections = parseList(json.optJSONArray(SELECTIONS), new MediaSelectionParser(users));
 		List<WatchableType> watchablesTypes = Lists.newArrayList();
 		for (String watchableType : parseListString(json.getJSONArray(WATCHABLES_TYPES))) {
 			watchablesTypes.add(WatchableType.find(watchableType));

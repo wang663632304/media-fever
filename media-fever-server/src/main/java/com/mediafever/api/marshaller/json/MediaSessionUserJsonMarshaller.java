@@ -13,8 +13,6 @@ import com.mediafever.core.domain.session.MediaSessionUser;
 public class MediaSessionUserJsonMarshaller implements Marshaller<MediaSessionUser, JsonMap> {
 	
 	private static final String USER = "user";
-	private static final String PENDING_THUMBS_UP = "pendingThumbsUp";
-	private static final String PENDING_THUMBS_DOWN = "pendingThumbsDown";
 	private static final String ACCEPTED = "accepted";
 	
 	/**
@@ -25,8 +23,6 @@ public class MediaSessionUserJsonMarshaller implements Marshaller<MediaSessionUs
 	public JsonMap marshall(MediaSessionUser mediaSessionUser, MarshallerMode mode, Map<String, String> extras) {
 		JsonMap map = new JsonMap(mode, extras);
 		map.put(USER, mediaSessionUser.getUser());
-		map.put(PENDING_THUMBS_UP, mediaSessionUser.getPendingThumbsUp());
-		map.put(PENDING_THUMBS_DOWN, mediaSessionUser.getPendingThumbsDown());
 		map.put(ACCEPTED, mediaSessionUser.isAccepted());
 		return map;
 	}

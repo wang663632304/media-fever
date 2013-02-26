@@ -41,35 +41,49 @@ public class FriendsGridFragment extends AbstractGridFragment<UserImpl> {
 		
 		getSupportActionBar().setTitle(R.string.friends);
 		
-		if (friendsUseCase == null) {
-			friendsUseCase = getInstance(FriendsUseCase.class);
-			friendsUseCase.setUserId(getUser().getId());
-		}
+		friendsUseCase = getInstance(FriendsUseCase.class);
+		friendsUseCase.setUserId(getUser().getId());
 		
-		if (removeFriendUseCase == null) {
-			removeFriendUseCase = getInstance(RemoveFriendUseCase.class);
-			removeFriendUseCaseListener = new AndroidUseCaseListener() {
-				
-				@Override
-				public void onFinishUseCase() {
-					executeOnUIThread(new Runnable() {
-						
-						@Override
-						public void run() {
-							ToastUtils.showInfoToast(R.string.friendRemoved);
-							executeUseCase(friendsUseCase);
-							dismissLoading();
-						}
-					});
-				}
-				
-				@Override
-				protected ActivityIf getActivityIf() {
-					return (ActivityIf)getActivity();
-				}
-			};
-			removeFriendUseCase.setUserId(getUser().getId());
-		}
+		removeFriendUseCase = getInstance(RemoveFriendUseCase.class);
+		removeFriendUseCaseListener = new AndroidUseCaseListener() {
+			
+			@Override
+			public void onFinishUseCase() {
+				executeOnUIThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						ToastUtils.showInfoToast(R.string.friendRemoved);
+						executeUseCase(friendsUseCase);
+						dismissLoading();
+					}
+				});
+			}
+			
+			@Override
+			protected ActivityIf getActivityIf() {
+				return (ActivityIf)getActivity();
+			}
+		};
+		removeFriendUseCase.setUserId(getUser().getId());
+	}
+	
+	/**
+	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 *      android.os.Bundle)
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.grid_fragment, container, false);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractGridFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		registerForContextMenu(getGridView());
 	}
 	
 	/**
@@ -90,24 +104,6 @@ public class FriendsGridFragment extends AbstractGridFragment<UserImpl> {
 		super.onPause();
 		onPauseUseCase(friendsUseCase, this);
 		onPauseUseCase(removeFriendUseCase, removeFriendUseCaseListener);
-	}
-	
-	/**
-	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 *      android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.grid_fragment, container, false);
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#onActivityCreated(android.os.Bundle)
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		registerForContextMenu(getGridView());
 	}
 	
 	/**
@@ -154,7 +150,7 @@ public class FriendsGridFragment extends AbstractGridFragment<UserImpl> {
 			
 			@Override
 			public void run() {
-				setListAdapter(new UserAdapter(FriendsGridFragment.this.getActivity(), friendsUseCase.getFriends()));
+				setListAdapter(new UserAdapter(getActivity(), friendsUseCase.getFriends()));
 				AnimationUtils.makeViewGroupAnimation(getGridView());
 				dismissLoading();
 			}

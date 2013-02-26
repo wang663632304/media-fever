@@ -10,6 +10,7 @@ import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.android.domain.User;
 import com.jdroid.android.utils.AndroidDateUtils;
 import com.jdroid.android.utils.AndroidUtils;
+import com.jdroid.android.utils.LocalizationUtils;
 import com.jdroid.java.utils.DateUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
@@ -35,8 +36,9 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 	@Override
 	protected void fillHolderFromItem(final MediaSession mediaSession, MediaSessionHolder holder) {
 		holder.watchableTypes.setText(StringUtils.join(mediaSession.getWatchableTypes(), SEPARATOR));
-		if ((mediaSession.getDate() != null) || (mediaSession.getTime() != null)) {
-			holder.date.setText(getDateString(mediaSession.getDate(), mediaSession.getTime()));
+		String dateTime = getDateString(mediaSession);
+		if (StringUtils.isNotEmpty(dateTime)) {
+			holder.date.setText(dateTime);
 			holder.date.setVisibility(View.VISIBLE);
 		} else {
 			holder.date.setVisibility(View.INVISIBLE);
@@ -64,8 +66,10 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		}
 	}
 	
-	private String getDateString(Date date, Date time) {
+	public static String getDateString(MediaSession mediaSession) {
 		
+		Date date = mediaSession.getDate();
+		Date time = mediaSession.getTime();
 		StringBuilder dateBuilder = new StringBuilder();
 		if (date != null) {
 			
@@ -76,7 +80,7 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			Boolean isCurrentDay = DateUtils.getDay(now) == DateUtils.getDay(fullDate);
 			
 			if ((absSecondsToDate < DateUtils.DAY) && isCurrentDay) {
-				dateBuilder.append(getContext().getString(R.string.todayDateFormat));
+				dateBuilder.append(LocalizationUtils.getString(R.string.todayDateFormat));
 			} else if (absSecondsToDate < DateUtils.WEEK) {
 				dateBuilder.append(DateUtils.format(fullDate, DateUtils.E_DATE_FORMAT));
 			} else {

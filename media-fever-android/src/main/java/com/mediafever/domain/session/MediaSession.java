@@ -1,10 +1,10 @@
 package com.mediafever.domain.session;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.domain.Entity;
-import com.jdroid.android.domain.User;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.domain.UserImpl;
@@ -39,37 +39,30 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		date = DateUtils.now();
 		users = Lists.newArrayList(new MediaSessionUser(SecurityContext.get().getUser()));
 		watchableTypes = Lists.newArrayList(WatchableType.MOVIE);
+		setSelections(null);
+	}
+	
+	public void setSelections(List<MediaSelection> mediaSelections) {
 		selections = Lists.newArrayList(new MediaSelection());
+		if (mediaSelections != null) {
+			selections.addAll(mediaSelections);
+		}
 	}
 	
 	public void thumbsUp(Watchable watchable) {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
-		MediaSessionUser mediaSessionUser = getMe();
-		mediaSelection.thumbsUp(mediaSessionUser);
-		mediaSessionUser.decrementPendingThumbsUp();
+		mediaSelection.thumbsUp();
 	}
 	
 	public void thumbsDown(Watchable watchable) {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
-		MediaSessionUser mediaSessionUser = getMe();
-		mediaSelection.thumbsDown(mediaSessionUser);
-		mediaSessionUser.decrementPendingThumbsDown();
+		mediaSelection.thumbsDown();
 	}
 	
 	private MediaSelection findMediaSelection(Watchable watchable) {
 		for (MediaSelection mediaSelection : selections) {
 			if ((mediaSelection.getWatchable() != null) && mediaSelection.getWatchable().equals(watchable)) {
 				return mediaSelection;
-			}
-		}
-		return null;
-	}
-	
-	public MediaSessionUser getMe() {
-		User user = SecurityContext.get().getUser();
-		for (MediaSessionUser mediaUser : users) {
-			if (mediaUser.getUser().equals(user)) {
-				return mediaUser;
 			}
 		}
 		return null;
@@ -91,6 +84,14 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return watchableTypes;
 	}
 	
+	public Boolean acceptOnlyMovies() {
+		return (watchableTypes.size() == 1) && watchableTypes.contains(WatchableType.MOVIE);
+	}
+	
+	public Boolean acceptOnlySeries() {
+		return (watchableTypes.size() == 1) && watchableTypes.contains(WatchableType.SERIES);
+	}
+	
 	public void accept() {
 		accepted = true;
 	}
@@ -100,6 +101,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	}
 	
 	public List<MediaSelection> getSelections() {
+		Collections.sort(selections);
 		return selections;
 	}
 	
@@ -143,12 +145,11 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return false;
 	}
 	
-	public void addSelection(Watchable watchable) {
-		selections.add(new MediaSelection(watchable));
+	public void addSelection(MediaSelection mediaSelection) {
+		selections.add(mediaSelection);
 	}
 	
-	public void removeSelection(Watchable watchable) {
-		MediaSelection mediaSelection = findMediaSelection(watchable);
+	public void removeSelection(MediaSelection mediaSelection) {
 		selections.remove(mediaSelection);
 	}
 	
@@ -203,12 +204,5 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public void setAccepted(Boolean accepted) {
 		this.accepted = accepted;
-	}
-	
-	public void setSelections(List<MediaSelection> selections) {
-		this.selections = Lists.newArrayList(new MediaSelection());
-		if (selections != null) {
-			this.selections.addAll(selections);
-		}
 	}
 }

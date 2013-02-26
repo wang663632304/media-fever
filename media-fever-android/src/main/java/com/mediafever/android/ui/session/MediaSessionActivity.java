@@ -1,6 +1,7 @@
 package com.mediafever.android.ui.session;
 
 import java.util.List;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,18 @@ public class MediaSessionActivity extends WizardActivity {
 	
 	private List<WizardStep> steps;
 	
+	public static void start(Context context) {
+		start(context, null);
+	}
+	
+	public static void start(Context context, Long mediaSessionId) {
+		Intent intent = new Intent(context, MediaSessionActivity.class);
+		if (mediaSessionId != null) {
+			intent.putExtra(MediaSessionActivity.MEDIA_SESSION_ID_EXTRA, mediaSessionId);
+		}
+		context.startActivity(intent);
+	}
+	
 	/**
 	 * @see com.jdroid.android.wizard.WizardActivity#getWizardSteps()
 	 */
@@ -43,13 +56,6 @@ public class MediaSessionActivity extends WizardActivity {
 				public Fragment createFragment(Object args) {
 					return AndroidUtils.isLargeScreenOrBigger() && !AndroidUtils.isPreHoneycomb() ? new MediaSessionFriendsGridFragment()
 							: new MediaSessionFriendsFragment();
-				}
-			});
-			steps.add(new WizardStep() {
-				
-				@Override
-				public Fragment createFragment(Object args) {
-					return new MediaSelectionsFragment();
 				}
 			});
 		}
@@ -111,18 +117,16 @@ public class MediaSessionActivity extends WizardActivity {
 				@Override
 				public void run() {
 					getActivity().finish();
-					Intent intent = new Intent(getActivity(), MediaSessionListActivity.class);
-					intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-					startActivity(intent);
+					MediaSelectionsActivity.start(getActivity(), getUseCase().getMediaSession());
 				}
 			});
 		}
 		
 		/**
-		 * @see com.jdroid.android.fragment.UseCaseFragment#getuseCaseTrigger()
+		 * @see com.jdroid.android.fragment.UseCaseFragment#getUseCaseTrigger()
 		 */
 		@Override
-		protected UseCaseTrigger getuseCaseTrigger() {
+		protected UseCaseTrigger getUseCaseTrigger() {
 			return UseCaseTrigger.MANUAL;
 		}
 	}

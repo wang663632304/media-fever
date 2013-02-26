@@ -24,9 +24,17 @@
 			android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp" />
 	</LinearLayout>
 
-	<TextView android:id="@+id/thumbs" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
-		android:layout_below="@+id/userContainer" android:layout_alignParentRight="true" android:padding="5dp" />
+	<LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:background="@color/transluscentGrey"
+		android:layout_below="@+id/userContainer" android:layout_alignParentRight="true" android:orientation="horizontal">
+		<TextView android:id="@+id/thumbsUp" android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:padding="5dp" />
+		<ImageView android:id="@+id/thumbsUpIcon" android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:src="@drawable/thumbs_up" android:layout_gravity="center_vertical" />
+		<TextView android:id="@+id/thumbsDown" android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:padding="5dp" />
+		<ImageView android:id="@+id/thumbsDownIcon" android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:src="@drawable/thumbs_down" android:layout_gravity="center_vertical" />
+	</LinearLayout>
 
 	<TextView android:id="@+id/addNew" android:layout_height="match_parent" android:layout_width="match_parent"
 		android:textStyle="bold" android:textSize="60sp" android:textColor="@android:color/white" android:background="@color/dashboardPressed"

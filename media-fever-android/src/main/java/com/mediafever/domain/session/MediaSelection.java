@@ -11,11 +11,11 @@ import com.mediafever.domain.watchable.Watchable;
  * 
  * @author Maxi Rosson
  */
-public class MediaSelection extends Entity {
+public class MediaSelection extends Entity implements Comparable<MediaSelection> {
 	
 	private Watchable watchable;
-	private List<MediaSessionUser> thumbsUpUsers = Lists.newArrayList();
-	private List<MediaSessionUser> thumbsDownUsers = Lists.newArrayList();
+	private List<User> thumbsUpUsers = Lists.newArrayList();
+	private List<User> thumbsDownUsers = Lists.newArrayList();
 	private User owner;
 	
 	public MediaSelection() {
@@ -25,8 +25,7 @@ public class MediaSelection extends Entity {
 		this(null, watchable, SecurityContext.get().getUser(), null, null);
 	}
 	
-	public MediaSelection(Long id, Watchable watchable, User owner, List<MediaSessionUser> thumbsUpUsers,
-			List<MediaSessionUser> thumbsDownUsers) {
+	public MediaSelection(Long id, Watchable watchable, User owner, List<User> thumbsUpUsers, List<User> thumbsDownUsers) {
 		super(id);
 		this.watchable = watchable;
 		this.owner = owner;
@@ -34,18 +33,28 @@ public class MediaSelection extends Entity {
 		this.thumbsDownUsers = Lists.safeArrayList(thumbsDownUsers);
 	}
 	
-	public void thumbsUp(MediaSessionUser mediaSessionUser) {
-		thumbsDownUsers.remove(mediaSessionUser);
-		if (!thumbsUpUsers.contains(mediaSessionUser)) {
-			thumbsUpUsers.add(mediaSessionUser);
+	public void thumbsUp() {
+		User user = SecurityContext.get().getUser();
+		thumbsDownUsers.remove(user);
+		if (!thumbsUpUsers.contains(user)) {
+			thumbsUpUsers.add(user);
 		}
 	}
 	
-	public void thumbsDown(MediaSessionUser mediaSessionUser) {
-		thumbsUpUsers.remove(mediaSessionUser);
-		if (!thumbsDownUsers.contains(mediaSessionUser)) {
-			thumbsDownUsers.add(mediaSessionUser);
+	public void thumbsDown() {
+		User user = SecurityContext.get().getUser();
+		thumbsUpUsers.remove(user);
+		if (!thumbsDownUsers.contains(user)) {
+			thumbsDownUsers.add(user);
 		}
+	}
+	
+	public Boolean isThumbsUp() {
+		return thumbsUpUsers.contains(SecurityContext.get().getUser());
+	}
+	
+	public Boolean isThumbsDown() {
+		return thumbsDownUsers.contains(SecurityContext.get().getUser());
 	}
 	
 	/**
@@ -58,14 +67,14 @@ public class MediaSelection extends Entity {
 	/**
 	 * @return the thumbsUpUsers
 	 */
-	public List<MediaSessionUser> getThumbsUpUsers() {
+	public List<User> getThumbsUpUsers() {
 		return thumbsUpUsers;
 	}
 	
 	/**
 	 * @return the thumbsDownUsers
 	 */
-	public List<MediaSessionUser> getThumbsDownUsers() {
+	public List<User> getThumbsDownUsers() {
 		return thumbsDownUsers;
 	}
 	
@@ -74,5 +83,27 @@ public class MediaSelection extends Entity {
 	 */
 	public User getOwner() {
 		return owner;
+	}
+	
+	/**
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(MediaSelection another) {
+		Integer thumbsUp = thumbsUpUsers.size();
+		Integer anotherThumbsUp = another.thumbsUpUsers.size();
+		Integer thumbsDown = thumbsDownUsers.size();
+		Integer anotherThumbsDown = another.thumbsDownUsers.size();
+		if (getId() == null) {
+			return -1;
+		} else if (another.getId() == null) {
+			return 1;
+		} else {
+			int comp = anotherThumbsUp.compareTo(thumbsUp);
+			if (comp == 0) {
+				comp = thumbsDown.compareTo(anotherThumbsDown);
+			}
+			return comp;
+		}
 	}
 }

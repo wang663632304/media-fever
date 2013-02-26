@@ -1,6 +1,7 @@
 package com.mediafever.api.controller;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -54,7 +55,7 @@ public class MediaSessionController extends AbstractController {
 	@PUT
 	@Path("{id}/thumbsUp/{mediaSelectionId}")
 	@GZIP
-	public void thumbsUpMediaSelection(@PathParam("id") Long id, @PathParam("id") Long mediaSelectionId) {
+	public void thumbsUpMediaSelection(@PathParam("id") Long id, @PathParam("mediaSelectionId") Long mediaSelectionId) {
 		mediaSessionService.thumbsUpMediaSelection(id, mediaSelectionId,
 			ApplicationContext.get().getSecurityContext().getUser().getId());
 	}
@@ -62,9 +63,26 @@ public class MediaSessionController extends AbstractController {
 	@PUT
 	@Path("{id}/thumbsDown/{mediaSelectionId}")
 	@GZIP
-	public void thumbsDownMediaSelection(@PathParam("id") Long id, @PathParam("id") Long mediaSelectionId) {
+	public void thumbsDownMediaSelection(@PathParam("id") Long id, @PathParam("mediaSelectionId") Long mediaSelectionId) {
 		mediaSessionService.thumbsDownMediaSelection(id, mediaSelectionId,
 			ApplicationContext.get().getSecurityContext().getUser().getId());
+	}
+	
+	@DELETE
+	@Path("{id}/mediaSelection/{mediaSelectionId}")
+	@GZIP
+	public void removeMediaSelection(@PathParam("id") Long id, @PathParam("mediaSelectionId") Long mediaSelectionId) {
+		mediaSessionService.removeMediaSelection(id, mediaSelectionId,
+			ApplicationContext.get().getSecurityContext().getUser().getId());
+	}
+	
+	@PUT
+	@Path("{id}/mediaSelection/smart")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String addSmartSelection(@PathParam("id") Long id) {
+		return marshallSimple(mediaSessionService.addSmartSelection(id,
+			ApplicationContext.get().getSecurityContext().getUser().getId()));
 	}
 	
 	@GET
@@ -94,13 +112,5 @@ public class MediaSessionController extends AbstractController {
 	@GZIP
 	public void rejectMediaSession(@PathParam("id") Long id) {
 		mediaSessionService.rejectMediaSession(id, ApplicationContext.get().getSecurityContext().getUser().getId());
-	}
-	
-	@GET
-	@Path("{id}/selection/smart")
-	@Produces(MediaType.APPLICATION_JSON)
-	@GZIP
-	public String getSmartSelection(@PathParam("id") Long id) {
-		return marshallSimple(mediaSessionService.getSmartSelection(id));
 	}
 }

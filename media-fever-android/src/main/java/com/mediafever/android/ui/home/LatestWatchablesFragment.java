@@ -17,7 +17,7 @@ import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.images.ReflectedRemoteImageResolver;
 import com.jdroid.java.utils.CollectionUtils;
 import com.mediafever.R;
-import com.mediafever.android.ui.watchable.WatchableAdapter;
+import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.usecase.LatestWatchablesUseCase;
 
@@ -39,6 +39,8 @@ public class LatestWatchablesFragment extends AbstractFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+		
+		latestWatchablesUseCase = getInstance(LatestWatchablesUseCase.class);
 	}
 	
 	/**
@@ -56,10 +58,6 @@ public class LatestWatchablesFragment extends AbstractFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
-		if (latestWatchablesUseCase == null) {
-			latestWatchablesUseCase = getInstance(LatestWatchablesUseCase.class);
-		}
 		
 		float height = getResources().getDimensionPixelSize(R.dimen.coverFlowHeight)
 				* (1 + ReflectedRemoteImageResolver.get().getImageReflectionRatio());
@@ -124,25 +122,16 @@ public class LatestWatchablesFragment extends AbstractFragment {
 				}
 			});
 			coverflow.setSelection(latestWatchablesUseCase.getWatchables().size() / 2, true);
-			setupListeners(coverflow);
+			coverflow.setOnItemClickListener(new OnItemClickListener() {
+				
+				@Override
+				public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+					Watchable watchable = (Watchable)parent.getAdapter().getItem(position);
+					WatchableActivity.start(getActivity(), watchable);
+				}
+				
+			});
 		}
 		
-	}
-	
-	/**
-	 * Sets the up listeners.
-	 * 
-	 * @param coverFlow the new up listeners
-	 */
-	private void setupListeners(CoverFlow coverFlow) {
-		coverFlow.setOnItemClickListener(new OnItemClickListener() {
-			
-			@Override
-			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-				Watchable watchable = (Watchable)parent.getAdapter().getItem(position);
-				WatchableAdapter.onItemClick(LatestWatchablesFragment.this.getActivity(), watchable);
-			}
-			
-		});
 	}
 }

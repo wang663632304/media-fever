@@ -30,10 +30,10 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 		
 		getSupportActionBar().setTitle(R.string.friendsRequests);
 		
-		if (friendRequestsUseCase == null) {
-			friendRequestsUseCase = getInstance(FriendRequestsUseCase.class);
-			friendRequestsUseCase.setUserId(getUser().getId());
-		}
+		friendRequestsUseCase = getInstance(FriendRequestsUseCase.class);
+		friendRequestsUseCase.setUserId(getUser().getId());
+		
+		acceptFriendRequestUseCase = getInstance(AcceptFriendRequestUseCase.class);
 	}
 	
 	/**
@@ -43,6 +43,16 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.list_fragment, container, false);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractListFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		
+		getListView().setItemsCanFocus(true);
 	}
 	
 	/**
@@ -74,20 +84,6 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#onViewCreated(android.view.View, android.os.Bundle)
-	 */
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		
-		getListView().setItemsCanFocus(true);
-		
-		if (acceptFriendRequestUseCase == null) {
-			acceptFriendRequestUseCase = getInstance(AcceptFriendRequestUseCase.class);
-		}
-	}
-	
-	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
 	 */
 	@Override
@@ -96,8 +92,7 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 			
 			@Override
 			public void run() {
-				setListAdapter(new FriendRequestAdapter(FriendsRequestsFragment.this.getActivity(),
-						friendRequestsUseCase.getFriendRequests()) {
+				setListAdapter(new FriendRequestAdapter(getActivity(), friendRequestsUseCase.getFriendRequests()) {
 					
 					@Override
 					public void onAccept(FriendRequest friendRequest) {

@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import org.apache.commons.collections.CollectionUtils;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.domain.Entity;
+import com.mediafever.core.domain.User;
+import com.mediafever.core.domain.watchable.Watchable;
 import com.mediafever.core.domain.watchable.WatchableType;
 
 /**
@@ -66,14 +68,22 @@ public class MediaSession extends Entity {
 		users.addAll(newUsers);
 	}
 	
-	public void thumbsUp(MediaSelection mediaSelection, MediaSessionUser mediaSessionUser) {
-		mediaSelection.thumbsUp(mediaSessionUser);
-		mediaSessionUser.decrementPendingThumbsUp();
+	public void thumbsUp(MediaSelection mediaSelection, User user) {
+		mediaSelection.thumbsUp(user);
 	}
 	
-	public void thumbsDown(MediaSelection mediaSelection, MediaSessionUser mediaSessionUser) {
-		mediaSelection.thumbsDown(mediaSessionUser);
-		mediaSessionUser.decrementPendingThumbsDown();
+	public void thumbsDown(MediaSelection mediaSelection, User user) {
+		mediaSelection.thumbsDown(user);
+	}
+	
+	public MediaSelection addSelection(User user, Watchable watchable) {
+		MediaSelection mediaSelection = new MediaSelection(user, watchable);
+		selections.add(mediaSelection);
+		return mediaSelection;
+	}
+	
+	public void removeSelection(MediaSelection mediaSelection) {
+		selections.remove(mediaSelection);
 	}
 	
 	public Date getDate() {

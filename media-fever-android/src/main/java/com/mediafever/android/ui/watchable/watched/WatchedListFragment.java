@@ -8,6 +8,7 @@ import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
+import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.usecase.WatchedUseCase;
 
@@ -18,6 +19,18 @@ import com.mediafever.usecase.WatchedUseCase;
 public class WatchedListFragment extends AbstractListFragment<Watchable> {
 	
 	private WatchedUseCase watchedUseCase;
+	
+	/**
+	 * @see android.app.Fragment#onCreate(android.os.Bundle)
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		
+		watchedUseCase = getInstance(WatchedUseCase.class);
+		watchedUseCase.setUserId(getUser().getId());
+	}
 	
 	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
@@ -34,20 +47,6 @@ public class WatchedListFragment extends AbstractListFragment<Watchable> {
 	@Override
 	protected int getNoResultsText() {
 		return R.string.noResultsWatched;
-	}
-	
-	/**
-	 * @see android.app.Fragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-		
-		if (watchedUseCase == null) {
-			watchedUseCase = getInstance(WatchedUseCase.class);
-			watchedUseCase.setUserId(getUser().getId());
-		}
 	}
 	
 	/**
@@ -77,8 +76,7 @@ public class WatchedListFragment extends AbstractListFragment<Watchable> {
 			
 			@Override
 			public void run() {
-				setListAdapter(new WatchableAdapter(WatchedListFragment.this.getActivity(),
-						watchedUseCase.getWatchables()));
+				setListAdapter(new WatchableAdapter(getActivity(), watchedUseCase.getWatchables()));
 				dismissLoading();
 			}
 		});
@@ -89,6 +87,6 @@ public class WatchedListFragment extends AbstractListFragment<Watchable> {
 	 */
 	@Override
 	public void onItemSelected(Watchable watchable) {
-		WatchableAdapter.onItemClick(this.getActivity(), watchable);
+		WatchableActivity.start(getActivity(), watchable);
 	}
 }

@@ -9,6 +9,7 @@ import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.utils.AnimationUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
+import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.usecase.SuggestionsUseCase;
 
@@ -21,15 +22,6 @@ public class SuggestionsGridFragment extends AbstractGridFragment<Watchable> {
 	private SuggestionsUseCase suggestionsUseCase;
 	
 	/**
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
-	 *      android.os.Bundle)
-	 */
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.grid_fragment, container, false);
-	}
-	
-	/**
 	 * @see android.app.Fragment#onCreate(android.os.Bundle)
 	 */
 	@Override
@@ -37,10 +29,17 @@ public class SuggestionsGridFragment extends AbstractGridFragment<Watchable> {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		if (suggestionsUseCase == null) {
-			suggestionsUseCase = getInstance(SuggestionsUseCase.class);
-			suggestionsUseCase.setUserId(getUser().getId());
-		}
+		suggestionsUseCase = getInstance(SuggestionsUseCase.class);
+		suggestionsUseCase.setUserId(getUser().getId());
+	}
+	
+	/**
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+	 *      android.os.Bundle)
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.grid_fragment, container, false);
 	}
 	
 	/**
@@ -70,8 +69,7 @@ public class SuggestionsGridFragment extends AbstractGridFragment<Watchable> {
 			
 			@Override
 			public void run() {
-				setListAdapter(new WatchableAdapter(SuggestionsGridFragment.this.getActivity(),
-						suggestionsUseCase.getWatchables()));
+				setListAdapter(new WatchableAdapter(getActivity(), suggestionsUseCase.getWatchables()));
 				AnimationUtils.makeViewGroupAnimation(getGridView());
 				dismissLoading();
 			}
@@ -83,6 +81,6 @@ public class SuggestionsGridFragment extends AbstractGridFragment<Watchable> {
 	 */
 	@Override
 	public void onItemSelected(Watchable watchable) {
-		WatchableAdapter.onItemClick(this.getActivity(), watchable);
+		WatchableActivity.start(getActivity(), watchable);
 	}
 }

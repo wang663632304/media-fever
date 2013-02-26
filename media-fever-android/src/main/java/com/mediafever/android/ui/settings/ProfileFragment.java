@@ -65,6 +65,17 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	private Button save;
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		
+		updateUserProfileUseCase = getInstance(UpdateUserProfileUseCase.class);
+	}
+	
+	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
 	 *      android.os.Bundle)
 	 */
@@ -74,26 +85,12 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-	}
-	
-	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		if (updateUserProfileUseCase == null) {
-			updateUserProfileUseCase = getInstance(UpdateUserProfileUseCase.class);
-		}
-		
-		avatar = findView(R.id.photo);
 		changePassword.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -126,6 +123,8 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 		firstName.setText(user.getFirstName());
 		lastName.setText(user.getLastName());
 		publicProfile.setChecked(user.hasPublicProfile());
+		
+		avatar = findView(R.id.photo);
 		avatar.setImageContent(user.getImage(), R.drawable.person_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
 		if (PictureDialogFragment.display()) {
 			

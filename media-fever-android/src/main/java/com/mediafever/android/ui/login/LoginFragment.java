@@ -49,6 +49,8 @@ public class LoginFragment extends AbstractFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+		
+		loginUseCase = getInstance(LoginUseCase.class);
 	}
 	
 	/**
@@ -61,26 +63,21 @@ public class LoginFragment extends AbstractFragment {
 	}
 	
 	/**
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see com.jdroid.android.fragment.AbstractFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		
 		// TODO Hardcoded login
 		email.setText("user1@email.com");
 		password.setText("admin");
 		
 		if (ApplicationContext.get().isFreeApp()) {
-			
 			buyFullApp.setVisibility(View.VISIBLE);
 			buyFullApp.setOnClickListener(new BuyFullAppOnClickListener());
 		} else {
 			buyFullApp.setVisibility(View.GONE);
-		}
-		
-		if (loginUseCase == null) {
-			loginUseCase = getInstance(LoginUseCase.class);
 		}
 		
 		login.setOnClickListener(new OnClickListener() {

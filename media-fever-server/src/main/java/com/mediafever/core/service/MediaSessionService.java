@@ -89,45 +89,44 @@ public class MediaSessionService {
 		mediaSession.modify(newWatchableTypes, date, time, newUsers);
 	}
 	
-	private MediaSessionUser find(MediaSession mediaSession, Long userId) {
-		MediaSessionUser mediaSessionUser = null;
-		for (MediaSessionUser each : mediaSession.getUsers()) {
-			if (each.getId().equals(userId)) {
-				mediaSessionUser = each;
-				break;
-			}
-		}
-		return mediaSessionUser;
-	}
-	
 	@Transactional
 	public void thumbsUpMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
-		MediaSessionUser mediaSessionUser = find(mediaSession, userId);
-		MediaSelection mediaSelection = null;
-		for (MediaSelection each : mediaSession.getSelections()) {
-			if (each.getId().equals(mediaSelectionId)) {
-				mediaSelection = each;
-			}
-		}
+		User user = userRepository.get(userId);
+		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
-			mediaSession.thumbsUp(mediaSelection, mediaSessionUser);
+			mediaSession.thumbsUp(mediaSelection, user);
 		}
 	}
 	
 	@Transactional
 	public void thumbsDownMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
-		MediaSessionUser mediaSessionUser = find(mediaSession, userId);
+		User user = userRepository.get(userId);
+		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
+		if (mediaSelection != null) {
+			mediaSession.thumbsDown(mediaSelection, user);
+		}
+	}
+	
+	@Transactional
+	public void removeMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
+		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
+		if (mediaSelection != null) {
+			mediaSession.removeSelection(mediaSelection);
+		}
+	}
+	
+	private MediaSelection findMediaSelection(Long mediaSelectionId, MediaSession mediaSession) {
 		MediaSelection mediaSelection = null;
 		for (MediaSelection each : mediaSession.getSelections()) {
 			if (each.getId().equals(mediaSelectionId)) {
 				mediaSelection = each;
+				break;
 			}
 		}
-		if (mediaSelection != null) {
-			mediaSession.thumbsDown(mediaSelection, mediaSessionUser);
-		}
+		return mediaSelection;
 	}
 	
 	public MediaSession get(Long mediaSessionId) {
@@ -160,15 +159,23 @@ public class MediaSessionService {
 		}
 	}
 	
-	public Watchable getSmartSelection(Long id) {
-		
+	@Transactional
+	public MediaSelection addSmartSelection(Long id, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
-		
+		User user = userRepository.get(userId);
+		Watchable watchable = getSmartSelection(mediaSession);
+		MediaSelection mediaSelection = mediaSession.addSelection(user, watchable);
+		return mediaSelection;
+	}
+	
+	private Watchable getSmartSelection(MediaSession mediaSession) {
 		// TODO Use the SMART Selection algorithm here
 		Filter filter = new Filter(1, 1000);
 		filter.addValue(CustomFilterKey.WATCHABLE_TYPES, mediaSession.getWatchableTypes());
 		List<Watchable> watchables = watchableService.searchWatchable(filter).getData();
 		int random = IdGenerator.getRandomIntId() % watchables.size();
-		return watchables.get(random);
+		Watchable watchable = watchables.get(random);
+		
+		return watchable;
 	}
 }

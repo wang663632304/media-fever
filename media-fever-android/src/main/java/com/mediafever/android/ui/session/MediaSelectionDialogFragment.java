@@ -11,10 +11,10 @@ import android.widget.Button;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.mediafever.R;
-import com.mediafever.android.ui.watchable.WatchableAdapter;
+import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.session.MediaSelection;
-import com.mediafever.domain.session.MediaSessionUser;
-import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
+import com.mediafever.domain.session.MediaSession;
+import com.mediafever.usecase.mediasession.RemoveMediaSelectionUseCase;
 import com.mediafever.usecase.mediasession.VoteMediaSelectionUseCase;
 
 /**
@@ -23,31 +23,24 @@ import com.mediafever.usecase.mediasession.VoteMediaSelectionUseCase;
  */
 public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	
+	private static final String MEDIA_SESSION_EXTRA = "mediaSession";
 	private static final String MEDIA_SELECTION_EXTRA = "mediaSelection";
 	
 	private VoteMediaSelectionUseCase voteMediaSelectionUseCase;
+	private RemoveMediaSelectionUseCase removeMediaSelectionUseCase;
+	private MediaSession mediaSession;
 	private MediaSelection mediaSelection;
 	
-	public static void show(Fragment targetFragment, MediaSelection mediaSelection) {
+	public static void show(Fragment targetFragment, MediaSession mediaSession, MediaSelection mediaSelection) {
 		FragmentManager fm = targetFragment.getActivity().getSupportFragmentManager();
-		MediaSelectionDialogFragment dialogFragment = new MediaSelectionDialogFragment(mediaSelection);
+		MediaSelectionDialogFragment dialogFragment = new MediaSelectionDialogFragment();
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(MEDIA_SESSION_EXTRA, mediaSession);
+		bundle.putSerializable(MEDIA_SELECTION_EXTRA, mediaSelection);
+		dialogFragment.setArguments(bundle);
+		
 		dialogFragment.setTargetFragment(targetFragment, 1);
 		dialogFragment.show(fm, MediaSelectionDialogFragment.class.getSimpleName());
-	}
-	
-	public MediaSelectionDialogFragment() {
-	}
-	
-	private MediaSelectionDialogFragment(MediaSelection mediaSelection) {
-		this.mediaSelection = mediaSelection;
-		
-		Bundle bundle = new Bundle();
-		bundle.putSerializable(MEDIA_SELECTION_EXTRA, mediaSelection);
-		setArguments(bundle);
-	}
-	
-	public MediaSessionSetupUseCase getMediaSessionSetupUseCase() {
-		return ((MediaSessionActivity)getActivity()).getMediaSessionSetupUseCase();
 	}
 	
 	/**
@@ -58,16 +51,16 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		Bundle args = getArguments();
-		if (args != null) {
-			mediaSelection = (MediaSelection)args.getSerializable(MEDIA_SELECTION_EXTRA);
-		}
+		mediaSelection = getArgument(MEDIA_SELECTION_EXTRA);
+		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
 		
-		if (voteMediaSelectionUseCase == null) {
-			voteMediaSelectionUseCase = getInstance(VoteMediaSelectionUseCase.class);
-			voteMediaSelectionUseCase.setMediaSelection(mediaSelection);
-			voteMediaSelectionUseCase.setMediaSession(getMediaSessionSetupUseCase().getMediaSession());
-		}
+		voteMediaSelectionUseCase = getInstance(VoteMediaSelectionUseCase.class);
+		voteMediaSelectionUseCase.setMediaSelection(mediaSelection);
+		voteMediaSelectionUseCase.setMediaSession(mediaSession);
+		
+		removeMediaSelectionUseCase = getInstance(RemoveMediaSelectionUseCase.class);
+		removeMediaSelectionUseCase.setMediaSelection(mediaSelection);
+		removeMediaSelectionUseCase.setMediaSession(mediaSession);
 	}
 	
 	/**
@@ -76,40 +69,47 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.media_selection_dialog_fragment, container, false);
+		return inflater.inflate(R.layout.media_selection_dialog_fragment, container, false);
+	}
+	
+	/**
+	 * @see com.jdroid.android.dialog.AbstractDialogFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		
-		Button details = (Button)view.findViewById(R.id.details);
-		Button remove = (Button)view.findViewById(R.id.remove);
-		Button change = (Button)view.findViewById(R.id.change);
-		Button thumbsUp = (Button)view.findViewById(R.id.thumbsUp);
-		Button thumbsDown = (Button)view.findViewById(R.id.thumbsDown);
-		
+		Button details = findView(R.id.details);
 		details.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				WatchableAdapter.onItemClick(getActivity(), mediaSelection.getWatchable());
+				WatchableActivity.start(getActivity(), mediaSelection.getWatchable());
 			}
 		});
 		
+		Button remove = findView(R.id.remove);
+		Button change = findView(R.id.change);
+		Button thumbsUp = findView(R.id.thumbsUp);
+		Button thumbsDown = findView(R.id.thumbsDown);
 		if (mediaSelection.getOwner().equals(SecurityContext.get().getUser())) {
 			remove.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					getMediaSessionSetupUseCase().removeSelection(mediaSelection.getWatchable());
-					((MediaSelectionsFragment)getTargetFragment()).refresh();
-					dismiss();
-					
+					executeUseCase(removeMediaSelectionUseCase);
 				}
 			});
+			remove.setVisibility(View.VISIBLE);
+			
 			change.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					MediaSelectionPickerDialogFragment.show(getTargetFragment());
+					MediaSelectionPickerDialogFragment.show(getTargetFragment(), mediaSession);
 				}
 			});
+			change.setVisibility(View.VISIBLE);
 			
 			thumbsUp.setVisibility(View.GONE);
 			thumbsDown.setVisibility(View.GONE);
@@ -125,9 +125,7 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 					executeUseCase(voteMediaSelectionUseCase);
 				}
 			});
-			
-			MediaSessionUser mediaSessionUser = getMediaSessionSetupUseCase().getMediaSession().getMe();
-			thumbsUp.setVisibility(mediaSessionUser.hasPendingThumbsUp() ? View.VISIBLE : View.GONE);
+			thumbsUp.setVisibility(mediaSelection.isThumbsUp() ? View.GONE : View.VISIBLE);
 			
 			thumbsDown.setOnClickListener(new OnClickListener() {
 				
@@ -137,11 +135,10 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 					executeUseCase(voteMediaSelectionUseCase);
 				}
 			});
-			thumbsDown.setVisibility(mediaSessionUser.hasPendingThumbsDown() ? View.VISIBLE : View.GONE);
+			thumbsDown.setVisibility(mediaSelection.isThumbsDown() ? View.GONE : View.VISIBLE);
 		}
 		
 		getDialog().setTitle(mediaSelection.getWatchable().getName());
-		return view;
 	}
 	
 	/**
@@ -151,6 +148,7 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	public void onResume() {
 		super.onResume();
 		onResumeUseCase(voteMediaSelectionUseCase, this);
+		onResumeUseCase(removeMediaSelectionUseCase, this);
 	}
 	
 	/**
@@ -160,6 +158,7 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(voteMediaSelectionUseCase, this);
+		onPauseUseCase(removeMediaSelectionUseCase, this);
 	}
 	
 	/**

@@ -53,6 +53,7 @@ public class SignUpFragment extends AbstractFragment {
 		setRetainInstance(true);
 		
 		getSupportActionBar().setTitle(R.string.signUp);
+		signUpUseCase = getInstance(SignUpUseCase.class);
 	}
 	
 	/**
@@ -65,15 +66,11 @@ public class SignUpFragment extends AbstractFragment {
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onActivityCreated(android.os.Bundle)
+	 * @see com.jdroid.android.fragment.AbstractFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		
-		if (signUpUseCase == null) {
-			signUpUseCase = getInstance(SignUpUseCase.class);
-		}
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		
 		signUp.setOnClickListener(new OnClickListener() {
 			

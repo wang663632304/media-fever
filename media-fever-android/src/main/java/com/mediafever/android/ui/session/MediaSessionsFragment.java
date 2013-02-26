@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.commonsware.cwac.merge.MergeAdapter;
-import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.view.ListSeparatorView;
@@ -33,10 +32,8 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 		
 		getSupportActionBar().setTitle(R.string.mediaSessions);
 		
-		if (mediaSessionsUseCase == null) {
-			mediaSessionsUseCase = getInstance(MediaSessionsUseCase.class);
-			mediaSessionsUseCase.setUserId(getUser().getId());
-		}
+		mediaSessionsUseCase = getInstance(MediaSessionsUseCase.class);
+		mediaSessionsUseCase.setUserId(getUser().getId());
 	}
 	
 	/**
@@ -53,10 +50,8 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	 */
 	@Override
 	public void onItemSelected(MediaSession mediaSession) {
-		
 		if (mediaSession.isAccepted()) {
-			ActivityLauncher.launchActivity(MediaSessionActivity.class, MediaSessionActivity.MEDIA_SESSION_ID_EXTRA,
-				mediaSession.getId());
+			MediaSelectionsActivity.start(getActivity(), mediaSession);
 		} else {
 			AcceptRejectSessionDialogFragment.show(mediaSession.getId(), this);
 		}
@@ -76,7 +71,7 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(mediaSessionsUseCase, this, UseCaseTrigger.ALWAYS);
+		onResumeUseCase(mediaSessionsUseCase, this, UseCaseTrigger.ONCE);
 	}
 	
 	/**
