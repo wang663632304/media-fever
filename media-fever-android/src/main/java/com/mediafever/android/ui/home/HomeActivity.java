@@ -53,4 +53,12 @@ public class HomeActivity extends AbstractFragmentActivity {
 		}
 	};
 	
+	/**
+	 * @see com.jdroid.android.activity.AbstractFragmentActivity#isLauncherActivity()
+	 */
+	@Override
+	public Boolean isLauncherActivity() {
+		return true;
+	}
+	
 }

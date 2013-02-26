@@ -241,6 +241,8 @@
 				<environment.name>DEV</environment.name>
 				<debug.settings>true</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
+				<crittercism.enabled>false</crittercism.enabled>
+				<crittercism.appId>???????????????</crittercism.appId>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
@@ -268,6 +270,8 @@
 				<environment.name>QA</environment.name>
 				<debug.settings>true</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
+				<crittercism.enabled>false</crittercism.enabled>
+				<crittercism.appId>???????????????</crittercism.appId>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
@@ -295,6 +299,8 @@
 				<environment.name>UAT</environment.name>
 				<debug.settings>false</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
+				<crittercism.enabled>true</crittercism.enabled>
+				<crittercism.appId>???????????????</crittercism.appId>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
@@ -324,6 +330,8 @@
 				<environment.name>PROD</environment.name>
 				<debug.settings>false</debug.settings>
 				<analytics.enabled>true</analytics.enabled>
+				<crittercism.enabled>true</crittercism.enabled>
+				<crittercism.appId>???????????????</crittercism.appId>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>false</android.manifest.debuggable>
