@@ -10,9 +10,6 @@
 	<Button android:id="@+id/remove" android:layout_width="match_parent" android:layout_height="wrap_content"
 		android:layout_margin="3dp" android:text="@string/remove" android:textSize="18sp" android:layout_marginLeft="10dp"
 		android:layout_marginRight="10dp" />
-	<Button android:id="@+id/change" android:layout_width="match_parent" android:layout_height="wrap_content"
-		android:layout_margin="3dp" android:text="@string/change" android:textSize="18sp" android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp" />
 	<Button android:id="@+id/thumbsUp" android:layout_width="match_parent" android:layout_height="wrap_content"
 		android:layout_margin="3dp" android:text="@string/thumbsUp" android:textSize="18sp" android:layout_marginLeft="10dp"
 		android:layout_marginRight="10dp" />

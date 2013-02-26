@@ -89,7 +89,6 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 		});
 		
 		Button remove = findView(R.id.remove);
-		Button change = findView(R.id.change);
 		Button thumbsUp = findView(R.id.thumbsUp);
 		Button thumbsDown = findView(R.id.thumbsDown);
 		if (mediaSelection.getOwner().equals(SecurityContext.get().getUser())) {
@@ -102,20 +101,10 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 			});
 			remove.setVisibility(View.VISIBLE);
 			
-			change.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					MediaSelectionPickerDialogFragment.show(getTargetFragment(), mediaSession);
-				}
-			});
-			change.setVisibility(View.VISIBLE);
-			
 			thumbsUp.setVisibility(View.GONE);
 			thumbsDown.setVisibility(View.GONE);
 		} else {
 			remove.setVisibility(View.GONE);
-			change.setVisibility(View.GONE);
 			
 			thumbsUp.setOnClickListener(new OnClickListener() {
 				
