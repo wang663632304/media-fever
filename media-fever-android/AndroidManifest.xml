@@ -13,9 +13,6 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-	<uses-permission android:name="android.permission.READ_LOGS" />
-	<uses-permission android:name="android.permission.GET_TASKS" />
-
 	<uses-feature android:name="com.google.android.tv" android:required="false" />
 	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
@@ -74,10 +71,6 @@
 			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 		<activity android:name="com.jdroid.android.exception.ExceptionReportActivity" android:theme="@android:style/Theme.NoDisplay"
 			android:excludeFromRecents="true" />
-
-		<!-- Start of Crittercism.com Code -->
-		<activity android:name="com.crittercism.NotificationActivity" />
-		<!-- End of Crittercism.com Code -->
 
 		<service android:name="com.jdroid.android.exception.ExceptionReportService" android:exported="false" />
 

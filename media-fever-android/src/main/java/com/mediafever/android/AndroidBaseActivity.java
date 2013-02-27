@@ -45,12 +45,16 @@ public class AndroidBaseActivity extends BaseActivity {
 		
 		ActionBar actionBar = getActivityIf().getSupportActionBar();
 		if (actionBar != null) {
-			if (AndroidApplication.get().isLeftNavBarEnabled()) {
+			if (isLeftNavBarEnabled()) {
 				actionBar.setDisplayShowHomeEnabled(false);
 			} else {
 				actionBar.setDisplayUseLogoEnabled(false);
 			}
 		}
+	}
+	
+	private Boolean isLeftNavBarEnabled() {
+		return AndroidUtils.isGoogleTV() || (AndroidUtils.isXLargeScreenOrBigger() && !AndroidUtils.isPreHoneycomb());
 	}
 	
 	/**
@@ -60,7 +64,7 @@ public class AndroidBaseActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		if (AndroidApplication.get().isLeftNavBarEnabled() && getActivityIf().requiresAuthentication()
+		if (isLeftNavBarEnabled() && getActivityIf().requiresAuthentication()
 				&& !getActivity().getClass().equals(HomeActivity.class)) {
 			loadLeftNavBar();
 		}

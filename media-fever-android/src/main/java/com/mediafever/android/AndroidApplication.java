@@ -13,7 +13,6 @@ import com.jdroid.android.context.DefaultApplicationContext;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.exception.ExceptionHandler;
 import com.jdroid.android.fragment.BaseFragment;
-import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.NotificationUtils;
 import com.mediafever.android.exception.AndroidExceptionHandler;
 import com.mediafever.android.service.DisableDeviceService;
@@ -62,11 +61,11 @@ public class AndroidApplication extends AbstractApplication {
 	}
 	
 	/**
-	 * @see com.jdroid.android.AbstractApplication#createExceptionHandler()
+	 * @see com.jdroid.android.AbstractApplication#getExceptionHandlerClass()
 	 */
 	@Override
-	protected ExceptionHandler createExceptionHandler() {
-		return new AndroidExceptionHandler();
+	public Class<? extends ExceptionHandler> getExceptionHandlerClass() {
+		return AndroidExceptionHandler.class;
 	}
 	
 	/**
@@ -119,9 +118,5 @@ public class AndroidApplication extends AbstractApplication {
 	@Override
 	public Boolean isGcmEnabled() {
 		return true;
-	}
-	
-	public Boolean isLeftNavBarEnabled() {
-		return AndroidUtils.isGoogleTV() || (AndroidUtils.isXLargeScreenOrBigger() && !AndroidUtils.isPreHoneycomb());
 	}
 }
