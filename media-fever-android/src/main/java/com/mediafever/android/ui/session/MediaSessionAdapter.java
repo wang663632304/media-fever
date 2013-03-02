@@ -8,13 +8,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.android.domain.User;
+import com.jdroid.android.images.BorderedCustomImageView;
 import com.jdroid.android.utils.AndroidDateUtils;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.LocalizationUtils;
 import com.jdroid.java.utils.DateUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
-import com.mediafever.android.ui.BorderImage;
 import com.mediafever.android.ui.session.MediaSessionAdapter.MediaSessionHolder;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.session.MediaSessionUser;
@@ -56,10 +56,10 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			if (usersAdded < max) {
 				User user = mediaSessionUser.getUser();
 				if (!user.getId().equals(this.user.getId())) {
-					BorderImage borderImage = new BorderImage(getContext(), R.dimen.rowSamllImageDim,
-							R.dimen.rowSamllImageDim);
-					borderImage.setImageContent(user.getImage(), R.drawable.user_default);
-					holder.users.addView(borderImage);
+					BorderedCustomImageView borderedCustomImageView = new BorderedCustomImageView(getContext(),
+							R.drawable.user_default, R.dimen.rowSamllImageDim, R.dimen.rowSamllImageDim);
+					borderedCustomImageView.setImageContent(user.getImage(), R.drawable.user_default);
+					holder.users.addView(borderedCustomImageView);
 					usersAdded++;
 				}
 			}
