@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.actionbarsherlock.view.MenuItem;
 import com.jdroid.android.fragment.AbstractGridFragment;
+import com.jdroid.android.utils.AlertDialogUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
 import com.mediafever.domain.session.MediaSelection;
@@ -19,8 +20,10 @@ import com.mediafever.domain.session.MediaSession;
 public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection> {
 	
 	public static final String MEDIA_SESSION_EXTRA = "mediaSessionExtra";
+	public static final String MEDIA_SESSION_CREATED_EXTRA = "mediaSessionCreatedExtra";
 	
 	private MediaSession mediaSession;
+	private Boolean mediaSessionCreated;
 	
 	public static MediaSelectionsFragment instance(Bundle bundle) {
 		MediaSelectionsFragment fragment = new MediaSelectionsFragment();
@@ -37,6 +40,12 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		setRetainInstance(true);
 		
 		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
+		mediaSessionCreated = getArgument(MEDIA_SESSION_CREATED_EXTRA);
+		
+		if (mediaSessionCreated) {
+			AlertDialogUtils.showOKDialog(getString(R.string.mediaSessionCreatedTitle),
+				getString(R.string.mediaSessionCreatedDescription, getWatchablesString()));
+		}
 		
 		setHasOptionsMenu(true);
 	}
@@ -50,6 +59,16 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		return inflater.inflate(R.layout.media_selections_fragment, container, false);
 	}
 	
+	private String getWatchablesString() {
+		if (mediaSession.acceptOnlyMovies()) {
+			return getString(R.string.movies).toLowerCase();
+		} else if (mediaSession.acceptOnlySeries()) {
+			return getString(R.string.series).toLowerCase();
+		} else {
+			return getString(R.string.moviesOrSeries);
+		}
+	}
+	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractGridFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
@@ -59,13 +78,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		
 		// Header
 		TextView header = findView(R.id.header);
-		if (mediaSession.acceptOnlyMovies()) {
-			header.setText(getString(R.string.mediaSelectionsHeader, getString(R.string.movie).toLowerCase()));
-		} else if (mediaSession.acceptOnlySeries()) {
-			header.setText(getString(R.string.mediaSelectionsHeader, getString(R.string.series).toLowerCase()));
-		} else {
-			header.setText(getString(R.string.mediaSelectionsHeader, getString(R.string.movieOrSeries)));
-		}
+		header.setText(getString(R.string.mediaSelectionsHeader, getWatchablesString()));
 		
 		// Footer
 		TextView footer = findView(R.id.footer);

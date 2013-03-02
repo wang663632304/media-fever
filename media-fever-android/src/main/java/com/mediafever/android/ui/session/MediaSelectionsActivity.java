@@ -14,9 +14,10 @@ import com.mediafever.domain.session.MediaSession;
  */
 public class MediaSelectionsActivity extends FragmentContainerActivity {
 	
-	public static void start(Context context, MediaSession mediaSession) {
+	public static void start(Context context, MediaSession mediaSession, Boolean mediaSessionCreated) {
 		Intent intent = new Intent(context, MediaSelectionsActivity.class);
 		intent.putExtra(MediaSelectionsFragment.MEDIA_SESSION_EXTRA, mediaSession);
+		intent.putExtra(MediaSelectionsFragment.MEDIA_SESSION_CREATED_EXTRA, mediaSessionCreated);
 		context.startActivity(intent);
 	}
 	
