@@ -4,14 +4,20 @@
 	android:paddingBottom="4dp" android:gravity="center_vertical">
 
 	<TextView android:id="@+id/watchableTypes" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp" />
+		android:textStyle="bold" android:textSize="16sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp" />
 	<TextView android:id="@+id/date" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textSize="12sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
+		android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
 		android:layout_marginRight="10dp" android:layout_below="@+id/watchableTypes" />
 
-	<LinearLayout android:id="@+id/users" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:layout_centerVertical="true" android:layout_alignParentRight="true" android:layout_marginRight="10dp"
-		android:layout_toRightOf="@+id/date" android:gravity="right">
+	<LinearLayout android:id="@+id/usersUp" android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:layout_alignParentRight="true" android:layout_marginRight="10dp" android:layout_toRightOf="@+id/date"
+		android:gravity="right">
+
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/usersDown" android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:layout_alignParentRight="true" android:layout_marginRight="10dp" android:layout_toRightOf="@+id/date"
+		android:layout_below="@+id/usersUp" android:gravity="right">
 
 	</LinearLayout>
 

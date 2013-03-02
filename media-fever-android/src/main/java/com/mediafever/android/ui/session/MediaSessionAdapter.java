@@ -44,11 +44,12 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			holder.date.setVisibility(View.INVISIBLE);
 		}
 		
-		holder.users.removeAllViews();
+		holder.usersUp.removeAllViews();
+		holder.usersDown.removeAllViews();
 		
-		int max = 5;
+		int max = 8;
 		if (AndroidUtils.isLargeScreenOrBigger()) {
-			max = 10;
+			max = 16;
 		}
 		
 		int usersAdded = 0;
@@ -59,7 +60,11 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 					BorderedCustomImageView borderedCustomImageView = new BorderedCustomImageView(getContext(),
 							R.drawable.user_default, R.dimen.rowSamllImageDim, R.dimen.rowSamllImageDim);
 					borderedCustomImageView.setImageContent(user.getImage(), R.drawable.user_default);
-					holder.users.addView(borderedCustomImageView);
+					if (usersAdded < (max / 2)) {
+						holder.usersUp.addView(borderedCustomImageView);
+					} else {
+						holder.usersDown.addView(borderedCustomImageView);
+					}
 					usersAdded++;
 				}
 			}
@@ -103,7 +108,8 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		MediaSessionHolder holder = new MediaSessionHolder();
 		holder.watchableTypes = findView(convertView, R.id.watchableTypes);
 		holder.date = findView(convertView, R.id.date);
-		holder.users = findView(convertView, R.id.users);
+		holder.usersUp = findView(convertView, R.id.usersUp);
+		holder.usersDown = findView(convertView, R.id.usersDown);
 		return holder;
 	}
 	
@@ -111,7 +117,8 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		
 		protected TextView watchableTypes;
 		protected TextView date;
-		private LinearLayout users;
+		private LinearLayout usersUp;
+		private LinearLayout usersDown;
 	}
 	
 }
