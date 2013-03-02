@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-	android:layout_height="wrap_content" android:paddingLeft="4dp" android:paddingRight="4dp" android:paddingTop="4dp"
-	android:paddingBottom="4dp" android:gravity="center_vertical">
+	android:layout_height="100dp" android:padding="5dp">
 
 	<TextView android:id="@+id/watchableTypes" android:layout_height="wrap_content" android:layout_width="wrap_content"
 		android:textStyle="bold" android:textSize="16sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp" />
@@ -9,14 +8,19 @@
 		android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
 		android:layout_marginRight="10dp" android:layout_below="@+id/watchableTypes" />
 
+	<LinearLayout android:id="@+id/selections" android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:layout_marginRight="10dp" android:layout_centerInParent="true">
+
+	</LinearLayout>
+
 	<LinearLayout android:id="@+id/usersUp" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:layout_alignParentRight="true" android:layout_marginRight="10dp" android:layout_toRightOf="@+id/date"
+		android:layout_alignParentRight="true" android:layout_marginRight="10dp" android:layout_toRightOf="@+id/selections"
 		android:gravity="right">
 
 	</LinearLayout>
 
 	<LinearLayout android:id="@+id/usersDown" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:layout_alignParentRight="true" android:layout_marginRight="10dp" android:layout_toRightOf="@+id/date"
+		android:layout_alignParentRight="true" android:layout_marginRight="10dp" android:layout_toRightOf="@+id/selections"
 		android:layout_below="@+id/usersUp" android:gravity="right">
 
 	</LinearLayout>

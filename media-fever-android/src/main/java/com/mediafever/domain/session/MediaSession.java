@@ -105,6 +105,21 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return selections;
 	}
 	
+	public List<MediaSelection> getTop3Selections() {
+		List<MediaSelection> mediaSelections = getSelections();
+		List<MediaSelection> top3MediaSelections = Lists.newArrayList();
+		if (mediaSelections.size() > 1) {
+			top3MediaSelections.add(mediaSelections.get(1));
+		}
+		if (mediaSelections.size() > 2) {
+			top3MediaSelections.add(mediaSelections.get(2));
+		}
+		if (mediaSelections.size() > 3) {
+			top3MediaSelections.add(mediaSelections.get(3));
+		}
+		return top3MediaSelections;
+	}
+	
 	public void setDate(Date date) {
 		this.date = date;
 	}

@@ -3,7 +3,10 @@
 
 	<dimen name="defaultTextSize">18sp</dimen>
 	<dimen name="rowImageDim">50dp</dimen>
-	<dimen name="rowSamllImageDim">30dp</dimen>
+
+	<dimen name="mediaSessionUserImageDim">40dp</dimen>
+	<dimen name="mediaSessionSelectionHeight">80dp</dimen>
+	<dimen name="mediaSessionSelectionWidth">50dp</dimen>
 
 	<!-- Left Nav Bar -->
 	<dimen name="left_nav_expanded_width">230dip</dimen>
