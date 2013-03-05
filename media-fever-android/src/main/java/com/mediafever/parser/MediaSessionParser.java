@@ -61,7 +61,7 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 		if (mediaSession != null) {
 			mediaSession.setDate(date);
 			mediaSession.setTime(time);
-			mediaSession.setUsers(users);
+			mediaSession.setMediaSessionUsers(users);
 			mediaSession.setSelections(selections);
 			mediaSession.setWatchableTypes(watchablesTypes);
 			mediaSession.setAccepted(accepted);

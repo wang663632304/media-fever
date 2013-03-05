@@ -64,7 +64,7 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		}
 		
 		int usersAdded = 0;
-		for (MediaSessionUser mediaSessionUser : mediaSession.getUsers()) {
+		for (MediaSessionUser mediaSessionUser : mediaSession.getMediaSessionUsers()) {
 			if (usersAdded < max) {
 				User user = mediaSessionUser.getUser();
 				if (!user.getId().equals(this.user.getId())) {

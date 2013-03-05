@@ -12,12 +12,10 @@ import android.widget.GridView;
 import com.jdroid.android.domain.User;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
-import com.jdroid.java.collections.Lists;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserAdapter;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.domain.session.MediaSessionUser;
 import com.mediafever.usecase.friends.FriendsUseCase;
 import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
@@ -122,14 +120,11 @@ public class MediaSessionFriendsGridFragment extends AbstractGridFragment<UserIm
 		setListAdapter(new UserAdapter(MediaSessionFriendsGridFragment.this.getActivity(), friendsUseCase.getFriends()));
 		MediaSession mediaSession = getMediaSessionSetupUseCase().getMediaSession();
 		if (mediaSession.getId() != null) {
-			List<User> mediaSessionUsers = Lists.newArrayList();
-			for (MediaSessionUser each : mediaSession.getUsers()) {
-				mediaSessionUsers.add(each.getUser());
-			}
+			List<User> users = mediaSession.getUsers();
 			List<UserImpl> friends = friendsUseCase.getFriends();
 			for (int i = 0; i < friends.size(); i++) {
 				User friend = friends.get(i);
-				if (mediaSessionUsers.contains(friend)) {
+				if (users.contains(friend)) {
 					getGridView().setItemChecked(i, true);
 				}
 			}

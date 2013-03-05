@@ -292,7 +292,7 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	@Override
 	public MediaSelection addSmartSelection(MediaSession mediaSession) {
 		WebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), "mediaSelection", "smart");
-		return webservice.execute(new MediaSelectionParser(mediaSession.getUsers()));
+		return webservice.execute(new MediaSelectionParser(mediaSession.getMediaSessionUsers()));
 	}
 	
 	private void addPagination(WebService webservice) {
