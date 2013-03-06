@@ -31,7 +31,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
 		mediaSessionCreated = getArgument(MEDIA_SESSION_CREATED_EXTRA);

@@ -27,7 +27,6 @@ public class WatchedGridFragment extends AbstractGridFragment<Watchable> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		watchedUseCase = getInstance(WatchedUseCase.class);
 		watchedUseCase.setUserId(getUser().getId());

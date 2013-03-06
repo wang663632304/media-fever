@@ -34,7 +34,6 @@ public class MediaSessionFriendsGridFragment extends AbstractGridFragment<UserIm
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		friendsUseCase = getInstance(FriendsUseCase.class);
 		friendsUseCase.setUserId(getUser().getId());

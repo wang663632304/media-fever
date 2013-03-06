@@ -28,7 +28,6 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		getSupportActionBar().setTitle(R.string.mediaSessions);
 		

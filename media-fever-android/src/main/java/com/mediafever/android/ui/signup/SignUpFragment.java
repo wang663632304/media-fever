@@ -1,12 +1,10 @@
 package com.mediafever.android.ui.signup;
 
-import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.ActivityLauncher;
@@ -23,34 +21,12 @@ public class SignUpFragment extends AbstractFragment {
 	
 	private SignUpUseCase signUpUseCase;
 	
-	@InjectView(R.id.firstName)
-	private TextView firstName;
-	
-	@InjectView(R.id.lastName)
-	private TextView lastName;
-	
-	@InjectView(R.id.email)
-	private TextView email;
-	
-	@InjectView(R.id.confirmEmail)
-	private TextView confirmEmail;
-	
-	@InjectView(R.id.password)
-	private TextView password;
-	
-	@InjectView(R.id.confirmPassword)
-	private TextView confirmPassword;
-	
-	@InjectView(R.id.signUp)
-	private Button signUp;
-	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		getSupportActionBar().setTitle(R.string.signUp);
 		signUpUseCase = getInstance(SignUpUseCase.class);
@@ -72,7 +48,14 @@ public class SignUpFragment extends AbstractFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		signUp.setOnClickListener(new OnClickListener() {
+		final TextView firstName = findView(R.id.firstName);
+		final TextView lastName = findView(R.id.lastName);
+		final TextView email = findView(R.id.email);
+		final TextView confirmEmail = findView(R.id.confirmEmail);
+		final TextView password = findView(R.id.password);
+		final TextView confirmPassword = findView(R.id.confirmPassword);
+		
+		findView(R.id.signUp).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

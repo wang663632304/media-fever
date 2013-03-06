@@ -1,7 +1,6 @@
 package com.mediafever.android.ui.watchable.details;
 
 import java.util.List;
-import roboguice.inject.InjectView;
 import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -40,7 +39,6 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	private static final String USER_WATCHABLE_EXTRA = "userWatchable";
 	private MarkAsWachedUseCase markAsWachedUseCase;
 	
-	@InjectView(R.id.seasonsSpinner)
 	private Spinner spinner;
 	
 	private UserWatchable<Series> userWatchable;
@@ -61,7 +59,6 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		userWatchable = getArgument(USER_WATCHABLE_EXTRA);
 		
@@ -111,6 +108,8 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 		SeasonAdapter adapter = new SeasonAdapter(getActivity(), series.getSeasons());
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		spinner = findView(R.id.seasonsSpinner);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
 		

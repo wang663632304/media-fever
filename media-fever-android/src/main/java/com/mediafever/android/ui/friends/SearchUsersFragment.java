@@ -36,7 +36,6 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		getSupportActionBar().setTitle(R.string.searchUsers);
 		setThreshold(3);

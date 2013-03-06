@@ -1,6 +1,5 @@
 package com.mediafever.android.ui.settings;
 
-import roboguice.inject.InjectView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,17 +31,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 	
 	private FacebookConnector facebookConnector = new FacebookConnector(ApplicationContext.get().getFacebookAppId());;
 	
-	@InjectView(R.id.connectToFacebook)
 	private SwitchButton connectButton;
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-	}
 	
 	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
@@ -63,8 +52,8 @@ public class SocialSettingsFragment extends AbstractFragment {
 		initFacebookAccountUseCase();
 		initConnectToFacebookUseCase();
 		
+		connectButton = findView(R.id.connectToFacebook);
 		connectButton.setChecked(facebookConnector.isConnected());
-		
 		connectButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override

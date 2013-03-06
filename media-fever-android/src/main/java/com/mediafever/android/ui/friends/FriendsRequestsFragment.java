@@ -26,7 +26,6 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		getSupportActionBar().setTitle(R.string.friendsRequests);
 		

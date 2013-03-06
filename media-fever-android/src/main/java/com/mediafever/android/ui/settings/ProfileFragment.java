@@ -1,12 +1,10 @@
 package com.mediafever.android.ui.settings;
 
-import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -34,43 +32,12 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	
 	private CustomImageView avatar;
 	
-	@InjectView(R.id.firstName)
-	private TextView firstName;
-	
-	@InjectView(R.id.lastName)
-	private TextView lastName;
-	
-	@InjectView(R.id.email)
-	private TextView email;
-	
-	@InjectView(R.id.confirmEmail)
-	private TextView confirmEmail;
-	
-	@InjectView(R.id.changePassword)
-	private CheckBox changePassword;
-	
-	@InjectView(R.id.passwordContainer)
-	private View passwordContainer;
-	
-	@InjectView(R.id.password)
-	private TextView password;
-	
-	@InjectView(R.id.confirmPassword)
-	private TextView confirmPassword;
-	
-	@InjectView(R.id.publicProfile)
-	private CheckBox publicProfile;
-	
-	@InjectView(R.id.save)
-	private Button save;
-	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		updateUserProfileUseCase = getInstance(UpdateUserProfileUseCase.class);
 	}
@@ -91,6 +58,40 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
+		UserImpl user = (UserImpl)getUser();
+		
+		final TextView email = findView(R.id.email);
+		email.setText(user.getEmail());
+		
+		final TextView confirmEmail = findView(R.id.confirmEmail);
+		confirmEmail.setText(user.getEmail());
+		
+		final TextView firstName = findView(R.id.firstName);
+		firstName.setText(user.getFirstName());
+		
+		final TextView lastName = findView(R.id.lastName);
+		lastName.setText(user.getLastName());
+		
+		final CheckBox publicProfile = findView(R.id.publicProfile);
+		publicProfile.setChecked(user.hasPublicProfile());
+		
+		avatar = findView(R.id.photo);
+		avatar.setImageContent(user.getImage(), R.drawable.person_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
+		if (PictureDialogFragment.display()) {
+			
+			avatar.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					PictureDialogFragment.show(ProfileFragment.this);
+				}
+			});
+		}
+		
+		final CheckBox changePassword = findView(R.id.changePassword);
+		final TextView confirmPassword = findView(R.id.confirmPassword);
+		final View passwordContainer = findView(R.id.passwordContainer);
+		final TextView password = findView(R.id.password);
 		changePassword.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -101,7 +102,7 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 			}
 		});
 		
-		save.setOnClickListener(new OnClickListener() {
+		findView(R.id.save).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -117,25 +118,6 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 			}
 		});
 		
-		UserImpl user = (UserImpl)getUser();
-		email.setText(user.getEmail());
-		confirmEmail.setText(user.getEmail());
-		firstName.setText(user.getFirstName());
-		lastName.setText(user.getLastName());
-		publicProfile.setChecked(user.hasPublicProfile());
-		
-		avatar = findView(R.id.photo);
-		avatar.setImageContent(user.getImage(), R.drawable.person_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
-		if (PictureDialogFragment.display()) {
-			
-			avatar.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					PictureDialogFragment.show(ProfileFragment.this);
-				}
-			});
-		}
 	}
 	
 	/**

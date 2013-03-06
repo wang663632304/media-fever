@@ -35,7 +35,6 @@ public class FriendsListFragment extends AbstractListFragment<UserImpl> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		friendsUseCase = getInstance(FriendsUseCase.class);
 		friendsUseCase.setUserId(getUser().getId());
