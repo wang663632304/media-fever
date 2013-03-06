@@ -22,11 +22,11 @@ public class MediaSelectionsActivity extends FragmentContainerActivity {
 	}
 	
 	/**
-	 * @see com.jdroid.android.activity.FragmentContainerActivity#createNewFragment()
+	 * @see com.jdroid.android.activity.FragmentContainerActivity#getFragmentClass()
 	 */
 	@Override
-	protected Fragment createNewFragment() {
-		return MediaSelectionsFragment.instance(getIntent().getExtras());
+	protected Class<? extends Fragment> getFragmentClass() {
+		return MediaSelectionsFragment.class;
 	}
 	
 	/**

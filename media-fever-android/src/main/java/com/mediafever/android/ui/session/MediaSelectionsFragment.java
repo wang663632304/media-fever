@@ -25,12 +25,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	private MediaSession mediaSession;
 	private Boolean mediaSessionCreated;
 	
-	public static MediaSelectionsFragment instance(Bundle bundle) {
-		MediaSelectionsFragment fragment = new MediaSelectionsFragment();
-		fragment.setArguments(bundle);
-		return fragment;
-	}
-	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
 	 */
