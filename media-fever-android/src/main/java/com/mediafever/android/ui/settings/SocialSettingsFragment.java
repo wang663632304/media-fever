@@ -9,19 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.facebook.Session;
-import com.facebook.Session.Builder;
 import com.facebook.SessionState;
-import com.facebook.SharedPreferencesTokenCachingStrategy;
-import com.facebook.TokenCachingStrategy;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.LoginButton;
-import com.jdroid.android.context.SecurityContext;
+import com.jdroid.android.facebook.MultipleUsersSharedPreferencesTokenCachingStrategy;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
+import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
+import com.mediafever.context.ApplicationContext;
 import com.mediafever.usecase.settings.ConnectToFacebookUseCase;
 
 /**
+ * Fragment that enables the user to connect his MediaFever! account to social media accounts. Currently only Facebook
+ * is supported.
  * 
  * @author Maxi Rosson
  */
@@ -30,18 +31,12 @@ public class SocialSettingsFragment extends AbstractFragment {
 	private static final String TAG = SocialSettingsFragment.class.getSimpleName();
 	
 	private ConnectToFacebookUseCase connectToFacebookUseCase;
-	// private FacebookAccountUseCase facebookAccountUseCase;
-	// private AndroidUseCaseListener facebookAccountUseCaseListener;
-	//
-	// private FacebookConnector facebookConnector = new
-	// FacebookConnector(ApplicationContext.get().getFacebookAppId());;
 	
-	// @InjectView(R.id.connectToFacebook)
-	// private SwitchButton connectButton;
-	
+	// TODO: See if we can change Facebook login button for our own implementation using SwitchButton.
 	@InjectView(R.id.authButton)
 	private LoginButton loginButton;
 	
+	private UiLifecycleHelper uiHelper;
 	private Session.StatusCallback callback = new Session.StatusCallback() {
 		
 		@Override
@@ -49,8 +44,6 @@ public class SocialSettingsFragment extends AbstractFragment {
 			onSessionStateChange(session, state, exception);
 		}
 	};
-	
-	private UiLifecycleHelper uiHelper;
 	
 	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
@@ -61,6 +54,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 		View view = inflater.inflate(R.layout.social_settings_fragment, container, false);
 		loginButton = LoginButton.class.cast(view.findViewById(R.id.authButton));
 		loginButton.setFragment(this);
+		loginButton.setApplicationId(ApplicationContext.get().getFacebookAppId());
 		
 		return view;
 	}
@@ -73,54 +67,16 @@ public class SocialSettingsFragment extends AbstractFragment {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		
-		TokenCachingStrategy tokenCachingStrategy = new SharedPreferencesTokenCachingStrategy(getActivity(),
-				SecurityContext.get().getUser().getId().toString());
-		
-		Session session = new Builder(getActivity()).setTokenCachingStrategy(tokenCachingStrategy).build();
-		// session.addCallback(callback);
-		Session.setActiveSession(session);
+		MultipleUsersSharedPreferencesTokenCachingStrategy tokenCachingStrategy = new MultipleUsersSharedPreferencesTokenCachingStrategy(
+				getActivity());
+		tokenCachingStrategy.buildActiveSession(getActivity(), ApplicationContext.get().getFacebookAppId());
 		
 		uiHelper = new UiLifecycleHelper(getActivity(), callback);
-		// Session.openActiveSession(getActivity(), this, true, callback);
-		
 		uiHelper.onCreate(savedInstanceState);
 		
 		if (connectToFacebookUseCase == null) {
 			connectToFacebookUseCase = getInstance(ConnectToFacebookUseCase.class);
 		}
-		
-		//
-		// if (facebookAccountUseCase == null) {
-		// facebookAccountUseCase = getInstance(FacebookAccountUseCase.class);
-		// facebookAccountUseCaseListener = new AndroidUseCaseListener() {
-		//
-		// @Override
-		// public void onFinishUseCase() {
-		// executeOnUIThread(new Runnable() {
-		//
-		// @Override
-		// public void run() {
-		// FacebookAccount facebookAccount = facebookAccountUseCase.getFacebookAccount();
-		// if (facebookAccount != null) {
-		// facebookConnector.setAccessToken(facebookAccount.getAccessToken(),
-		// facebookAccount.getAccessExpiresIn());
-		// connectButton.setChecked(facebookConnector.isConnected());
-		// }
-		// dismissLoading();
-		// }
-		// });
-		// }
-		//
-		// @Override
-		// protected ActivityIf getActivityIf() {
-		// return (ActivityIf)getActivity();
-		// }
-		// };
-		//
-		// facebookAccountUseCase.addListener(facebookAccountUseCaseListener);
-		// executeUseCase(facebookAccountUseCase);
-		//
-		// }
 	}
 	
 	/**
@@ -131,7 +87,6 @@ public class SocialSettingsFragment extends AbstractFragment {
 		super.onResume();
 		uiHelper.onResume();
 		onResumeUseCase(connectToFacebookUseCase, this, UseCaseTrigger.MANUAL);
-		// onResumeUseCase(facebookAccountUseCase, facebookAccountUseCaseListener, UseCaseTrigger.ALWAYS);
 	}
 	
 	/**
@@ -142,7 +97,6 @@ public class SocialSettingsFragment extends AbstractFragment {
 		super.onPause();
 		uiHelper.onPause();
 		onPauseUseCase(connectToFacebookUseCase, this);
-		// onPauseUseCase(facebookAccountUseCase, facebookAccountUseCaseListener);
 	}
 	
 	/**
@@ -164,89 +118,49 @@ public class SocialSettingsFragment extends AbstractFragment {
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 * Connects/Disconnects the MediaFever account from a FB account based on FB's {@link Session} state.
+	 * 
+	 * @param session FB's {@link Session}
+	 * @param state The new state for FB's {@link Session}.
+	 * @param exception The exception that may have been thrown when trying to change the {@link Session}'s state.
 	 */
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		
-	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		// initFacebookAccountUseCase();
-	}
-	
 	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 		Log.i(TAG, "Facebook session state changed to " + state.name());
 		
-		// Refresh FB token if its updated.
 		if (SessionState.OPENED_TOKEN_UPDATED.equals(state)) {
-			updateFacebookAccount(session);
+			// Refresh FB token in the server if its updated here.
+			connectToFacebook(session);
+		} else if (SessionState.CLOSED.equals(state)) {
+			// Session was closed, remove token from server.
+			executeUseCase(connectToFacebookUseCase);
 		}
-		
 	}
 	
-	private void updateFacebookAccount(Session session) {
+	/**
+	 * Links the user's account to the given Facebook session.
+	 * 
+	 * @param session The session to link.
+	 */
+	private void connectToFacebook(Session session) {
 		connectToFacebookUseCase.setDataToConnect(session.getAccessToken(), session.getExpirationDate());
 		executeUseCase(connectToFacebookUseCase);
 	}
 	
-	// TODO Use the onResumeUseCase & onPauseUseCase methods
-	// private void initFacebookAccountUseCase() {
-	// if (facebookAccountUseCase == null) {
-	// facebookAccountUseCase = getInstance(FacebookAccountUseCase.class);
-	// facebookAccountUseCaseListener = new AndroidUseCaseListener() {
-	//
-	// @Override
-	// public void onFinishUseCase() {
-	// executeOnUIThread(new Runnable() {
-	//
-	// @Override
-	// public void run() {
-	// FacebookAccount facebookAccount = facebookAccountUseCase.getFacebookAccount();
-	// if (facebookAccount != null) {
-	// facebookConnector.setAccessToken(facebookAccount.getAccessToken(),
-	// facebookAccount.getAccessExpiresIn());
-	// connectButton.setChecked(facebookConnector.isConnected());
-	// }
-	// dismissLoading();
-	// }
-	// });
-	// }
-	//
-	// @Override
-	// protected ActivityIf getActivityIf() {
-	// return (ActivityIf)getActivity();
-	// }
-	// };
-	//
-	// facebookAccountUseCase.addListener(facebookAccountUseCaseListener);
-	// executeUseCase(facebookAccountUseCase);
-	//
-	// } else if (facebookAccountUseCase.isInProgress()) {
-	// facebookAccountUseCaseListener.onStartUseCase();
-	// } else if (facebookAccountUseCase.isFinish()) {
-	// facebookAccountUseCaseListener.onFinishUseCase();
-	// }
-	// }
-	
-	// /**
-	// * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
-	// */
-	// @Override
-	// public void onFinishUseCase() {
-	// // executeOnUIThread(new Runnable() {
-	// //
-	// // @Override
-	// // public void run() {
-	// // ToastUtils.showInfoToast(facebookConnector.isConnected() ? R.string.accountConnected
-	// // : R.string.accountDisconnected);
-	// // dismissLoading();
-	// // }
-	// // });
-	// }
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
+	 */
+	@Override
+	public void onFinishUseCase() {
+		executeOnUIThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				ToastUtils.showInfoToast(Session.getActiveSession().isOpened() ? R.string.accountConnected
+						: R.string.accountDisconnected);
+				dismissLoading();
+			}
+		});
+	}
 	
 	/**
 	 * @see android.support.v4.app.Fragment#onActivityResult(int, int, android.content.Intent)
@@ -256,7 +170,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 		super.onActivityResult(requestCode, resultCode, data);
 		uiHelper.onActivityResult(requestCode, resultCode, data);
 		if ((requestCode == Session.DEFAULT_AUTHORIZE_ACTIVITY_CODE) && (resultCode == Activity.RESULT_OK)) {
-			updateFacebookAccount(Session.getActiveSession());
+			connectToFacebook(Session.getActiveSession());
 		}
 	}
 }

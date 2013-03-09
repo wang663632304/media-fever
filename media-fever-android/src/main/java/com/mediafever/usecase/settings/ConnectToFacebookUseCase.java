@@ -19,7 +19,7 @@ public class ConnectToFacebookUseCase extends AbstractApiUseCase<APIService> {
 	
 	private String accessToken;
 	private Date expirationDate;
-	private Boolean connect;
+	private Boolean connect = Boolean.FALSE;
 	
 	/**
 	 * @param apiService

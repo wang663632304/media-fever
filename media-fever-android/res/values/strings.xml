@@ -152,7 +152,4 @@
 		Download it from Google Play.
 		https://play.google.com/store/apps/details?id=%1$s</string>
 		
-	<!-- Facebook app id - required to use loginbutton -->
-	 <string name="app_id">253164851452906</string>
-	 
 </resources>
