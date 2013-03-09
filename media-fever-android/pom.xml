@@ -123,6 +123,29 @@
 								xmlWriter.setPreserveWhitespace(false)
 								xmlWriter.setNamespaceAware(true)
 								xmlWriter.print(rootNode)
+								
+								
+								
+								def analyticsFile = new File("./res/values/analytics.xml")
+								parser = new groovy.util.XmlParser(false, true)
+								rootNode = parser.parse(analyticsFile)
+								childrensIterator =	rootNode.children().iterator()
+								
+								while(childrensIterator.hasNext()) {
+									def children = childrensIterator.next();
+									if(children.name() == 'string') {
+										def stringAttributes = children.attributes()
+										if (stringAttributes["name"] == 'ga_trackingId') {
+											children.value = "${analytics.trackingId}"
+										}
+									}
+								}
+								writer = new groovy.io.GroovyPrintWriter(analyticsFile)
+								writer.println('&lt;?xml version="1.0" encoding="UTF-8"?&gt;')
+								xmlWriter = new groovy.util.XmlNodePrinter(writer)
+								xmlWriter.setPreserveWhitespace(false)
+								xmlWriter.setNamespaceAware(true)
+								xmlWriter.print(rootNode)
 							</source>
 						</configuration>
 					</execution>
