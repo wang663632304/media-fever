@@ -13,7 +13,7 @@
 			android:src="@drawable/cancel" android:layout_gravity="center_vertical" android:layout_marginLeft="3dp" />
 	</LinearLayout>
 
-	<ListView android:id="@+id/android:list" style="@style/defaultList" android:layout_above="@+id/adViewContainer" />
+	<ListView android:id="@+id/android:list" style="@style/defaultList" />
 
 	<TextView android:id="@id/android:empty" android:text="@string/noResultsSearch" style="@style/noResultsText" />
 

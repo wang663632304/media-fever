@@ -1,6 +1,5 @@
 package com.mediafever.android.ui.watchable.details;
 
-import roboguice.inject.InjectView;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,37 +27,7 @@ public class WatchableOverviewLargeFragment extends AbstractFragment {
 	private static final String USER_WATCHABLE_EXTRA = "userWatchable";
 	private static final String SEPARATOR = " | ";
 	
-	@InjectView(R.id.name)
-	private TextView name;
-	
-	@InjectView(R.id.tagline)
-	private TextView tagline;
-	
-	@InjectView(R.id.releaseYear)
-	private TextView releaseYear;
-	
-	@InjectView(R.id.overviewContainer)
-	private View overviewContainer;
-	
-	@InjectView(R.id.overview)
-	private TextView overview;
-	
-	@InjectView(R.id.actorsContainer)
-	private View actorsContainer;
-	
-	@InjectView(R.id.actors)
-	private TextView actors;
-	
-	@InjectView(R.id.genresContainer)
-	private View genresContainer;
-	
-	@InjectView(R.id.genres)
-	private TextView genres;
-	
-	@InjectView(R.id.watchedToogle)
 	private Button watchedToogle;
-	
-	@InjectView(R.id.wishListToogle)
 	private Button wishListToogle;
 	
 	private UpdateUserWatchableUseCase updateUserWatchableUseCase;
@@ -79,7 +48,6 @@ public class WatchableOverviewLargeFragment extends AbstractFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		userWatchable = getArgument(USER_WATCHABLE_EXTRA);
 		updateUserWatchableUseCase = getInstance(UpdateUserWatchableUseCase.class);
@@ -103,38 +71,46 @@ public class WatchableOverviewLargeFragment extends AbstractFragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		Watchable watchable = userWatchable.getWatchable();
+		
+		TextView name = findView(R.id.name);
 		name.setText(watchable.getName());
 		
 		if (watchable.getReleaseYear() != null) {
+			TextView releaseYear = findView(R.id.releaseYear);
 			releaseYear.setText(watchable.getReleaseYear().toString());
 		}
 		
 		if (StringUtils.isNotEmpty(watchable.getOverview())) {
+			TextView overview = findView(R.id.overview);
 			overview.setText(watchable.getOverview());
 		} else {
-			overviewContainer.setVisibility(View.GONE);
+			findView(R.id.overviewContainer).setVisibility(View.GONE);
 		}
 		
 		if (CollectionUtils.isNotEmpty(watchable.getActors())) {
+			TextView actors = findView(R.id.actors);
 			actors.setText(StringUtils.join(watchable.getActors(), SEPARATOR));
 		} else {
-			actorsContainer.setVisibility(View.GONE);
+			findView(R.id.actorsContainer).setVisibility(View.GONE);
 		}
 		
 		if (CollectionUtils.isNotEmpty(watchable.getGenres())) {
+			TextView genres = findView(R.id.genres);
 			genres.setText(StringUtils.join(watchable.getGenres(), SEPARATOR));
 		} else {
-			genresContainer.setVisibility(View.GONE);
+			findView(R.id.genresContainer).setVisibility(View.GONE);
 		}
 		
 		if (WatchableType.MOVIE.match(watchable)) {
 			Movie movie = Movie.class.cast(watchable);
 			if (StringUtils.isNotBlank(movie.getTagline())) {
+				TextView tagline = findView(R.id.tagline);
 				tagline.setText(movie.getTagline());
 				tagline.setVisibility(View.VISIBLE);
 			}
 		}
 		
+		watchedToogle = findView(R.id.watchedToogle);
 		watchedToogle.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -144,6 +120,7 @@ public class WatchableOverviewLargeFragment extends AbstractFragment {
 			}
 		});
 		
+		wishListToogle = findView(R.id.wishListToogle);
 		wishListToogle.setOnClickListener(new OnClickListener() {
 			
 			@Override

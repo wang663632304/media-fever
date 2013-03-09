@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.domain.Entity;
+import com.jdroid.android.domain.User;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.domain.UserImpl;
@@ -19,7 +20,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	private Date date;
 	private Date time;
-	private List<MediaSessionUser> users;
+	private List<MediaSessionUser> mediaSessionUsers;
 	private List<WatchableType> watchableTypes;
 	private Boolean accepted;
 	private List<MediaSelection> selections;
@@ -29,7 +30,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		super(id);
 		this.date = date;
 		this.time = time;
-		this.users = users;
+		mediaSessionUsers = users;
 		setSelections(selections);
 		this.watchableTypes = watchableTypes;
 		this.accepted = accepted;
@@ -37,7 +38,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public MediaSession() {
 		date = DateUtils.now();
-		users = Lists.newArrayList(new MediaSessionUser(SecurityContext.get().getUser()));
+		mediaSessionUsers = Lists.newArrayList(new MediaSessionUser(SecurityContext.get().getUser()));
 		watchableTypes = Lists.newArrayList(WatchableType.MOVIE);
 		setSelections(null);
 	}
@@ -76,7 +77,15 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return time;
 	}
 	
-	public List<MediaSessionUser> getUsers() {
+	public List<MediaSessionUser> getMediaSessionUsers() {
+		return mediaSessionUsers;
+	}
+	
+	public List<User> getUsers() {
+		List<User> users = Lists.newArrayList();
+		for (MediaSessionUser each : mediaSessionUsers) {
+			users.add(each.getUser());
+		}
 		return users;
 	}
 	
@@ -105,6 +114,21 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return selections;
 	}
 	
+	public List<MediaSelection> getTop3Selections() {
+		List<MediaSelection> mediaSelections = getSelections();
+		List<MediaSelection> top3MediaSelections = Lists.newArrayList();
+		if (mediaSelections.size() > 1) {
+			top3MediaSelections.add(mediaSelections.get(1));
+		}
+		if (mediaSelections.size() > 2) {
+			top3MediaSelections.add(mediaSelections.get(2));
+		}
+		if (mediaSelections.size() > 3) {
+			top3MediaSelections.add(mediaSelections.get(3));
+		}
+		return top3MediaSelections;
+	}
+	
 	public void setDate(Date date) {
 		this.date = date;
 	}
@@ -122,22 +146,22 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	}
 	
 	public void addUser(UserImpl user) {
-		users.add(new MediaSessionUser(user));
+		mediaSessionUsers.add(new MediaSessionUser(user));
 	}
 	
 	public void removeUser(UserImpl user) {
 		MediaSessionUser userToRemove = null;
-		for (MediaSessionUser mediaSessionUser : users) {
+		for (MediaSessionUser mediaSessionUser : mediaSessionUsers) {
 			if (mediaSessionUser.getUser().equals(user)) {
 				userToRemove = mediaSessionUser;
 				break;
 			}
 		}
-		users.remove(userToRemove);
+		mediaSessionUsers.remove(userToRemove);
 	}
 	
 	public Boolean containsUser(UserImpl user) {
-		for (MediaSessionUser mediaSessionUser : users) {
+		for (MediaSessionUser mediaSessionUser : mediaSessionUsers) {
 			if (mediaSessionUser.getUser().equals(user)) {
 				return true;
 			}
@@ -194,8 +218,8 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return result;
 	}
 	
-	public void setUsers(List<MediaSessionUser> users) {
-		this.users = users;
+	public void setMediaSessionUsers(List<MediaSessionUser> mediaSessionUsers) {
+		this.mediaSessionUsers = mediaSessionUsers;
 	}
 	
 	public void setWatchableTypes(List<WatchableType> watchableTypes) {

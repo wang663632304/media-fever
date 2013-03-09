@@ -36,7 +36,6 @@ public class WatchablesGridFragment extends AbstractGridFragment<Watchable> impl
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		watchables = getArgument(WATCHABLES_EXTRA);
 	}

@@ -8,14 +8,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.android.domain.User;
+import com.jdroid.android.images.BorderedCustomImageView;
 import com.jdroid.android.utils.AndroidDateUtils;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.LocalizationUtils;
 import com.jdroid.java.utils.DateUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
-import com.mediafever.android.ui.BorderImage;
 import com.mediafever.android.ui.session.MediaSessionAdapter.MediaSessionHolder;
+import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.session.MediaSessionUser;
 
@@ -25,7 +26,6 @@ import com.mediafever.domain.session.MediaSessionUser;
  */
 public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, MediaSessionHolder> {
 	
-	private static final String SEPARATOR = ", ";
 	private User user;
 	
 	public MediaSessionAdapter(Activity context, List<MediaSession> items, User user) {
@@ -35,7 +35,7 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 	
 	@Override
 	protected void fillHolderFromItem(final MediaSession mediaSession, MediaSessionHolder holder) {
-		holder.watchableTypes.setText(StringUtils.join(mediaSession.getWatchableTypes(), SEPARATOR));
+		holder.watchableTypes.setText(getWatchablesString(mediaSession));
 		String dateTime = getDateString(mediaSession);
 		if (StringUtils.isNotEmpty(dateTime)) {
 			holder.date.setText(dateTime);
@@ -44,25 +44,51 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			holder.date.setVisibility(View.INVISIBLE);
 		}
 		
-		holder.users.removeAllViews();
+		holder.selections.removeAllViews();
+		holder.usersUp.removeAllViews();
+		holder.usersDown.removeAllViews();
 		
-		int max = 5;
+		List<MediaSelection> firstSelections = mediaSession.getTop3Selections();
+		for (MediaSelection mediaSelection : firstSelections) {
+			BorderedCustomImageView borderedCustomImageView = new BorderedCustomImageView(getContext(),
+					R.drawable.watchable_default, R.dimen.mediaSessionSelectionWidth,
+					R.dimen.mediaSessionSelectionHeight);
+			borderedCustomImageView.setImageContent(mediaSelection.getWatchable().getImage(),
+				R.drawable.watchable_default);
+			holder.selections.addView(borderedCustomImageView);
+		}
+		
+		int max = 4;
 		if (AndroidUtils.isLargeScreenOrBigger()) {
-			max = 10;
+			max = 8;
 		}
 		
 		int usersAdded = 0;
-		for (MediaSessionUser mediaSessionUser : mediaSession.getUsers()) {
+		for (MediaSessionUser mediaSessionUser : mediaSession.getMediaSessionUsers()) {
 			if (usersAdded < max) {
 				User user = mediaSessionUser.getUser();
 				if (!user.getId().equals(this.user.getId())) {
-					BorderImage borderImage = new BorderImage(getContext(), R.dimen.rowSamllImageDim,
-							R.dimen.rowSamllImageDim);
-					borderImage.setImageContent(user.getImage(), R.drawable.user_default);
-					holder.users.addView(borderImage);
+					BorderedCustomImageView borderedCustomImageView = new BorderedCustomImageView(getContext(),
+							R.drawable.user_default, R.dimen.mediaSessionUserImageDim, R.dimen.mediaSessionUserImageDim);
+					borderedCustomImageView.setImageContent(user.getImage(), R.drawable.user_default);
+					if (usersAdded < (max / 2)) {
+						holder.usersUp.addView(borderedCustomImageView);
+					} else {
+						holder.usersDown.addView(borderedCustomImageView);
+					}
 					usersAdded++;
 				}
 			}
+		}
+	}
+	
+	private String getWatchablesString(MediaSession mediaSession) {
+		if (mediaSession.acceptOnlyMovies()) {
+			return getContext().getString(R.string.movies);
+		} else if (mediaSession.acceptOnlySeries()) {
+			return getContext().getString(R.string.series);
+		} else {
+			return getContext().getString(R.string.moviesAndSeries);
 		}
 	}
 	
@@ -103,7 +129,9 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		MediaSessionHolder holder = new MediaSessionHolder();
 		holder.watchableTypes = findView(convertView, R.id.watchableTypes);
 		holder.date = findView(convertView, R.id.date);
-		holder.users = findView(convertView, R.id.users);
+		holder.selections = findView(convertView, R.id.selections);
+		holder.usersUp = findView(convertView, R.id.usersUp);
+		holder.usersDown = findView(convertView, R.id.usersDown);
 		return holder;
 	}
 	
@@ -111,7 +139,9 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		
 		protected TextView watchableTypes;
 		protected TextView date;
-		private LinearLayout users;
+		private LinearLayout selections;
+		private LinearLayout usersUp;
+		private LinearLayout usersDown;
 	}
 	
 }

@@ -1,14 +1,18 @@
 package com.mediafever.android.ui.session;
 
+import java.util.List;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.jdroid.android.domain.User;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserCheckeableAdapter;
 import com.mediafever.domain.UserImpl;
+import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.friends.FriendsUseCase;
 import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
@@ -26,7 +30,6 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		friendsUseCase = getInstance(FriendsUseCase.class);
 		friendsUseCase.setUserId(getUser().getId());
@@ -95,24 +98,43 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 	}
 	
 	private void loadFriends() {
-		setListAdapter(new UserCheckeableAdapter(MediaSessionFriendsFragment.this.getActivity(),
-				friendsUseCase.getFriends()) {
-			
-			@Override
-			protected void onUserChecked(UserImpl user) {
-				getMediaSessionSetupUseCase().addUser(user);
+		setListAdapter(new MediaSessionUsersAdapter(MediaSessionFriendsFragment.this.getActivity(),
+				friendsUseCase.getFriends()));
+	}
+	
+	private class MediaSessionUsersAdapter extends UserCheckeableAdapter {
+		
+		private List<User> originalUsers;
+		
+		public MediaSessionUsersAdapter(Activity context, List<UserImpl> items) {
+			super(context, items);
+			originalUsers = getMediaSessionSetupUseCase().getMediaSession().getUsers();
+		}
+		
+		@Override
+		protected void onUserChecked(UserImpl user) {
+			getMediaSessionSetupUseCase().addUser(user);
+		}
+		
+		@Override
+		protected void onUserUnChecked(UserImpl user) {
+			getMediaSessionSetupUseCase().removeUser(user);
+		}
+		
+		@Override
+		protected Boolean isUserChecked(UserImpl user) {
+			return getMediaSessionSetupUseCase().containsUser(user);
+		}
+		
+		@Override
+		protected Boolean isUserEnabled(UserImpl user) {
+			MediaSession mediaSession = getMediaSessionSetupUseCase().getMediaSession();
+			if (mediaSession.getId() != null) {
+				return !originalUsers.contains(user);
+			} else {
+				return true;
 			}
-			
-			@Override
-			protected void onUserUnChecked(UserImpl user) {
-				getMediaSessionSetupUseCase().removeUser(user);
-			}
-			
-			@Override
-			protected Boolean isUserChecked(UserImpl user) {
-				return getMediaSessionSetupUseCase().containsUser(user);
-			}
-		});
+		}
 	}
 	
 	/**

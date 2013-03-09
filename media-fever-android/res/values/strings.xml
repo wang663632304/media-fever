@@ -67,7 +67,6 @@
 	<string name="todayDateFormat">Today</string>
 
 	<!-- Watchable Social -->
-	<string name="social">Social</string>
 	<string name="watchedByFriend">Watched by %1$s friend</string>
 	<string name="watchedByFriends">Watched by %1$s friends</string>
 	<string name="onTheWishListOfFriend">On the Wishlist of %1$s friend</string>
@@ -116,9 +115,11 @@
 	<string name="anyDate">Any Date</string>
 	<string name="anyTime">Any Time</string>
 	<string name="mediaSessionFriendsHeader">Pick the friends you want to invite to this media session</string>
+	<string name="mediaSessionCreatedTitle">Media Session created</string>
+	<string name="mediaSessionCreatedDescription">Now you and your friends can pick the %1$s and start voting</string>
 	<string name="mediaSelectionsHeader">Pick the %1$s you want to add to this media session</string>
 	<string name="mediaSelectionsFooter">Starts: %1$s</string>
-	<string name="movieOrSeries">movie or series</string>
+	<string name="moviesOrSeries">movies or series</string>
 	<string name="addNewSelection">+</string>
 	<string name="details">Details</string>
 	<string name="thumbsUp">Thumbs Up</string>
@@ -151,5 +152,5 @@
 	<string name="shareContent">Organize movies or series sessions with your friends.
 		Download it from Google Play.
 		https://play.google.com/store/apps/details?id=%1$s</string>
-		
+
 </resources>

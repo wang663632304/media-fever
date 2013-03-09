@@ -39,7 +39,6 @@ public class WatchableSocialFragment extends AbstractListFragment<User> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		userWatchable = getArgument(USER_WATCHABLE_EXTRA);
 	}

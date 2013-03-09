@@ -1,111 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.mediafever"
-	android:versionCode="160010000" android:versionName="0.1.0" xmlns:tools="http://schemas.android.com/tools">
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest package="com.mediafever" android:versionCode="160010000" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.1.0">
+  <permission android:name="com.mediafever.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+  <uses-permission android:name="com.mediafever.permission.C2D_MESSAGE"/>
+  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-feature android:name="com.google.android.tv" android:required="false"/>
+  <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+  <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+  <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+  <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16"/>
+  <application android:icon="@drawable/ic_launcher" android:logo="@drawable/logo" android:label="@string/appName" android:allowBackup="true" android:name="com.mediafever.android.AndroidApplication" android:hardwareAccelerated="true" android:theme="@style/Theme.Sherlock">
+    <meta-data android:name="android.app.default_searchable" android:value="com.mediafever.android.ui.watchable.search.SearchableActivity"/>
 
-    
-	<!-- Google Cloud Messaging permissions -->
-	<permission android:name="com.mediafever.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-	<uses-permission android:name="com.mediafever.permission.C2D_MESSAGE" />
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-	<uses-feature android:name="com.google.android.tv" android:required="false" />
-	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
-	<uses-feature android:name="android.hardware.telephony" android:required="false" />
-
-	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
-
-	<application android:icon="@drawable/ic_launcher" android:logo="@drawable/logo" android:label="@string/appName"
-		android:allowBackup="true" android:name="com.mediafever.android.AndroidApplication" android:hardwareAccelerated="true"
-		android:theme="@style/Theme.Sherlock">
-
-		<!-- enable the search dialog to send searches to SearchableActivity -->
-		<meta-data android:name="android.app.default_searchable" android:value="com.mediafever.android.ui.watchable.search.SearchableActivity" />
-
-		<!-- This Activity is a necessary part of the overall Facebook login process but is not meant to be used directly, 
-		it must be declared on the manifest to ensure proper handling of Facebook login. -->
-		<activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"
-           android:label="@string/appName" />   
-
-		<activity android:name="com.mediafever.android.ui.login.LoginActivity" android:windowSoftInputMode="adjustPan" />
-		<activity android:name="com.mediafever.android.ui.home.HomeActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<activity android:name="com.mediafever.android.ui.signup.SignUpActivity" android:label="@string/signUp"
-			android:windowSoftInputMode="adjustPan" />
-
-		<activity android:name="com.mediafever.android.ui.watchable.search.SearchableActivity" android:label="@string/moviesAndSeries"
-			android:launchMode="singleTop">
-			<intent-filter>
-				<action android:name="android.intent.action.SEARCH" />
-			</intent-filter>
-			<meta-data android:name="android.app.searchable" android:resource="@xml/searchable_paid" />
-		</activity>
-
-		<activity android:name="com.mediafever.android.ui.watchable.wishlist.WishListActivity" android:label="@string/wishList" />
-		<activity android:name="com.mediafever.android.ui.watchable.watched.WatchedListActivity" android:label="@string/watched" />
-		<activity android:name="com.mediafever.android.ui.watchable.whattowatch.WhatToWatchActivity" android:label="@string/whatToWatch" />
-		<activity android:name="com.mediafever.android.ui.watchable.details.WatchableActivity" />
-
-		<activity android:name="com.mediafever.android.ui.session.MediaSessionListActivity" android:label="@string/mediaSessions" />
-		<activity android:name="com.mediafever.android.ui.session.MediaSessionActivity" android:label="@string/newMediaSession" />
-		<activity android:name="com.mediafever.android.ui.session.MediaSelectionsActivity" android:label="@string/mediaSession" />
-
-		<activity android:name="com.mediafever.android.ui.friends.FriendsActivity" android:label="@string/friends" />
-		<activity android:name="com.mediafever.android.ui.friends.FriendsListActivity" android:label="@string/friends" />
-		<activity android:name="com.mediafever.android.ui.friends.FriendsRequestsActivity" android:label="@string/friendsRequests" />
-		<activity android:name="com.mediafever.android.ui.friends.SearchUsersActivity" android:label="@string/searchUsers" />
-
-		<activity android:name="com.mediafever.android.ui.settings.SettingsActivity" android:label="@string/settings" />
-		<activity android:name="com.mediafever.android.ui.settings.ProfileActivity" android:label="@string/profile"
-			android:windowSoftInputMode="stateHidden" />
-		<activity android:name="com.mediafever.android.ui.settings.SocialSettingsActivity" android:label="@string/social" />
-
-		<activity android:name="com.jdroid.android.debug.DebugSettingsActivity" android:label="@string/debugSettings" />
-		<activity android:name="com.jdroid.android.debug.PreHoneycombDebugSettingsActivity" android:label="@string/debugSettings" />
-
-		<activity android:name="com.google.ads.AdActivity"
-			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-		<activity android:name="com.jdroid.android.exception.ExceptionReportActivity" android:theme="@android:style/Theme.NoDisplay"
-			android:excludeFromRecents="true" />
-
-		<service android:name="com.jdroid.android.exception.ExceptionReportService" android:exported="false" />
-
-		<service android:name="com.mediafever.android.service.DisableDeviceService" android:exported="false" />
-		<service android:name="com.mediafever.android.service.EnableDeviceService" android:exported="false" />
-
-		<!-- Google Cloud Messaging Configuration -->
-		<service android:name="com.mediafever.android.gcm.GcmService" />
-		<receiver android:name="com.mediafever.android.gcm.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
-			<intent-filter>
-				<!-- Receive actual messages -->
-				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-				<!-- Receive registration ids -->
-				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-				<category android:name="com.mediafever" />
-			</intent-filter>
-		</receiver>
-
-		<!-- Handles notification from Google Play on install -->
-		<receiver android:name="com.google.analytics.tracking.android.AnalyticsReceiver" android:exported="true"
-			tools:ignore="ExportedReceiver">
-			<intent-filter>
-				<action android:name="com.android.vending.INSTALL_REFERRER" />
-			</intent-filter>
-		</receiver>
-
-		<provider android:name="com.mediafever.android.contentprovider.WatchablesSuggestionsProvider"
-			android:authorities="com.mediafever.watchablessuggestionsprovider" />
-
-	</application>
-
+   	<!-- This Activity is a necessary part of the overall Facebook login process but is not meant to be used directly, it must be declared on the manifest to ensure proper handling of Facebook login. -->
+	<activity android:name="com.facebook.LoginActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:label="@string/appName" />   
+	
+    <activity android:name="com.mediafever.android.ui.login.LoginActivity" android:windowSoftInputMode="adjustPan"/>
+    <activity android:name="com.mediafever.android.ui.home.HomeActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity android:name="com.mediafever.android.ui.signup.SignUpActivity" android:label="@string/signUp" android:windowSoftInputMode="adjustPan"/>
+    <activity android:name="com.mediafever.android.ui.watchable.search.SearchableActivity" android:label="@string/moviesAndSeries" android:launchMode="singleTop">
+      <intent-filter>
+        <action android:name="android.intent.action.SEARCH"/>
+      </intent-filter>
+      <meta-data android:name="android.app.searchable" android:resource="@xml/searchable_paid"/>
+    </activity>
+    <activity android:name="com.mediafever.android.ui.watchable.wishlist.WishListActivity" android:label="@string/wishList"/>
+    <activity android:name="com.mediafever.android.ui.watchable.watched.WatchedListActivity" android:label="@string/watched"/>
+    <activity android:name="com.mediafever.android.ui.watchable.whattowatch.WhatToWatchActivity" android:label="@string/whatToWatch"/>
+    <activity android:name="com.mediafever.android.ui.watchable.details.WatchableActivity"/>
+    <activity android:name="com.mediafever.android.ui.session.MediaSessionListActivity" android:label="@string/mediaSessions"/>
+    <activity android:name="com.mediafever.android.ui.session.MediaSessionActivity" android:label="@string/newMediaSession"/>
+    <activity android:name="com.mediafever.android.ui.session.MediaSelectionsActivity" android:label="@string/mediaSession"/>
+    <activity android:name="com.mediafever.android.ui.friends.FriendsActivity" android:label="@string/friends"/>
+    <activity android:name="com.mediafever.android.ui.friends.FriendsListActivity" android:label="@string/friends"/>
+    <activity android:name="com.mediafever.android.ui.friends.FriendsRequestsActivity" android:label="@string/friendsRequests"/>
+    <activity android:name="com.mediafever.android.ui.friends.SearchUsersActivity" android:label="@string/searchUsers"/>
+    <activity android:name="com.mediafever.android.ui.settings.SettingsActivity" android:label="@string/settings"/>
+    <activity android:name="com.mediafever.android.ui.settings.ProfileActivity" android:label="@string/profile" android:windowSoftInputMode="stateHidden"/>
+    <activity android:name="com.mediafever.android.ui.settings.SocialSettingsActivity" android:label="@string/social"/>
+    <activity android:name="com.jdroid.android.debug.DebugSettingsActivity" android:label="@string/debugSettings"/>
+    <activity android:name="com.jdroid.android.debug.PreHoneycombDebugSettingsActivity" android:label="@string/debugSettings"/>
+    <activity android:name="com.google.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+    <activity android:name="com.jdroid.android.exception.ExceptionReportActivity" android:theme="@android:style/Theme.NoDisplay" android:excludeFromRecents="true"/>
+    <service android:name="com.mediafever.android.service.DisableDeviceService" android:exported="false"/>
+    <service android:name="com.mediafever.android.service.EnableDeviceService" android:exported="false"/>
+    <service android:name="com.mediafever.android.gcm.GcmService"/>
+    <receiver android:name="com.mediafever.android.gcm.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+      <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+        <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+        <category android:name="com.mediafever"/>
+      </intent-filter>
+    </receiver>
+    <service android:name="com.google.analytics.tracking.android.CampaignTrackingService"/>
+    <receiver android:name="com.google.analytics.tracking.android.CampaignTrackingReceiver" android:exported="true" tools:ignore="ExportedReceiver" xmlns:tools="http://schemas.android.com/tools">
+      <intent-filter>
+        <action android:name="com.android.vending.INSTALL_REFERRER"/>
+      </intent-filter>
+    </receiver>
+    <provider android:name="com.mediafever.android.contentprovider.WatchablesSuggestionsProvider" android:authorities="com.mediafever.watchablessuggestionsprovider"/>
+  </application>
 </manifest>

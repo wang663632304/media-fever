@@ -1,6 +1,5 @@
 package com.mediafever.android.ui.home;
 
-import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,6 @@ public class LatestWatchablesFragment extends AbstractFragment {
 	
 	private LatestWatchablesUseCase latestWatchablesUseCase;
 	
-	@InjectView(R.id.coverflow)
 	private CoverFlow coverflow;
 	
 	/**
@@ -38,7 +36,6 @@ public class LatestWatchablesFragment extends AbstractFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		latestWatchablesUseCase = getInstance(LatestWatchablesUseCase.class);
 	}
@@ -61,6 +58,8 @@ public class LatestWatchablesFragment extends AbstractFragment {
 		
 		float height = getResources().getDimensionPixelSize(R.dimen.coverFlowHeight)
 				* (1 + ReflectedRemoteImageResolver.get().getImageReflectionRatio());
+		
+		coverflow = findView(R.id.coverflow);
 		coverflow.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, (int)height));
 		loadCoverflow();
 	}

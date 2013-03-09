@@ -27,7 +27,6 @@ public class WishListGridFragment extends AbstractGridFragment<Watchable> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		wishListUseCase = getInstance(WishListUseCase.class);
 		wishListUseCase.setUserId(getUser().getId());

@@ -1,6 +1,5 @@
 package com.mediafever.android.ui.watchable.details;
 
-import roboguice.inject.InjectView;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -31,43 +30,7 @@ public class WatchableOverviewFragment extends AbstractFragment {
 	private static final String USER_WATCHABLE_EXTRA = "userWatchable";
 	private static final String SEPARATOR = " | ";
 	
-	@InjectView(R.id.image)
-	private CustomImageView image;
-	
-	@InjectView(R.id.name)
-	private TextView name;
-	
-	@InjectView(R.id.tagline)
-	private TextView tagline;
-	
-	@InjectView(R.id.releaseYear)
-	private TextView releaseYear;
-	
-	@InjectView(R.id.overview)
-	private TextView overview;
-	
-	@InjectView(R.id.overviewTitle)
-	private TextView overviewTitle;
-	
-	@InjectView(R.id.actorsTitle)
-	private TextView actorsTitle;
-	
-	@InjectView(R.id.actors)
-	private TextView actors;
-	
-	@InjectView(R.id.genresTitle)
-	private TextView genresTitle;
-	
-	@InjectView(R.id.genres)
-	private TextView genres;
-	
-	@InjectView(R.id.viewTrailer)
-	private Button viewTrailer;
-	
-	@InjectView(R.id.watchedToogle)
 	private Button watchedToogle;
-	
-	@InjectView(R.id.wishListToogle)
 	private Button wishListToogle;
 	
 	private UpdateUserWatchableUseCase updateUserWatchableUseCase;
@@ -88,7 +51,6 @@ public class WatchableOverviewFragment extends AbstractFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		userWatchable = getArgument(USER_WATCHABLE_EXTRA);
 		updateUserWatchableUseCase = getInstance(UpdateUserWatchableUseCase.class);
@@ -112,42 +74,52 @@ public class WatchableOverviewFragment extends AbstractFragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		Watchable watchable = userWatchable.getWatchable();
+		
+		CustomImageView image = findView(R.id.image);
 		image.setImageContent(watchable.getImage(), R.drawable.watchable_default);
+		
+		TextView name = findView(R.id.name);
 		name.setText(watchable.getName());
 		
 		if (watchable.getReleaseYear() != null) {
+			TextView releaseYear = findView(R.id.releaseYear);
 			releaseYear.setText(watchable.getReleaseYear().toString());
 		}
 		
+		TextView overview = findView(R.id.overview);
 		if (StringUtils.isNotEmpty(watchable.getOverview())) {
 			overview.setText(watchable.getOverview());
 		} else {
 			overview.setVisibility(View.GONE);
-			overviewTitle.setVisibility(View.GONE);
+			findView(R.id.overviewTitle).setVisibility(View.GONE);
 		}
 		
+		TextView actors = findView(R.id.actors);
 		if (CollectionUtils.isNotEmpty(watchable.getActors())) {
 			actors.setText(StringUtils.join(watchable.getActors(), SEPARATOR));
 		} else {
 			actors.setVisibility(View.GONE);
-			actorsTitle.setVisibility(View.GONE);
+			findView(R.id.actorsTitle).setVisibility(View.GONE);
 		}
 		
+		TextView genres = findView(R.id.genres);
 		if (CollectionUtils.isNotEmpty(watchable.getGenres())) {
 			genres.setText(StringUtils.join(watchable.getGenres(), SEPARATOR));
 		} else {
 			genres.setVisibility(View.GONE);
-			genresTitle.setVisibility(View.GONE);
+			findView(R.id.genresTitle).setVisibility(View.GONE);
 		}
 		
 		if (WatchableType.MOVIE.match(watchable)) {
 			final Movie movie = Movie.class.cast(watchable);
 			
 			if (StringUtils.isNotBlank(movie.getTagline())) {
+				TextView tagline = findView(R.id.tagline);
 				tagline.setText(movie.getTagline());
 				tagline.setVisibility(View.VISIBLE);
 			}
 			if (movie.hasYoutubeTrailer()) {
+				Button viewTrailer = findView(R.id.viewTrailerButton);
 				viewTrailer.setOnClickListener(new OnClickListener() {
 					
 					@Override
@@ -159,6 +131,7 @@ public class WatchableOverviewFragment extends AbstractFragment {
 			}
 		}
 		
+		watchedToogle = findView(R.id.watchedToogle);
 		watchedToogle.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -168,6 +141,7 @@ public class WatchableOverviewFragment extends AbstractFragment {
 			}
 		});
 		
+		wishListToogle = findView(R.id.wishListToogle);
 		wishListToogle.setOnClickListener(new OnClickListener() {
 			
 			@Override
