@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="150dp"
-	android:layout_height="200dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="@dimen/mediaSelectionWidth"
+	android:layout_height="@dimen/mediaSelectionHeight">
 
 	<com.jdroid.android.images.CustomImageView android:id="@+id/image"
 		android:layout_height="match_parent" android:layout_width="match_parent" android:scaleType="fitXY"
 		android:src="@drawable/watchable_default" />
 
 	<TextView android:id="@+id/name" android:layout_height="wrap_content" android:layout_width="match_parent"
-		android:textStyle="bold" android:textSize="16sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"
-		android:layout_alignParentBottom="true" android:padding="5dp" />
+		android:textStyle="bold" android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white"
+		android:background="@color/transluscentGrey" android:layout_alignParentBottom="true" android:padding="5dp" />
 
 	<LinearLayout android:id="@+id/userContainer" android:orientation="horizontal" android:layout_width="match_parent"
 		android:layout_height="wrap_content" android:padding="4dp" android:gravity="center_vertical" android:background="@color/transluscentGrey">
@@ -21,17 +21,20 @@
 		</RelativeLayout>
 
 		<TextView android:id="@+id/fullName" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp" />
+			android:textStyle="bold" android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white"
+			android:layout_marginLeft="10dp" />
 	</LinearLayout>
 
 	<LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:background="@color/transluscentGrey"
 		android:layout_below="@+id/userContainer" android:layout_alignParentRight="true" android:orientation="horizontal">
 		<TextView android:id="@+id/thumbsUp" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:padding="5dp" />
+			android:textStyle="bold" android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white"
+			android:padding="5dp" />
 		<ImageView android:id="@+id/thumbsUpIcon" android:layout_height="wrap_content" android:layout_width="wrap_content"
 			android:src="@drawable/thumbs_up" android:layout_gravity="center_vertical" />
 		<TextView android:id="@+id/thumbsDown" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:padding="5dp" />
+			android:textStyle="bold" android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white"
+			android:padding="5dp" />
 		<ImageView android:id="@+id/thumbsDownIcon" android:layout_height="wrap_content" android:layout_width="wrap_content"
 			android:src="@drawable/thumbs_down" android:layout_gravity="center_vertical" />
 	</LinearLayout>

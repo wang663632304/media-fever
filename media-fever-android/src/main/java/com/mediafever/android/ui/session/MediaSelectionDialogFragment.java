@@ -49,7 +49,6 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		mediaSelection = getArgument(MEDIA_SELECTION_EXTRA);
 		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
@@ -79,8 +78,7 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		Button details = findView(R.id.details);
-		details.setOnClickListener(new OnClickListener() {
+		findView(R.id.details).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

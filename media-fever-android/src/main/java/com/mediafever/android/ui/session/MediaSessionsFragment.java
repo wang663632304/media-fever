@@ -28,7 +28,6 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		getSupportActionBar().setTitle(R.string.mediaSessions);
 		
@@ -51,7 +50,7 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	@Override
 	public void onItemSelected(MediaSession mediaSession) {
 		if (mediaSession.isAccepted()) {
-			MediaSelectionsActivity.start(getActivity(), mediaSession);
+			MediaSelectionsActivity.start(getActivity(), mediaSession, false);
 		} else {
 			AcceptRejectSessionDialogFragment.show(mediaSession.getId(), this);
 		}

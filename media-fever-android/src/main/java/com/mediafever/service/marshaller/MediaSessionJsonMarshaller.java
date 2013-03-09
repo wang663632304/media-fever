@@ -31,7 +31,7 @@ public class MediaSessionJsonMarshaller implements Marshaller<MediaSession, Json
 		map.put(TIME, mediaSession.getTime());
 		map.put(WATCHABLE_TYPE, mediaSession.getWatchableTypes());
 		List<Long> ids = Lists.newArrayList();
-		for (MediaSessionUser user : mediaSession.getUsers()) {
+		for (MediaSessionUser user : mediaSession.getMediaSessionUsers()) {
 			ids.add(user.getUser().getId());
 		}
 		map.put(USER_IDS, ids);

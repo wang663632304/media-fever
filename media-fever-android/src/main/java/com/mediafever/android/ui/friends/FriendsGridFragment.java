@@ -37,7 +37,6 @@ public class FriendsGridFragment extends AbstractGridFragment<UserImpl> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		getSupportActionBar().setTitle(R.string.friends);
 		

@@ -1,7 +1,6 @@
 package com.mediafever.android.ui.session;
 
 import java.util.Date;
-import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +9,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import com.jdroid.android.date.DateButton;
-import com.jdroid.android.date.TimeButton;
 import com.jdroid.android.date.DatePickerDialogFragment.OnDateSetListener;
+import com.jdroid.android.date.TimeButton;
 import com.jdroid.android.date.TimePickerDialogFragment.OnTimeSetListener;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.java.utils.DateUtils;
@@ -26,32 +25,8 @@ import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
  */
 public class MediaSessionSetupFragment extends AbstractFragment implements OnDateSetListener, OnTimeSetListener {
 	
-	@InjectView(R.id.movies)
-	private CheckBox movies;
-	
-	@InjectView(R.id.series)
-	private CheckBox series;
-	
-	@InjectView(R.id.date)
 	private DateButton dateEditText;
-	
-	@InjectView(R.id.time)
 	private TimeButton timeEditText;
-	
-	@InjectView(R.id.anyDate)
-	private CheckBox anyDate;
-	
-	@InjectView(R.id.anyTime)
-	private CheckBox anyTime;
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-	}
 	
 	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
@@ -70,6 +45,8 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 		super.onViewCreated(view, savedInstanceState);
 		
 		MediaSession mediaSession = getMediaSessionSetupUseCase().getMediaSession();
+		
+		CheckBox movies = findView(R.id.movies);
 		movies.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.MOVIE));
 		movies.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
@@ -84,6 +61,7 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 		});
 		movies.setEnabled((mediaSession.getId() != null) && movies.isChecked() ? false : true);
 		
+		CheckBox series = findView(R.id.series);
 		series.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.SERIES));
 		series.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
@@ -101,6 +79,8 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 		Date now = DateUtils.now();
 		
 		// Date
+		dateEditText = findView(R.id.date);
+		CheckBox anyDate = findView(R.id.anyDate);
 		anyDate.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -125,6 +105,8 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 		}
 		
 		// Time
+		timeEditText = findView(R.id.time);
+		CheckBox anyTime = findView(R.id.anyTime);
 		anyTime.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override

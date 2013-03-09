@@ -36,6 +36,7 @@ public abstract class UserCheckeableAdapter extends BaseHolderArrayAdapter<UserI
 		holder.fullName.setText(user.getFullname());
 		holder.checkbox.setOnCheckedChangeListener(null);
 		holder.checkbox.setChecked(isUserChecked(user));
+		holder.checkbox.setEnabled(isUserEnabled(user));
 		holder.checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -70,6 +71,8 @@ public abstract class UserCheckeableAdapter extends BaseHolderArrayAdapter<UserI
 	protected abstract void onUserUnChecked(UserImpl user);
 	
 	protected abstract Boolean isUserChecked(UserImpl user);
+	
+	protected abstract Boolean isUserEnabled(UserImpl user);
 	
 	/**
 	 * @return the selectedUsers

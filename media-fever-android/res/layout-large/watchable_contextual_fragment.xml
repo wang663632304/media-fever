@@ -12,22 +12,24 @@
 		<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 			android:orientation="vertical">
 
-			<Button android:id="@+id/overview" android:layout_width="180dp" style="@style/defaultButton" android:text="@string/overview"
-				android:layout_gravity="center_horizontal" android:layout_marginTop="5dp">
+			<Button android:id="@+id/overviewButton" android:layout_width="180dp" style="@style/defaultButton"
+				android:text="@string/overview" android:layout_gravity="center_horizontal" android:layout_marginTop="5dp">
 				<requestFocus />
 			</Button>
 
-			<Button android:id="@+id/social" android:layout_width="180dp" style="@style/defaultButton" android:text="@string/social"
+			<Button android:id="@+id/socialButton" android:layout_width="180dp" style="@style/defaultButton" android:text="@string/social"
 				android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" />
 
-			<Button android:id="@+id/seasons" android:layout_width="180dp" style="@style/defaultButton" android:text="@string/seasons"
-				android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" android:visibility="gone" />
+			<Button android:id="@+id/seasonsButton" android:layout_width="180dp" style="@style/defaultButton"
+				android:text="@string/seasons" android:layout_gravity="center_horizontal" android:layout_marginTop="5dp"
+				android:visibility="gone" />
 
-			<Button android:id="@+id/viewTrailer" android:layout_width="180dp" style="@style/defaultButton" android:text="@string/viewTrailer"
-				android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" android:visibility="gone" />
+			<Button android:id="@+id/viewTrailerButton" android:layout_width="180dp" style="@style/defaultButton"
+				android:text="@string/viewTrailer" android:layout_gravity="center_horizontal" android:layout_marginTop="5dp"
+				android:visibility="gone" />
 
-			<Button android:id="@+id/mediaSession" android:layout_width="180dp" style="@style/defaultButton" android:text="@string/mediaSession"
-				android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" />
+			<Button android:id="@+id/mediaSessionButton" android:layout_width="180dp" style="@style/defaultButton"
+				android:text="@string/mediaSession" android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" />
 
 		</LinearLayout>
 

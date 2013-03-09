@@ -1,6 +1,5 @@
 package com.mediafever.android.ui.watchable.details;
 
-import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,21 +26,6 @@ public class WatchableContextualFragment extends AbstractFragment {
 	
 	private static final String USER_WATCHABLE_EXTRA = "userWatchable";
 	
-	@InjectView(R.id.image)
-	private CustomImageView image;
-	
-	@InjectView(R.id.overview)
-	private Button overview;
-	
-	@InjectView(R.id.social)
-	private Button social;
-	
-	@InjectView(R.id.viewTrailer)
-	private Button viewTrailer;
-	
-	@InjectView(R.id.mediaSession)
-	private Button mediaSession;
-	
 	private UserWatchable<Watchable> userWatchable;
 	
 	public static WatchableContextualFragment instance(UserWatchable<Watchable> userWatchable) {
@@ -58,7 +42,6 @@ public class WatchableContextualFragment extends AbstractFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		userWatchable = getArgument(USER_WATCHABLE_EXTRA);
 	}
@@ -80,13 +63,17 @@ public class WatchableContextualFragment extends AbstractFragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		Watchable watchable = userWatchable.getWatchable();
+		
+		CustomImageView image = findView(R.id.image);
 		image.setImageContent(watchable.getImage(), R.drawable.watchable_default);
 		
-		Button seasons = findView(R.id.seasons);
+		Button seasons = findView(R.id.seasonsButton);
 		WatchableType watchableType = WatchableType.find(watchable);
 		if (watchableType.equals(WatchableType.MOVIE)) {
 			final Movie movie = Movie.class.cast(watchable);
 			if (movie.hasYoutubeTrailer()) {
+				
+				Button viewTrailer = findView(R.id.viewTrailerButton);
 				viewTrailer.setOnClickListener(new OnClickListener() {
 					
 					@Override
@@ -110,7 +97,7 @@ public class WatchableContextualFragment extends AbstractFragment {
 			}
 		}
 		
-		overview.setOnClickListener(new OnClickListener() {
+		findView(R.id.overviewButton).setOnClickListener(new OnClickListener() {
 			
 			@SuppressWarnings("unchecked")
 			@Override
@@ -119,7 +106,7 @@ public class WatchableContextualFragment extends AbstractFragment {
 			}
 		});
 		
-		social.setOnClickListener(new OnClickListener() {
+		findView(R.id.socialButton).setOnClickListener(new OnClickListener() {
 			
 			@SuppressWarnings("unchecked")
 			@Override
@@ -128,7 +115,7 @@ public class WatchableContextualFragment extends AbstractFragment {
 			}
 		});
 		
-		mediaSession.setOnClickListener(new OnClickListener() {
+		findView(R.id.mediaSessionButton).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

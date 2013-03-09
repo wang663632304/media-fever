@@ -1,8 +1,8 @@
 package com.mediafever.android.ui.watchable.details;
 
 import java.util.List;
-import roboguice.inject.InjectView;
 import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.ContextMenu;
@@ -40,7 +40,6 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	private static final String USER_WATCHABLE_EXTRA = "userWatchable";
 	private MarkAsWachedUseCase markAsWachedUseCase;
 	
-	@InjectView(R.id.seasonsSpinner)
 	private Spinner spinner;
 	
 	private UserWatchable<Series> userWatchable;
@@ -61,7 +60,6 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		userWatchable = getArgument(USER_WATCHABLE_EXTRA);
 		
@@ -111,6 +109,8 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 		SeasonAdapter adapter = new SeasonAdapter(getActivity(), series.getSeasons());
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		spinner = findView(R.id.seasonsSpinner);
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
 		
@@ -130,7 +130,7 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
 	 */
-	@TargetApi(11)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onFinishUseCase() {
 		executeOnUIThread(new Runnable() {
@@ -148,7 +148,7 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 		});
 	}
 	
-	@TargetApi(11)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupActionMode() {
 		ListView listView = getListView();
 		listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
@@ -239,7 +239,7 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 		}
 	}
 	
-	@TargetApi(11)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onPageSelected(TabAction action) {
 		if (actionMode != null) {

@@ -26,7 +26,6 @@ public class SuggestionsListFragment extends AbstractListFragment<Watchable> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		suggestionsUseCase = getInstance(SuggestionsUseCase.class);
 		suggestionsUseCase.setUserId(getUser().getId());

@@ -45,7 +45,7 @@
 			<TextView android:id="@+id/overview" android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:textSize="@dimen/defaultTextSize" />
 
-			<Button android:id="@+id/viewTrailer" style="@style/defaultButton" android:text="@string/viewTrailer"
+			<Button android:id="@+id/viewTrailerButton" style="@style/defaultButton" android:text="@string/viewTrailer"
 				android:layout_gravity="center_horizontal" android:layout_marginTop="10dp" android:visibility="gone" />
 
 		</LinearLayout>

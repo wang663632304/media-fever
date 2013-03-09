@@ -17,6 +17,7 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	
 	private MediaSessionsRepository mediaSessionsRepository;
 	private MediaSession mediaSession;
+	private Boolean created;
 	
 	@Inject
 	public MediaSessionSetupUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
@@ -33,9 +34,11 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 		if (mediaSession.getId() != null) {
 			getApiService().updateMediaSession(mediaSession);
 			mediaSessionsRepository.update(mediaSession);
+			created = false;
 		} else {
 			mediaSession = getApiService().createMediaSession(mediaSession);
 			mediaSessionsRepository.add(mediaSession);
+			created = true;
 		}
 	}
 	
@@ -73,5 +76,9 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	
 	public void setTime(Date time) {
 		mediaSession.setTime(time);
+	}
+	
+	public Boolean isCreated() {
+		return created;
 	}
 }

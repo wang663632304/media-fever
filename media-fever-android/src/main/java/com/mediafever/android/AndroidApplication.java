@@ -2,6 +2,7 @@ package com.mediafever.android;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
@@ -76,7 +77,7 @@ public class AndroidApplication extends AbstractApplication {
 		return new AndroidModule();
 	}
 	
-	@TargetApi(11)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void logout() {
 		
 		DisableDeviceService.setUserToken(SecurityContext.get().getUser().getUserToken());

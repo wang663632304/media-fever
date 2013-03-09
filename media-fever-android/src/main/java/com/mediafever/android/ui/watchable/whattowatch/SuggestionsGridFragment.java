@@ -27,7 +27,6 @@ public class SuggestionsGridFragment extends AbstractGridFragment<Watchable> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		suggestionsUseCase = getInstance(SuggestionsUseCase.class);
 		suggestionsUseCase.setUserId(getUser().getId());

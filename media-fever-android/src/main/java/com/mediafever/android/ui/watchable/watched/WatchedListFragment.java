@@ -26,7 +26,6 @@ public class WatchedListFragment extends AbstractListFragment<Watchable> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		watchedUseCase = getInstance(WatchedUseCase.class);
 		watchedUseCase.setUserId(getUser().getId());

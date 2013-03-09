@@ -26,7 +26,6 @@ public class WishListFragment extends AbstractListFragment<Watchable> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		wishListUseCase = getInstance(WishListUseCase.class);
 		wishListUseCase.setUserId(getUser().getId());

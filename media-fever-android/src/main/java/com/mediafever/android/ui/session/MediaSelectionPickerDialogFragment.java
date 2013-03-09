@@ -61,8 +61,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		View manualSelection = findView(R.id.manualSelection);
-		manualSelection.setOnClickListener(new OnClickListener() {
+		findView(R.id.manualSelection).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -70,8 +69,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			}
 		});
 		
-		View smartSelection = findView(R.id.smartSelection);
-		smartSelection.setOnClickListener(new OnClickListener() {
+		findView(R.id.smartSelection).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

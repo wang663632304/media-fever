@@ -1,6 +1,5 @@
 package com.mediafever.android.ui.login;
 
-import roboguice.inject.InjectView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,28 +26,12 @@ public class LoginFragment extends AbstractFragment {
 	
 	private LoginUseCase loginUseCase;
 	
-	@InjectView(R.id.email)
-	private TextView email;
-	
-	@InjectView(R.id.password)
-	private TextView password;
-	
-	@InjectView(R.id.login)
-	private Button login;
-	
-	@InjectView(R.id.signUp)
-	private Button signUp;
-	
-	@InjectView(R.id.buyFullApp)
-	private Button buyFullApp;
-	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		loginUseCase = getInstance(LoginUseCase.class);
 	}
@@ -70,9 +53,13 @@ public class LoginFragment extends AbstractFragment {
 		super.onViewCreated(view, savedInstanceState);
 		
 		// TODO Hardcoded login
+		final TextView email = findView(R.id.email);
 		email.setText("user1@email.com");
+		
+		final TextView password = findView(R.id.password);
 		password.setText("admin");
 		
+		Button buyFullApp = findView(R.id.buyFullApp);
 		if (ApplicationContext.get().isFreeApp()) {
 			buyFullApp.setVisibility(View.VISIBLE);
 			buyFullApp.setOnClickListener(new BuyFullAppOnClickListener());
@@ -80,7 +67,7 @@ public class LoginFragment extends AbstractFragment {
 			buyFullApp.setVisibility(View.GONE);
 		}
 		
-		login.setOnClickListener(new OnClickListener() {
+		findView(R.id.login).setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -90,7 +77,7 @@ public class LoginFragment extends AbstractFragment {
 			}
 		});
 		
-		signUp.setOnClickListener(new LaunchOnClickListener(SignUpActivity.class));
+		findView(R.id.signUp).setOnClickListener(new LaunchOnClickListener(SignUpActivity.class));
 		
 		if (AndroidApplication.get().getLoginRunnable() != null) {
 			AndroidApplication.get().getLoginRunnable().run();

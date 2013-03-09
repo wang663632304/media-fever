@@ -209,7 +209,7 @@ public class AndroidBaseActivity extends BaseActivity {
 	 * @see com.jdroid.android.activity.BaseActivity#doOnCreateOptionsMenu(com.actionbarsherlock.view.Menu)
 	 */
 	@Override
-	@TargetApi(11)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void doOnCreateOptionsMenu(Menu menu) {
 		super.doOnCreateOptionsMenu(menu);
 		if (getActivityIf().requiresAuthentication()
