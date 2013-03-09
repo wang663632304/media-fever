@@ -72,8 +72,6 @@
 		<activity android:name="com.jdroid.android.exception.ExceptionReportActivity" android:theme="@android:style/Theme.NoDisplay"
 			android:excludeFromRecents="true" />
 
-		<service android:name="com.jdroid.android.exception.ExceptionReportService" android:exported="false" />
-
 		<service android:name="com.mediafever.android.service.DisableDeviceService" android:exported="false" />
 		<service android:name="com.mediafever.android.service.EnableDeviceService" android:exported="false" />
 

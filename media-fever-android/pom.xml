@@ -243,7 +243,6 @@
 				<analytics.enabled>false</analytics.enabled>
 				<crittercism.enabled>false</crittercism.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
-				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
 				<android.sign.debug>true</android.sign.debug>
 				<android.zipalign.skip>true</android.zipalign.skip>
@@ -271,7 +270,6 @@
 				<analytics.enabled>false</analytics.enabled>
 				<crittercism.enabled>true</crittercism.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
-				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
 				<android.sign.debug>true</android.sign.debug>
 				<android.zipalign.skip>true</android.zipalign.skip>
@@ -299,7 +297,6 @@
 				<analytics.enabled>false</analytics.enabled>
 				<crittercism.enabled>true</crittercism.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
-				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
 				<android.sign.debug>true</android.sign.debug>
 				<android.zipalign.skip>true</android.zipalign.skip>
@@ -329,7 +326,6 @@
 				<analytics.enabled>true</analytics.enabled>
 				<crittercism.enabled>true</crittercism.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
-				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>false</android.manifest.debuggable>
 				<android.sign.debug>false</android.sign.debug>
 				<android.zipalign.skip>false</android.zipalign.skip>
