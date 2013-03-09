@@ -269,7 +269,7 @@
 				<environment.name>QA</environment.name>
 				<debug.settings>true</debug.settings>
 				<analytics.enabled>false</analytics.enabled>
-				<crittercism.enabled>false</crittercism.enabled>
+				<crittercism.enabled>true</crittercism.enabled>
 				<mail.contact>mail@gmail.com</mail.contact>
 				<mail.reporting>false</mail.reporting>
 				<android.manifest.debuggable>true</android.manifest.debuggable>
