@@ -67,7 +67,6 @@
 	<string name="todayDateFormat">Today</string>
 
 	<!-- Watchable Social -->
-	<string name="social">Social</string>
 	<string name="watchedByFriend">Watched by %1$s friend</string>
 	<string name="watchedByFriends">Watched by %1$s friends</string>
 	<string name="onTheWishListOfFriend">On the Wishlist of %1$s friend</string>

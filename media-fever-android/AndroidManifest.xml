@@ -18,7 +18,7 @@
 	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
 	<uses-feature android:name="android.hardware.telephony" android:required="false" />
 
-	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
+	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16" />
 
 	<application android:icon="@drawable/ic_launcher" android:logo="@drawable/logo" android:label="@string/appName"
 		android:allowBackup="true" android:name="com.mediafever.android.AndroidApplication" android:hardwareAccelerated="true"

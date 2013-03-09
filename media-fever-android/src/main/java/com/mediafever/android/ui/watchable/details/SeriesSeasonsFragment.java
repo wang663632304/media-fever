@@ -2,6 +2,7 @@ package com.mediafever.android.ui.watchable.details;
 
 import java.util.List;
 import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.ContextMenu;
@@ -129,7 +130,7 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
 	 */
-	@TargetApi(11)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onFinishUseCase() {
 		executeOnUIThread(new Runnable() {
@@ -147,7 +148,7 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 		});
 	}
 	
-	@TargetApi(11)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupActionMode() {
 		ListView listView = getListView();
 		listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
@@ -238,7 +239,7 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 		}
 	}
 	
-	@TargetApi(11)
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onPageSelected(TabAction action) {
 		if (actionMode != null) {
