@@ -1,5 +1,6 @@
 package com.mediafever.core.domain;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -105,15 +106,20 @@ public class User extends Entity {
 	}
 	
 	/**
-	 * Links the {@link User} to his {@link FacebookAccount}.
+	 * Links the {@link User} to his {@link FacebookAccount}. If the user already has a {@link FacebookAccount}, then
+	 * its token and expiration date are updated.
 	 * 
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
-	 * @param facebookAccessExpiresIn FB session's expiration time (in milliseconds since Unix epoch), or 0 if the
-	 *            session doesn't expire.
+	 * @param facebookAccessExpirationDate FB session's expiration date.
 	 */
-	public void linkToFacebookAccount(String facebookUserId, String facebookAccessToken, Long facebookAccessExpiresIn) {
-		facebookAccount = new FacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpiresIn);
+	public void linkToFacebookAccount(String facebookUserId, String facebookAccessToken,
+			Date facebookAccessExpirationDate) {
+		if (facebookAccount == null) {
+			facebookAccount = new FacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpirationDate);
+		} else {
+			facebookAccount.update(facebookAccessToken, facebookAccessExpirationDate);
+		}
 	}
 	
 	/**

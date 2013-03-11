@@ -1,9 +1,12 @@
 package com.mediafever.usecase.settings;
 
-import android.content.Context;
+import java.util.Date;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.model.GraphUser;
 import com.google.inject.Inject;
 import com.jdroid.android.context.SecurityContext;
-import com.jdroid.android.facebook.FacebookConnector;
 import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.mediafever.service.APIService;
 
@@ -15,10 +18,8 @@ import com.mediafever.service.APIService;
 public class ConnectToFacebookUseCase extends AbstractApiUseCase<APIService> {
 	
 	private String accessToken;
-	private String facebookUserId;
-	private Boolean connect;
-	private FacebookConnector facebookConnector;
-	private Context context;
+	private Date expirationDate;
+	private Boolean connect = Boolean.FALSE;
 	
 	/**
 	 * @param apiService
@@ -35,49 +36,20 @@ public class ConnectToFacebookUseCase extends AbstractApiUseCase<APIService> {
 	protected void doExecute() {
 		
 		if (connect) {
-			facebookUserId = facebookConnector.getFacebookUserId();
-			getApiService().connectToFacebook(SecurityContext.get().getUser().getId(), facebookUserId, accessToken,
-				facebookConnector.getAccessExpires());
+			Response response = Request.executeAndWait(Request.newMeRequest(Session.getActiveSession(), null));
+			GraphUser user = response.getGraphObjectAs(GraphUser.class);
+			getApiService().connectToFacebook(SecurityContext.get().getUser().getId(), user.getId(), accessToken,
+				expirationDate);
+			connect = Boolean.FALSE;
 		} else {
-			facebookConnector.disconnect(context);
 			getApiService().disconnectFromFacebook(SecurityContext.get().getUser().getId());
 		}
 	}
 	
-	/**
-	 * @param accessToken the accessToken to set
-	 */
-	public void setAccessToken(String accessToken) {
+	public void setDataToConnect(String accessToken, Date expirationDate) {
+		connect = Boolean.TRUE;
 		this.accessToken = accessToken;
+		this.expirationDate = expirationDate;
 	}
 	
-	/**
-	 * @param facebookUserId the facebookUserId to set
-	 */
-	public void setFacebookUserId(String facebookUserId) {
-		this.facebookUserId = facebookUserId;
-	}
-	
-	/**
-	 * @param facebookConnector the facebookConnector to set
-	 */
-	public void setFacebookConnector(FacebookConnector facebookConnector) {
-		this.facebookConnector = facebookConnector;
-	}
-	
-	/**
-	 * Set the use case to connect or disconnect from Facebook.
-	 * 
-	 * @param connect Whether to connect to Facebook or not.
-	 */
-	public void setConnect(Boolean connect) {
-		this.connect = connect;
-	}
-	
-	/**
-	 * @param context the context to set
-	 */
-	public void setContext(Context context) {
-		this.context = context;
-	}
 }

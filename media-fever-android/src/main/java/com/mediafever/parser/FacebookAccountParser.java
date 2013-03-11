@@ -13,14 +13,14 @@ import com.mediafever.domain.social.FacebookAccount;
 public class FacebookAccountParser extends JsonParser<JsonObjectWrapper> {
 	
 	private final static String ACCESS_TOKEN = "accessToken";
-	private final static String EXPIRES_IN = "accessExpiresIn";
+	private final static String EXPIRATION_DATE = "accessExpirationDate";
 	
 	/**
 	 * @see com.jdroid.java.parser.json.JsonParser#parse(java.lang.Object)
 	 */
 	@Override
 	public Object parse(JsonObjectWrapper json) throws JSONException {
-		return new FacebookAccount(json.getString(ACCESS_TOKEN), json.getLong(EXPIRES_IN));
+		return new FacebookAccount(json.getString(ACCESS_TOKEN), json.getDate(EXPIRATION_DATE));
 	}
 	
 }

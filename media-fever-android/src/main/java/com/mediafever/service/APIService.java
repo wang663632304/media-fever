@@ -1,5 +1,6 @@
 package com.mediafever.service;
 
+import java.util.Date;
 import java.util.List;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.search.PagedResult;
@@ -85,10 +86,10 @@ public interface APIService {
 	 * @param userId The user id.
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
-	 * @param facebookExpiresIn FB session's expiration time (in milliseconds since Unix epoch), or 0 if the session
-	 *            doesn't expire.
+	 * @param facebookExpirationDate FB session's expiration date.
 	 */
-	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken, Long facebookExpiresIn);
+	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken,
+			Date facebookExpirationDate);
 	
 	/**
 	 * Disconnects an user account from its Facebook profile.
