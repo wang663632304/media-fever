@@ -1,6 +1,5 @@
 package com.mediafever.android.ui.settings;
 
-import roboguice.inject.InjectView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,18 +31,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 	
 	private ConnectToFacebookUseCase connectToFacebookUseCase;
 	
-	// TODO: See if we can change Facebook login button for our own implementation using SwitchButton.
-	@InjectView(R.id.authButton)
-	private LoginButton loginButton;
-	
 	private UiLifecycleHelper uiHelper;
-	private Session.StatusCallback callback = new Session.StatusCallback() {
-		
-		@Override
-		public void call(Session session, SessionState state, Exception exception) {
-			onSessionStateChange(session, state, exception);
-		}
-	};
 	
 	/**
 	 * @see android.app.ListFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
@@ -51,12 +39,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.social_settings_fragment, container, false);
-		loginButton = LoginButton.class.cast(view.findViewById(R.id.authButton));
-		loginButton.setFragment(this);
-		loginButton.setApplicationId(ApplicationContext.get().getFacebookAppId());
-		
-		return view;
+		return inflater.inflate(R.layout.social_settings_fragment, container, false);
 	}
 	
 	/**
@@ -65,18 +48,37 @@ public class SocialSettingsFragment extends AbstractFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 		
 		MultipleUsersSharedPreferencesTokenCachingStrategy tokenCachingStrategy = new MultipleUsersSharedPreferencesTokenCachingStrategy(
 				getActivity());
 		tokenCachingStrategy.buildActiveSession(getActivity(), ApplicationContext.get().getFacebookAppId());
 		
+		// Add callback to listen to Facebook session's state changes
+		Session.StatusCallback callback = new Session.StatusCallback() {
+			
+			@Override
+			public void call(Session session, SessionState state, Exception exception) {
+				onSessionStateChange(session, state, exception);
+			}
+		};
+		
 		uiHelper = new UiLifecycleHelper(getActivity(), callback);
 		uiHelper.onCreate(savedInstanceState);
 		
-		if (connectToFacebookUseCase == null) {
-			connectToFacebookUseCase = getInstance(ConnectToFacebookUseCase.class);
-		}
+		connectToFacebookUseCase = getInstance(ConnectToFacebookUseCase.class);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		
+		// TODO: See if we can change Facebook login button for our own implementation using SwitchButton.
+		LoginButton loginButton = findView(R.id.authButton);
+		loginButton.setFragment(this);
+		loginButton.setApplicationId(ApplicationContext.get().getFacebookAppId());
 	}
 	
 	/**
