@@ -1,7 +1,6 @@
 package com.mediafever.android.ui.watchable.details;
 
 import java.util.List;
-import roboguice.inject.InjectExtra;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -104,7 +103,6 @@ public class WatchableActivity extends AbstractFragmentActivity implements
 		}
 	}
 	
-	@InjectExtra(value = WATCHABLE_TYPE_EXTRA)
 	private WatchableType watchableType;
 	
 	private OnPageSelectedListener onPageSelectedListener;
@@ -135,6 +133,8 @@ public class WatchableActivity extends AbstractFragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		watchableType = getExtra(WatchableActivity.WATCHABLE_TYPE_EXTRA);
 		setTitle(watchableType.getResourceId());
 		loadUseCaseFragment(savedInstanceState, WatchableUseCaseFragment.class);
 		

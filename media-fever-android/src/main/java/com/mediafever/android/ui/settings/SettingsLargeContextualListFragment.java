@@ -16,8 +16,8 @@ import com.mediafever.R;
  */
 public class SettingsLargeContextualListFragment extends ContextualListFragment {
 	
-	private final static int MAX_AVATAR_HEIGHT = 120;
-	private final static int MAX_AVATAR_WIDTH = 120;
+	private final static int MAX_AVATAR_HEIGHT = 240;
+	private final static int MAX_AVATAR_WIDTH = 240;
 	
 	public SettingsLargeContextualListFragment() {
 		super();
@@ -37,6 +37,6 @@ public class SettingsLargeContextualListFragment extends ContextualListFragment 
 		super.onViewCreated(view, savedInstanceState);
 		
 		CustomImageView avatar = findView(R.id.photo);
-		avatar.setImageContent(getUser().getImage(), R.drawable.person_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
+		avatar.setImageContent(getUser().getImage(), R.drawable.profile_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
 	}
 }

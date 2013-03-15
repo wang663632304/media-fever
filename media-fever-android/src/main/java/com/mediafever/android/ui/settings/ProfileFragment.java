@@ -76,7 +76,7 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 		publicProfile.setChecked(user.hasPublicProfile());
 		
 		avatar = findView(R.id.photo);
-		avatar.setImageContent(user.getImage(), R.drawable.person_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
+		avatar.setImageContent(user.getImage(), R.drawable.profile_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
 		if (PictureDialogFragment.display()) {
 			
 			avatar.setOnClickListener(new OnClickListener() {
@@ -159,6 +159,6 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	@Override
 	public void onPicturePicked(FileContent fileContent) {
 		updateUserProfileUseCase.setAvatar(fileContent);
-		avatar.setImageContent(fileContent, R.drawable.person_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
+		avatar.setImageContent(fileContent, R.drawable.profile_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
 	}
 }
