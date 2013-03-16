@@ -13,7 +13,7 @@
 
 			<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 				android:orientation="horizontal" android:paddingTop="10dp">
-				<RelativeLayout android:layout_height="120dp" android:layout_width="90dp">
+				<RelativeLayout android:layout_height="@dimen/watchableOverviewHeight" android:layout_width="@dimen/watchableOverviewWidth">
 					<View android:layout_height="match_parent" android:layout_width="match_parent" android:background="@android:color/white" />
 					<com.jdroid.android.images.CustomImageView android:id="@+id/image"
 						android:scaleType="centerCrop" android:layout_width="match_parent" android:layout_height="match_parent"

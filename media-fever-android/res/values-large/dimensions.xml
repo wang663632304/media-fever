@@ -3,8 +3,13 @@
 
 	<dimen name="smallTextSize">16sp</dimen>
 
-	<dimen name="mediaSelectionHeight">200dp</dimen>
-	<dimen name="mediaSelectionWidth">150dp</dimen>
+	<!-- Watchables -->
+
+	<dimen name="watchableGridHeight">200dp</dimen>
+	<dimen name="watchableGridWidth">150dp</dimen>
+
+	<dimen name="watchableOverviewHeight">215dp</dimen>
+	<dimen name="watchableOverviewWidth">180dp</dimen>
 
 	<!-- CoverFlow -->
 	<dimen name="coverFlowWidth">120dp</dimen>

@@ -3,7 +3,7 @@
 	android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingLeft="4dp"
 	android:paddingRight="4dp" android:paddingTop="4dp" android:paddingBottom="4dp" android:gravity="center_vertical">
 
-	<RelativeLayout android:layout_height="80dp" android:layout_width="60dp">
+	<RelativeLayout android:layout_height="@dimen/watchableListHeight" android:layout_width="@dimen/watchableListWidth">
 		<View android:layout_height="match_parent" android:layout_width="match_parent" android:background="@android:color/white" />
 		<com.jdroid.android.images.CustomImageView android:id="@+id/image"
 			android:scaleType="centerCrop" android:layout_width="match_parent" android:layout_height="match_parent"

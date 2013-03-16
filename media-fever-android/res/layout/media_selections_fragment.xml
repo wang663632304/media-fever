@@ -7,7 +7,7 @@
 
 	<GridView android:id="@+id/grid" android:layout_width="match_parent" android:layout_height="match_parent"
 		android:layout_below="@+id/header" android:layout_above="@+id/footer" android:verticalSpacing="20dp"
-		android:horizontalSpacing="5dp" android:gravity="center" android:numColumns="auto_fit" android:columnWidth="@dimen/mediaSelectionWidth"
+		android:horizontalSpacing="5dp" android:gravity="center" android:numColumns="auto_fit" android:columnWidth="@dimen/watchableGridWidth"
 		android:stretchMode="columnWidth" style="@style/defaultGrid" android:layout_margin="5dp" />
 
 	<TextView android:id="@id/android:empty" android:text="@string/noResultsSearch" style="@style/noResultsText"

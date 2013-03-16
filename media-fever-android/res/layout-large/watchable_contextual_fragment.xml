@@ -3,8 +3,8 @@
 	android:layout_width="match_parent" android:layout_height="match_parent" android:padding="10dp">
 
 	<com.jdroid.android.images.CustomImageView android:id="@+id/image"
-		android:layout_height="215dp" android:layout_width="180dp" android:src="@drawable/watchable_default"
-		android:layout_gravity="center_horizontal" />
+		android:layout_height="@dimen/watchableOverviewHeight" android:layout_width="@dimen/watchableOverviewWidth"
+		android:src="@drawable/watchable_default" android:layout_gravity="center_horizontal" />
 
 	<ScrollView android:layout_width="match_parent" android:layout_height="match_parent"
 		android:layout_marginTop="5dp">

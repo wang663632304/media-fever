@@ -9,12 +9,20 @@
 	<dimen name="mediaSessionSelectionHeight">80dp</dimen>
 	<dimen name="mediaSessionSelectionWidth">50dp</dimen>
 
-	<dimen name="mediaSelectionHeight">160dp</dimen>
-	<dimen name="mediaSelectionWidth">120dp</dimen>
+	<!-- Watchables -->
+
+	<dimen name="watchableListHeight">80dp</dimen>
+	<dimen name="watchableListWidth">60dp</dimen>
+
+	<dimen name="watchableGridHeight">160dp</dimen>
+	<dimen name="watchableGridWidth">120dp</dimen>
+
+	<dimen name="watchableOverviewHeight">120dp</dimen>
+	<dimen name="watchableOverviewWidth">90dp</dimen>
 
 	<!-- Left Nav Bar -->
-	<dimen name="left_nav_expanded_width">230dip</dimen>
-	<dimen name="left_nav_expanded_apparent_width">218dip</dimen>
+	<dimen name="left_nav_expanded_width">230dp</dimen>
+	<dimen name="left_nav_expanded_apparent_width">218dp</dimen>
 
 	<!-- CoverFlow -->
 	<dimen name="coverFlowWidth">90dp</dimen>
