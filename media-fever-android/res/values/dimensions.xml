@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+	<dimen name="dashboardTextSize">20sp</dimen>
 	<dimen name="smallTextSize">12sp</dimen>
 	<dimen name="defaultTextSize">18sp</dimen>
 	<dimen name="rowImageDim">50dp</dimen>
