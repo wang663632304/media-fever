@@ -77,6 +77,11 @@ public class MediaSession extends Entity {
 	}
 	
 	public MediaSelection addSelection(User user, Watchable watchable) {
+		for (MediaSelection each : selections) {
+			if (each.getWatchable().equals(watchable)) {
+				// TODO throw exception here
+			}
+		}
 		MediaSelection mediaSelection = new MediaSelection(user, watchable);
 		selections.add(mediaSelection);
 		return mediaSelection;

@@ -30,7 +30,7 @@ public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 		if (mediaSessionsRepository.isOutdated()) {
 			List<MediaSession> mediaSessions = getApiService().getMediaSessions(userId);
 			mediaSessionsRepository.replaceAll(mediaSessions);
-			mediaSessionsRepository.resetLastUpdateTimestamp();
+			mediaSessionsRepository.refreshUpdateTimestamp();
 		}
 	}
 	

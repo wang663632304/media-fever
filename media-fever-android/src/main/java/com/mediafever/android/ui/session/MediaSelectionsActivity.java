@@ -18,6 +18,7 @@ public class MediaSelectionsActivity extends FragmentContainerActivity {
 		Intent intent = new Intent(context, MediaSelectionsActivity.class);
 		intent.putExtra(MediaSelectionsFragment.MEDIA_SESSION_EXTRA, mediaSession);
 		intent.putExtra(MediaSelectionsFragment.MEDIA_SESSION_CREATED_EXTRA, mediaSessionCreated);
+		intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		context.startActivity(intent);
 	}
 	

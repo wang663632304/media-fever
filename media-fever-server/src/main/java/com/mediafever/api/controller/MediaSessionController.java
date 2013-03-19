@@ -85,6 +85,15 @@ public class MediaSessionController extends AbstractController {
 			ApplicationContext.get().getSecurityContext().getUser().getId()));
 	}
 	
+	@PUT
+	@Path("{id}/mediaSelection/manual/{watchableId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String addManualSelection(@PathParam("id") Long id, @PathParam("watchableId") Long watchableId) {
+		return marshallSimple(mediaSessionService.addManualSelection(id,
+			ApplicationContext.get().getSecurityContext().getUser().getId(), watchableId));
+	}
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@GZIP

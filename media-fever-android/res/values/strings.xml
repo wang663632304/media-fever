@@ -101,7 +101,7 @@
 	<string name="noResultsFriendsRequests">There are no pending friends\' requests</string>
 
 	<!-- Search Users -->
-	<string name="searchBy">Search by name or email</string>
+	<string name="searchByNameOrEmail">Search by name or email</string>
 
 	<!-- Media Sessions -->
 	<string name="mediaSessions">Media Sessions</string>

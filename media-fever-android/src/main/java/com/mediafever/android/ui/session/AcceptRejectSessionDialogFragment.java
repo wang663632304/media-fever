@@ -109,9 +109,9 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void run() {
+				((MediaSessionsFragment)getTargetFragment()).refresh();
 				dismissLoading();
 				dismiss();
-				((MediaSessionsFragment)getTargetFragment()).refresh();
 			}
 		});
 	}

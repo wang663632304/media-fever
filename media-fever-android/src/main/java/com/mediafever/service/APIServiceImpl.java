@@ -297,6 +297,17 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 		return webservice.execute(new MediaSelectionParser(mediaSession.getMediaSessionUsers()));
 	}
 	
+	/**
+	 * @see com.mediafever.service.APIService#addManualSelection(com.mediafever.domain.session.MediaSession,
+	 *      com.mediafever.domain.watchable.Watchable)
+	 */
+	@Override
+	public MediaSelection addManualSelection(MediaSession mediaSession, Watchable watchable) {
+		WebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), "mediaSelection", "manual",
+			watchable.getId());
+		return webservice.execute(new MediaSelectionParser(mediaSession.getMediaSessionUsers()));
+	}
+	
 	private void addPagination(WebService webservice) {
 		webservice.addQueryParameter(PAGE, DEFAULT_PAGE_VALUE);
 		webservice.addQueryParameter(PAGE_SIZE, DEFAULT_PAGE_SIZE_VALUE);

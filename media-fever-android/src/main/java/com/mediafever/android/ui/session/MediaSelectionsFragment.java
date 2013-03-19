@@ -1,6 +1,12 @@
 package com.mediafever.android.ui.session;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +18,7 @@ import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
 import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
+import com.mediafever.usecase.mediasession.MediaSessionDetailsUseCase;
 
 /**
  * 
@@ -19,9 +26,16 @@ import com.mediafever.domain.session.MediaSession;
  */
 public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection> {
 	
+	private static final String SYNCHRONIZE_ACTION = MediaSelectionsFragment.class.getSimpleName()
+			+ ".SYNCHRONIZE_ACTION";
+	
+	public static final int MEDIA_SELECTION_ADDED_REQUEST_CODE = 1;
+	
 	public static final String MEDIA_SESSION_EXTRA = "mediaSessionExtra";
 	public static final String MEDIA_SESSION_CREATED_EXTRA = "mediaSessionCreatedExtra";
 	
+	private MediaSessionDetailsUseCase mediaSessionDetailsUseCase;
+	private BroadcastReceiver refreshBroadcastReceiver;
 	private MediaSession mediaSession;
 	private Boolean mediaSessionCreated;
 	
@@ -39,6 +53,9 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			AlertDialogUtils.showOKDialog(getString(R.string.mediaSessionCreatedTitle),
 				getString(R.string.mediaSessionCreatedDescription, getWatchablesString()));
 		}
+		
+		mediaSessionDetailsUseCase = getInstance(MediaSessionDetailsUseCase.class);
+		mediaSessionDetailsUseCase.setMediaSessionId(mediaSession.getId());
 		
 		setHasOptionsMenu(true);
 	}
@@ -86,6 +103,47 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		refresh();
 	}
 	
+	public static void synchronize(Context context) {
+		Intent broadcastIntent = new Intent();
+		broadcastIntent.setAction(SYNCHRONIZE_ACTION);
+		LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onResume()
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
+		onResumeUseCase(mediaSessionDetailsUseCase, this);
+		
+		refreshBroadcastReceiver = new BroadcastReceiver() {
+			
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				mediaSessionDetailsUseCase.setSynch(true);
+				executeUseCase(mediaSessionDetailsUseCase);
+			}
+		};
+		
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(SYNCHRONIZE_ACTION);
+		LocalBroadcastManager.getInstance(getActivity()).registerReceiver(refreshBroadcastReceiver, intentFilter);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onPause()
+	 */
+	@Override
+	public void onPause() {
+		super.onPause();
+		onPauseUseCase(mediaSessionDetailsUseCase, this);
+		
+		if (refreshBroadcastReceiver != null) {
+			LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(refreshBroadcastReceiver);
+		}
+	}
+	
 	/**
 	 * @see com.jdroid.android.activity.BaseActivity#onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
 	 */
@@ -112,8 +170,36 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		}
 	}
 	
-	public void refresh() {
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
+	 */
+	@Override
+	public void onFinishUseCase() {
+		executeOnUIThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				mediaSession = mediaSessionDetailsUseCase.getMediaSession();
+				refresh();
+				dismissLoading();
+			}
+		});
+	}
+	
+	private void refresh() {
 		setListAdapter(new MediaSelectionAdapter(MediaSelectionsFragment.this.getActivity(),
 				mediaSession.getSelections()));
+	}
+	
+	/**
+	 * @see android.support.v4.app.Fragment#onActivityResult(int, int, android.content.Intent)
+	 */
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if ((resultCode == Activity.RESULT_OK) && (requestCode == MEDIA_SELECTION_ADDED_REQUEST_CODE)) {
+			mediaSessionDetailsUseCase.setSynch(false);
+			executeUseCase(mediaSessionDetailsUseCase);
+		}
 	}
 }

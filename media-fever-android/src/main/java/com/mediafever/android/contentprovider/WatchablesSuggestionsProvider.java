@@ -40,7 +40,7 @@ public class WatchablesSuggestionsProvider extends ReadOnlyContentProvider imple
 			watchablesSuggestionsUseCase = AbstractApplication.getInstance(WatchablesSuggestionsUseCase.class);
 		}
 		watchablesSuggestionsUseCase.addListener(this);
-		watchablesSuggestionsUseCase.setQuery(selectionArgs[0]);
+		watchablesSuggestionsUseCase.setSearchValue(selectionArgs[0]);
 		watchablesSuggestionsUseCase.run();
 		watchablesSuggestionsUseCase.removeListener(this);
 		
@@ -50,7 +50,7 @@ public class WatchablesSuggestionsProvider extends ReadOnlyContentProvider imple
 				SearchManager.SUGGEST_COLUMN_ICON_1 });
 		
 		if (watchablesSuggestionsUseCase.isFinishSuccessful()) {
-			for (Watchable watchable : watchablesSuggestionsUseCase.getWatchables()) {
+			for (Watchable watchable : watchablesSuggestionsUseCase.getSearchResult().getResults()) {
 				WatchableType watchableType = WatchableType.find(watchable);
 				cursor.addRow(new String[] { watchable.getId().toString(), watchable.getId().toString(),
 						watchableType.getName(), watchable.getName(),

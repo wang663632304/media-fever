@@ -58,6 +58,7 @@
 		<activity android:name="com.mediafever.android.ui.session.MediaSessionListActivity" android:label="@string/mediaSessions" />
 		<activity android:name="com.mediafever.android.ui.session.MediaSessionActivity" android:label="@string/newMediaSession" />
 		<activity android:name="com.mediafever.android.ui.session.MediaSelectionsActivity" android:label="@string/mediaSession" />
+		<activity android:name="com.mediafever.android.ui.session.ManualMediaSelectionPickerActivity" android:label="@string/moviesAndSeries" />
 
 		<activity android:name="com.mediafever.android.ui.friends.FriendsActivity" android:label="@string/friends" />
 		<activity android:name="com.mediafever.android.ui.friends.FriendsListActivity" android:label="@string/friends" />
