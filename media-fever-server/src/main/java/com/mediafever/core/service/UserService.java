@@ -39,7 +39,7 @@ public class UserService {
 	@Transactional
 	public User addUser(String email, String password, String firstName, String lastName, Boolean publicProfile) {
 		if (userRepository.existsWithEmail(email)) {
-			throw ServerErrorCode.DUPLICATED_USERNAME.newBusinessException(email);
+			throw ServerErrorCode.USERNAME_DUPLICATED.newBusinessException(email);
 		}
 		User user = new User(email, password, firstName, lastName, publicProfile);
 		userRepository.add(user);
@@ -51,7 +51,7 @@ public class UserService {
 			Boolean publicProfile, FileEntity image) {
 		User user = userRepository.get(userId);
 		if (!email.equals(user.getEmail()) && userRepository.existsWithEmail(email)) {
-			throw ServerErrorCode.DUPLICATED_USERNAME.newBusinessException(email);
+			throw ServerErrorCode.USERNAME_DUPLICATED.newBusinessException(email);
 		}
 		user.modify(email, password, firstName, lastName, publicProfile, image);
 		return user;

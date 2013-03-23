@@ -131,6 +131,7 @@
 	<string name="smartSelection">SMART Selection</string>
 	<string name="smartSelectionDescription">Let us decide for you which is the best movie or series to watch according to your preferences.
 	</string>
+	<string name="mediaSelectionDuplicated">This movie or series is already present on the media session</string>
 
 	<!-- Notifications -->
 	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>

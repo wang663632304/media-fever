@@ -12,8 +12,9 @@ import com.jdroid.java.utils.StringUtils;
  */
 public enum ServerErrorCode implements ErrorCode {
 	
-	DUPLICATED_USERNAME(201),
-	PASSWORD_REQUIRED(202);
+	USERNAME_DUPLICATED(201),
+	PASSWORD_REQUIRED(202),
+	MEDIA_SELECTION_DUPLICATED(203);
 	
 	private Integer statusCode;
 	
