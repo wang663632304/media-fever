@@ -85,7 +85,7 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 	 */
 	@Override
 	protected int getSearchEditTextHintResId() {
-		return R.string.searchBy;
+		return R.string.searchByNameOrEmail;
 	}
 	
 	/**

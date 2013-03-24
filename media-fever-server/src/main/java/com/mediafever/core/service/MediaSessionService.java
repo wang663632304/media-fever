@@ -162,9 +162,19 @@ public class MediaSessionService {
 	@Transactional
 	public MediaSelection addSmartSelection(Long id, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
-		User user = userRepository.get(userId);
 		Watchable watchable = getSmartSelection(mediaSession);
 		
+		User user = userRepository.get(userId);
+		MediaSelection mediaSelection = mediaSession.addSelection(user, watchable);
+		return mediaSelection;
+	}
+	
+	@Transactional
+	public MediaSelection addManualSelection(Long id, Long userId, Long watchableId) {
+		MediaSession mediaSession = mediaSessionRepository.get(id);
+		Watchable watchable = watchableService.getWatchable(watchableId);
+		
+		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = mediaSession.addSelection(user, watchable);
 		return mediaSelection;
 	}

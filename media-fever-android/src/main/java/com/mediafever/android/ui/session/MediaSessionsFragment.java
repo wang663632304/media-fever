@@ -64,6 +64,10 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 		return R.string.noResultsMediaSessions;
 	}
 	
+	public void refresh() {
+		executeUseCase(mediaSessionsUseCase);
+	}
+	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onResume()
 	 */
@@ -80,10 +84,6 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(mediaSessionsUseCase, this);
-	}
-	
-	public void refresh() {
-		executeUseCase(mediaSessionsUseCase);
 	}
 	
 	/**

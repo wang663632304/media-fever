@@ -45,4 +45,8 @@ public class WatchableService {
 		filter.setSorting(new Sorting(CustomSortingKey.RELEASE_YEAR, false));
 		return watchableRepository.search(filter);
 	}
+	
+	public Watchable getWatchable(Long watchableId) {
+		return watchableRepository.get(watchableId);
+	}
 }

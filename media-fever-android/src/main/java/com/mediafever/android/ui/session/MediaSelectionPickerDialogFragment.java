@@ -1,5 +1,6 @@
 package com.mediafever.android.ui.session;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -65,7 +66,8 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Implement manual selection
+				ManualMediaSelectionPickerActivity.start(getTargetFragment(), mediaSession);
+				dismiss();
 			}
 		});
 		
@@ -107,7 +109,8 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void run() {
-				((MediaSelectionsFragment)getTargetFragment()).refresh();
+				getTargetFragment().onActivityResult(MediaSelectionsFragment.MEDIA_SELECTION_ADDED_REQUEST_CODE,
+					Activity.RESULT_OK, null);
 				dismissLoading();
 				dismiss();
 			}

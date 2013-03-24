@@ -1,8 +1,9 @@
 package com.mediafever.usecase;
 
 import java.util.List;
-import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.google.inject.Inject;
+import com.jdroid.android.search.SearchResult;
+import com.jdroid.android.usecase.SearchApiUseCase;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.domain.watchable.Watchable;
@@ -13,10 +14,8 @@ import com.mediafever.service.APIService;
  * 
  * @author Maxi Rosson
  */
-public class WatchablesSuggestionsUseCase extends AbstractApiUseCase<APIService> {
+public class WatchablesSuggestionsUseCase extends SearchApiUseCase<Watchable, APIService> {
 	
-	private String query;
-	private List<Watchable> watchables;
 	private List<WatchableType> watchableTypes = Lists.newArrayList();
 	
 	@Inject
@@ -27,29 +26,16 @@ public class WatchablesSuggestionsUseCase extends AbstractApiUseCase<APIService>
 	}
 	
 	/**
-	 * @see com.jdroid.android.usecase.DefaultAbstractUseCase#doExecute()
+	 * @see com.jdroid.android.usecase.SearchUseCase#doSearch(java.lang.String)
 	 */
 	@Override
-	protected void doExecute() {
-		if (StringUtils.isNotEmpty(query)) {
-			watchables = getApiService().searchSuggestedWatchables(query, watchableTypes);
+	protected SearchResult<Watchable> doSearch(String searchValue) {
+		List<Watchable> watchables;
+		if (StringUtils.isNotEmpty(searchValue)) {
+			watchables = getApiService().searchSuggestedWatchables(searchValue, watchableTypes);
 		} else {
 			watchables = Lists.newArrayList();
 		}
+		return SearchResult.getInstance(watchables);
 	}
-	
-	/**
-	 * @return the watchables
-	 */
-	public List<Watchable> getWatchables() {
-		return watchables;
-	}
-	
-	/**
-	 * @param query the query to set
-	 */
-	public void setQuery(String query) {
-		this.query = query;
-	}
-	
 }

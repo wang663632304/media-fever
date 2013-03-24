@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import org.apache.commons.collections.CollectionUtils;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.domain.Entity;
+import com.mediafever.api.exception.ServerErrorCode;
 import com.mediafever.core.domain.User;
 import com.mediafever.core.domain.watchable.Watchable;
 import com.mediafever.core.domain.watchable.WatchableType;
@@ -77,6 +78,11 @@ public class MediaSession extends Entity {
 	}
 	
 	public MediaSelection addSelection(User user, Watchable watchable) {
+		for (MediaSelection each : selections) {
+			if (each.getWatchable().equals(watchable)) {
+				throw ServerErrorCode.MEDIA_SELECTION_DUPLICATED.newBusinessException();
+			}
+		}
 		MediaSelection mediaSelection = new MediaSelection(user, watchable);
 		selections.add(mediaSelection);
 		return mediaSelection;

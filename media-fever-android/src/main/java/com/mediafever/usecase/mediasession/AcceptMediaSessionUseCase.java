@@ -31,6 +31,7 @@ public class AcceptMediaSessionUseCase extends AbstractApiUseCase<APIService> {
 		if (accept) {
 			getApiService().acceptMediaSession(mediaSession);
 			mediaSession.accept();
+			mediaSessionsRepository.update(mediaSession);
 		} else {
 			getApiService().rejectMediaSession(mediaSession);
 			mediaSessionsRepository.remove(mediaSession);

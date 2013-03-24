@@ -1,5 +1,6 @@
 package com.mediafever.android.ui.session;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -157,7 +158,8 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void run() {
-				((MediaSelectionsFragment)getTargetFragment()).refresh();
+				getTargetFragment().onActivityResult(MediaSelectionsFragment.MEDIA_SELECTION_ADDED_REQUEST_CODE,
+					Activity.RESULT_OK, null);
 				dismissLoading();
 				dismiss();
 			}

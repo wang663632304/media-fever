@@ -19,6 +19,7 @@ import com.mediafever.android.ui.session.MediaSessionListActivity;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.WatchableType;
 import com.mediafever.repository.FriendRequestsRepository;
+import com.mediafever.repository.MediaSessionsRepository;
 
 /**
  * GCM Message types
@@ -39,6 +40,9 @@ public enum GcmMessage {
 			
 			NotificationUtils.sendNotification(IdGenerator.getIntId(), R.drawable.ic_launcher, friendImageUrl,
 				tickerText, contentTitle, contentText, MediaSessionListActivity.class);
+			
+			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
+			mediaSessionsRepository.resetLastUpdateTimestamp();
 		}
 	},
 	FRIEND_REQUEST("friendRequest") {
