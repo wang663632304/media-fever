@@ -26,6 +26,8 @@
 				<value>com.mediafever.core.domain.watchable.Season</value>
 				<value>com.mediafever.core.domain.watchable.Episode</value>
 				<value>com.mediafever.core.domain.watchable.Person</value>
+				<value>com.mediafever.core.domain.watchable.Settings</value>
+				<value>com.mediafever.core.domain.watchable.Settings.SettingsKey</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

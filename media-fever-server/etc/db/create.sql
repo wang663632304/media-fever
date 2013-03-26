@@ -238,4 +238,14 @@ CREATE TABLE Device (
 	FOREIGN KEY 	(userId) 		REFERENCES User (id)
 );
 
+-- --------------------
+-- APPLICATION SETTINGS
+-- --------------------
+CREATE TABLE Settings (
+	id				bigint(20)		NOT NULL auto_increment,
+	settingsKey		VARCHAR(255)	NOT NULL,
+	value			VARCHAR(255)	NOT NULL,
+	PRIMARY KEY		(id),
+	UNIQUE			(settingsKey)
+);
 
