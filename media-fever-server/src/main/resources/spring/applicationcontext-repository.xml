@@ -18,5 +18,6 @@
    	<bean id="peopleRepository" class="com.mediafever.core.repository.PeopleHibernateRepository" parent="abstractRepository"/>
    	<bean id="friendRequestRepository" class="com.mediafever.core.repository.FriendRequestHibernateRepository" parent="abstractRepository"/>
    	<bean id="fileEntityRepository" class="com.jdroid.javaweb.repository.FileEntityHibernateRepository" parent="abstractRepository"/>
+   	<bean id="settingsRepository" class="com.mediafever.core.repository.SettingsHibernateRepository" parent="abstractRepository"/>
 
 </beans>

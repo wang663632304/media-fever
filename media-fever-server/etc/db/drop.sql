@@ -1,6 +1,7 @@
 --
 -- Drop tables in reverse order
 --
+DROP TABLE IF EXISTS Settings;
 DROP TABLE IF EXISTS Device;
 DROP TABLE IF EXISTS MediaSessionInvitation;
 DROP TABLE IF EXISTS MediaSelection_ThumbsDownUsers;

@@ -7,11 +7,12 @@ import com.jdroid.java.http.HttpWebServiceProcessor;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.http.mock.AbstractMockWebService;
 import com.jdroid.java.http.mock.JsonMockWebService;
-import com.jdroid.java.utils.StringUtils;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.core.domain.watchable.Series;
 import com.mediafever.core.repository.PeopleRepository;
 import com.mediafever.core.service.tvdb.parser.SeriesParser;
+import com.mediafever.core.service.tvdb.parser.SeriesUpdateParser;
+import com.mediafever.core.service.tvdb.parser.SeriesUpdateParser.SeriesUpdateResponse;
 
 /**
  * 
@@ -21,14 +22,23 @@ import com.mediafever.core.service.tvdb.parser.SeriesParser;
 public class TVDbApiService extends AbstractApiService {
 	
 	private static final String SERIES_MODULE = "series";
+	private static final String UPDATES_MODULE = "Updates.php";
 	
 	private static final String COMMON_URL = ApplicationContext.get().getTvApiKey();
 	
 	public Series getSeries(Long seriesId, PeopleRepository peopleRepository) {
 		// Example URL: http://www.thetvdb.com/api/A587336A3A152892/series/79168/all/en.zip
 		// Example banners: http://www.thetvdb.com/banners/posters/79168-3.jpg
-		WebService webService = newGetService(SERIES_MODULE, seriesId.toString());
+		WebService webService = newGetService(COMMON_URL, SERIES_MODULE, seriesId.toString(), "all/en.zip");
 		return webService.execute(new SeriesParser(peopleRepository));
+	}
+	
+	public SeriesUpdateResponse getUpdatedSeries(String lastUpdate) {
+		WebService webService = newGetService(UPDATES_MODULE);
+		webService.addQueryParameter("type", "series");
+		webService.addQueryParameter("time", lastUpdate);
+		
+		return webService.execute(new SeriesUpdateParser());
 	}
 	
 	/**
@@ -67,18 +77,5 @@ public class TVDbApiService extends AbstractApiService {
 	@Override
 	protected Boolean isHttpMockEnabled() {
 		return ApplicationContext.get().isHttpMockEnabled();
-	}
-	
-	@Override
-	protected String getBaseURL(String serverUrl, Object... urlSegments) {
-		StringBuilder builder = new StringBuilder();
-		builder.append(serverUrl);
-		builder.append(COMMON_URL);
-		builder.append(StringUtils.SLASH);
-		builder.append(urlSegments[0]);
-		builder.append(StringUtils.SLASH);
-		builder.append(urlSegments[1]);
-		builder.append("/all/en.zip");
-		return builder.toString();
 	}
 }

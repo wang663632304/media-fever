@@ -1,0 +1,77 @@
+package com.mediafever.core.service.tvdb.parser;
+
+import java.util.List;
+import org.xml.sax.Attributes;
+import com.google.common.collect.Lists;
+import com.jdroid.java.parser.xml.XmlParser;
+import com.jdroid.java.utils.NumberUtils;
+
+/**
+ * Parser that handles series update information.
+ * 
+ * @author Estefanía Caravatti
+ */
+public class SeriesUpdateParser extends XmlParser {
+	
+	private static final String SERIES_TAG = "Series";
+	private static final String TIME_TAG = "Time";
+	
+	private SeriesUpdateResponse response = new SeriesUpdateResponse();
+	
+	/**
+	 * @see com.jdroid.java.parser.xml.XmlParser#onStartElement(java.lang.String, org.xml.sax.Attributes)
+	 */
+	@Override
+	protected void onStartElement(String localName, Attributes attributes) {
+		// Nothing to do here.
+	}
+	
+	/**
+	 * @see com.jdroid.java.parser.xml.XmlParser#onEndElement(java.lang.String, java.lang.String)
+	 */
+	@Override
+	protected void onEndElement(String localName, String content) {
+		if (SERIES_TAG.equals(localName)) {
+			response.addSeries(NumberUtils.getLong(content));
+		} else if (TIME_TAG.equals(localName)) {
+			response.setTime(content);
+		}
+	}
+	
+	/**
+	 * @see com.jdroid.java.parser.xml.XmlParser#getResponse()
+	 */
+	@Override
+	protected Object getResponse() {
+		return response;
+	}
+	
+	public class SeriesUpdateResponse {
+		
+		private List<Long> seriesIds = Lists.newArrayList();
+		private String time;
+		
+		public void addSeries(Long seriesId) {
+			seriesIds.add(seriesId);
+		}
+		
+		public void setTime(String time) {
+			this.time = time;
+		}
+		
+		/**
+		 * @return the time
+		 */
+		public String getTime() {
+			return time;
+		}
+		
+		/**
+		 * @return the seriesIds
+		 */
+		public List<Long> getSeriesIds() {
+			return seriesIds;
+		}
+	}
+	
+}
