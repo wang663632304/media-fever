@@ -31,6 +31,16 @@ public class MediaSelectionsActivity extends FragmentContainerActivity {
 	}
 	
 	/**
+	 * @see android.support.v4.app.FragmentActivity#onNewIntent(android.content.Intent)
+	 */
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		Fragment fragment = instanceFragment(getFragmentClass(), intent.getExtras());
+		replaceFragment(fragment);
+	}
+	
+	/**
 	 * @see com.jdroid.android.activity.AbstractFragmentActivity#getMenuResourceId()
 	 */
 	@Override

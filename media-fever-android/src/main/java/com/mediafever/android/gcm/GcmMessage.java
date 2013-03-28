@@ -9,12 +9,12 @@ import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.LocalizationUtils;
 import com.jdroid.android.utils.NotificationUtils;
 import com.jdroid.java.utils.IdGenerator;
-import com.jdroid.java.utils.NumberUtils;
 import com.mediafever.R;
 import com.mediafever.android.AndroidApplication;
 import com.mediafever.android.ui.friends.FriendsActivity;
 import com.mediafever.android.ui.friends.FriendsContextualItem;
 import com.mediafever.android.ui.friends.FriendsRequestsActivity;
+import com.mediafever.android.ui.session.MediaSelectionsFragment;
 import com.mediafever.android.ui.session.MediaSessionListActivity;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.WatchableType;
@@ -32,8 +32,8 @@ public enum GcmMessage {
 		
 		@Override
 		public void handle(Intent intent) {
-			String friendFullName = intent.getStringExtra(FRIEND_FULL_NAME_KEY);
-			String friendImageUrl = intent.getStringExtra(FRIEND_IMAGE_URL_KEY);
+			String friendFullName = intent.getStringExtra(FULL_NAME_KEY);
+			String friendImageUrl = intent.getStringExtra(IMAGE_URL_KEY);
 			String tickerText = LocalizationUtils.getString(R.string.mediaSessionInvitationTickerText, friendFullName);
 			String contentTitle = LocalizationUtils.getString(R.string.mediaSessionInvitationContentTitle);
 			String contentText = LocalizationUtils.getString(R.string.mediaSessionInvitationContentText, friendFullName);
@@ -45,12 +45,62 @@ public enum GcmMessage {
 			mediaSessionsRepository.resetLastUpdateTimestamp();
 		}
 	},
+	MEDIA_SESSION_UPDATED("mediaSessionUpdated") {
+		
+		@Override
+		public void handle(Intent intent) {
+			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
+			mediaSessionsRepository.resetLastUpdateTimestamp();
+			
+			MediaSelectionsFragment.synchronize(intent.getExtras());
+		}
+	},
+	MEDIA_SELECTION_THUMBS_UP("mediaSelectionThumbsUp") {
+		
+		@Override
+		public void handle(Intent intent) {
+			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
+			mediaSessionsRepository.resetLastUpdateTimestamp();
+			
+			MediaSelectionsFragment.synchronize(intent.getExtras());
+		}
+	},
+	MEDIA_SELECTION_THUMBS_DOWN("mediaSelectionThumbsDown") {
+		
+		@Override
+		public void handle(Intent intent) {
+			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
+			mediaSessionsRepository.resetLastUpdateTimestamp();
+			
+			MediaSelectionsFragment.synchronize(intent.getExtras());
+		}
+	},
+	MEDIA_SELECTION_ADDED("mediaSelectionAdded") {
+		
+		@Override
+		public void handle(Intent intent) {
+			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
+			mediaSessionsRepository.resetLastUpdateTimestamp();
+			
+			MediaSelectionsFragment.synchronize(intent.getExtras());
+		}
+	},
+	MEDIA_SELECTION_REMOVED("mediaSelectionRemoved") {
+		
+		@Override
+		public void handle(Intent intent) {
+			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
+			mediaSessionsRepository.resetLastUpdateTimestamp();
+			
+			MediaSelectionsFragment.synchronize(intent.getExtras());
+		}
+	},
 	FRIEND_REQUEST("friendRequest") {
 		
 		@Override
 		public void handle(Intent intent) {
-			String friendFullName = intent.getStringExtra(FRIEND_FULL_NAME_KEY);
-			String friendImageUrl = intent.getStringExtra(FRIEND_IMAGE_URL_KEY);
+			String friendFullName = intent.getStringExtra(FULL_NAME_KEY);
+			String friendImageUrl = intent.getStringExtra(IMAGE_URL_KEY);
 			String tickerText = LocalizationUtils.getString(R.string.friendRequestTickerText, friendFullName);
 			String contentTitle = LocalizationUtils.getString(R.string.friendRequestContentTitle);
 			String contentText = LocalizationUtils.getString(R.string.friendRequestContentText, friendFullName);
@@ -75,7 +125,7 @@ public enum GcmMessage {
 		
 		@Override
 		public void handle(Intent intent) {
-			Long seriesId = NumberUtils.getLong(intent.getStringExtra(SERIES_ID_KEY));
+			String seriesId = intent.getStringExtra(SERIES_ID_KEY);
 			String episodeName = intent.getStringExtra(EPISODE_NAME_KEY);
 			
 			String tickerText = LocalizationUtils.getString(R.string.newEpisodeTickerText, episodeName);
@@ -84,7 +134,7 @@ public enum GcmMessage {
 			String episodeImageUrl = intent.getStringExtra(EPISODE_IMAGE_URL_KEY);
 			
 			Intent notificationIntent = new Intent(AndroidApplication.get(), WatchableActivity.class);
-			notificationIntent.setData(Uri.parse(seriesId.toString()));
+			notificationIntent.setData(Uri.parse(seriesId));
 			notificationIntent.putExtra(WatchableActivity.WATCHABLE_TYPE_EXTRA, WatchableType.SERIES);
 			
 			NotificationUtils.sendNotification(IdGenerator.getIntId(), R.drawable.ic_launcher, episodeImageUrl,
@@ -94,11 +144,13 @@ public enum GcmMessage {
 	
 	private static final String TAG = GcmMessage.class.getSimpleName();
 	private static final String MESSAGE_KEY_EXTRA = "messageKey";
-	private static final String FRIEND_FULL_NAME_KEY = "friendFullName";
-	private static final String FRIEND_IMAGE_URL_KEY = "friendImageUrl";
+	public static final String FULL_NAME_KEY = "fullName";
+	public static final String IMAGE_URL_KEY = "imageUrl";
 	private static final String SERIES_ID_KEY = "seriesId";
 	private static final String EPISODE_NAME_KEY = "episodeName";
 	private static final String EPISODE_IMAGE_URL_KEY = "episodeImageUrl";
+	public static final String MEDIA_SESSION_ID_KEY = "mediaSessionId";
+	public static final String WATCHABLE_NAME_KEY = "watchableName";
 	private String messageKey;
 	
 	private GcmMessage(String messageKey) {

@@ -7,15 +7,22 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.actionbarsherlock.view.MenuItem;
+import com.jdroid.android.AbstractApplication;
+import com.jdroid.android.animation.FadeInOutAnimation;
+import com.jdroid.android.domain.FileContent;
+import com.jdroid.android.domain.UriFileContent;
 import com.jdroid.android.fragment.AbstractGridFragment;
+import com.jdroid.android.images.CustomImageView;
 import com.jdroid.android.utils.AlertDialogUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
+import com.mediafever.android.gcm.GcmMessage;
 import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.MediaSessionDetailsUseCase;
@@ -25,6 +32,8 @@ import com.mediafever.usecase.mediasession.MediaSessionDetailsUseCase;
  * @author Maxi Rosson
  */
 public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection> {
+	
+	private static final String TAG = MediaSelectionsFragment.class.getSimpleName();
 	
 	private static final String SYNCHRONIZE_ACTION = MediaSelectionsFragment.class.getSimpleName()
 			+ ".SYNCHRONIZE_ACTION";
@@ -86,27 +95,14 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		// Header
-		TextView header = findView(R.id.header);
-		header.setText(getString(R.string.mediaSelectionsHeader, getWatchablesString()));
-		
-		// Footer
-		TextView footer = findView(R.id.footer);
-		String dateTime = MediaSessionAdapter.getDateString(mediaSession);
-		if (StringUtils.isNotEmpty(dateTime)) {
-			footer.setText(getString(R.string.mediaSelectionsFooter, dateTime));
-			footer.setVisibility(View.VISIBLE);
-		} else {
-			footer.setVisibility(View.GONE);
-		}
-		
 		refresh();
 	}
 	
-	public static void synchronize(Context context) {
+	public static void synchronize(Bundle bundle) {
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(SYNCHRONIZE_ACTION);
-		LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
+		broadcastIntent.putExtras(bundle);
+		LocalBroadcastManager.getInstance(AbstractApplication.get()).sendBroadcast(broadcastIntent);
 	}
 	
 	/**
@@ -121,8 +117,38 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				mediaSessionDetailsUseCase.setSynch(true);
-				executeUseCase(mediaSessionDetailsUseCase);
+				
+				String mediaSessionId = intent.getStringExtra(GcmMessage.MEDIA_SESSION_ID_KEY);
+				if (mediaSessionId.equals(mediaSession.getId().toString())) {
+					mediaSessionDetailsUseCase.setSynch(true);
+					executeUseCase(mediaSessionDetailsUseCase);
+					
+					GcmMessage gcmMessage = GcmMessage.find(intent);
+					if (!gcmMessage.equals(GcmMessage.MEDIA_SESSION_UPDATED)) {
+						FileContent imageContent = new UriFileContent(intent.getStringExtra(GcmMessage.IMAGE_URL_KEY));
+						CustomImageView customImageView = findView(R.id.userImage);
+						customImageView.setImageContent(imageContent, R.drawable.user_default);
+						
+						String watchableName = intent.getStringExtra(GcmMessage.WATCHABLE_NAME_KEY);
+						
+						String fullName = intent.getStringExtra(GcmMessage.FULL_NAME_KEY);
+						TextView synchMessage = findView(R.id.synchMessage);
+						if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_ADDED)) {
+							synchMessage.setText(getString(R.string.mediaSelectionAdded, fullName, watchableName));
+						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_REMOVED)) {
+							synchMessage.setText(getString(R.string.mediaSelectionRemoved, fullName, watchableName));
+						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_UP)) {
+							synchMessage.setText(getString(R.string.mediaSelectionThumbsUp, fullName, watchableName));
+						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_DOWN)) {
+							synchMessage.setText(getString(R.string.mediaSelectionThumbsDown, fullName, watchableName));
+						}
+						
+						ViewGroup mediaSelectionsSynch = findView(R.id.mediaSelectionsSynch);
+						mediaSelectionsSynch.clearAnimation();
+						mediaSelectionsSynch.startAnimation(new FadeInOutAnimation(mediaSelectionsSynch, 1000, 4000));
+					}
+					
+				}
 			}
 		};
 		
@@ -171,6 +197,22 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onStartUseCase()
+	 */
+	@Override
+	public void onStartUseCase() {
+		// Do nothing
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 */
+	@Override
+	public void onFinishFailedUseCase(RuntimeException runtimeException) {
+		Log.e(TAG, MediaSessionDetailsUseCase.class.getSimpleName() + " failed when executed.", runtimeException);
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
 	 */
 	@Override
@@ -187,6 +229,21 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	}
 	
 	private void refresh() {
+		
+		// Header
+		TextView header = findView(R.id.header);
+		header.setText(getString(R.string.mediaSelectionsHeader, getWatchablesString()));
+		
+		// Footer
+		TextView footer = findView(R.id.mediaSelectionsStarts);
+		String dateTime = MediaSessionAdapter.getDateString(mediaSession);
+		if (StringUtils.isNotEmpty(dateTime)) {
+			footer.setText(getString(R.string.mediaSelectionsStarts, dateTime));
+			footer.setVisibility(View.VISIBLE);
+		} else {
+			footer.setVisibility(View.GONE);
+		}
+		
 		setListAdapter(new MediaSelectionAdapter(MediaSelectionsFragment.this.getActivity(),
 				mediaSession.getSelections()));
 	}

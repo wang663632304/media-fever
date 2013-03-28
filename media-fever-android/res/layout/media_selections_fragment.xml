@@ -2,20 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<TextView android:id="@+id/header" android:layout_width="match_parent" android:layout_height="wrap_content"
-		android:padding="10dp" android:text="@string/mediaSelectionsHeader" android:textSize="20sp" android:textStyle="bold" />
+	<LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+		android:layout_above="@+id/adViewContainer" android:orientation="vertical">
+		<TextView android:id="@+id/header" android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:padding="10dp" android:text="@string/mediaSelectionsHeader" android:textSize="20sp" android:textStyle="bold" />
 
-	<GridView android:id="@+id/grid" android:layout_width="match_parent" android:layout_height="match_parent"
-		android:layout_below="@+id/header" android:layout_above="@+id/footer" android:verticalSpacing="20dp"
-		android:horizontalSpacing="5dp" android:gravity="center" android:numColumns="auto_fit" android:columnWidth="@dimen/watchableGridWidth"
-		android:stretchMode="columnWidth" style="@style/defaultGrid" android:layout_margin="5dp" />
+		<GridView android:id="@+id/grid" android:layout_width="match_parent" android:layout_height="0dp"
+			android:layout_weight="1" android:verticalSpacing="20dp" android:horizontalSpacing="5dp" android:gravity="center"
+			android:numColumns="auto_fit" android:columnWidth="@dimen/watchableGridWidth" android:stretchMode="columnWidth"
+			style="@style/defaultGrid" android:layout_margin="5dp" />
 
-	<TextView android:id="@id/android:empty" android:text="@string/noResultsSearch" style="@style/noResultsText"
-		android:textSize="20sp" />
+		<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:orientation="horizontal" android:gravity="center_vertical">
+			<TextView android:id="@+id/mediaSelectionsStarts" android:layout_width="0dp" android:layout_height="wrap_content"
+				android:layout_weight="0.5" android:padding="10dp" android:text="@string/mediaSelectionsStarts" android:textSize="20sp"
+				android:textStyle="bold" />
 
-	<TextView android:id="@+id/footer" android:layout_width="match_parent" android:layout_height="wrap_content"
-		android:padding="10dp" android:text="@string/mediaSelectionsFooter" android:textSize="20sp" android:textStyle="bold"
-		android:layout_above="@+id/adViewContainer" android:layout_alignParentBottom="true" />
+			<LinearLayout android:id="@+id/mediaSelectionsSynch" android:orientation="horizontal"
+				android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="0.5" android:layout_margin="10dp"
+				android:gravity="center_vertical|right" android:visibility="invisible">
+
+				<RelativeLayout android:layout_height="@dimen/rowImageDim" android:layout_width="@dimen/rowImageDim">
+					<View android:layout_height="match_parent" android:layout_width="match_parent" android:background="@android:color/white" />
+					<com.jdroid.android.images.CustomImageView android:id="@+id/userImage"
+						android:scaleType="centerCrop" android:layout_width="match_parent" android:layout_height="match_parent"
+						android:layout_margin="1dp" android:src="@drawable/user_default" />
+				</RelativeLayout>
+
+				<TextView android:id="@+id/synchMessage" android:layout_height="wrap_content" android:layout_width="wrap_content"
+					android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white"
+					android:layout_marginLeft="10dp" />
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
 
 	<include layout="@layout/ad_view_container" />
 
