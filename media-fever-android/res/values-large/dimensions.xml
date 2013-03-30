@@ -2,6 +2,7 @@
 <resources>
 
 	<dimen name="smallTextSize">16sp</dimen>
+	<dimen name="normalTextSize">20sp</dimen>
 
 	<!-- Watchables -->
 

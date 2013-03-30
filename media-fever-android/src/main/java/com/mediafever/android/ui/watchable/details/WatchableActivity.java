@@ -88,7 +88,7 @@ public class WatchableActivity extends AbstractFragmentActivity implements
 				
 				ContextualItemsPagerAdapter pagerAdapter = new ContextualItemsPagerAdapter(
 						getActivity().getSupportFragmentManager(), items, userWatchable);
-				ViewPager viewPager = findView(R.id.pager);
+				ViewPager viewPager = (ViewPager)getActivity().findViewById(R.id.pager);
 				viewPager.setOnPageChangeListener(new SimpleOnPageChangeListener() {
 					
 					@Override
