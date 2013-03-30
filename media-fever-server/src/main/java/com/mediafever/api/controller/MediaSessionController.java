@@ -49,7 +49,8 @@ public class MediaSessionController extends AbstractController {
 	public void updateMediaSession(@PathParam("id") Long id, String mediaSessionJSON) {
 		MediaSessionJson mediaSessionJson = (MediaSessionJson)(new MediaSessionParser().parse(mediaSessionJSON));
 		mediaSessionService.updateMediaSession(id, mediaSessionJson.getDate(), mediaSessionJson.getTime(),
-			mediaSessionJson.getWatchableTypes(), mediaSessionJson.getUsersIds());
+			mediaSessionJson.getWatchableTypes(), mediaSessionJson.getUsersIds(),
+			ApplicationContext.get().getSecurityContext().getUser().getId());
 	}
 	
 	@PUT

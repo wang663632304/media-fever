@@ -10,12 +10,12 @@ public class FriendRequestGcmMessage extends DefaultGcmMessage {
 	
 	private static final String MESSAGE_KEY = "friendRequest";
 	
-	private static final String FRIEND_FULL_NAME_KEY = "friendFullName";
-	private static final String FRIEND_IMAGE_URL_KEY = "friendImageUrl";
+	private static final String FULL_NAME_KEY = "fullName";
+	private static final String IMAGE_URL_KEY = "imageUrl";
 	
 	public FriendRequestGcmMessage(String friendFullName, String friendImageUrl) {
-		addParameter(FRIEND_FULL_NAME_KEY, friendFullName);
-		addParameter(FRIEND_IMAGE_URL_KEY, friendImageUrl);
+		addParameter(FULL_NAME_KEY, friendFullName);
+		addParameter(IMAGE_URL_KEY, friendImageUrl);
 	}
 	
 	/**

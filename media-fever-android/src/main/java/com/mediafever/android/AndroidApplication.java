@@ -19,6 +19,8 @@ import com.mediafever.android.service.EnableDeviceService;
 import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.android.ui.login.LoginActivity;
 import com.mediafever.context.ApplicationContext;
+import com.mediafever.repository.FriendsRepository;
+import com.mediafever.repository.MediaSessionsRepository;
 
 /**
  * 
@@ -82,6 +84,14 @@ public class AndroidApplication extends AbstractApplication {
 		
 		SecurityContext.get().detachUser();
 		NotificationUtils.cancelAllNotifications();
+		
+		FriendsRepository friendsRepository = getInstance(FriendsRepository.class);
+		friendsRepository.removeAll();
+		friendsRepository.resetLastUpdateTimestamp();
+		
+		MediaSessionsRepository mediaSessionsRepository = getInstance(MediaSessionsRepository.class);
+		mediaSessionsRepository.removeAll();
+		mediaSessionsRepository.resetLastUpdateTimestamp();
 		
 		ActivityLauncher.launchActivityClearTask(LoginActivity.class, true);
 	}

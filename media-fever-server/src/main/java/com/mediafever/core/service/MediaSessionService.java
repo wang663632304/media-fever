@@ -6,8 +6,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.jdroid.java.collections.Lists;
+import com.google.common.collect.Lists;
 import com.jdroid.java.utils.IdGenerator;
+import com.jdroid.javaweb.push.PushMessage;
 import com.jdroid.javaweb.push.PushService;
 import com.jdroid.javaweb.search.Filter;
 import com.mediafever.context.ApplicationContext;
@@ -20,7 +21,12 @@ import com.mediafever.core.domain.watchable.WatchableType;
 import com.mediafever.core.repository.CustomFilterKey;
 import com.mediafever.core.repository.MediaSessionRepository;
 import com.mediafever.core.repository.UserRepository;
+import com.mediafever.core.service.push.gcm.MediaSelectionAddedGcmMessage;
+import com.mediafever.core.service.push.gcm.MediaSelectionRemovedGcmMessage;
+import com.mediafever.core.service.push.gcm.MediaSelectionThumbsDownGcmMessage;
+import com.mediafever.core.service.push.gcm.MediaSelectionThumbsUpGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSessionInvitationGcmMessage;
+import com.mediafever.core.service.push.gcm.MediaSessionUpdatedGcmMessage;
 
 /**
  * 
@@ -68,7 +74,7 @@ public class MediaSessionService {
 	
 	@Transactional
 	public void updateMediaSession(Long mediaSessionId, Date date, Date time, List<WatchableType> watchableTypes,
-			List<Long> usersIds) {
+			List<Long> usersIds, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
 		
 		List<Long> currentUsersIds = Lists.newArrayList();
@@ -87,6 +93,9 @@ public class MediaSessionService {
 		newWatchableTypes.removeAll(mediaSession.getWatchableTypes());
 		
 		mediaSession.modify(newWatchableTypes, date, time, newUsers);
+		
+		// Send push notifications
+		sendPushToMediaSessionUsers(mediaSession, userId, new MediaSessionUpdatedGcmMessage(mediaSession.getId()));
 	}
 	
 	@Transactional
@@ -96,6 +105,24 @@ public class MediaSessionService {
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
 			mediaSession.thumbsUp(mediaSelection, user);
+			
+			// Send push notifications
+			sendPushToMediaSessionUsers(mediaSession, userId,
+				new MediaSelectionThumbsUpGcmMessage(mediaSession.getId(), mediaSelection.getWatchable().getName(),
+						user.getFullName(), user.getImageUrl()));
+		}
+	}
+	
+	private void sendPushToMediaSessionUsers(MediaSession mediaSession, Long excludedUserId, PushMessage pushMessage) {
+		List<Long> recipientsIds = Lists.newArrayList();
+		for (MediaSessionUser each : mediaSession.getUsers()) {
+			Long userId = each.getUser().getId();
+			if (!userId.equals(excludedUserId)) {
+				recipientsIds.add(userId);
+			}
+		}
+		if (CollectionUtils.isNotEmpty(recipientsIds)) {
+			pushService.send(pushMessage, recipientsIds);
 		}
 	}
 	
@@ -106,6 +133,11 @@ public class MediaSessionService {
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
 			mediaSession.thumbsDown(mediaSelection, user);
+			
+			// Send push notifications
+			sendPushToMediaSessionUsers(mediaSession, userId,
+				new MediaSelectionThumbsDownGcmMessage(mediaSession.getId(), mediaSelection.getWatchable().getName(),
+						user.getFullName(), user.getImageUrl()));
 		}
 	}
 	
@@ -115,6 +147,11 @@ public class MediaSessionService {
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
 			mediaSession.removeSelection(mediaSelection);
+			
+			// Send push notifications
+			User user = userRepository.get(userId);
+			sendPushToMediaSessionUsers(mediaSession, userId, new MediaSelectionRemovedGcmMessage(mediaSession.getId(),
+					mediaSelection.getWatchable().getName(), user.getFullName(), user.getImageUrl()));
 		}
 	}
 	
@@ -164,9 +201,7 @@ public class MediaSessionService {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
 		Watchable watchable = getSmartSelection(mediaSession);
 		
-		User user = userRepository.get(userId);
-		MediaSelection mediaSelection = mediaSession.addSelection(user, watchable);
-		return mediaSelection;
+		return addMediaSelection(mediaSession, userId, watchable);
 	}
 	
 	@Transactional
@@ -174,8 +209,17 @@ public class MediaSessionService {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
 		Watchable watchable = watchableService.getWatchable(watchableId);
 		
+		return addMediaSelection(mediaSession, userId, watchable);
+	}
+	
+	private MediaSelection addMediaSelection(MediaSession mediaSession, Long userId, Watchable watchable) {
 		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = mediaSession.addSelection(user, watchable);
+		
+		// Send push notifications
+		sendPushToMediaSessionUsers(mediaSession, userId, new MediaSelectionAddedGcmMessage(mediaSession.getId(),
+				mediaSelection.getWatchable().getName(), user.getFullName(), user.getImageUrl()));
+		
 		return mediaSelection;
 	}
 	
