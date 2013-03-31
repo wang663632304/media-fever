@@ -2,6 +2,7 @@ package com.mediafever.core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.jdroid.java.repository.ObjectNotFoundException;
 import com.jdroid.javaweb.search.Filter;
@@ -31,10 +32,11 @@ public class WatchableService {
 	 * 
 	 * @param watchable The {@link Watchable} to save.
 	 */
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void saveWatchable(Watchable watchable) {
 		try {
-			Watchable existentWatchable = watchableRepository.getByExternalId(watchable.getExternalId());
+			Watchable existentWatchable = watchableRepository.getByExternalId(watchable.getExternalId(),
+				watchable.getType());
 			existentWatchable.updateFrom(watchable);
 		} catch (ObjectNotFoundException e) {
 			addWatchable(watchable);

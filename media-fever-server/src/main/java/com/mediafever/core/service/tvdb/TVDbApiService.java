@@ -10,9 +10,11 @@ import com.jdroid.java.http.mock.JsonMockWebService;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.core.domain.watchable.Series;
 import com.mediafever.core.repository.PeopleRepository;
-import com.mediafever.core.service.tvdb.parser.SeriesParser;
+import com.mediafever.core.service.tvdb.parser.SeriesDetailsParser;
+import com.mediafever.core.service.tvdb.parser.SeriesInitialUpdateParser;
 import com.mediafever.core.service.tvdb.parser.SeriesUpdateParser;
-import com.mediafever.core.service.tvdb.parser.SeriesUpdateParser.SeriesUpdateResponse;
+import com.mediafever.core.service.tvdb.parser.SeriesUpdateResponse;
+import com.mediafever.core.service.tvdb.parser.ZipFileParser;
 
 /**
  * 
@@ -23,6 +25,7 @@ public class TVDbApiService extends AbstractApiService {
 	
 	private static final String SERIES_MODULE = "series";
 	private static final String UPDATES_MODULE = "Updates.php";
+	private static final String UPDATE_MODULE = "updates";
 	
 	private static final String COMMON_URL = ApplicationContext.get().getTvApiKey();
 	
@@ -30,7 +33,7 @@ public class TVDbApiService extends AbstractApiService {
 		// Example URL: http://www.thetvdb.com/api/A587336A3A152892/series/79168/all/en.zip
 		// Example banners: http://www.thetvdb.com/banners/posters/79168-3.jpg
 		WebService webService = newGetService(COMMON_URL, SERIES_MODULE, seriesId.toString(), "all/en.zip");
-		return webService.execute(new SeriesParser(peopleRepository));
+		return webService.execute(new ZipFileParser(new SeriesDetailsParser(peopleRepository), "en.xml"));
 	}
 	
 	public SeriesUpdateResponse getUpdatedSeries(String lastUpdate) {
@@ -39,6 +42,12 @@ public class TVDbApiService extends AbstractApiService {
 		webService.addQueryParameter("time", lastUpdate);
 		
 		return webService.execute(new SeriesUpdateParser());
+	}
+	
+	public SeriesUpdateResponse getAllSeries() {
+		// Example URL: http://www.thetvdb.com/api/A587336A3A152892/updates/updates_all.zip
+		WebService webService = newGetService(COMMON_URL, UPDATE_MODULE, "updates_all.zip");
+		return webService.execute(new ZipFileParser(new SeriesInitialUpdateParser(), "updates_all.xml"));
 	}
 	
 	/**

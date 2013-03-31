@@ -39,6 +39,14 @@ public class Movie extends Watchable {
 		trailerURL = otherMovie.trailerURL;
 	}
 	
+	/**
+	 * @see com.mediafever.core.domain.watchable.Watchable#getType()
+	 */
+	@Override
+	public WatchableType getType() {
+		return WatchableType.MOVIE;
+	}
+	
 	public String getTrailerURL() {
 		return trailerURL;
 	}

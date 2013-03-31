@@ -6,18 +6,24 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import com.jdroid.java.exception.UnexpectedException;
 import com.jdroid.java.parser.Parser;
-import com.mediafever.core.repository.PeopleRepository;
 
 /**
+ * Parser used to handle a file contained inside a zip.
  * 
  * @author Maxi Rosson
  */
-public class SeriesParser implements Parser {
+public class ZipFileParser implements Parser {
 	
-	private PeopleRepository peopleRepository;
+	private Parser innerParser;
+	private String fileName;
 	
-	public SeriesParser(PeopleRepository peopleRepository) {
-		this.peopleRepository = peopleRepository;
+	/**
+	 * @param innerParser {@link Parser} to use to handle the extracted file.
+	 * @param fileName Name of the file to extract of the zip.
+	 */
+	public ZipFileParser(Parser innerParser, String fileName) {
+		this.innerParser = innerParser;
+		this.fileName = fileName;
 	}
 	
 	/**
@@ -30,8 +36,8 @@ public class SeriesParser implements Parser {
 		try {
 			ZipEntry entry = null;
 			while ((entry = zipInputStream.getNextEntry()) != null) {
-				if (entry.getName().equals("en.xml")) {
-					return new SeriesDetailsParser(peopleRepository).parse(zipInputStream);
+				if (entry.getName().equals(fileName)) {
+					return innerParser.parse(zipInputStream);
 				}
 			}
 		} catch (IOException e) {

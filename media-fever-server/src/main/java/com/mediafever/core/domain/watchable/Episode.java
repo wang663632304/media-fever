@@ -1,6 +1,5 @@
 package com.mediafever.core.domain.watchable;
 
-
 /**
  * 
  * @author Maxi Rosson
@@ -36,5 +35,13 @@ public class Episode extends Watchable {
 		super.updateFrom(episode);
 		Episode otherEpisode = Episode.class.cast(episode);
 		episodeNumber = otherEpisode.episodeNumber;
+	}
+	
+	/**
+	 * @see com.mediafever.core.domain.watchable.Watchable#getType()
+	 */
+	@Override
+	public WatchableType getType() {
+		return WatchableType.EPISODE;
 	}
 }

@@ -75,4 +75,12 @@ public class Series extends Watchable {
 			seasons.addAll(seasonsMap.values());
 		}
 	}
+	
+	/**
+	 * @see com.mediafever.core.domain.watchable.Watchable#getType()
+	 */
+	@Override
+	public WatchableType getType() {
+		return WatchableType.SERIES;
+	}
 }
