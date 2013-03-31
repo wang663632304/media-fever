@@ -126,6 +126,8 @@ public abstract class Watchable extends Entity {
 		rating = totalRating / ratingCount;
 	}
 	
+	public abstract WatchableType getType();
+	
 	public Long getExternalId() {
 		return externalId;
 	}

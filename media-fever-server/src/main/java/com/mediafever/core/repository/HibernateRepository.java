@@ -49,9 +49,7 @@ public abstract class HibernateRepository<T extends Entity> extends AbstractHibe
 	}
 	
 	@SuppressWarnings("deprecation")
-	protected void addWatchableTypesFilter(DetachedCriteria watchableCriteria, Filter filter) {
-		
-		Collection<WatchableType> watchableTypes = filter.getCollectionValue(CustomFilterKey.WATCHABLE_TYPES);
+	protected void addWatchableTypeRestriction(DetachedCriteria criteria, Collection<WatchableType> watchableTypes) {
 		if (com.jdroid.java.utils.CollectionUtils.isNotEmpty(watchableTypes)) {
 			StringBuilder sqlBuilder = new StringBuilder();
 			sqlBuilder.append("{alias}.dtype IN (");
@@ -64,9 +62,14 @@ public abstract class HibernateRepository<T extends Entity> extends AbstractHibe
 				values.add(each.getWatchableSimpleClassName());
 				valueTypes.add(Hibernate.STRING);
 			}
-			watchableCriteria.add(Restrictions.sqlRestriction(sqlBuilder.toString(), values.toArray(),
+			criteria.add(Restrictions.sqlRestriction(sqlBuilder.toString(), values.toArray(),
 				valueTypes.toArray(new Type[] {})));
 		}
+	}
+	
+	protected void addWatchableTypesFilter(DetachedCriteria watchableCriteria, Filter filter) {
+		Collection<WatchableType> watchableTypes = filter.getCollectionValue(CustomFilterKey.WATCHABLE_TYPES);
+		addWatchableTypeRestriction(watchableCriteria, watchableTypes);
 	}
 	
 	protected void addWatchedFilter(DetachedCriteria userWatchableCriteria, Filter filter) {

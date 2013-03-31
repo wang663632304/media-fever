@@ -4,6 +4,7 @@ import com.jdroid.java.repository.Repository;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.watchable.Watchable;
+import com.mediafever.core.domain.watchable.WatchableType;
 
 /**
  * Repository that handles the persistence of {@link Watchable}s.
@@ -21,12 +22,13 @@ public interface WatchableRepository extends Repository<Watchable> {
 	public PagedResult<Watchable> search(Filter filter);
 	
 	/**
-	 * Gets a {@link Watchable} by its external id.
+	 * Gets a {@link Watchable} by its external id and type.
 	 * 
 	 * @param externalId The {@link Watchable}'s external id.
+	 * @param watchableType The {@link Watchable}'s type.
 	 * @return The {@link Watchable}.
 	 */
-	public Watchable getByExternalId(Long externalId);
+	public Watchable getByExternalId(Long externalId, WatchableType watchableType);
 	
 	public Long getLastMovieExternalId();
 	

@@ -17,7 +17,7 @@ import com.mediafever.core.repository.SettingsRepository;
 import com.mediafever.core.repository.WatchableRepository;
 import com.mediafever.core.service.moviedb.MovieDbApiService;
 import com.mediafever.core.service.tvdb.TVDbApiService;
-import com.mediafever.core.service.tvdb.parser.SeriesUpdateParser.SeriesUpdateResponse;
+import com.mediafever.core.service.tvdb.parser.SeriesUpdateResponse;
 
 /**
  * 
@@ -27,6 +27,8 @@ import com.mediafever.core.service.tvdb.parser.SeriesUpdateParser.SeriesUpdateRe
 public class SynchronizationService {
 	
 	private static final Logger LOGGER = LoggerUtils.getLogger(SynchronizationService.class);
+	
+	private static final String INITIAL_UPDATE = "1";
 	
 	private static final int SLEEP = 2;
 	
@@ -89,9 +91,13 @@ public class SynchronizationService {
 		
 		Settings lastUpdateSettings = settingsRepository.getSeriesLastUpdate();
 		
-		// TODO: Do initial load if it's the first time ever.
-		// TODO: Improve the sync process to avoid updating episodes that haven't been modified.
-		SeriesUpdateResponse response = tvDbApiService.getUpdatedSeries(lastUpdateSettings.getValue());
+		SeriesUpdateResponse response;
+		if (INITIAL_UPDATE.equals(lastUpdateSettings.getValue())) {
+			response = tvDbApiService.getAllSeries();
+		} else {
+			// TODO: Improve the sync process to avoid updating episodes that haven't been modified.
+			response = tvDbApiService.getUpdatedSeries(lastUpdateSettings.getValue());
+		}
 		
 		// Update the DB only if there's a new update.
 		if (!lastUpdateSettings.getValue().equals(response.getTime())) {

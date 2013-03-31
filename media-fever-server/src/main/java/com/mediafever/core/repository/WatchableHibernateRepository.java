@@ -3,6 +3,7 @@ package com.mediafever.core.repository;
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
@@ -33,11 +34,15 @@ public class WatchableHibernateRepository extends HibernateRepository<Watchable>
 	}
 	
 	/**
-	 * @see com.mediafever.core.repository.WatchableRepository#getByExternalId(java.lang.Long)
+	 * @see com.mediafever.core.repository.WatchableRepository#getByExternalId(Long, WatchableType)
 	 */
 	@Override
-	public Watchable getByExternalId(Long externalId) {
-		return findUnique("externalId", externalId);
+	public Watchable getByExternalId(Long externalId, WatchableType watchableType) {
+		DetachedCriteria criteria = this.createDetachedCriteria();
+		criteria.add(Restrictions.eq("externalId", externalId));
+		addWatchableTypeRestriction(criteria, Lists.newArrayList(watchableType));
+		return findUnique(criteria);
+		
 	}
 	
 	/**
