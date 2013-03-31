@@ -49,50 +49,35 @@ public enum GcmMessage {
 		
 		@Override
 		public void handle(Intent intent) {
-			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
-			mediaSessionsRepository.resetLastUpdateTimestamp();
-			
-			MediaSelectionsFragment.synchronize(intent.getExtras());
+			synchronizeMediaSelection(intent);
 		}
 	},
 	MEDIA_SELECTION_THUMBS_UP("mediaSelectionThumbsUp") {
 		
 		@Override
 		public void handle(Intent intent) {
-			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
-			mediaSessionsRepository.resetLastUpdateTimestamp();
-			
-			MediaSelectionsFragment.synchronize(intent.getExtras());
+			synchronizeMediaSelection(intent);
 		}
 	},
 	MEDIA_SELECTION_THUMBS_DOWN("mediaSelectionThumbsDown") {
 		
 		@Override
 		public void handle(Intent intent) {
-			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
-			mediaSessionsRepository.resetLastUpdateTimestamp();
-			
-			MediaSelectionsFragment.synchronize(intent.getExtras());
+			synchronizeMediaSelection(intent);
 		}
 	},
 	MEDIA_SELECTION_ADDED("mediaSelectionAdded") {
 		
 		@Override
 		public void handle(Intent intent) {
-			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
-			mediaSessionsRepository.resetLastUpdateTimestamp();
-			
-			MediaSelectionsFragment.synchronize(intent.getExtras());
+			synchronizeMediaSelection(intent);
 		}
 	},
 	MEDIA_SELECTION_REMOVED("mediaSelectionRemoved") {
 		
 		@Override
 		public void handle(Intent intent) {
-			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
-			mediaSessionsRepository.resetLastUpdateTimestamp();
-			
-			MediaSelectionsFragment.synchronize(intent.getExtras());
+			synchronizeMediaSelection(intent);
 		}
 	},
 	FRIEND_REQUEST("friendRequest") {
@@ -167,6 +152,13 @@ public enum GcmMessage {
 		}
 		Log.w(TAG, "The GCM message is unknown");
 		return null;
+	}
+	
+	private static void synchronizeMediaSelection(Intent intent) {
+		MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
+		mediaSessionsRepository.resetLastUpdateTimestamp();
+		
+		MediaSelectionsFragment.synchronize(intent.getExtras());
 	}
 	
 	public abstract void handle(Intent intent);

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<dimen name="dashboardTextSize">20sp</dimen>
 	<dimen name="smallTextSize">12sp</dimen>
 	<dimen name="normalTextSize">16sp</dimen>
 
@@ -11,6 +10,10 @@
 	<dimen name="mediaSessionUserImageDim">40dp</dimen>
 	<dimen name="mediaSessionSelectionHeight">80dp</dimen>
 	<dimen name="mediaSessionSelectionWidth">50dp</dimen>
+
+	<!-- Dashboard -->
+	<dimen name="dashboardPadding">5dp</dimen>
+	<dimen name="dashboardIconSize">48dp</dimen>
 
 	<!-- Watchables -->
 
