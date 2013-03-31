@@ -12,6 +12,7 @@ import com.jdroid.android.fragment.OnItemSelectedListener;
 import com.jdroid.android.images.CustomImageView;
 import com.jdroid.android.tabs.TabAction;
 import com.mediafever.R;
+import com.mediafever.android.ui.session.MediaSessionActivity;
 import com.mediafever.domain.UserWatchable;
 import com.mediafever.domain.watchable.Movie;
 import com.mediafever.domain.watchable.Series;
@@ -119,7 +120,7 @@ public class WatchableContextualFragment extends AbstractFragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Implement this
+				MediaSessionActivity.start(getActivity(), userWatchable.getWatchable());
 			}
 		});
 	}

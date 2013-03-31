@@ -60,10 +60,22 @@ public class MediaSession extends Entity {
 		this.date = date;
 		this.time = time;
 		this.users = users;
+		selections = Lists.newArrayList();
 	}
 	
-	public void modify(List<WatchableType> newWatchableTypes, Date date, Date time, List<MediaSessionUser> newUsers) {
-		watchableTypes.addAll(newWatchableTypes);
+	public void modify(List<WatchableType> watchableTypes, Date date, Date time, List<MediaSessionUser> newUsers) {
+		if (CollectionUtils.isEmpty(watchableTypes)) {
+			watchableTypes = Lists.newArrayList(WatchableType.MOVIE, WatchableType.SERIES);
+		}
+		
+		for (MediaSelection mediaSelection : selections) {
+			// If a another user added a media session for removed watchable type, we add it to avoid data inconsistency
+			if (!watchableTypes.contains(mediaSelection.getWatchable().getType())) {
+				watchableTypes.add(mediaSelection.getWatchable().getType());
+			}
+		}
+		this.watchableTypes.clear();
+		this.watchableTypes.addAll(watchableTypes);
 		this.date = date;
 		this.time = time;
 		users.addAll(newUsers);
@@ -82,6 +94,10 @@ public class MediaSession extends Entity {
 			if (each.getWatchable().equals(watchable)) {
 				throw ServerErrorCode.MEDIA_SELECTION_DUPLICATED.newBusinessException();
 			}
+		}
+		
+		if (!watchableTypes.contains(watchable.getType())) {
+			throw ServerErrorCode.MEDIA_SELECTION_INVALID_WATCAHBLE_TYPE.newBusinessException();
 		}
 		MediaSelection mediaSelection = new MediaSelection(user, watchable);
 		selections.add(mediaSelection);

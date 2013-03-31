@@ -48,7 +48,8 @@ public class MediaSessionService {
 	private PushService pushService;
 	
 	@Transactional
-	public MediaSession createMediaSession(Date date, Date time, List<WatchableType> watchableTypes, List<Long> usersIds) {
+	public MediaSession createMediaSession(Date date, Date time, List<WatchableType> watchableTypes,
+			List<Long> usersIds, List<Long> watchablesIds) {
 		
 		User creator = ApplicationContext.get().getSecurityContext().getUser();
 		List<MediaSessionUser> users = Lists.newArrayList();
@@ -62,6 +63,11 @@ public class MediaSessionService {
 		
 		MediaSession mediaSession = new MediaSession(watchableTypes, date, time, users);
 		mediaSessionRepository.add(mediaSession);
+		
+		for (Long watchableId : watchablesIds) {
+			Watchable watchable = watchableService.getWatchable(watchableId);
+			mediaSession.addSelection(creator, watchable);
+		}
 		
 		List<Long> recipientsIds = Lists.newArrayList(usersIds);
 		recipientsIds.remove(creator.getId());
@@ -89,10 +95,7 @@ public class MediaSessionService {
 			}
 		}
 		
-		List<WatchableType> newWatchableTypes = Lists.newArrayList(watchableTypes);
-		newWatchableTypes.removeAll(mediaSession.getWatchableTypes());
-		
-		mediaSession.modify(newWatchableTypes, date, time, newUsers);
+		mediaSession.modify(watchableTypes, date, time, newUsers);
 		
 		// Send push notifications
 		sendPushToMediaSessionUsers(mediaSession, userId, new MediaSessionUpdatedGcmMessage(mediaSession.getId()));

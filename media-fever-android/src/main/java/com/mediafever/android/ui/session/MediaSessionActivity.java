@@ -11,6 +11,8 @@ import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.wizard.WizardActivity;
 import com.jdroid.android.wizard.WizardStep;
 import com.jdroid.java.collections.Lists;
+import com.mediafever.domain.session.MediaSession;
+import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.usecase.mediasession.MediaSessionDetailsUseCase;
 import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 
@@ -21,18 +23,24 @@ import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 public class MediaSessionActivity extends WizardActivity {
 	
 	public final static String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
+	public final static String WATCHABLE_EXTRA = "watchableExtra";
 	
 	private List<WizardStep> steps;
 	
+	public static void start(Context context, Watchable watchable) {
+		Intent intent = new Intent(context, MediaSessionActivity.class);
+		intent.putExtra(MediaSessionActivity.WATCHABLE_EXTRA, watchable);
+		context.startActivity(intent);
+	}
+	
 	public static void start(Context context) {
-		start(context, null);
+		Intent intent = new Intent(context, MediaSessionActivity.class);
+		context.startActivity(intent);
 	}
 	
 	public static void start(Context context, Long mediaSessionId) {
 		Intent intent = new Intent(context, MediaSessionActivity.class);
-		if (mediaSessionId != null) {
-			intent.putExtra(MediaSessionActivity.MEDIA_SESSION_ID_EXTRA, mediaSessionId);
-		}
+		intent.putExtra(MediaSessionActivity.MEDIA_SESSION_ID_EXTRA, mediaSessionId);
 		context.startActivity(intent);
 	}
 	
@@ -141,10 +149,16 @@ public class MediaSessionActivity extends WizardActivity {
 		
 		loadUseCaseFragment(savedInstanceState, MediaSessionSetupUseCaseFragment.class);
 		getSupportFragmentManager().executePendingTransactions();
-		if (getIntent().hasExtra(MEDIA_SESSION_ID_EXTRA)
-				&& (getMediaSessionSetupUseCase().getMediaSession().getId() == null)) {
+		
+		if (getIntent().hasExtra(MEDIA_SESSION_ID_EXTRA)) {
+			// Media Session edition
 			loadUseCaseFragment(savedInstanceState, MediaSessionDetailsUseCaseFragment.class);
 		} else {
+			// Media Session creation
+			if (getMediaSessionSetupUseCase().getMediaSession() == null) {
+				Watchable watchable = (Watchable)getIntent().getSerializableExtra(WATCHABLE_EXTRA);
+				getMediaSessionSetupUseCase().setMediaSession(new MediaSession(watchable));
+			}
 			loadWizard();
 		}
 	}
