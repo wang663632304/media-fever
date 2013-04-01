@@ -7,6 +7,7 @@ import com.jdroid.java.http.HttpWebServiceProcessor;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.http.mock.AbstractMockWebService;
 import com.jdroid.java.http.mock.JsonMockWebService;
+import com.jdroid.java.parser.zip.ZipFileParser;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.core.domain.watchable.Series;
 import com.mediafever.core.repository.PeopleRepository;
@@ -14,7 +15,6 @@ import com.mediafever.core.service.tvdb.parser.SeriesDetailsParser;
 import com.mediafever.core.service.tvdb.parser.SeriesInitialUpdateParser;
 import com.mediafever.core.service.tvdb.parser.SeriesUpdateParser;
 import com.mediafever.core.service.tvdb.parser.SeriesUpdateResponse;
-import com.mediafever.core.service.tvdb.parser.ZipFileParser;
 
 /**
  * 
