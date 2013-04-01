@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.Spinner;
+import com.google.ads.AdSize;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.pager.OnPageSelectedListener;
 import com.jdroid.android.tabs.TabAction;
@@ -269,5 +270,13 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 		// Do Nothing
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
+	 */
+	@Override
+	public AdSize getAdSize() {
+		return AndroidUtils.isLargeScreenOrBigger() ? null : super.getAdSize();
 	}
 }
