@@ -41,13 +41,16 @@
 
 			<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 				android:layout_marginTop="10dp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfile"
-					android:textStyle="bold" android:layout_centerInParent="true" android:layout_alignParentLeft="true" />
+				<LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content"
+					android:orientation="vertical" android:layout_alignParentLeft="true" android:layout_centerInParent="true"
+					android:layout_toLeftOf="@+id/publicProfile">
+					<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfile"
+						android:textStyle="bold" />
+					<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfileDescription" />
+				</LinearLayout>
 				<CheckBox android:id="@+id/publicProfile" android:layout_height="wrap_content" android:layout_width="wrap_content"
 					android:layout_marginLeft="10dp" android:layout_alignParentRight="true" android:layout_centerInParent="true" />
 			</RelativeLayout>
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfileDescription"
-				android:layout_marginLeft="10dp" />
 
 			<Button android:id="@+id/save" style="@style/defaultLargeButton" android:text="@string/save"
 				android:layout_gravity="center_horizontal" android:minWidth="140dp" />

@@ -4,6 +4,7 @@ import java.util.Date;
 import com.google.inject.Inject;
 import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.mediafever.domain.UserImpl;
+import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.watchable.WatchableType;
 import com.mediafever.repository.MediaSessionsRepository;
@@ -23,7 +24,6 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	public MediaSessionSetupUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
 		super(apiService);
 		this.mediaSessionsRepository = mediaSessionsRepository;
-		mediaSession = new MediaSession();
 	}
 	
 	/**
@@ -80,5 +80,9 @@ public class MediaSessionSetupUseCase extends AbstractApiUseCase<APIService> {
 	
 	public Boolean isCreated() {
 		return created;
+	}
+	
+	public void addMediaSelection(MediaSelection mediaSelection) {
+		mediaSession.addSelection(mediaSelection);
 	}
 }

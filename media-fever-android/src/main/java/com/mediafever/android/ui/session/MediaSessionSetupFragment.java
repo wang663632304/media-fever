@@ -46,35 +46,8 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 		
 		MediaSession mediaSession = getMediaSessionSetupUseCase().getMediaSession();
 		
-		CheckBox movies = findView(R.id.movies);
-		movies.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.MOVIE));
-		movies.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					getMediaSessionSetupUseCase().addWatchableType(WatchableType.MOVIE);
-				} else {
-					getMediaSessionSetupUseCase().removeWatchableType(WatchableType.MOVIE);
-				}
-			}
-		});
-		movies.setEnabled((mediaSession.getId() != null) && movies.isChecked() ? false : true);
-		
-		CheckBox series = findView(R.id.series);
-		series.setChecked(mediaSession.getWatchableTypes().contains(WatchableType.SERIES));
-		series.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					getMediaSessionSetupUseCase().addWatchableType(WatchableType.SERIES);
-				} else {
-					getMediaSessionSetupUseCase().removeWatchableType(WatchableType.SERIES);
-				}
-			}
-		});
-		series.setEnabled((mediaSession.getId() != null) && series.isChecked() ? false : true);
+		initWatchableTypeCheckbox(mediaSession, R.id.movies, WatchableType.MOVIE);
+		initWatchableTypeCheckbox(mediaSession, R.id.series, WatchableType.SERIES);
 		
 		Date now = DateUtils.now();
 		
@@ -129,6 +102,24 @@ public class MediaSessionSetupFragment extends AbstractFragment implements OnDat
 			timeEditText.setVisibility(View.GONE);
 			anyTime.setChecked(true);
 		}
+	}
+	
+	private void initWatchableTypeCheckbox(MediaSession mediaSession, int checkBoxResId,
+			final WatchableType watchableType) {
+		CheckBox checkBox = findView(checkBoxResId);
+		checkBox.setChecked(mediaSession.getWatchableTypes().contains(watchableType));
+		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					getMediaSessionSetupUseCase().addWatchableType(watchableType);
+				} else {
+					getMediaSessionSetupUseCase().removeWatchableType(watchableType);
+				}
+			}
+		});
+		checkBox.setEnabled(!mediaSession.isWatchableTypeRequired(watchableType));
 	}
 	
 	/**

@@ -3,10 +3,12 @@ package com.mediafever.domain.session;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.domain.Entity;
 import com.jdroid.android.domain.User;
 import com.jdroid.java.collections.Lists;
+import com.jdroid.java.collections.Sets;
 import com.jdroid.java.utils.DateUtils;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.watchable.Watchable;
@@ -22,6 +24,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	private Date time;
 	private List<MediaSessionUser> mediaSessionUsers;
 	private List<WatchableType> watchableTypes;
+	private Set<WatchableType> requiredWatchableTypes;
 	private Boolean accepted;
 	private List<MediaSelection> selections;
 	
@@ -34,13 +37,24 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		setSelections(selections);
 		this.watchableTypes = watchableTypes;
 		this.accepted = accepted;
+		
+		requiredWatchableTypes = Sets.newHashSet();
+		for (MediaSelection mediaSelection : selections) {
+			WatchableType watchableType = WatchableType.find(mediaSelection.getWatchable());
+			requiredWatchableTypes.add(watchableType);
+		}
 	}
 	
-	public MediaSession() {
+	public MediaSession(Watchable watchable) {
 		date = DateUtils.now();
 		mediaSessionUsers = Lists.newArrayList(new MediaSessionUser(SecurityContext.get().getUser()));
 		watchableTypes = Lists.newArrayList(WatchableType.MOVIE);
+		requiredWatchableTypes = Sets.newHashSet();
 		setSelections(null);
+		
+		if (watchable != null) {
+			addSelection(new MediaSelection(watchable));
+		}
 	}
 	
 	public void setSelections(List<MediaSelection> mediaSelections) {
@@ -171,6 +185,8 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public void addSelection(MediaSelection mediaSelection) {
 		selections.add(mediaSelection);
+		WatchableType watchableType = WatchableType.find(mediaSelection.getWatchable());
+		requiredWatchableTypes.add(watchableType);
 	}
 	
 	public void removeSelection(MediaSelection mediaSelection) {
@@ -228,5 +244,9 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public void setAccepted(Boolean accepted) {
 		this.accepted = accepted;
+	}
+	
+	public Boolean isWatchableTypeRequired(WatchableType watchableType) {
+		return requiredWatchableTypes.contains(watchableType);
 	}
 }

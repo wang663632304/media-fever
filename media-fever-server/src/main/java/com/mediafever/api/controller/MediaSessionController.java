@@ -38,7 +38,8 @@ public class MediaSessionController extends AbstractController {
 	public String createMediaSession(String mediaSessionJSON) {
 		MediaSessionJson mediaSessionJson = (MediaSessionJson)(new MediaSessionParser().parse(mediaSessionJSON));
 		MediaSession mediaSession = mediaSessionService.createMediaSession(mediaSessionJson.getDate(),
-			mediaSessionJson.getTime(), mediaSessionJson.getWatchableTypes(), mediaSessionJson.getUsersIds());
+			mediaSessionJson.getTime(), mediaSessionJson.getWatchableTypes(), mediaSessionJson.getUsersIds(),
+			mediaSessionJson.getWatchablesIds());
 		return marshall(mediaSession);
 	}
 	

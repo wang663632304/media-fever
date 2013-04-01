@@ -4,6 +4,10 @@
 	<dimen name="smallTextSize">16sp</dimen>
 	<dimen name="normalTextSize">20sp</dimen>
 
+	<!-- Dashboard -->
+	<dimen name="dashboardPadding">5dp</dimen>
+	<dimen name="dashboardIconSize">64dp</dimen>
+
 	<!-- Watchables -->
 
 	<dimen name="watchableGridHeight">200dp</dimen>

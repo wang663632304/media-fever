@@ -6,6 +6,7 @@ import com.jdroid.java.collections.Lists;
 import com.jdroid.java.json.JsonMap;
 import com.jdroid.java.marshaller.Marshaller;
 import com.jdroid.java.marshaller.MarshallerMode;
+import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.session.MediaSessionUser;
 
@@ -19,6 +20,7 @@ public class MediaSessionJsonMarshaller implements Marshaller<MediaSession, Json
 	private static final String TIME = "time";
 	private static final String WATCHABLE_TYPE = "watchableTypes";
 	private static final String USER_IDS = "usersIds";
+	private static final String WATCHABLES_IDS = "watchablesIds";
 	
 	/**
 	 * @see com.jdroid.java.marshaller.Marshaller#marshall(java.lang.Object, com.jdroid.java.marshaller.MarshallerMode,
@@ -35,6 +37,13 @@ public class MediaSessionJsonMarshaller implements Marshaller<MediaSession, Json
 			ids.add(user.getUser().getId());
 		}
 		map.put(USER_IDS, ids);
+		ids = Lists.newArrayList();
+		for (MediaSelection mediaSelection : mediaSession.getSelections()) {
+			if (mediaSelection.getWatchable() != null) {
+				ids.add(mediaSelection.getWatchable().getId());
+			}
+		}
+		map.put(WATCHABLES_IDS, ids);
 		return map;
 	}
 }
