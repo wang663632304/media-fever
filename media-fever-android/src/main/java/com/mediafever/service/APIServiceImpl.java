@@ -2,6 +2,7 @@ package com.mediafever.service;
 
 import java.util.Date;
 import java.util.List;
+import com.jdroid.android.debug.mocks.AndroidJsonMockWebService;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.search.PagedResult;
 import com.jdroid.android.utils.BitmapUtils;
@@ -13,7 +14,6 @@ import com.jdroid.java.http.MimeType;
 import com.jdroid.java.http.MultipartWebService;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.http.mock.AbstractMockWebService;
-import com.jdroid.java.http.mock.JsonMockWebService;
 import com.jdroid.java.http.post.EntityEnclosingWebService;
 import com.jdroid.java.marshaller.MarshallerProvider;
 import com.jdroid.java.parser.json.JsonArrayParser;
@@ -495,13 +495,7 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	 */
 	@Override
 	protected AbstractMockWebService getAbstractMockWebServiceInstance(Object... urlSegments) {
-		return new JsonMockWebService(urlSegments) {
-			
-			@Override
-			protected Integer getHttpMockSleepDuration(Object... urlSegments) {
-				return ApplicationContext.get().getHttpMockSleepDuration();
-			}
-		};
+		return new AndroidJsonMockWebService(urlSegments);
 	}
 	
 	/**

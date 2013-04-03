@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.gcm.GCMRegistrar;
 import com.jdroid.android.ActivityLauncher;
+import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.listener.LaunchOnClickListener;
 import com.mediafever.R;
@@ -101,6 +102,15 @@ public class LoginFragment extends AbstractFragment {
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(loginUseCase, this);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 */
+	@Override
+	public void onFinishFailedUseCase(RuntimeException runtimeException) {
+		DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
+		super.onFinishFailedUseCase(runtimeException);
 	}
 	
 	/**

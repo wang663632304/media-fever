@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.google.ads.AdSize;
+import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.java.utils.CollectionUtils;
 import com.jdroid.java.utils.StringUtils;
@@ -159,6 +160,15 @@ public class WatchableOverviewLargeFragment extends AbstractFragment {
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(updateUserWatchableUseCase, this);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 */
+	@Override
+	public void onFinishFailedUseCase(RuntimeException runtimeException) {
+		DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
+		super.onFinishFailedUseCase(runtimeException);
 	}
 	
 	/**

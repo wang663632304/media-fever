@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.ActivityLauncher;
+import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.mediafever.R;
 import com.mediafever.usecase.SignUpUseCase;
@@ -86,6 +87,15 @@ public class SignUpFragment extends AbstractFragment {
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(signUpUseCase, this);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractListFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 */
+	@Override
+	public void onFinishFailedUseCase(RuntimeException runtimeException) {
+		DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
+		super.onFinishFailedUseCase(runtimeException);
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package com.mediafever.android.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.jdroid.android.images.ReflectedRemoteImageResolver;
+import com.jdroid.java.exception.ConnectionException;
 import com.jdroid.java.utils.CollectionUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
@@ -25,6 +27,8 @@ import com.mediafever.usecase.LatestWatchablesUseCase;
  * @author Maxi Rosson
  */
 public class LatestWatchablesFragment extends AbstractFragment {
+	
+	private static final String TAG = LatestWatchablesFragment.class.getSimpleName();
 	
 	private LatestWatchablesUseCase latestWatchablesUseCase;
 	
@@ -88,6 +92,17 @@ public class LatestWatchablesFragment extends AbstractFragment {
 	@Override
 	public void onStartUseCase() {
 		// Do nothing
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 */
+	@Override
+	public void onFinishFailedUseCase(RuntimeException runtimeException) {
+		Log.e(TAG, "Failed to execute the use case", runtimeException);
+		if (runtimeException instanceof ConnectionException) {
+			executeUseCase(latestWatchablesUseCase, 10L);
+		}
 	}
 	
 	/**

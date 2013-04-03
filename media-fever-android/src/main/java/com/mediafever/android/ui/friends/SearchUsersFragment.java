@@ -11,6 +11,7 @@ import com.google.ads.AdSize;
 import com.jdroid.android.AndroidUseCaseListener;
 import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.adapter.BaseArrayAdapter;
+import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.AbstractSearchFragment;
 import com.jdroid.android.usecase.SearchUseCase;
 import com.jdroid.android.utils.AndroidUtils;
@@ -47,6 +48,12 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 		
 		createFriendRequestUseCase = getInstance(CreateFriendRequestUseCase.class);
 		createFriendRequestUseCaseListener = new AndroidUseCaseListener() {
+			
+			@Override
+			public void onFinishFailedUseCase(RuntimeException runtimeException) {
+				DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
+				super.onFinishFailedUseCase(runtimeException);
+			}
 			
 			@Override
 			public void onFinishUseCase() {
