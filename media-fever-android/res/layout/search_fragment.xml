@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-	android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-	<LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"
-		android:paddingLeft="5dp" android:paddingTop="5dp" android:paddingRight="5dp" android:paddingBottom="1dp">
+	<LinearLayout android:id="@+id/searchBox" android:orientation="horizontal" android:layout_width="match_parent"
+		android:layout_height="wrap_content" android:paddingLeft="5dp" android:paddingTop="5dp" android:paddingRight="5dp"
+		android:paddingBottom="1dp">
 		<EditText android:id="@+id/searchText" android:layout_width="0dp" android:layout_height="wrap_content"
 			android:inputType="text" android:hint="@string/typeHere" android:imeOptions="actionSearch" android:layout_weight="1" />
 		<ImageView android:id="@+id/searchButton" android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -13,8 +14,12 @@
 			android:src="@drawable/cancel" android:layout_gravity="center_vertical" android:layout_marginLeft="3dp" />
 	</LinearLayout>
 
-	<ListView android:id="@+id/android:list" style="@style/defaultList" />
+	<ListView android:id="@+id/android:list" style="@style/defaultList" android:layout_below="@+id/searchBox"
+		android:layout_above="@+id/adViewContainer" />
 
-	<TextView android:id="@id/android:empty" android:text="@string/noResultsSearch" style="@style/noResultsText" />
+	<TextView android:id="@id/android:empty" android:text="@string/noResultsSearch" style="@style/noResultsText"
+		android:layout_below="@+id/android:list" />
 
-</LinearLayout>
+	<include layout="@layout/ad_view_container" />
+
+</RelativeLayout>

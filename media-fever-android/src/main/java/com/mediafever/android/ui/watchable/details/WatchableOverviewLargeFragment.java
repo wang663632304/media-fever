@@ -8,6 +8,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import com.google.ads.AdSize;
+import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.java.utils.CollectionUtils;
 import com.jdroid.java.utils.StringUtils;
@@ -161,6 +163,15 @@ public class WatchableOverviewLargeFragment extends AbstractFragment {
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 */
+	@Override
+	public void onFinishFailedUseCase(RuntimeException runtimeException) {
+		DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
+		super.onFinishFailedUseCase(runtimeException);
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
 	 */
 	@Override
@@ -174,5 +185,13 @@ public class WatchableOverviewLargeFragment extends AbstractFragment {
 				dismissLoading();
 			}
 		});
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
+	 */
+	@Override
+	public AdSize getAdSize() {
+		return null;
 	}
 }

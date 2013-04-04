@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.ads.AdSize;
 import com.jdroid.android.AndroidUseCaseListener;
 import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.adapter.BaseArrayAdapter;
+import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.AbstractSearchFragment;
 import com.jdroid.android.usecase.SearchUseCase;
+import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.ToastUtils;
 import com.jdroid.java.collections.Lists;
 import com.mediafever.R;
@@ -45,6 +48,12 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 		
 		createFriendRequestUseCase = getInstance(CreateFriendRequestUseCase.class);
 		createFriendRequestUseCaseListener = new AndroidUseCaseListener() {
+			
+			@Override
+			public void onFinishFailedUseCase(RuntimeException runtimeException) {
+				DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
+				super.onFinishFailedUseCase(runtimeException);
+			}
 			
 			@Override
 			public void onFinishUseCase() {
@@ -148,5 +157,13 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 		});
 		builder.setNegativeButton(R.string.no, null);
 		builder.show();
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
+	 */
+	@Override
+	public AdSize getAdSize() {
+		return AndroidUtils.isLargeScreenOrBigger() ? null : super.getAdSize();
 	}
 }

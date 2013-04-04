@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.ads.AdSize;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
+import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.usecase.friends.AcceptFriendRequestUseCase;
@@ -110,5 +112,13 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 				dismissLoading();
 			}
 		});
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
+	 */
+	@Override
+	public AdSize getAdSize() {
+		return AndroidUtils.isLargeScreenOrBigger() ? null : super.getAdSize();
 	}
 }

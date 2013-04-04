@@ -11,9 +11,11 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.LoginButton;
+import com.google.ads.AdSize;
 import com.jdroid.android.facebook.MultipleUsersSharedPreferencesTokenCachingStrategy;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
+import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
 import com.mediafever.context.ApplicationContext;
@@ -174,5 +176,13 @@ public class SocialSettingsFragment extends AbstractFragment {
 		if ((requestCode == Session.DEFAULT_AUTHORIZE_ACTIVITY_CODE) && (resultCode == Activity.RESULT_OK)) {
 			connectToFacebook(Session.getActiveSession());
 		}
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
+	 */
+	@Override
+	public AdSize getAdSize() {
+		return AndroidUtils.isLargeScreenOrBigger() ? null : super.getAdSize();
 	}
 }

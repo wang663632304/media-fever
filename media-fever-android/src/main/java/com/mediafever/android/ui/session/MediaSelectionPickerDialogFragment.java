@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.jdroid.android.dialog.AbstractDialogFragment;
+import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.mediafever.R;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.AddSmartSelectionUseCase;
@@ -98,6 +99,15 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(addSmartSelectionUseCase, this);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractListFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 */
+	@Override
+	public void onFinishFailedUseCase(RuntimeException runtimeException) {
+		DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
+		super.onFinishFailedUseCase(runtimeException);
 	}
 	
 	/**

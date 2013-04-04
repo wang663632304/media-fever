@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.commonsware.cwac.merge.MergeAdapter;
+import com.google.ads.AdSize;
 import com.jdroid.android.domain.User;
 import com.jdroid.android.fragment.AbstractListFragment;
+import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.view.ListSeparatorView;
 import com.jdroid.java.utils.CollectionUtils;
 import com.mediafever.R;
@@ -87,5 +89,13 @@ public class WatchableSocialFragment extends AbstractListFragment<User> {
 	protected int getNoResultsText() {
 		return WatchableType.MOVIE.match(userWatchable.getWatchable()) ? R.string.noResultsMovieSocial
 				: R.string.noResultsSeriesSocial;
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#getAdSize()
+	 */
+	@Override
+	public AdSize getAdSize() {
+		return AndroidUtils.isLargeScreenOrBigger() ? null : super.getAdSize();
 	}
 }

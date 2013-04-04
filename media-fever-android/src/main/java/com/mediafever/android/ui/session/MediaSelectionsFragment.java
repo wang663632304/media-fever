@@ -15,11 +15,12 @@ import android.widget.TextView;
 import com.actionbarsherlock.view.MenuItem;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.animation.FadeInOutAnimation;
+import com.jdroid.android.dialog.AlertDialogFragment;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.domain.UriFileContent;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.jdroid.android.images.CustomImageView;
-import com.jdroid.android.utils.AlertDialogUtils;
+import com.jdroid.android.utils.LocalizationUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
 import com.mediafever.android.gcm.GcmMessage;
@@ -59,8 +60,9 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		mediaSessionCreated = getArgument(MEDIA_SESSION_CREATED_EXTRA);
 		
 		if (mediaSessionCreated) {
-			AlertDialogUtils.showOKDialog(getString(R.string.mediaSessionCreatedTitle),
-				getString(R.string.mediaSessionCreatedDescription, getWatchablesString()));
+			AlertDialogFragment.show(this, getString(R.string.mediaSessionCreatedTitle),
+				getString(R.string.mediaSessionCreatedDescription, getWatchablesString()),
+				LocalizationUtils.getString(R.string.ok), null, true);
 		}
 		
 		mediaSessionDetailsUseCase = getInstance(MediaSessionDetailsUseCase.class);

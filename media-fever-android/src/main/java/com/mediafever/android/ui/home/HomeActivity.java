@@ -1,6 +1,7 @@
 package com.mediafever.android.ui.home;
 
 import android.os.Bundle;
+import com.google.ads.AdSize;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.AbstractFragmentActivity;
 import com.jdroid.android.utils.AndroidUtils;
@@ -59,6 +60,14 @@ public class HomeActivity extends AbstractFragmentActivity {
 	@Override
 	public Boolean isLauncherActivity() {
 		return true;
+	}
+	
+	/**
+	 * @see com.jdroid.android.activity.AbstractFragmentActivity#getAdSize()
+	 */
+	@Override
+	public AdSize getAdSize() {
+		return AdSize.BANNER;
 	}
 	
 }
