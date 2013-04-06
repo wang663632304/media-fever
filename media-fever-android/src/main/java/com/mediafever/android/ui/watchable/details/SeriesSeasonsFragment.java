@@ -19,7 +19,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.Spinner;
 import com.google.ads.AdSize;
-import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.pager.OnPageSelectedListener;
 import com.jdroid.android.tabs.TabAction;
@@ -130,12 +129,11 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 * @see com.jdroid.android.fragment.AbstractListFragment#goBackOnError()
 	 */
 	@Override
-	public void onFinishFailedUseCase(RuntimeException runtimeException) {
-		DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
-		super.onFinishFailedUseCase(runtimeException);
+	public Boolean goBackOnError() {
+		return false;
 	}
 	
 	/**

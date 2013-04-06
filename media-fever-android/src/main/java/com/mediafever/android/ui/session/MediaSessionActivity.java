@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
-import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.UseCaseFragment;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.wizard.WizardActivity;
@@ -117,12 +116,11 @@ public class MediaSessionActivity extends WizardActivity {
 		}
 		
 		/**
-		 * @see com.jdroid.android.fragment.AbstractListFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+		 * @see com.jdroid.android.fragment.AbstractFragment#goBackOnError()
 		 */
 		@Override
-		public void onFinishFailedUseCase(RuntimeException runtimeException) {
-			DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
-			super.onFinishFailedUseCase(runtimeException);
+		public Boolean goBackOnError() {
+			return false;
 		}
 		
 		/**

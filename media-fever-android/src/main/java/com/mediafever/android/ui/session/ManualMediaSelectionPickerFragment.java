@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import com.jdroid.android.AndroidUseCaseListener;
 import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.adapter.BaseArrayAdapter;
-import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.AbstractSearchFragment;
 import com.jdroid.android.usecase.SearchUseCase;
 import com.jdroid.java.collections.Lists;
@@ -49,9 +48,8 @@ public class ManualMediaSelectionPickerFragment extends AbstractSearchFragment<W
 		addManualSelectionUseCaseListener = new AndroidUseCaseListener() {
 			
 			@Override
-			public void onFinishFailedUseCase(RuntimeException runtimeException) {
-				DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
-				super.onFinishFailedUseCase(runtimeException);
+			public Boolean goBackOnError() {
+				return false;
 			}
 			
 			@Override

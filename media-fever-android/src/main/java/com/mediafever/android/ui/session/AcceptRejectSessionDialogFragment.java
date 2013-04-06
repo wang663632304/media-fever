@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.jdroid.android.dialog.AbstractDialogFragment;
-import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.mediafever.R;
 import com.mediafever.usecase.mediasession.AcceptMediaSessionUseCase;
 
@@ -102,12 +101,11 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 * @see com.jdroid.android.dialog.AbstractDialogFragment#goBackOnError()
 	 */
 	@Override
-	public void onFinishFailedUseCase(RuntimeException runtimeException) {
-		DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
-		super.onFinishFailedUseCase(runtimeException);
+	public Boolean goBackOnError() {
+		return false;
 	}
 	
 	/**
