@@ -22,6 +22,7 @@ import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
  */
 public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> {
 	
+	private MediaSession mediaSession;
 	private FriendsUseCase friendsUseCase;
 	
 	/**
@@ -30,6 +31,8 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mediaSession = ((MediaSessionActivity)getActivity()).getMediaSessionSetupUseCase().getMediaSession();
 		
 		friendsUseCase = getInstance(FriendsUseCase.class);
 		friendsUseCase.setUserId(getUser().getId());
@@ -113,17 +116,17 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 		
 		@Override
 		protected void onUserChecked(UserImpl user) {
-			getMediaSessionSetupUseCase().addUser(user);
+			mediaSession.addUser(user);
 		}
 		
 		@Override
 		protected void onUserUnChecked(UserImpl user) {
-			getMediaSessionSetupUseCase().removeUser(user);
+			mediaSession.removeUser(user);
 		}
 		
 		@Override
 		protected Boolean isUserChecked(UserImpl user) {
-			return getMediaSessionSetupUseCase().containsUser(user);
+			return mediaSession.containsUser(user);
 		}
 		
 		@Override
