@@ -141,6 +141,14 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#goBackOnError()
+	 */
+	@Override
+	public Boolean goBackOnError() {
+		return false;
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
 	 */
 	@Override
