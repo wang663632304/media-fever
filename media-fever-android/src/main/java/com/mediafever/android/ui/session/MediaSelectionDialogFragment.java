@@ -14,7 +14,6 @@ import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.session.MediaSelection;
-import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.RemoveMediaSelectionUseCase;
 import com.mediafever.usecase.mediasession.VoteMediaSelectionUseCase;
 
@@ -24,19 +23,19 @@ import com.mediafever.usecase.mediasession.VoteMediaSelectionUseCase;
  */
 public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	
-	private static final String MEDIA_SESSION_EXTRA = "mediaSession";
+	private static final String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
 	private static final String MEDIA_SELECTION_EXTRA = "mediaSelection";
 	
 	private VoteMediaSelectionUseCase voteMediaSelectionUseCase;
 	private RemoveMediaSelectionUseCase removeMediaSelectionUseCase;
-	private MediaSession mediaSession;
+	private Long mediaSessionId;
 	private MediaSelection mediaSelection;
 	
-	public static void show(Fragment targetFragment, MediaSession mediaSession, MediaSelection mediaSelection) {
+	public static void show(Fragment targetFragment, Long mediaSessionId, MediaSelection mediaSelection) {
 		FragmentManager fm = targetFragment.getActivity().getSupportFragmentManager();
 		MediaSelectionDialogFragment dialogFragment = new MediaSelectionDialogFragment();
 		Bundle bundle = new Bundle();
-		bundle.putSerializable(MEDIA_SESSION_EXTRA, mediaSession);
+		bundle.putSerializable(MEDIA_SESSION_ID_EXTRA, mediaSessionId);
 		bundle.putSerializable(MEDIA_SELECTION_EXTRA, mediaSelection);
 		dialogFragment.setArguments(bundle);
 		
@@ -51,16 +50,16 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		mediaSessionId = getArgument(MEDIA_SESSION_ID_EXTRA);
 		mediaSelection = getArgument(MEDIA_SELECTION_EXTRA);
-		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
 		
 		voteMediaSelectionUseCase = getInstance(VoteMediaSelectionUseCase.class);
 		voteMediaSelectionUseCase.setMediaSelection(mediaSelection);
-		voteMediaSelectionUseCase.setMediaSession(mediaSession);
+		voteMediaSelectionUseCase.setMediaSessionId(mediaSessionId);
 		
 		removeMediaSelectionUseCase = getInstance(RemoveMediaSelectionUseCase.class);
 		removeMediaSelectionUseCase.setMediaSelection(mediaSelection);
-		removeMediaSelectionUseCase.setMediaSession(mediaSession);
+		removeMediaSelectionUseCase.setMediaSessionId(mediaSessionId);
 	}
 	
 	/**

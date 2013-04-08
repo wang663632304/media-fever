@@ -192,9 +192,9 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	@Override
 	public void onItemSelected(MediaSelection mediaSelection) {
 		if (mediaSelection.getWatchable() != null) {
-			MediaSelectionDialogFragment.show(this, mediaSession, mediaSelection);
+			MediaSelectionDialogFragment.show(this, mediaSession.getId(), mediaSelection);
 		} else {
-			MediaSelectionPickerDialogFragment.show(this, mediaSession);
+			MediaSelectionPickerDialogFragment.show(this, mediaSession.getId());
 		}
 	}
 	

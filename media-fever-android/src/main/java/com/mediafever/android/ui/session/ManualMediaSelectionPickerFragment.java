@@ -13,7 +13,6 @@ import com.jdroid.android.usecase.SearchUseCase;
 import com.jdroid.java.collections.Lists;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
-import com.mediafever.domain.session.MediaSession;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.usecase.WatchablesSuggestionsUseCase;
 import com.mediafever.usecase.mediasession.AddManualSelectionUseCase;
@@ -24,11 +23,13 @@ import com.mediafever.usecase.mediasession.AddManualSelectionUseCase;
  */
 public class ManualMediaSelectionPickerFragment extends AbstractSearchFragment<Watchable> {
 	
+	public static final String MEDIA_SESSION_ID_EXTRA = "mediaSessionId";
+	
 	private WatchablesSuggestionsUseCase watchablesSuggestionsUseCase;
 	private AddManualSelectionUseCase addManualSelectionUseCase;
 	private AndroidUseCaseListener addManualSelectionUseCaseListener;
 	
-	private MediaSession mediaSession;
+	private Long mediaSessionId;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractSearchFragment#onCreate(android.os.Bundle)
@@ -37,14 +38,14 @@ public class ManualMediaSelectionPickerFragment extends AbstractSearchFragment<W
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		mediaSession = getArgument(MediaSelectionsFragment.MEDIA_SESSION_EXTRA);
+		mediaSessionId = getArgument(MEDIA_SESSION_ID_EXTRA);
 		
 		getSupportActionBar().setTitle(R.string.moviesAndSeries);
 		setThreshold(3);
 		
 		watchablesSuggestionsUseCase = getInstance(WatchablesSuggestionsUseCase.class);
 		addManualSelectionUseCase = getInstance(AddManualSelectionUseCase.class);
-		addManualSelectionUseCase.setMediaSession(mediaSession);
+		addManualSelectionUseCase.setMediaSessionId(mediaSessionId);
 		addManualSelectionUseCaseListener = new AndroidUseCaseListener() {
 			
 			@Override

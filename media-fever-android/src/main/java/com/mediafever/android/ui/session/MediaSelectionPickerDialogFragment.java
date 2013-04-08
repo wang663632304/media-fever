@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.mediafever.R;
-import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.AddSmartSelectionUseCase;
 
 /**
@@ -19,16 +18,16 @@ import com.mediafever.usecase.mediasession.AddSmartSelectionUseCase;
  */
 public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	
-	private static final String MEDIA_SESSION_EXTRA = "mediaSession";
+	private static final String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
 	
 	private AddSmartSelectionUseCase addSmartSelectionUseCase;
-	private MediaSession mediaSession;
+	private Long mediaSessionId;
 	
-	public static void show(Fragment targetFragment, MediaSession mediaSession) {
+	public static void show(Fragment targetFragment, Long mediaSessionId) {
 		FragmentManager fm = targetFragment.getActivity().getSupportFragmentManager();
 		MediaSelectionPickerDialogFragment dialogFragment = new MediaSelectionPickerDialogFragment();
 		Bundle bundle = new Bundle();
-		bundle.putSerializable(MEDIA_SESSION_EXTRA, mediaSession);
+		bundle.putSerializable(MEDIA_SESSION_ID_EXTRA, mediaSessionId);
 		dialogFragment.setArguments(bundle);
 		dialogFragment.setTargetFragment(targetFragment, 1);
 		dialogFragment.show(fm, MediaSelectionPickerDialogFragment.class.getSimpleName());
@@ -41,9 +40,9 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
+		mediaSessionId = getArgument(MEDIA_SESSION_ID_EXTRA);
 		addSmartSelectionUseCase = getInstance(AddSmartSelectionUseCase.class);
-		addSmartSelectionUseCase.setMediaSession(mediaSession);
+		addSmartSelectionUseCase.setMediaSessionId(mediaSessionId);
 	}
 	
 	/**
@@ -66,7 +65,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void onClick(View v) {
-				ManualMediaSelectionPickerActivity.start(getTargetFragment(), mediaSession);
+				ManualMediaSelectionPickerActivity.start(getTargetFragment(), mediaSessionId);
 				dismiss();
 			}
 		});

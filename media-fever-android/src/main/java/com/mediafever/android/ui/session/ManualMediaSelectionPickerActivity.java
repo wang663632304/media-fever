@@ -3,7 +3,6 @@ package com.mediafever.android.ui.session;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import com.jdroid.android.activity.FragmentContainerActivity;
-import com.mediafever.domain.session.MediaSession;
 
 /**
  * 
@@ -11,9 +10,9 @@ import com.mediafever.domain.session.MediaSession;
  */
 public class ManualMediaSelectionPickerActivity extends FragmentContainerActivity {
 	
-	public static void start(Fragment fragment, MediaSession mediaSession) {
+	public static void start(Fragment fragment, Long mediaSessionId) {
 		Intent intent = new Intent(fragment.getActivity(), ManualMediaSelectionPickerActivity.class);
-		intent.putExtra(MediaSelectionsFragment.MEDIA_SESSION_EXTRA, mediaSession);
+		intent.putExtra(ManualMediaSelectionPickerFragment.MEDIA_SESSION_ID_EXTRA, mediaSessionId);
 		fragment.startActivityForResult(intent, MediaSelectionsFragment.MEDIA_SELECTION_ADDED_REQUEST_CODE);
 	}
 	
