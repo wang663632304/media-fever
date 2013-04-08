@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.GridView;
+import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.domain.User;
 import com.jdroid.android.fragment.AbstractGridFragment;
-import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserAdapter;
 import com.mediafever.domain.UserImpl;
@@ -26,6 +26,7 @@ import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MediaSessionFriendsGridFragment extends AbstractGridFragment<UserImpl> {
 	
+	private MediaSession mediaSession;
 	private FriendsUseCase friendsUseCase;
 	
 	/**
@@ -34,6 +35,8 @@ public class MediaSessionFriendsGridFragment extends AbstractGridFragment<UserIm
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mediaSession = ((MediaSessionActivity)getActivity()).getMediaSessionSetupUseCase().getMediaSession();
 		
 		friendsUseCase = getInstance(FriendsUseCase.class);
 		friendsUseCase.setUserId(getUser().getId());
@@ -109,9 +112,9 @@ public class MediaSessionFriendsGridFragment extends AbstractGridFragment<UserIm
 		
 		UserImpl user = (UserImpl)parent.getAdapter().getItem(position);
 		if (parent.isItemChecked(position)) {
-			getMediaSessionSetupUseCase().addUser(user);
+			mediaSession.addUser(user);
 		} else {
-			getMediaSessionSetupUseCase().removeUser(user);
+			mediaSession.removeUser(user);
 		}
 	}
 	

@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.gcm.GCMRegistrar;
 import com.jdroid.android.ActivityLauncher;
-import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.listener.LaunchOnClickListener;
 import com.mediafever.R;
@@ -105,12 +104,11 @@ public class LoginFragment extends AbstractFragment {
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 * @see com.jdroid.android.fragment.AbstractFragment#goBackOnError()
 	 */
 	@Override
-	public void onFinishFailedUseCase(RuntimeException runtimeException) {
-		DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
-		super.onFinishFailedUseCase(runtimeException);
+	public Boolean goBackOnError() {
+		return false;
 	}
 	
 	/**

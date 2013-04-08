@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.dialog.AbstractDialogFragment;
-import com.jdroid.android.exception.DefaultExceptionHandler;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.session.MediaSelection;
@@ -151,12 +150,11 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 * @see com.jdroid.android.dialog.AbstractDialogFragment#goBackOnError()
 	 */
 	@Override
-	public void onFinishFailedUseCase(RuntimeException runtimeException) {
-		DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
-		super.onFinishFailedUseCase(runtimeException);
+	public Boolean goBackOnError() {
+		return false;
 	}
 	
 	/**

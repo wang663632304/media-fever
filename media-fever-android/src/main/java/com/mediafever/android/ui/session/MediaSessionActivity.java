@@ -5,8 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import com.jdroid.android.exception.DefaultExceptionHandler;
-import com.jdroid.android.fragment.BaseFragment.UseCaseTrigger;
+import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.fragment.UseCaseFragment;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.wizard.WizardActivity;
@@ -23,6 +22,7 @@ import com.mediafever.usecase.mediasession.MediaSessionSetupUseCase;
  */
 public class MediaSessionActivity extends WizardActivity {
 	
+	private final static String MEDIA_SESSION_EXTRA = "mediaSessionExtra";
 	public final static String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
 	public final static String WATCHABLE_EXTRA = "watchableExtra";
 	
@@ -55,14 +55,14 @@ public class MediaSessionActivity extends WizardActivity {
 			steps.add(new WizardStep() {
 				
 				@Override
-				public Fragment createFragment(Object args) {
+				public Fragment createFragment(Bundle bundle) {
 					return new MediaSessionSetupFragment();
 				}
 			});
 			steps.add(new WizardStep() {
 				
 				@Override
-				public Fragment createFragment(Object args) {
+				public Fragment createFragment(Bundle bundle) {
 					return AndroidUtils.isLargeScreenOrBigger() && !AndroidUtils.isPreHoneycomb() ? new MediaSessionFriendsGridFragment()
 							: new MediaSessionFriendsFragment();
 				}
@@ -101,6 +101,7 @@ public class MediaSessionActivity extends WizardActivity {
 					MediaSessionActivity activity = ((MediaSessionActivity)getActivity());
 					activity.getMediaSessionSetupUseCase().setMediaSession(getUseCase().getMediaSession());
 					activity.loadWizard();
+					activity.removeUseCaseFragment(MediaSessionDetailsUseCaseFragment.class);
 				}
 			});
 		}
@@ -117,12 +118,11 @@ public class MediaSessionActivity extends WizardActivity {
 		}
 		
 		/**
-		 * @see com.jdroid.android.fragment.AbstractListFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+		 * @see com.jdroid.android.fragment.AbstractFragment#goBackOnError()
 		 */
 		@Override
-		public void onFinishFailedUseCase(RuntimeException runtimeException) {
-			DefaultExceptionHandler.markAsNotGoBackOnError(runtimeException);
-			super.onFinishFailedUseCase(runtimeException);
+		public Boolean goBackOnError() {
+			return false;
 		}
 		
 		/**
@@ -160,17 +160,32 @@ public class MediaSessionActivity extends WizardActivity {
 		loadUseCaseFragment(savedInstanceState, MediaSessionSetupUseCaseFragment.class);
 		getSupportFragmentManager().executePendingTransactions();
 		
-		if (getIntent().hasExtra(MEDIA_SESSION_ID_EXTRA)) {
-			// Media Session edition
-			loadUseCaseFragment(savedInstanceState, MediaSessionDetailsUseCaseFragment.class);
-		} else {
-			// Media Session creation
-			if (getMediaSessionSetupUseCase().getMediaSession() == null) {
-				Watchable watchable = (Watchable)getIntent().getSerializableExtra(WATCHABLE_EXTRA);
-				getMediaSessionSetupUseCase().setMediaSession(new MediaSession(watchable));
-			}
+		if (savedInstanceState != null) {
+			getMediaSessionSetupUseCase().setMediaSession(
+				(MediaSession)savedInstanceState.getSerializable(MEDIA_SESSION_EXTRA));
 			loadWizard();
+		} else {
+			if (getIntent().hasExtra(MEDIA_SESSION_ID_EXTRA)) {
+				// Media Session edition
+				loadUseCaseFragment(savedInstanceState, MediaSessionDetailsUseCaseFragment.class);
+			} else {
+				// Media Session creation
+				if (getMediaSessionSetupUseCase().getMediaSession() == null) {
+					Watchable watchable = (Watchable)getIntent().getSerializableExtra(WATCHABLE_EXTRA);
+					getMediaSessionSetupUseCase().setMediaSession(new MediaSession(watchable));
+				}
+				loadWizard();
+			}
 		}
+	}
+	
+	/**
+	 * @see com.jdroid.android.activity.AbstractFragmentActivity#onSaveInstanceState(android.os.Bundle)
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(MEDIA_SESSION_EXTRA, getMediaSessionSetupUseCase().getMediaSession());
 	}
 	
 	/**
