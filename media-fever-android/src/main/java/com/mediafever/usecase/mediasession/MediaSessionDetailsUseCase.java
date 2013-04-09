@@ -15,7 +15,6 @@ public class MediaSessionDetailsUseCase extends AbstractApiUseCase<APIService> {
 	private MediaSessionsRepository mediaSessionsRepository;
 	private Long mediaSessionId;
 	private MediaSession mediaSession;
-	private Boolean synch = true;
 	
 	@Inject
 	public MediaSessionDetailsUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
@@ -29,9 +28,6 @@ public class MediaSessionDetailsUseCase extends AbstractApiUseCase<APIService> {
 	@Override
 	protected void doExecute() {
 		mediaSession = mediaSessionsRepository.get(mediaSessionId);
-		if (synch) {
-			getApiService().getMediaSession(mediaSession);
-		}
 	}
 	
 	public MediaSession getMediaSession() {
@@ -41,9 +37,4 @@ public class MediaSessionDetailsUseCase extends AbstractApiUseCase<APIService> {
 	public void setMediaSessionId(Long mediaSessionId) {
 		this.mediaSessionId = mediaSessionId;
 	}
-	
-	public void setSynch(Boolean synch) {
-		this.synch = synch;
-	}
-	
 }

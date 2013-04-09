@@ -403,12 +403,12 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#getMediaSession(com.mediafever.domain.session.MediaSession)
+	 * @see com.mediafever.service.APIService#getMediaSession(java.lang.Long)
 	 */
 	@Override
-	public MediaSession getMediaSession(MediaSession mediaSession) {
-		WebService webservice = newGetService(MEDIA_SESSIONS, mediaSession.getId());
-		return webservice.execute(new MediaSessionParser(mediaSession));
+	public MediaSession getMediaSession(Long mediaSessionId) {
+		WebService webservice = newGetService(MEDIA_SESSIONS, mediaSessionId);
+		return webservice.execute(new MediaSessionParser());
 	}
 	
 	/**

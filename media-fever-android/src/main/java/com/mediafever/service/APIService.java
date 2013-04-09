@@ -128,6 +128,6 @@ public interface APIService {
 	
 	public MediaSelection addManualSelection(MediaSession mediaSession, Watchable watchable);
 	
-	public MediaSession getMediaSession(MediaSession mediaSession);
+	public MediaSession getMediaSession(Long mediaSessionId);
 	
 }

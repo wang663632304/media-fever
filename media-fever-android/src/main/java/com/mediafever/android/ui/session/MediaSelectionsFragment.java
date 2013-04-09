@@ -122,7 +122,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 				
 				String mediaSessionId = intent.getStringExtra(GcmMessage.MEDIA_SESSION_ID_KEY);
 				if (mediaSessionId.equals(mediaSession.getId().toString())) {
-					mediaSessionDetailsUseCase.setSynch(true);
 					executeUseCase(mediaSessionDetailsUseCase);
 					
 					GcmMessage gcmMessage = GcmMessage.find(intent);
@@ -257,7 +256,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if ((resultCode == Activity.RESULT_OK) && (requestCode == MEDIA_SELECTION_ADDED_REQUEST_CODE)) {
-			mediaSessionDetailsUseCase.setSynch(false);
 			executeUseCase(mediaSessionDetailsUseCase);
 		}
 	}

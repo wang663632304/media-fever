@@ -15,6 +15,7 @@ public class FriendRequestsUseCase extends AbstractApiUseCase<APIService> {
 	
 	private FriendRequestsRepository friendRequestsRepository;
 	private Long userId;
+	private List<FriendRequest> friendRequests;
 	
 	@Inject
 	public FriendRequestsUseCase(APIService apiService, FriendRequestsRepository friendRequestsRepository) {
@@ -32,6 +33,7 @@ public class FriendRequestsUseCase extends AbstractApiUseCase<APIService> {
 			friendRequestsRepository.replaceAll(friendRequests);
 			friendRequestsRepository.resetLastUpdateTimestamp();
 		}
+		friendRequests = friendRequestsRepository.getAll();
 	}
 	
 	public void setUserId(Long userId) {
@@ -39,6 +41,6 @@ public class FriendRequestsUseCase extends AbstractApiUseCase<APIService> {
 	}
 	
 	public List<FriendRequest> getFriendRequests() {
-		return friendRequestsRepository.getAll();
+		return friendRequests;
 	}
 }

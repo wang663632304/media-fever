@@ -14,7 +14,6 @@ import com.mediafever.service.APIService;
 public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 	
 	private MediaSessionsRepository mediaSessionsRepository;
-	private Long userId;
 	
 	@Inject
 	public MediaSessionsUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
@@ -27,15 +26,7 @@ public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		if (mediaSessionsRepository.isOutdated()) {
-			List<MediaSession> mediaSessions = getApiService().getMediaSessions(userId);
-			mediaSessionsRepository.replaceAll(mediaSessions);
-			mediaSessionsRepository.refreshUpdateTimestamp();
-		}
-	}
-	
-	public void setUserId(Long userId) {
-		this.userId = userId;
+		mediaSessionsRepository.getAll();
 	}
 	
 	public List<MediaSession> getPendingMediaSessions() {
