@@ -128,6 +128,8 @@
 	<string name="selection">Selection</string>
 	<string name="manualSelection">Manual Selection</string>
 	<string name="manualSelectionDescription">You decide which is the next movie or series to watch.</string>
+	<string name="randomSelection">Random Selection</string>
+	<string name="randomSelectionDescription">Select a movie or series randomly.</string>
 	<string name="smartSelection">SMART Selection</string>
 	<string name="smartSelectionDescription">Let us decide for you which is the best movie or series to watch according to your preferences.
 	</string>

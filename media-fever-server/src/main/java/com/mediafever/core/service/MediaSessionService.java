@@ -208,6 +208,14 @@ public class MediaSessionService {
 	}
 	
 	@Transactional
+	public MediaSelection addRandomSelection(Long id, Long userId) {
+		MediaSession mediaSession = mediaSessionRepository.get(id);
+		Watchable watchable = getRandomSelection(mediaSession);
+		
+		return addMediaSelection(mediaSession, userId, watchable);
+	}
+	
+	@Transactional
 	public MediaSelection addManualSelection(Long id, Long userId, Long watchableId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
 		Watchable watchable = watchableService.getWatchable(watchableId);
@@ -224,6 +232,25 @@ public class MediaSessionService {
 				mediaSelection.getWatchable().getName(), user.getFullName(), user.getImageUrl()));
 		
 		return mediaSelection;
+	}
+	
+	private Watchable getRandomSelection(MediaSession mediaSession) {
+		
+		// Pick a random movie or series between the last 10.000 movies or series released
+		Filter filter = new Filter(1, 10000);
+		filter.addValue(CustomFilterKey.WATCHABLE_TYPES, mediaSession.getWatchableTypes());
+		List<Watchable> watchables = watchableService.searchWatchable(filter).getData();
+		int random = IdGenerator.getRandomIntId() % watchables.size();
+		Watchable watchable = watchables.get(random);
+		
+		// Retry if the selection is duplicated
+		for (MediaSelection mediaSelection : mediaSession.getSelections()) {
+			if (mediaSelection.getWatchable().equals(watchable)) {
+				watchable = getSmartSelection(mediaSession);
+				break;
+			}
+		}
+		return watchable;
 	}
 	
 	private Watchable getSmartSelection(MediaSession mediaSession) {

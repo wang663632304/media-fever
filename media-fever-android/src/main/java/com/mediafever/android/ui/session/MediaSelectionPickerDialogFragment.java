@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.mediafever.R;
+import com.mediafever.usecase.mediasession.AddRandomSelectionUseCase;
 import com.mediafever.usecase.mediasession.AddSmartSelectionUseCase;
 
 /**
@@ -21,6 +22,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	private static final String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
 	
 	private AddSmartSelectionUseCase addSmartSelectionUseCase;
+	private AddRandomSelectionUseCase addRandomSelectionUseCase;
 	private Long mediaSessionId;
 	
 	public static void show(Fragment targetFragment, Long mediaSessionId) {
@@ -41,6 +43,10 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 		super.onCreate(savedInstanceState);
 		
 		mediaSessionId = getArgument(MEDIA_SESSION_ID_EXTRA);
+		
+		addRandomSelectionUseCase = getInstance(AddRandomSelectionUseCase.class);
+		addRandomSelectionUseCase.setMediaSessionId(mediaSessionId);
+		
 		addSmartSelectionUseCase = getInstance(AddSmartSelectionUseCase.class);
 		addSmartSelectionUseCase.setMediaSessionId(mediaSessionId);
 	}
@@ -70,6 +76,14 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 			}
 		});
 		
+		findView(R.id.randomSelection).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				executeUseCase(addRandomSelectionUseCase);
+			}
+		});
+		
 		findView(R.id.smartSelection).setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -87,6 +101,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		onResumeUseCase(addRandomSelectionUseCase, this);
 		onResumeUseCase(addSmartSelectionUseCase, this);
 	}
 	
@@ -96,6 +111,7 @@ public class MediaSelectionPickerDialogFragment extends AbstractDialogFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
+		onPauseUseCase(addRandomSelectionUseCase, this);
 		onPauseUseCase(addSmartSelectionUseCase, this);
 	}
 	

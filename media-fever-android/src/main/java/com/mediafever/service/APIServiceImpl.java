@@ -298,6 +298,15 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
+	 * @see com.mediafever.service.APIService#addRandomSelection(com.mediafever.domain.session.MediaSession)
+	 */
+	@Override
+	public MediaSelection addRandomSelection(MediaSession mediaSession) {
+		WebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), "mediaSelection", "random");
+		return webservice.execute(new MediaSelectionParser(mediaSession.getMediaSessionUsers()));
+	}
+	
+	/**
 	 * @see com.mediafever.service.APIService#addManualSelection(com.mediafever.domain.session.MediaSession,
 	 *      com.mediafever.domain.watchable.Watchable)
 	 */

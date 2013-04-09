@@ -126,6 +126,8 @@ public interface APIService {
 	
 	public MediaSelection addSmartSelection(MediaSession mediaSession);
 	
+	public MediaSelection addRandomSelection(MediaSession mediaSession);
+	
 	public MediaSelection addManualSelection(MediaSession mediaSession, Watchable watchable);
 	
 	public MediaSession getMediaSession(Long mediaSessionId);

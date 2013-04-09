@@ -1,31 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent"
-	android:layout_width="match_parent" android:orientation="vertical" android:gravity="center_vertical" android:minWidth="400dp">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent"
+	android:layout_width="match_parent" android:minWidth="400dp">
+	<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
+		android:orientation="vertical" android:gravity="center_vertical">
 
-	<LinearLayout android:id="@+id/manualSelection" android:layout_height="wrap_content" android:layout_width="match_parent"
-		android:orientation="horizontal" android:padding="10dp" android:background="@drawable/media_selection_picker_selector"
-		android:focusable="true" android:gravity="center_vertical">
-		<com.jdroid.android.images.CustomImageView android:layout_height="100dp"
-			android:layout_width="100dp" android:scaleType="centerCrop" android:src="@drawable/user_default" />
-		<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
-			android:orientation="vertical" android:layout_margin="10dp">
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
-				android:text="@string/manualSelection" />
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/manualSelectionDescription" />
+		<LinearLayout android:id="@+id/manualSelection" android:layout_height="wrap_content"
+			android:layout_width="match_parent" android:orientation="horizontal" android:padding="10dp"
+			android:background="@drawable/media_selection_picker_selector" android:focusable="true" android:gravity="center_vertical">
+			<com.jdroid.android.images.CustomImageView android:layout_height="100dp"
+				android:layout_width="100dp" android:scaleType="centerCrop" android:src="@drawable/user_default" />
+			<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
+				android:orientation="vertical" android:layout_margin="10dp">
+				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
+					android:text="@string/manualSelection" />
+				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/manualSelectionDescription" />
+			</LinearLayout>
 		</LinearLayout>
-	</LinearLayout>
 
-	<LinearLayout android:id="@+id/smartSelection" android:layout_height="wrap_content" android:layout_width="match_parent"
-		android:orientation="horizontal" android:padding="10dp" android:background="@drawable/media_selection_picker_selector"
-		android:focusable="true" android:gravity="center_vertical">
-		<com.jdroid.android.images.CustomImageView android:layout_height="100dp"
-			android:layout_width="100dp" android:scaleType="centerCrop" android:src="@drawable/user_default" />
-		<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
-			android:orientation="vertical" android:layout_margin="10dp">
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
-				android:text="@string/smartSelection" />
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/smartSelectionDescription" />
+		<LinearLayout android:id="@+id/randomSelection" android:layout_height="wrap_content"
+			android:layout_width="match_parent" android:orientation="horizontal" android:padding="10dp"
+			android:background="@drawable/media_selection_picker_selector" android:focusable="true" android:gravity="center_vertical">
+			<com.jdroid.android.images.CustomImageView android:layout_height="100dp"
+				android:layout_width="100dp" android:scaleType="centerCrop" android:src="@drawable/user_default" />
+			<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
+				android:orientation="vertical" android:layout_margin="10dp">
+				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
+					android:text="@string/randomSelection" />
+				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/randomSelectionDescription" />
+			</LinearLayout>
 		</LinearLayout>
-	</LinearLayout>
 
-</LinearLayout>
+		<LinearLayout android:id="@+id/smartSelection" android:layout_height="wrap_content" android:layout_width="match_parent"
+			android:orientation="horizontal" android:padding="10dp" android:background="@drawable/media_selection_picker_selector"
+			android:focusable="true" android:gravity="center_vertical">
+			<com.jdroid.android.images.CustomImageView android:layout_height="100dp"
+				android:layout_width="100dp" android:scaleType="centerCrop" android:src="@drawable/user_default" />
+			<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
+				android:orientation="vertical" android:layout_margin="10dp">
+				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
+					android:text="@string/smartSelection" />
+				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/smartSelectionDescription" />
+			</LinearLayout>
+		</LinearLayout>
+
+	</LinearLayout>
+</ScrollView>

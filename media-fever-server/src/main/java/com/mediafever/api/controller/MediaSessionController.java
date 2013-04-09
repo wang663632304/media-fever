@@ -88,6 +88,15 @@ public class MediaSessionController extends AbstractController {
 	}
 	
 	@PUT
+	@Path("{id}/mediaSelection/random")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String addRandomSelection(@PathParam("id") Long id) {
+		return marshallSimple(mediaSessionService.addRandomSelection(id,
+			ApplicationContext.get().getSecurityContext().getUser().getId()));
+	}
+	
+	@PUT
 	@Path("{id}/mediaSelection/manual/{watchableId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GZIP
