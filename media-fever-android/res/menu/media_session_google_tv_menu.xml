@@ -6,6 +6,8 @@
 		tools:ignore="MenuTitle" />
 	<item android:id="@+id/editMediaSessionItem" android:icon="@android:drawable/ic_menu_edit" android:title="@string/editMediaSession"
 		android:showAsAction="ifRoom" />
+	<item android:id="@+id/leaveMediaSessionItem" android:icon="@drawable/ic_action_leave" android:title="@string/leaveMediaSession"
+		android:showAsAction="ifRoom" />
 	<item android:id="@+id/settingsItem" android:icon="@android:drawable/ic_menu_manage" android:title="@string/settings" />
 	<item android:id="@+id/aboutItem" android:showAsAction="never" android:icon="@android:drawable/ic_menu_info_details"
 		android:title="@string/about" />

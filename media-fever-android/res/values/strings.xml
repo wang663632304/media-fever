@@ -111,6 +111,8 @@
 	<string name="acceptedSessions">Accepted Sessions</string>
 	<string name="addMediaSession">Add Media Session</string>
 	<string name="editMediaSession">Edit Media Session</string>
+	<string name="leaveMediaSession">Leave Media Session</string>
+	<string name="leaveMediaSessionConfirmation">Do you want to leave this media session?</string>
 	<string name="sessionType">Media type</string>
 	<string name="sessionDate">Session date</string>
 	<string name="anyDate">Any Date</string>
@@ -138,6 +140,7 @@
 	<string name="mediaSelectionRemoved">%1$s removed %2$s</string>
 	<string name="mediaSelectionThumbsUp">%1$s thumbs up %2$s</string>
 	<string name="mediaSelectionThumbsDown">%1$s thumbs down %2$s</string>
+	<string name="mediaSessionLeft">%1$s left this media session</string>
 
 	<!-- Notifications -->
 	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>

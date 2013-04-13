@@ -132,4 +132,6 @@ public interface APIService {
 	
 	public MediaSession getMediaSession(Long mediaSessionId);
 	
+	public void leaveMediaSession(Long mediaSessionId);
+	
 }

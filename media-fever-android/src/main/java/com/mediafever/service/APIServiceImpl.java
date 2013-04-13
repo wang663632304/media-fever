@@ -441,6 +441,15 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
+	 * @see com.mediafever.service.APIService#leaveMediaSession(java.lang.Long)
+	 */
+	@Override
+	public void leaveMediaSession(Long mediaSessionId) {
+		WebService webservice = newDeleteService(MEDIA_SESSIONS, mediaSessionId);
+		webservice.execute();
+	}
+	
+	/**
 	 * @see com.mediafever.service.APIService#thumbsUpMediaSelection(com.mediafever.domain.session.MediaSession,
 	 *      com.mediafever.domain.session.MediaSelection)
 	 */

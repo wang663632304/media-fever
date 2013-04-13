@@ -45,6 +45,13 @@ public enum GcmMessage {
 			mediaSessionsRepository.resetLastUpdateTimestamp();
 		}
 	},
+	MEDIA_SESSION_LEFT("mediaSessionLeft") {
+		
+		@Override
+		public void handle(Intent intent) {
+			synchronizeMediaSelection(intent);
+		}
+	},
 	MEDIA_SESSION_UPDATED("mediaSessionUpdated") {
 		
 		@Override

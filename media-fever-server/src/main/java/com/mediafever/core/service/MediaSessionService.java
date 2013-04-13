@@ -26,6 +26,7 @@ import com.mediafever.core.service.push.gcm.MediaSelectionRemovedGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSelectionThumbsDownGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSelectionThumbsUpGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSessionInvitationGcmMessage;
+import com.mediafever.core.service.push.gcm.MediaSessionLeftGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSessionUpdatedGcmMessage;
 
 /**
@@ -99,6 +100,22 @@ public class MediaSessionService {
 		
 		// Send push notifications
 		sendPushToMediaSessionUsers(mediaSession, userId, new MediaSessionUpdatedGcmMessage(mediaSession.getId()));
+	}
+	
+	@Transactional
+	public void leaveMediaSession(Long mediaSessionId, Long userId) {
+		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		User user = userRepository.get(userId);
+		mediaSession.leave(user);
+		
+		// If all the users left the media session, we remove it
+		if (mediaSession.getUsers().isEmpty()) {
+			mediaSessionRepository.remove(mediaSession);
+		}
+		
+		// Send push notifications
+		sendPushToMediaSessionUsers(mediaSession, userId,
+			new MediaSessionLeftGcmMessage(mediaSession.getId(), user.getFullName(), user.getImageUrl()));
 	}
 	
 	@Transactional

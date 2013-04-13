@@ -81,6 +81,29 @@ public class MediaSession extends Entity {
 		users.addAll(newUsers);
 	}
 	
+	public void leave(User user) {
+		MediaSessionUser mediaSessionUser = null;
+		for (MediaSessionUser each : users) {
+			if (each.getUser().equals(user)) {
+				mediaSessionUser = each;
+				break;
+			}
+		}
+		
+		if (mediaSessionUser != null) {
+			users.remove(mediaSessionUser);
+			List<MediaSelection> mediaSelectionsToRemove = Lists.newArrayList();
+			for (MediaSelection each : selections) {
+				if (each.getOwner().equals(user)) {
+					mediaSelectionsToRemove.add(each);
+				} else {
+					each.leave(user);
+				}
+			}
+			selections.removeAll(mediaSelectionsToRemove);
+		}
+	}
+	
 	public void thumbsUp(MediaSelection mediaSelection, User user) {
 		mediaSelection.thumbsUp(user);
 	}
