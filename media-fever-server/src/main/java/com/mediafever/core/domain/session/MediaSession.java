@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import org.apache.commons.collections.CollectionUtils;
 import com.jdroid.java.collections.Lists;
+import com.jdroid.java.utils.DateUtils;
 import com.jdroid.javaweb.domain.Entity;
 import com.mediafever.api.exception.ServerErrorCode;
 import com.mediafever.core.domain.User;
@@ -137,6 +138,22 @@ public class MediaSession extends Entity {
 	
 	public Date getTime() {
 		return time;
+	}
+	
+	public Boolean isExpired() {
+		if (date != null) {
+			Date fullDate = DateUtils.getDate(date, time);
+			if (DateUtils.now().after(fullDate)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void checkExpiration() {
+		if (isExpired()) {
+			throw ServerErrorCode.MEDIA_SESSION_EXPIRED.newBusinessException();
+		}
 	}
 	
 	public List<MediaSessionUser> getUsers() {

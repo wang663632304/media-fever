@@ -31,7 +31,8 @@ public enum AndroidErrorCode implements ErrorCode {
 	DUPLICATED_USERNAME(R.string.duplicatedUsername, 201),
 	
 	// Media Session
-	MEDIA_SELECTION_DUPLICATED(R.string.mediaSelectionDuplicated, 203);
+	MEDIA_SELECTION_DUPLICATED(R.string.mediaSelectionDuplicated, 203),
+	MEDIA_SESSION_EXPIRED(R.string.mediaSessionExpired, 205);
 	
 	private Integer resourceId;
 	private Integer statusCode;

@@ -19,6 +19,7 @@ import com.mediafever.domain.watchable.WatchableType;
 public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 	
 	private static final String ID = "id";
+	private static final String EXPIRED = "expired";
 	private static final String DATE = "date";
 	private static final String TIME = "time";
 	private static final String USERS = "users";
@@ -41,6 +42,7 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 	@Override
 	public Object parse(JsonObjectWrapper json) throws JSONException {
 		Long id = json.getLong(ID);
+		Boolean expired = json.getBoolean(EXPIRED);
 		Date date = json.getDate(DATE);
 		Date time = json.getDate(TIME);
 		List<MediaSessionUser> users = parseList(json.getJSONArray(USERS), new MediaSessionUserParser());
@@ -59,6 +61,7 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 		}
 		
 		if (mediaSession != null) {
+			mediaSession.setExpired(expired);
 			mediaSession.setDate(date);
 			mediaSession.setTime(time);
 			mediaSession.setMediaSessionUsers(users);
@@ -67,7 +70,7 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 			mediaSession.setAccepted(accepted);
 			return mediaSession;
 		} else {
-			return new MediaSession(id, date, time, users, selections, watchablesTypes, accepted);
+			return new MediaSession(id, expired, date, time, users, selections, watchablesTypes, accepted);
 		}
 	}
 }

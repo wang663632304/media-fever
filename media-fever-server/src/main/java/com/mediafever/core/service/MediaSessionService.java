@@ -83,6 +83,7 @@ public class MediaSessionService {
 	public void updateMediaSession(Long mediaSessionId, Date date, Date time, List<WatchableType> watchableTypes,
 			List<Long> usersIds, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		mediaSession.checkExpiration();
 		
 		List<Long> currentUsersIds = Lists.newArrayList();
 		for (MediaSessionUser mediaSessionUser : mediaSession.getUsers()) {
@@ -121,6 +122,8 @@ public class MediaSessionService {
 	@Transactional
 	public void thumbsUpMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		mediaSession.checkExpiration();
+		
 		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
@@ -149,6 +152,8 @@ public class MediaSessionService {
 	@Transactional
 	public void thumbsDownMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		mediaSession.checkExpiration();
+		
 		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
@@ -164,6 +169,8 @@ public class MediaSessionService {
 	@Transactional
 	public void removeMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		mediaSession.checkExpiration();
+		
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
 			mediaSession.removeSelection(mediaSelection);
@@ -219,6 +226,8 @@ public class MediaSessionService {
 	@Transactional
 	public MediaSelection addSmartSelection(Long id, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
+		mediaSession.checkExpiration();
+		
 		Watchable watchable = getSmartSelection(mediaSession);
 		
 		return addMediaSelection(mediaSession, userId, watchable);
@@ -227,6 +236,8 @@ public class MediaSessionService {
 	@Transactional
 	public MediaSelection addRandomSelection(Long id, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
+		mediaSession.checkExpiration();
+		
 		Watchable watchable = getRandomSelection(mediaSession);
 		
 		return addMediaSelection(mediaSession, userId, watchable);
@@ -235,6 +246,8 @@ public class MediaSessionService {
 	@Transactional
 	public MediaSelection addManualSelection(Long id, Long userId, Long watchableId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
+		mediaSession.checkExpiration();
+		
 		Watchable watchable = watchableService.getWatchable(watchableId);
 		
 		return addMediaSelection(mediaSession, userId, watchable);

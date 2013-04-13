@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.AndroidUseCaseListener;
@@ -72,6 +74,11 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			AlertDialogFragment.show(this, getString(R.string.mediaSessionCreatedTitle),
 				getString(R.string.mediaSessionCreatedDescription, getWatchablesString()),
 				LocalizationUtils.getString(R.string.ok), null, true);
+		} else if (mediaSession.isExpired()) {
+			MediaSelection mediaSelection = mediaSession.getMediaSelectionWinner();
+			if (mediaSelection != null) {
+				MediaSelectionExpiredDialogFragment.show(this, mediaSelection);
+			}
 		}
 		
 		mediaSessionDetailsUseCase = getInstance(MediaSessionDetailsUseCase.class);
@@ -212,6 +219,20 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	}
 	
 	/**
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com.actionbarsherlock.view.Menu,
+	 *      com.actionbarsherlock.view.MenuInflater)
+	 */
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		if (mediaSession.isExpired()) {
+			MenuItem menuItem = menu.findItem(R.id.editMediaSessionItem);
+			menuItem.setVisible(false);
+		}
+	}
+	
+	/**
 	 * @see com.jdroid.android.activity.BaseActivity#onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
 	 */
 	@Override
@@ -247,7 +268,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	@Override
 	public void onItemSelected(MediaSelection mediaSelection) {
 		if (mediaSelection.getWatchable() != null) {
-			MediaSelectionDialogFragment.show(this, mediaSession.getId(), mediaSelection);
+			MediaSelectionDialogFragment.show(this, mediaSession.getId(), mediaSelection, mediaSession.isExpired());
 		} else {
 			MediaSelectionPickerDialogFragment.show(this, mediaSession.getId());
 		}
@@ -289,12 +310,17 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		
 		// Header
 		TextView header = findView(R.id.header);
-		header.setText(getString(R.string.mediaSelectionsHeader, getWatchablesString()));
+		if (mediaSession.isExpired()) {
+			header.setText(R.string.mediaSelectionsExpiredHeader);
+		} else {
+			header.setText(getString(R.string.mediaSelectionsHeader, getWatchablesString()));
+		}
 		
 		// Footer
 		TextView footer = findView(R.id.mediaSelectionsStarts);
+		
 		String dateTime = MediaSessionAdapter.getDateString(mediaSession);
-		if (StringUtils.isNotEmpty(dateTime)) {
+		if (!mediaSession.isExpired() && StringUtils.isNotEmpty(dateTime)) {
 			footer.setText(getString(R.string.mediaSelectionsStarts, dateTime));
 			footer.setVisibility(View.VISIBLE);
 		} else {
