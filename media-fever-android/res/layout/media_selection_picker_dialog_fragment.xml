@@ -7,8 +7,8 @@
 		<LinearLayout android:id="@+id/manualSelection" android:layout_height="wrap_content"
 			android:layout_width="match_parent" android:orientation="horizontal" android:padding="10dp"
 			android:background="@drawable/media_selection_picker_selector" android:focusable="true" android:gravity="center_vertical">
-			<com.jdroid.android.images.CustomImageView android:layout_height="100dp"
-				android:layout_width="100dp" android:scaleType="centerCrop" android:src="@drawable/user_default" />
+			<ImageView android:layout_height="100dp" android:layout_width="100dp" android:scaleType="centerCrop"
+				android:src="@drawable/user_default" />
 			<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
 				android:orientation="vertical" android:layout_margin="10dp">
 				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
@@ -20,8 +20,8 @@
 		<LinearLayout android:id="@+id/randomSelection" android:layout_height="wrap_content"
 			android:layout_width="match_parent" android:orientation="horizontal" android:padding="10dp"
 			android:background="@drawable/media_selection_picker_selector" android:focusable="true" android:gravity="center_vertical">
-			<com.jdroid.android.images.CustomImageView android:layout_height="100dp"
-				android:layout_width="100dp" android:scaleType="centerCrop" android:src="@drawable/user_default" />
+			<ImageView android:layout_height="100dp" android:layout_width="100dp" android:scaleType="centerCrop"
+				android:src="@drawable/random_selection" />
 			<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
 				android:orientation="vertical" android:layout_margin="10dp">
 				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
@@ -33,8 +33,8 @@
 		<LinearLayout android:id="@+id/smartSelection" android:layout_height="wrap_content" android:layout_width="match_parent"
 			android:orientation="horizontal" android:padding="10dp" android:background="@drawable/media_selection_picker_selector"
 			android:focusable="true" android:gravity="center_vertical">
-			<com.jdroid.android.images.CustomImageView android:layout_height="100dp"
-				android:layout_width="100dp" android:scaleType="centerCrop" android:src="@drawable/user_default" />
+			<ImageView android:layout_height="100dp" android:layout_width="100dp" android:scaleType="centerCrop"
+				android:src="@drawable/smart_selection" />
 			<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
 				android:orientation="vertical" android:layout_margin="10dp">
 				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
