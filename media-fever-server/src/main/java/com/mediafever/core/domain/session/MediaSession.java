@@ -62,6 +62,9 @@ public class MediaSession extends Entity {
 		this.time = time;
 		this.users = users;
 		selections = Lists.newArrayList();
+		if (isExpired()) {
+			throw ServerErrorCode.MEDIA_SESSION_CREATION_EXPIRED.newBusinessException();
+		}
 	}
 	
 	public void modify(List<WatchableType> watchableTypes, Date date, Date time, List<MediaSessionUser> newUsers) {
@@ -80,6 +83,9 @@ public class MediaSession extends Entity {
 		this.date = date;
 		this.time = time;
 		users.addAll(newUsers);
+		if (isExpired()) {
+			throw ServerErrorCode.MEDIA_SESSION_EDITION_EXPIRED.newBusinessException();
+		}
 	}
 	
 	public void leave(User user) {

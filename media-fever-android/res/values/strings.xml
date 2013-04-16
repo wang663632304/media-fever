@@ -143,7 +143,9 @@
 	<string name="mediaSelectionThumbsDown">%1$s thumbs down %2$s</string>
 	<string name="mediaSessionLeft">%1$s left this media session</string>
 	<string name="mediaSessionExpired">This media session is expired. You can\'t edit or vote.</string>
-	<string name="mediaSessionWinner">And the winner is ...</string>
+	<string name="mediaSessionCreationExpired">You can\'t create a media session with a past date.</string>
+	<string name="mediaSessionEditionExpired">You can\'t edit a media session to a past date.</string>
+	<string name="mediaSessionWinner">And the winner is …</string>
 
 	<!-- Notifications -->
 	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>
