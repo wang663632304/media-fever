@@ -70,7 +70,7 @@ public class WatchableHibernateRepository extends HibernateRepository<Watchable>
 	@Override
 	public PagedResult<Watchable> getMovies(Integer page) {
 		DetachedCriteria criteria = this.createDetachedCriteria();
-		Filter filter = new Filter(page, 50);
+		Filter filter = new Filter(page, 100);
 		filter.addValue(CustomFilterKey.WATCHABLE_TYPES, Lists.newArrayList(WatchableType.MOVIE));
 		addWatchableTypesFilter(criteria, filter);
 		return this.find(criteria, filter.getPager(), filter.getSorting());

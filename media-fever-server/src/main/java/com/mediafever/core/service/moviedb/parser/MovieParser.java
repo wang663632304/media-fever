@@ -108,7 +108,9 @@ public class MovieParser extends JsonParser<JsonArrayWrapper> {
 						} catch (ObjectNotFoundException e) {
 							actor = new Person(fullname);
 						}
-						actors.add(actor);
+						if (!actors.contains(actor)) {
+							actors.add(actor);
+						}
 					}
 				}
 				

@@ -30,7 +30,7 @@ public class SynchronizationService {
 	
 	private static final String INITIAL_UPDATE = "1";
 	
-	private static final int SLEEP = 2;
+	private static final int SLEEP_IN_MILLI = 500;
 	
 	@Autowired
 	private MovieDbApiService movieDbApiService;
@@ -51,7 +51,8 @@ public class SynchronizationService {
 	private SettingsRepository settingsRepository;
 	
 	public void synchMovies() {
-		// Load new movies
+		
+		// Load new movies. Aprox 186587
 		Long minExternalId = watchableRepository.getLastMovieExternalId() + 1;
 		Long latestExternalId = movieDbApiService.getLatest();
 		addMovies(minExternalId, latestExternalId);
@@ -80,7 +81,7 @@ public class SynchronizationService {
 		if (movie != null) {
 			watchableService.saveWatchable(movie);
 		}
-		ExecutorUtils.sleep(SLEEP);
+		ExecutorUtils.sleepInMillis(SLEEP_IN_MILLI);
 	}
 	
 	/**
@@ -125,6 +126,6 @@ public class SynchronizationService {
 		if (series != null) {
 			watchableService.saveWatchable(series);
 		}
-		ExecutorUtils.sleep(SLEEP);
+		ExecutorUtils.sleepInMillis(SLEEP_IN_MILLI);
 	}
 }
