@@ -9,7 +9,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.SearchView;
 import com.actionbarsherlock.app.ActionBar;
@@ -22,14 +21,9 @@ import com.jdroid.android.tabs.TabAction;
 import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.AboutDialogFragment;
-import com.mediafever.android.ui.friends.FriendsActivity;
 import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.android.ui.listener.BuyFullAppOnClickListener;
-import com.mediafever.android.ui.session.MediaSessionListActivity;
 import com.mediafever.android.ui.settings.SettingsActivity;
-import com.mediafever.android.ui.watchable.watched.WatchedListActivity;
-import com.mediafever.android.ui.watchable.whattowatch.WhatToWatchActivity;
-import com.mediafever.android.ui.watchable.wishlist.WishListActivity;
 import com.mediafever.context.ApplicationContext;
 
 /**
@@ -97,7 +91,7 @@ public class AndroidBaseActivity extends BaseActivity {
 		}
 		leftNavBar.flipOption(LeftNavBar.DISPLAY_USE_LOGO_WHEN_EXPANDED);
 		
-		for (LeftAction leftAction : LeftAction.values()) {
+		for (HomeItem leftAction : HomeItem.values()) {
 			addLeftNavBarTab(leftAction);
 		}
 	}
@@ -125,66 +119,6 @@ public class AndroidBaseActivity extends BaseActivity {
 			}
 		});
 		leftNavBar.addTab(tab, leftAction.getActivityClass().equals(getActivity().getClass()));
-	}
-	
-	public enum LeftAction implements TabAction {
-		WATCHED(R.drawable.watched_action_selector, R.string.watched, WatchedListActivity.class),
-		WISHLIST(R.drawable.wishlist_action_selector, R.string.wishList, WishListActivity.class),
-		MEDIA_SESSIONS(R.drawable.media_sessions_action_selector, R.string.mediaSessions,
-				MediaSessionListActivity.class),
-		WATCH_TO_WATCH(R.drawable.what_to_watch_action_selector, R.string.whatToWatch, WhatToWatchActivity.class),
-		FRIENDS(R.drawable.friends_action_selector, R.string.friends, FriendsActivity.class);
-		
-		private int iconResource;
-		private int nameResource;
-		private Class<? extends Activity> targetActivity;
-		
-		private LeftAction(int iconResource, int nameResource, Class<? extends Activity> targetActivity) {
-			this.iconResource = iconResource;
-			this.nameResource = nameResource;
-			this.targetActivity = targetActivity;
-		}
-		
-		/**
-		 * @see com.jdroid.android.tabs.TabAction#getIconResource()
-		 */
-		@Override
-		public int getIconResource() {
-			return iconResource;
-		}
-		
-		/**
-		 * @see com.jdroid.android.tabs.TabAction#getNameResource()
-		 */
-		@Override
-		public int getNameResource() {
-			return nameResource;
-		}
-		
-		/**
-		 * @see com.jdroid.android.tabs.TabAction#getActivityClass()
-		 */
-		@Override
-		public Class<? extends Activity> getActivityClass() {
-			return targetActivity;
-		}
-		
-		/**
-		 * @see com.jdroid.android.tabs.TabAction#getName()
-		 */
-		@Override
-		public String getName() {
-			return name();
-		}
-		
-		/**
-		 * @see com.jdroid.android.tabs.TabAction#createFragment(java.lang.Object)
-		 */
-		@Override
-		public Fragment createFragment(Object args) {
-			return null;
-		}
-		
 	}
 	
 	/**

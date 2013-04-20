@@ -4,6 +4,9 @@
 	<dimen name="smallTextSize">12sp</dimen>
 	<dimen name="normalTextSize">16sp</dimen>
 
+	<dimen name="dashboardSmallTextSize">11sp</dimen>
+	<dimen name="dashboardTextSize">16sp</dimen>
+
 	<dimen name="defaultTextSize">18sp</dimen>
 	<dimen name="rowImageDim">50dp</dimen>
 
@@ -13,7 +16,7 @@
 
 	<!-- Dashboard -->
 	<dimen name="dashboardPadding">5dp</dimen>
-	<dimen name="dashboardIconSize">48dp</dimen>
+	<dimen name="dashboardIconSize">40dp</dimen>
 
 	<!-- Watchables -->
 

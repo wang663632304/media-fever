@@ -42,6 +42,14 @@ public class WatchedGridFragment extends AbstractGridFragment<Watchable> {
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractGridFragment#getNoResultsText()
+	 */
+	@Override
+	protected int getNoResultsText() {
+		return R.string.noResultsWatched;
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onResume()
 	 */
 	@Override

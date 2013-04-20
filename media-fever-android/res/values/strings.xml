@@ -8,6 +8,7 @@
 	<string name="series">Series</string>
 	<string name="moviesAndSeries">Movies &amp; Series</string>
 	<string name="whatToWatch">What to Watch</string>
+	<string name="whatToWatchDescription">What we offer you to watch</string>
 	<string name="selected">%1$s selected</string>
 	<string name="logout">Logout</string>
 	<string name="accept">Accept</string>
@@ -77,14 +78,17 @@
 
 	<!-- WishList -->
 	<string name="wishList">Wish List</string>
+	<string name="wishListDescription">Movies &amp; series on your wish list</string>
 	<string name="noResultsWishList">There are no items in your Wish List</string>
 
 	<!-- Watched -->
 	<string name="watched">Watched</string>
+	<string name="watchedDescription">Your watched movies &amp; series</string>
 	<string name="noResultsWatched">There are no items in your Watched List</string>
 
 	<!-- Friends -->
 	<string name="friends">Friends</string>
+	<string name="friendsDescription">Connect with your friends</string>
 	<string name="noResultsFriends">You can invite friends from Facebook</string>
 	<string name="remove">Remove</string>
 	<string name="friendRemoved">Your friend was successfully removed</string>
@@ -105,6 +109,7 @@
 
 	<!-- Media Sessions -->
 	<string name="mediaSessions">Media Sessions</string>
+	<string name="mediaSessionsDescription">Movies &amp; series events with friends</string>
 	<string name="newMediaSession">New Media Session</string>
 	<string name="noResultsMediaSessions">There are no media sessions</string>
 	<string name="pendingSessions">Pending Sessions</string>

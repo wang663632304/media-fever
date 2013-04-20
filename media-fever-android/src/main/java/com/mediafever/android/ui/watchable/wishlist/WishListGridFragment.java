@@ -42,6 +42,14 @@ public class WishListGridFragment extends AbstractGridFragment<Watchable> {
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractGridFragment#getNoResultsText()
+	 */
+	@Override
+	protected int getNoResultsText() {
+		return R.string.noResultsWishList;
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onResume()
 	 */
 	@Override

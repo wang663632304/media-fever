@@ -4,7 +4,6 @@ import android.os.Bundle;
 import com.google.ads.AdSize;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.AbstractFragmentActivity;
-import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.login.LoginActivity;
 
@@ -19,7 +18,7 @@ public class HomeActivity extends AbstractFragmentActivity {
 	 */
 	@Override
 	public int getContentView() {
-		return AndroidUtils.isGoogleTV() ? R.layout.home_activity_tv : R.layout.home_activity;
+		return R.layout.home_activity;
 	}
 	
 	/**
