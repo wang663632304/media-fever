@@ -32,7 +32,6 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 		getSupportActionBar().setTitle(R.string.mediaSessions);
 		
 		mediaSessionsUseCase = getInstance(MediaSessionsUseCase.class);
-		mediaSessionsUseCase.setUserId(getUser().getId());
 	}
 	
 	/**

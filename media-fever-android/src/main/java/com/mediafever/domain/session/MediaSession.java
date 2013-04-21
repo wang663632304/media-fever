@@ -20,6 +20,7 @@ import com.mediafever.domain.watchable.WatchableType;
  */
 public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
+	private Boolean expired;
 	private Date date;
 	private Date time;
 	private List<MediaSessionUser> mediaSessionUsers;
@@ -28,9 +29,10 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	private Boolean accepted;
 	private List<MediaSelection> selections;
 	
-	public MediaSession(Long id, Date date, Date time, List<MediaSessionUser> users, List<MediaSelection> selections,
-			List<WatchableType> watchableTypes, Boolean accepted) {
+	public MediaSession(Long id, Boolean expired, Date date, Date time, List<MediaSessionUser> users,
+			List<MediaSelection> selections, List<WatchableType> watchableTypes, Boolean accepted) {
 		super(id);
+		this.expired = expired;
 		this.date = date;
 		this.time = time;
 		mediaSessionUsers = users;
@@ -46,6 +48,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	}
 	
 	public MediaSession(Watchable watchable) {
+		expired = false;
 		date = DateUtils.now();
 		mediaSessionUsers = Lists.newArrayList(new MediaSessionUser(SecurityContext.get().getUser()));
 		watchableTypes = Lists.newArrayList(WatchableType.MOVIE);
@@ -57,8 +60,15 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		}
 	}
 	
+	public Boolean isExpired() {
+		return expired;
+	}
+	
 	public void setSelections(List<MediaSelection> mediaSelections) {
-		selections = Lists.newArrayList(new MediaSelection());
+		selections = Lists.newArrayList();
+		if (!expired) {
+			selections.add(new MediaSelection());
+		}
 		if (mediaSelections != null) {
 			selections.addAll(mediaSelections);
 		}
@@ -128,17 +138,21 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return selections;
 	}
 	
+	public MediaSelection getMediaSelectionWinner() {
+		return !selections.isEmpty() ? getSelections().get(0) : null;
+	}
+	
 	public List<MediaSelection> getTop3Selections() {
 		List<MediaSelection> mediaSelections = getSelections();
 		List<MediaSelection> top3MediaSelections = Lists.newArrayList();
-		if (mediaSelections.size() > 1) {
-			top3MediaSelections.add(mediaSelections.get(1));
-		}
-		if (mediaSelections.size() > 2) {
-			top3MediaSelections.add(mediaSelections.get(2));
-		}
-		if (mediaSelections.size() > 3) {
-			top3MediaSelections.add(mediaSelections.get(3));
+		for (MediaSelection mediaSelection : mediaSelections) {
+			if (mediaSelection.getWatchable() != null) {
+				if (top3MediaSelections.size() < 3) {
+					top3MediaSelections.add(mediaSelection);
+				} else {
+					break;
+				}
+			}
 		}
 		return top3MediaSelections;
 	}
@@ -248,5 +262,12 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public Boolean isWatchableTypeRequired(WatchableType watchableType) {
 		return requiredWatchableTypes.contains(watchableType);
+	}
+	
+	/**
+	 * @param expired the expired to set
+	 */
+	public void setExpired(Boolean expired) {
+		this.expired = expired;
 	}
 }

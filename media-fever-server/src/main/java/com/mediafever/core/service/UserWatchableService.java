@@ -118,14 +118,23 @@ public class UserWatchableService {
 	}
 	
 	public List<User> getWatchedBy(List<User> users, Watchable watchable) {
-		List<Long> userIds = Lists.transform(users, new IdPropertyFunction());
-		return Lists.transform(userWatchableRepository.getWatchedBy(userIds, watchable.getId()),
-			new PropertyFunction<UserWatchable, User>("user"));
+		List<User> watchedByUsers = Lists.newArrayList();
+		if (!users.isEmpty()) {
+			List<Long> userIds = Lists.transform(users, new IdPropertyFunction());
+			watchedByUsers = Lists.transform(userWatchableRepository.getWatchedBy(userIds, watchable.getId()),
+				new PropertyFunction<UserWatchable, User>("user"));
+		}
+		return watchedByUsers;
 	}
 	
 	public List<User> getOnTheWishListOf(List<User> users, Watchable watchable) {
-		List<Long> userIds = Lists.transform(users, new IdPropertyFunction());
-		return Lists.transform(userWatchableRepository.getOnTheWishListOf(userIds, watchable.getId()),
-			new PropertyFunction<UserWatchable, User>("user"));
+		List<User> onTheWishListOfUsers = Lists.newArrayList();
+		if (!users.isEmpty()) {
+			List<Long> userIds = Lists.transform(users, new IdPropertyFunction());
+			onTheWishListOfUsers = Lists.transform(
+				userWatchableRepository.getOnTheWishListOf(userIds, watchable.getId()),
+				new PropertyFunction<UserWatchable, User>("user"));
+		}
+		return onTheWishListOfUsers;
 	}
 }

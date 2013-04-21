@@ -14,7 +14,7 @@ import com.mediafever.service.APIService;
 public class RemoveMediaSelectionUseCase extends AbstractApiUseCase<APIService> {
 	
 	private MediaSessionsRepository mediaSessionsRepository;
-	private MediaSession mediaSession;
+	private Long mediaSessionId;
 	private MediaSelection mediaSelection;
 	
 	@Inject
@@ -28,6 +28,7 @@ public class RemoveMediaSelectionUseCase extends AbstractApiUseCase<APIService> 
 	 */
 	@Override
 	protected void doExecute() {
+		MediaSession mediaSession = mediaSessionsRepository.get(mediaSessionId);
 		getApiService().removeMediaSelection(mediaSession, mediaSelection);
 		mediaSession.removeSelection(mediaSelection);
 		mediaSessionsRepository.update(mediaSession);
@@ -40,11 +41,7 @@ public class RemoveMediaSelectionUseCase extends AbstractApiUseCase<APIService> 
 		this.mediaSelection = mediaSelection;
 	}
 	
-	/**
-	 * @param mediaSession the mediaSession to set
-	 */
-	public void setMediaSession(MediaSession mediaSession) {
-		this.mediaSession = mediaSession;
+	public void setMediaSessionId(Long mediaSessionId) {
+		this.mediaSessionId = mediaSessionId;
 	}
-	
 }

@@ -3,6 +3,7 @@ package com.mediafever.usecase.friends;
 import java.util.List;
 import com.google.inject.Inject;
 import com.jdroid.android.usecase.AbstractApiUseCase;
+import com.jdroid.java.collections.Lists;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.repository.FriendsRepository;
 import com.mediafever.service.APIService;
@@ -15,6 +16,7 @@ public class FriendsUseCase extends AbstractApiUseCase<APIService> {
 	
 	private FriendsRepository friendsRepository;
 	private Long userId;
+	private List<UserImpl> friends = Lists.newArrayList();
 	
 	@Inject
 	public FriendsUseCase(APIService apiService, FriendsRepository friendsRepository) {
@@ -32,10 +34,11 @@ public class FriendsUseCase extends AbstractApiUseCase<APIService> {
 			friendsRepository.replaceAll(friends);
 			friendsRepository.resetLastUpdateTimestamp();
 		}
+		friends = friendsRepository.getAll();
 	}
 	
 	public List<UserImpl> getFriends() {
-		return friendsRepository.getAll();
+		return friends;
 	}
 	
 	public void setUserId(Long userId) {

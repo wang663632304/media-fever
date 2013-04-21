@@ -54,6 +54,13 @@ public class MediaSessionController extends AbstractController {
 			ApplicationContext.get().getSecurityContext().getUser().getId());
 	}
 	
+	@DELETE
+	@Path("{id}")
+	@GZIP
+	public void leaveMediaSession(@PathParam("id") Long id) {
+		mediaSessionService.leaveMediaSession(id, ApplicationContext.get().getSecurityContext().getUser().getId());
+	}
+	
 	@PUT
 	@Path("{id}/thumbsUp/{mediaSelectionId}")
 	@GZIP
@@ -84,6 +91,15 @@ public class MediaSessionController extends AbstractController {
 	@GZIP
 	public String addSmartSelection(@PathParam("id") Long id) {
 		return marshallSimple(mediaSessionService.addSmartSelection(id,
+			ApplicationContext.get().getSecurityContext().getUser().getId()));
+	}
+	
+	@PUT
+	@Path("{id}/mediaSelection/random")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String addRandomSelection(@PathParam("id") Long id) {
+		return marshallSimple(mediaSessionService.addRandomSelection(id,
 			ApplicationContext.get().getSecurityContext().getUser().getId()));
 	}
 	

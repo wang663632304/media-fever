@@ -14,7 +14,7 @@ import com.mediafever.service.APIService;
 public class AddSmartSelectionUseCase extends AbstractApiUseCase<APIService> {
 	
 	private MediaSessionsRepository mediaSessionsRepository;
-	private MediaSession mediaSession;
+	private Long mediaSessionId;
 	private MediaSelection mediaSelection;
 	
 	@Inject
@@ -28,16 +28,14 @@ public class AddSmartSelectionUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
+		MediaSession mediaSession = mediaSessionsRepository.get(mediaSessionId);
 		mediaSelection = getApiService().addSmartSelection(mediaSession);
 		mediaSession.addSelection(mediaSelection);
 		mediaSessionsRepository.update(mediaSession);
 	}
 	
-	/**
-	 * @param mediaSession the mediaSession to set
-	 */
-	public void setMediaSession(MediaSession mediaSession) {
-		this.mediaSession = mediaSession;
+	public void setMediaSessionId(Long mediaSessionId) {
+		this.mediaSessionId = mediaSessionId;
 	}
 	
 	/**

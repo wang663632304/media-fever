@@ -51,6 +51,11 @@ public class MediaSelection extends Entity {
 		thumbsDownUsers = Lists.newArrayList();
 	}
 	
+	public void leave(User user) {
+		thumbsDownUsers.remove(user);
+		thumbsUpUsers.remove(user);
+	}
+	
 	public void thumbsUp(User user) {
 		thumbsDownUsers.remove(user);
 		if (!thumbsUpUsers.contains(user)) {

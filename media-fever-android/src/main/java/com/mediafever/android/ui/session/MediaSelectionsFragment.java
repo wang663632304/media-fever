@@ -1,8 +1,11 @@
 package com.mediafever.android.ui.session;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -12,8 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jdroid.android.AbstractApplication;
+import com.jdroid.android.AndroidUseCaseListener;
+import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.animation.FadeInOutAnimation;
 import com.jdroid.android.dialog.AlertDialogFragment;
 import com.jdroid.android.domain.FileContent;
@@ -27,6 +34,7 @@ import com.mediafever.android.gcm.GcmMessage;
 import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.MediaSessionDetailsUseCase;
+import com.mediafever.usecase.mediasession.MediaSessionLeaveUseCase;
 
 /**
  * 
@@ -45,6 +53,9 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public static final String MEDIA_SESSION_CREATED_EXTRA = "mediaSessionCreatedExtra";
 	
 	private MediaSessionDetailsUseCase mediaSessionDetailsUseCase;
+	private MediaSessionLeaveUseCase mediaSessionLeaveUseCase;
+	private AndroidUseCaseListener mediaSessionLeaveUseCaseListener;
+	
 	private BroadcastReceiver refreshBroadcastReceiver;
 	private MediaSession mediaSession;
 	private Boolean mediaSessionCreated;
@@ -63,10 +74,42 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			AlertDialogFragment.show(this, getString(R.string.mediaSessionCreatedTitle),
 				getString(R.string.mediaSessionCreatedDescription, getWatchablesString()),
 				LocalizationUtils.getString(R.string.ok), null, true);
+		} else if (mediaSession.isExpired()) {
+			MediaSelection mediaSelection = mediaSession.getMediaSelectionWinner();
+			if (mediaSelection != null) {
+				MediaSelectionExpiredDialogFragment.show(this, mediaSelection);
+			}
 		}
 		
 		mediaSessionDetailsUseCase = getInstance(MediaSessionDetailsUseCase.class);
 		mediaSessionDetailsUseCase.setMediaSessionId(mediaSession.getId());
+		
+		mediaSessionLeaveUseCase = getInstance(MediaSessionLeaveUseCase.class);
+		mediaSessionLeaveUseCase.setMediaSessionId(mediaSession.getId());
+		mediaSessionLeaveUseCaseListener = new AndroidUseCaseListener() {
+			
+			@Override
+			public void onFinishUseCase() {
+				executeOnUIThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						getActivity().finish();
+						dismissLoading();
+					}
+				});
+			}
+			
+			@Override
+			public Boolean goBackOnError() {
+				return false;
+			}
+			
+			@Override
+			protected ActivityIf getActivityIf() {
+				return (ActivityIf)getActivity();
+			}
+		};
 		
 		setHasOptionsMenu(true);
 	}
@@ -114,6 +157,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public void onResume() {
 		super.onResume();
 		onResumeUseCase(mediaSessionDetailsUseCase, this);
+		onResumeUseCase(mediaSessionLeaveUseCase, mediaSessionLeaveUseCaseListener);
 		
 		refreshBroadcastReceiver = new BroadcastReceiver() {
 			
@@ -122,7 +166,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 				
 				String mediaSessionId = intent.getStringExtra(GcmMessage.MEDIA_SESSION_ID_KEY);
 				if (mediaSessionId.equals(mediaSession.getId().toString())) {
-					mediaSessionDetailsUseCase.setSynch(true);
 					executeUseCase(mediaSessionDetailsUseCase);
 					
 					GcmMessage gcmMessage = GcmMessage.find(intent);
@@ -143,6 +186,8 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 							synchMessage.setText(getString(R.string.mediaSelectionThumbsUp, fullName, watchableName));
 						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_DOWN)) {
 							synchMessage.setText(getString(R.string.mediaSelectionThumbsDown, fullName, watchableName));
+						} else if (gcmMessage.equals(GcmMessage.MEDIA_SESSION_LEFT)) {
+							synchMessage.setText(getString(R.string.mediaSessionLeft, fullName));
 						}
 						
 						ViewGroup mediaSelectionsSynch = findView(R.id.mediaSelectionsSynch);
@@ -166,9 +211,24 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(mediaSessionDetailsUseCase, this);
+		onPauseUseCase(mediaSessionLeaveUseCase, mediaSessionLeaveUseCaseListener);
 		
 		if (refreshBroadcastReceiver != null) {
 			LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(refreshBroadcastReceiver);
+		}
+	}
+	
+	/**
+	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com.actionbarsherlock.view.Menu,
+	 *      com.actionbarsherlock.view.MenuInflater)
+	 */
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		if (mediaSession.isExpired()) {
+			MenuItem menuItem = menu.findItem(R.id.editMediaSessionItem);
+			menuItem.setVisible(false);
 		}
 	}
 	
@@ -181,6 +241,22 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			case R.id.editMediaSessionItem:
 				MediaSessionActivity.start(getActivity(), mediaSession.getId());
 				return true;
+			case R.id.leaveMediaSessionItem:
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle(R.string.leaveMediaSession);
+				builder.setMessage(R.string.leaveMediaSessionConfirmation);
+				builder.setPositiveButton(R.string.yes, new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						executeUseCase(mediaSessionLeaveUseCase);
+					}
+				});
+				builder.setNegativeButton(R.string.no, null);
+				builder.show();
+				
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -192,9 +268,9 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	@Override
 	public void onItemSelected(MediaSelection mediaSelection) {
 		if (mediaSelection.getWatchable() != null) {
-			MediaSelectionDialogFragment.show(this, mediaSession, mediaSelection);
+			MediaSelectionDialogFragment.show(this, mediaSession.getId(), mediaSelection, mediaSession.isExpired());
 		} else {
-			MediaSelectionPickerDialogFragment.show(this, mediaSession);
+			MediaSelectionPickerDialogFragment.show(this, mediaSession.getId());
 		}
 	}
 	
@@ -234,12 +310,17 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		
 		// Header
 		TextView header = findView(R.id.header);
-		header.setText(getString(R.string.mediaSelectionsHeader, getWatchablesString()));
+		if (mediaSession.isExpired()) {
+			header.setText(R.string.mediaSelectionsExpiredHeader);
+		} else {
+			header.setText(getString(R.string.mediaSelectionsHeader, getWatchablesString()));
+		}
 		
 		// Footer
 		TextView footer = findView(R.id.mediaSelectionsStarts);
+		
 		String dateTime = MediaSessionAdapter.getDateString(mediaSession);
-		if (StringUtils.isNotEmpty(dateTime)) {
+		if (!mediaSession.isExpired() && StringUtils.isNotEmpty(dateTime)) {
 			footer.setText(getString(R.string.mediaSelectionsStarts, dateTime));
 			footer.setVisibility(View.VISIBLE);
 		} else {
@@ -257,7 +338,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if ((resultCode == Activity.RESULT_OK) && (requestCode == MEDIA_SELECTION_ADDED_REQUEST_CODE)) {
-			mediaSessionDetailsUseCase.setSynch(false);
 			executeUseCase(mediaSessionDetailsUseCase);
 		}
 	}

@@ -33,6 +33,10 @@ public class MediaSelection extends Entity implements Comparable<MediaSelection>
 		this.thumbsDownUsers = Lists.safeArrayList(thumbsDownUsers);
 	}
 	
+	public Boolean isRemovable() {
+		return owner.equals(SecurityContext.get().getUser());
+	}
+	
 	public void thumbsUp() {
 		User user = SecurityContext.get().getUser();
 		thumbsDownUsers.remove(user);

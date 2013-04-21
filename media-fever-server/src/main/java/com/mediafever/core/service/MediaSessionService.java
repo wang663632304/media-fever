@@ -26,6 +26,7 @@ import com.mediafever.core.service.push.gcm.MediaSelectionRemovedGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSelectionThumbsDownGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSelectionThumbsUpGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSessionInvitationGcmMessage;
+import com.mediafever.core.service.push.gcm.MediaSessionLeftGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSessionUpdatedGcmMessage;
 
 /**
@@ -82,6 +83,7 @@ public class MediaSessionService {
 	public void updateMediaSession(Long mediaSessionId, Date date, Date time, List<WatchableType> watchableTypes,
 			List<Long> usersIds, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		mediaSession.checkExpiration();
 		
 		List<Long> currentUsersIds = Lists.newArrayList();
 		for (MediaSessionUser mediaSessionUser : mediaSession.getUsers()) {
@@ -102,8 +104,26 @@ public class MediaSessionService {
 	}
 	
 	@Transactional
+	public void leaveMediaSession(Long mediaSessionId, Long userId) {
+		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		User user = userRepository.get(userId);
+		mediaSession.leave(user);
+		
+		// If all the users left the media session, we remove it
+		if (mediaSession.getUsers().isEmpty()) {
+			mediaSessionRepository.remove(mediaSession);
+		}
+		
+		// Send push notifications
+		sendPushToMediaSessionUsers(mediaSession, userId,
+			new MediaSessionLeftGcmMessage(mediaSession.getId(), user.getFullName(), user.getImageUrl()));
+	}
+	
+	@Transactional
 	public void thumbsUpMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		mediaSession.checkExpiration();
+		
 		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
@@ -132,6 +152,8 @@ public class MediaSessionService {
 	@Transactional
 	public void thumbsDownMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		mediaSession.checkExpiration();
+		
 		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
@@ -147,6 +169,8 @@ public class MediaSessionService {
 	@Transactional
 	public void removeMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		mediaSession.checkExpiration();
+		
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
 			mediaSession.removeSelection(mediaSelection);
@@ -202,7 +226,19 @@ public class MediaSessionService {
 	@Transactional
 	public MediaSelection addSmartSelection(Long id, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
+		mediaSession.checkExpiration();
+		
 		Watchable watchable = getSmartSelection(mediaSession);
+		
+		return addMediaSelection(mediaSession, userId, watchable);
+	}
+	
+	@Transactional
+	public MediaSelection addRandomSelection(Long id, Long userId) {
+		MediaSession mediaSession = mediaSessionRepository.get(id);
+		mediaSession.checkExpiration();
+		
+		Watchable watchable = getRandomSelection(mediaSession);
 		
 		return addMediaSelection(mediaSession, userId, watchable);
 	}
@@ -210,6 +246,8 @@ public class MediaSessionService {
 	@Transactional
 	public MediaSelection addManualSelection(Long id, Long userId, Long watchableId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
+		mediaSession.checkExpiration();
+		
 		Watchable watchable = watchableService.getWatchable(watchableId);
 		
 		return addMediaSelection(mediaSession, userId, watchable);
@@ -224,6 +262,25 @@ public class MediaSessionService {
 				mediaSelection.getWatchable().getName(), user.getFullName(), user.getImageUrl()));
 		
 		return mediaSelection;
+	}
+	
+	private Watchable getRandomSelection(MediaSession mediaSession) {
+		
+		// Pick a random movie or series between the last 10.000 movies or series released
+		Filter filter = new Filter(1, 10000);
+		filter.addValue(CustomFilterKey.WATCHABLE_TYPES, mediaSession.getWatchableTypes());
+		List<Watchable> watchables = watchableService.searchWatchable(filter).getData();
+		int random = IdGenerator.getRandomIntId() % watchables.size();
+		Watchable watchable = watchables.get(random);
+		
+		// Retry if the selection is duplicated
+		for (MediaSelection mediaSelection : mediaSession.getSelections()) {
+			if (mediaSelection.getWatchable().equals(watchable)) {
+				watchable = getSmartSelection(mediaSession);
+				break;
+			}
+		}
+		return watchable;
 	}
 	
 	private Watchable getSmartSelection(MediaSession mediaSession) {

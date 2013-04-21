@@ -298,6 +298,15 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
+	 * @see com.mediafever.service.APIService#addRandomSelection(com.mediafever.domain.session.MediaSession)
+	 */
+	@Override
+	public MediaSelection addRandomSelection(MediaSession mediaSession) {
+		WebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId(), "mediaSelection", "random");
+		return webservice.execute(new MediaSelectionParser(mediaSession.getMediaSessionUsers()));
+	}
+	
+	/**
 	 * @see com.mediafever.service.APIService#addManualSelection(com.mediafever.domain.session.MediaSession,
 	 *      com.mediafever.domain.watchable.Watchable)
 	 */
@@ -403,12 +412,12 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#getMediaSession(com.mediafever.domain.session.MediaSession)
+	 * @see com.mediafever.service.APIService#getMediaSession(java.lang.Long)
 	 */
 	@Override
-	public MediaSession getMediaSession(MediaSession mediaSession) {
-		WebService webservice = newGetService(MEDIA_SESSIONS, mediaSession.getId());
-		return webservice.execute(new MediaSessionParser(mediaSession));
+	public MediaSession getMediaSession(Long mediaSessionId) {
+		WebService webservice = newGetService(MEDIA_SESSIONS, mediaSessionId);
+		return webservice.execute(new MediaSessionParser());
 	}
 	
 	/**
@@ -428,6 +437,15 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	public void updateMediaSession(MediaSession mediaSession) {
 		EntityEnclosingWebService webservice = newPutService(MEDIA_SESSIONS, mediaSession.getId());
 		marshall(webservice, mediaSession);
+		webservice.execute();
+	}
+	
+	/**
+	 * @see com.mediafever.service.APIService#leaveMediaSession(java.lang.Long)
+	 */
+	@Override
+	public void leaveMediaSession(Long mediaSessionId) {
+		WebService webservice = newDeleteService(MEDIA_SESSIONS, mediaSessionId);
 		webservice.execute();
 	}
 	

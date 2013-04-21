@@ -16,7 +16,7 @@ public class AddManualSelectionUseCase extends AbstractApiUseCase<APIService> {
 	
 	private Watchable watchable;
 	private MediaSessionsRepository mediaSessionsRepository;
-	private MediaSession mediaSession;
+	private Long mediaSessionId;
 	private MediaSelection mediaSelection;
 	
 	@Inject
@@ -30,16 +30,10 @@ public class AddManualSelectionUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
+		MediaSession mediaSession = mediaSessionsRepository.get(mediaSessionId);
 		mediaSelection = getApiService().addManualSelection(mediaSession, watchable);
 		mediaSession.addSelection(mediaSelection);
 		mediaSessionsRepository.update(mediaSession);
-	}
-	
-	/**
-	 * @param mediaSession the mediaSession to set
-	 */
-	public void setMediaSession(MediaSession mediaSession) {
-		this.mediaSession = mediaSession;
 	}
 	
 	/**
@@ -47,6 +41,10 @@ public class AddManualSelectionUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	public MediaSelection getMediaSelection() {
 		return mediaSelection;
+	}
+	
+	public void setMediaSessionId(Long mediaSessionId) {
+		this.mediaSessionId = mediaSessionId;
 	}
 	
 	/**

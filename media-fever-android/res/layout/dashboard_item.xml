@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="0dp" android:layout_weight="0.2" android:background="@drawable/contextual_list_selector"
+	android:focusable="true">
+	<ImageView android:id="@+id/dashboardIcon" android:layout_width="@dimen/dashboardIconSize"
+		android:layout_height="@dimen/dashboardIconSize" android:src="@drawable/media_sessions_action_selector"
+		android:layout_marginLeft="@dimen/dashboardPadding" android:layout_marginRight="@dimen/dashboardPadding"
+		android:duplicateParentState="true" android:layout_centerVertical="true" />
+	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:orientation="vertical" android:layout_toRightOf="@+id/dashboardIcon" android:layout_centerVertical="true">
+		<TextView android:id="@+id/dashboardText" android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:text="@string/mediaSessions" android:textSize="@dimen/dashboardTextSize" android:textColor="@android:color/white"
+			android:fontFamily="sans-serif" />
+		<TextView android:id="@+id/dashboardTextDescription" android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:text="@string/mediaSessionsDescription" android:textSize="@dimen/dashboardSmallTextSize"
+			android:textColor="@android:color/white" android:fontFamily="sans-serif-light" />
+	</LinearLayout>
+</RelativeLayout>

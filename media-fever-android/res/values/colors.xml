@@ -5,10 +5,9 @@
 	<color name="blue">#357EC7</color>
 	<color name="green">#4C7D7E</color>
 	<color name="grey">#357EC7</color>
+	<color name="grey2">#44FFFFFF</color>
+	<color name="grey3">#44AAAAAA</color>
 	<color name="lightWhite">#DBDBDB</color>
-
-	<color name="dashboardPressed">#44FFFFFF</color>
-	<color name="dashboardFocused">#44AAAAAA</color>
 
 	<color name="pagerTabBackground">#33b5e5</color>
 

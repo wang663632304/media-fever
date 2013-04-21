@@ -13,6 +13,7 @@ import com.mediafever.core.domain.session.MediaSession;
 public class MediaSessionJsonMarshaller implements Marshaller<MediaSession, JsonMap> {
 	
 	private static final String ID = "id";
+	private static final String EXPIRED = "expired";
 	private static final String DATE = "date";
 	private static final String TIME = "time";
 	private static final String USERS = "users";
@@ -27,6 +28,7 @@ public class MediaSessionJsonMarshaller implements Marshaller<MediaSession, Json
 	public JsonMap marshall(MediaSession mediaSession, MarshallerMode mode, Map<String, String> extras) {
 		JsonMap map = new JsonMap(mode, extras);
 		map.put(ID, mediaSession.getId());
+		map.put(EXPIRED, mediaSession.isExpired());
 		map.put(DATE, mediaSession.getDate());
 		map.put(TIME, mediaSession.getTime());
 		map.put(USERS, mediaSession.getUsers());

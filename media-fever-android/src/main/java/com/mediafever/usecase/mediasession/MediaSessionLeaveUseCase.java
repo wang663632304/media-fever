@@ -2,7 +2,6 @@ package com.mediafever.usecase.mediasession;
 
 import com.google.inject.Inject;
 import com.jdroid.android.usecase.AbstractApiUseCase;
-import com.mediafever.domain.session.MediaSession;
 import com.mediafever.repository.MediaSessionsRepository;
 import com.mediafever.service.APIService;
 
@@ -10,14 +9,13 @@ import com.mediafever.service.APIService;
  * 
  * @author Maxi Rosson
  */
-public class MediaSessionDetailsUseCase extends AbstractApiUseCase<APIService> {
+public class MediaSessionLeaveUseCase extends AbstractApiUseCase<APIService> {
 	
 	private MediaSessionsRepository mediaSessionsRepository;
 	private Long mediaSessionId;
-	private MediaSession mediaSession;
 	
 	@Inject
-	public MediaSessionDetailsUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
+	public MediaSessionLeaveUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
 		super(apiService);
 		this.mediaSessionsRepository = mediaSessionsRepository;
 	}
@@ -27,11 +25,8 @@ public class MediaSessionDetailsUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		mediaSession = mediaSessionsRepository.get(mediaSessionId);
-	}
-	
-	public MediaSession getMediaSession() {
-		return mediaSession;
+		getApiService().leaveMediaSession(mediaSessionId);
+		mediaSessionsRepository.remove(mediaSessionId);
 	}
 	
 	public void setMediaSessionId(Long mediaSessionId) {

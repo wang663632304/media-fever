@@ -79,16 +79,6 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 		
 		avatar = findViewOnActivity(R.id.photo);
 		avatar.setImageContent(user.getImage(), R.drawable.profile_default, MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT);
-		if (PictureDialogFragment.display()) {
-			
-			avatar.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					PictureDialogFragment.show(ProfileFragment.this);
-				}
-			});
-		}
 		
 		final CheckBox changePassword = findView(R.id.changePassword);
 		final TextView confirmPassword = findView(R.id.confirmPassword);
@@ -129,6 +119,17 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	public void onResume() {
 		super.onResume();
 		onResumeUseCase(updateUserProfileUseCase, this);
+		
+		if (PictureDialogFragment.display()) {
+			
+			avatar.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					PictureDialogFragment.show(ProfileFragment.this);
+				}
+			});
+		}
 	}
 	
 	/**
@@ -138,6 +139,16 @@ public class ProfileFragment extends AbstractFragment implements PicturePickerLi
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(updateUserProfileUseCase, this);
+		
+		avatar.setOnClickListener(null);
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#goBackOnError()
+	 */
+	@Override
+	public Boolean goBackOnError() {
+		return false;
 	}
 	
 	/**

@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.ads.AdSize;
+import com.jdroid.android.AndroidUseCaseListener;
+import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.utils.AndroidUtils;
@@ -21,6 +23,7 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 	
 	private FriendRequestsUseCase friendRequestsUseCase;
 	private AcceptFriendRequestUseCase acceptFriendRequestUseCase;
+	private AndroidUseCaseListener acceptFriendRequestUseCaseListener;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -35,6 +38,23 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 		friendRequestsUseCase.setUserId(getUser().getId());
 		
 		acceptFriendRequestUseCase = getInstance(AcceptFriendRequestUseCase.class);
+		acceptFriendRequestUseCaseListener = new AndroidUseCaseListener() {
+			
+			@Override
+			public void onFinishUseCase() {
+				FriendsRequestsFragment.this.onFinishUseCase();
+			}
+			
+			@Override
+			public Boolean goBackOnError() {
+				return false;
+			}
+			
+			@Override
+			protected ActivityIf getActivityIf() {
+				return (ActivityIf)getActivity();
+			}
+		};
 	}
 	
 	/**
@@ -63,7 +83,7 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 	public void onResume() {
 		super.onResume();
 		onResumeUseCase(friendRequestsUseCase, this, UseCaseTrigger.ONCE);
-		onResumeUseCase(acceptFriendRequestUseCase, this);
+		onResumeUseCase(acceptFriendRequestUseCase, acceptFriendRequestUseCaseListener);
 	}
 	
 	/**
@@ -73,7 +93,7 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(friendRequestsUseCase, this);
-		onPauseUseCase(acceptFriendRequestUseCase, this);
+		onPauseUseCase(acceptFriendRequestUseCase, acceptFriendRequestUseCaseListener);
 	}
 	
 	/**

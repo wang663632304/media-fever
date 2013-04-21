@@ -9,12 +9,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.dialog.AbstractDialogFragment;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.session.MediaSelection;
-import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.RemoveMediaSelectionUseCase;
 import com.mediafever.usecase.mediasession.VoteMediaSelectionUseCase;
 
@@ -24,20 +22,24 @@ import com.mediafever.usecase.mediasession.VoteMediaSelectionUseCase;
  */
 public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	
-	private static final String MEDIA_SESSION_EXTRA = "mediaSession";
+	private static final String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
 	private static final String MEDIA_SELECTION_EXTRA = "mediaSelection";
+	private static final String MEDIA_SESSION_EXPIRED_EXTRA = "mediaSessionExpiredExtra";
 	
 	private VoteMediaSelectionUseCase voteMediaSelectionUseCase;
 	private RemoveMediaSelectionUseCase removeMediaSelectionUseCase;
-	private MediaSession mediaSession;
+	private Long mediaSessionId;
 	private MediaSelection mediaSelection;
+	private Boolean mediaSessionExpired;
 	
-	public static void show(Fragment targetFragment, MediaSession mediaSession, MediaSelection mediaSelection) {
+	public static void show(Fragment targetFragment, Long mediaSessionId, MediaSelection mediaSelection,
+			Boolean mediaSessionExpired) {
 		FragmentManager fm = targetFragment.getActivity().getSupportFragmentManager();
 		MediaSelectionDialogFragment dialogFragment = new MediaSelectionDialogFragment();
 		Bundle bundle = new Bundle();
-		bundle.putSerializable(MEDIA_SESSION_EXTRA, mediaSession);
+		bundle.putSerializable(MEDIA_SESSION_ID_EXTRA, mediaSessionId);
 		bundle.putSerializable(MEDIA_SELECTION_EXTRA, mediaSelection);
+		bundle.putSerializable(MEDIA_SESSION_EXPIRED_EXTRA, mediaSessionExpired);
 		dialogFragment.setArguments(bundle);
 		
 		dialogFragment.setTargetFragment(targetFragment, 1);
@@ -51,16 +53,17 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		mediaSessionId = getArgument(MEDIA_SESSION_ID_EXTRA);
 		mediaSelection = getArgument(MEDIA_SELECTION_EXTRA);
-		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
+		mediaSessionExpired = getArgument(MEDIA_SESSION_EXPIRED_EXTRA);
 		
 		voteMediaSelectionUseCase = getInstance(VoteMediaSelectionUseCase.class);
 		voteMediaSelectionUseCase.setMediaSelection(mediaSelection);
-		voteMediaSelectionUseCase.setMediaSession(mediaSession);
+		voteMediaSelectionUseCase.setMediaSessionId(mediaSessionId);
 		
 		removeMediaSelectionUseCase = getInstance(RemoveMediaSelectionUseCase.class);
 		removeMediaSelectionUseCase.setMediaSelection(mediaSelection);
-		removeMediaSelectionUseCase.setMediaSession(mediaSession);
+		removeMediaSelectionUseCase.setMediaSessionId(mediaSessionId);
 	}
 	
 	/**
@@ -90,40 +93,48 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 		Button remove = findView(R.id.remove);
 		Button thumbsUp = findView(R.id.thumbsUp);
 		Button thumbsDown = findView(R.id.thumbsDown);
-		if (mediaSelection.getOwner().equals(SecurityContext.get().getUser())) {
-			remove.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					executeUseCase(removeMediaSelectionUseCase);
-				}
-			});
-			remove.setVisibility(View.VISIBLE);
-			
+		
+		if (mediaSessionExpired) {
+			remove.setVisibility(View.GONE);
 			thumbsUp.setVisibility(View.GONE);
 			thumbsDown.setVisibility(View.GONE);
+			
 		} else {
-			remove.setVisibility(View.GONE);
-			
-			thumbsUp.setOnClickListener(new OnClickListener() {
+			if (mediaSelection.isRemovable()) {
+				remove.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						executeUseCase(removeMediaSelectionUseCase);
+					}
+				});
+				remove.setVisibility(View.VISIBLE);
 				
-				@Override
-				public void onClick(View v) {
-					voteMediaSelectionUseCase.setThumbsUp(true);
-					executeUseCase(voteMediaSelectionUseCase);
-				}
-			});
-			thumbsUp.setVisibility(mediaSelection.isThumbsUp() ? View.GONE : View.VISIBLE);
-			
-			thumbsDown.setOnClickListener(new OnClickListener() {
+				thumbsUp.setVisibility(View.GONE);
+				thumbsDown.setVisibility(View.GONE);
+			} else {
+				remove.setVisibility(View.GONE);
 				
-				@Override
-				public void onClick(View v) {
-					voteMediaSelectionUseCase.setThumbsUp(false);
-					executeUseCase(voteMediaSelectionUseCase);
-				}
-			});
-			thumbsDown.setVisibility(mediaSelection.isThumbsDown() ? View.GONE : View.VISIBLE);
+				thumbsUp.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						voteMediaSelectionUseCase.setThumbsUp(true);
+						executeUseCase(voteMediaSelectionUseCase);
+					}
+				});
+				thumbsUp.setVisibility(mediaSelection.isThumbsUp() ? View.GONE : View.VISIBLE);
+				
+				thumbsDown.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						voteMediaSelectionUseCase.setThumbsUp(false);
+						executeUseCase(voteMediaSelectionUseCase);
+					}
+				});
+				thumbsDown.setVisibility(mediaSelection.isThumbsDown() ? View.GONE : View.VISIBLE);
+			}
 		}
 		
 		getDialog().setTitle(mediaSelection.getWatchable().getName());

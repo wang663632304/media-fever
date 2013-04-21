@@ -8,6 +8,7 @@
 	<string name="series">Series</string>
 	<string name="moviesAndSeries">Movies &amp; Series</string>
 	<string name="whatToWatch">What to Watch</string>
+	<string name="whatToWatchDescription">What we offer you to watch</string>
 	<string name="selected">%1$s selected</string>
 	<string name="logout">Logout</string>
 	<string name="accept">Accept</string>
@@ -77,14 +78,17 @@
 
 	<!-- WishList -->
 	<string name="wishList">Wish List</string>
+	<string name="wishListDescription">Movies &amp; series on your wish list</string>
 	<string name="noResultsWishList">There are no items in your Wish List</string>
 
 	<!-- Watched -->
 	<string name="watched">Watched</string>
+	<string name="watchedDescription">Your watched movies &amp; series</string>
 	<string name="noResultsWatched">There are no items in your Watched List</string>
 
 	<!-- Friends -->
 	<string name="friends">Friends</string>
+	<string name="friendsDescription">Connect with your friends</string>
 	<string name="noResultsFriends">You can invite friends from Facebook</string>
 	<string name="remove">Remove</string>
 	<string name="friendRemoved">Your friend was successfully removed</string>
@@ -105,12 +109,15 @@
 
 	<!-- Media Sessions -->
 	<string name="mediaSessions">Media Sessions</string>
+	<string name="mediaSessionsDescription">Movies &amp; series events with friends</string>
 	<string name="newMediaSession">New Media Session</string>
 	<string name="noResultsMediaSessions">There are no media sessions</string>
 	<string name="pendingSessions">Pending Sessions</string>
 	<string name="acceptedSessions">Accepted Sessions</string>
 	<string name="addMediaSession">Add Media Session</string>
 	<string name="editMediaSession">Edit Media Session</string>
+	<string name="leaveMediaSession">Leave Media Session</string>
+	<string name="leaveMediaSessionConfirmation">Do you want to leave this media session?</string>
 	<string name="sessionType">Media type</string>
 	<string name="sessionDate">Session date</string>
 	<string name="anyDate">Any Date</string>
@@ -119,6 +126,7 @@
 	<string name="mediaSessionCreatedTitle">Media Session created</string>
 	<string name="mediaSessionCreatedDescription">Now you and your friends can pick the %1$s and start voting</string>
 	<string name="mediaSelectionsHeader">Pick the %1$s you want to add to this media session</string>
+	<string name="mediaSelectionsExpiredHeader">This media session is expired</string>
 	<string name="mediaSelectionsStarts">Starts: %1$s</string>
 	<string name="moviesOrSeries">movies or series</string>
 	<string name="addNewSelection">+</string>
@@ -128,6 +136,8 @@
 	<string name="selection">Selection</string>
 	<string name="manualSelection">Manual Selection</string>
 	<string name="manualSelectionDescription">You decide which is the next movie or series to watch.</string>
+	<string name="randomSelection">Random Selection</string>
+	<string name="randomSelectionDescription">Select a movie or series randomly.</string>
 	<string name="smartSelection">SMART Selection</string>
 	<string name="smartSelectionDescription">Let us decide for you which is the best movie or series to watch according to your preferences.
 	</string>
@@ -136,6 +146,11 @@
 	<string name="mediaSelectionRemoved">%1$s removed %2$s</string>
 	<string name="mediaSelectionThumbsUp">%1$s thumbs up %2$s</string>
 	<string name="mediaSelectionThumbsDown">%1$s thumbs down %2$s</string>
+	<string name="mediaSessionLeft">%1$s left this media session</string>
+	<string name="mediaSessionExpired">This media session is expired. You can\'t edit or vote.</string>
+	<string name="mediaSessionCreationExpired">You can\'t create a media session with a past date.</string>
+	<string name="mediaSessionEditionExpired">You can\'t edit a media session to a past date.</string>
+	<string name="mediaSessionWinner">And the winner is …</string>
 
 	<!-- Notifications -->
 	<string name="mediaSessionInvitationTickerText">%1$s invited you to a media session</string>

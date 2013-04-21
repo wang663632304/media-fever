@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.listener.LaunchOnClickListener;
 import com.mediafever.R;
-import com.mediafever.android.ui.friends.FriendsActivity;
-import com.mediafever.android.ui.session.MediaSessionListActivity;
-import com.mediafever.android.ui.watchable.watched.WatchedListActivity;
-import com.mediafever.android.ui.watchable.whattowatch.WhatToWatchActivity;
-import com.mediafever.android.ui.watchable.wishlist.WishListActivity;
+import com.mediafever.android.HomeItem;
 
 /**
  * 
@@ -35,10 +33,12 @@ public class DashboardFragment extends AbstractFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		findView(R.id.friends).setOnClickListener(new LaunchOnClickListener(FriendsActivity.class));
-		findView(R.id.wishList).setOnClickListener(new LaunchOnClickListener(WishListActivity.class));
-		findView(R.id.watched).setOnClickListener(new LaunchOnClickListener(WatchedListActivity.class));
-		findView(R.id.mediaSessions).setOnClickListener(new LaunchOnClickListener(MediaSessionListActivity.class));
-		findView(R.id.whatToWatch).setOnClickListener(new LaunchOnClickListener(WhatToWatchActivity.class));
+		for (HomeItem homeItem : HomeItem.values()) {
+			View item = findView(homeItem.getViewId());
+			item.setOnClickListener(new LaunchOnClickListener(homeItem.getActivityClass()));
+			((ImageView)item.findViewById(R.id.dashboardIcon)).setImageResource(homeItem.getIconResource());
+			((TextView)item.findViewById(R.id.dashboardText)).setText(homeItem.getNameResource());
+			((TextView)item.findViewById(R.id.dashboardTextDescription)).setText(homeItem.getDescriptionResource());
+		}
 	}
 }

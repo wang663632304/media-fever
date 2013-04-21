@@ -11,15 +11,14 @@ import com.mediafever.service.APIService;
  * 
  * @author Maxi Rosson
  */
-public class VoteMediaSelectionUseCase extends AbstractApiUseCase<APIService> {
+public class AddRandomSelectionUseCase extends AbstractApiUseCase<APIService> {
 	
 	private MediaSessionsRepository mediaSessionsRepository;
 	private Long mediaSessionId;
 	private MediaSelection mediaSelection;
-	private Boolean thumbsUp;
 	
 	@Inject
-	public VoteMediaSelectionUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
+	public AddRandomSelectionUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
 		super(apiService);
 		this.mediaSessionsRepository = mediaSessionsRepository;
 	}
@@ -29,31 +28,21 @@ public class VoteMediaSelectionUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		
 		MediaSession mediaSession = mediaSessionsRepository.get(mediaSessionId);
-		if (thumbsUp) {
-			getApiService().thumbsUpMediaSelection(mediaSession, mediaSelection);
-			mediaSession.thumbsUp(mediaSelection.getWatchable());
-		} else {
-			getApiService().thumbsDownMediaSelection(mediaSession, mediaSelection);
-			mediaSession.thumbsDown(mediaSelection.getWatchable());
-		}
+		mediaSelection = getApiService().addRandomSelection(mediaSession);
+		mediaSession.addSelection(mediaSelection);
 		mediaSessionsRepository.update(mediaSession);
-	}
-	
-	public void setThumbsUp(Boolean thumbsUp) {
-		this.thumbsUp = thumbsUp;
-	}
-	
-	/**
-	 * @param mediaSelection the mediaSelection to set
-	 */
-	public void setMediaSelection(MediaSelection mediaSelection) {
-		this.mediaSelection = mediaSelection;
 	}
 	
 	public void setMediaSessionId(Long mediaSessionId) {
 		this.mediaSessionId = mediaSessionId;
+	}
+	
+	/**
+	 * @return the mediaSelection
+	 */
+	public MediaSelection getMediaSelection() {
+		return mediaSelection;
 	}
 	
 }

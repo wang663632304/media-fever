@@ -25,11 +25,15 @@ public class MediaSelectionAdapter extends BaseHolderArrayAdapter<MediaSelection
 	
 	@Override
 	protected void fillHolderFromItem(MediaSelection mediaSelection, MediaSelectionHolder holder) {
+		MediaSelectionAdapter.doFillHolderFromItem(mediaSelection, holder);
+	}
+	
+	public static void doFillHolderFromItem(MediaSelection mediaSelection, MediaSelectionHolder holder) {
 		Watchable watchable = mediaSelection.getWatchable();
 		if (watchable != null) {
-			holder.name.setText(mediaSelection.getWatchable().getName());
+			holder.name.setText(watchable.getName());
 			holder.name.setVisibility(View.VISIBLE);
-			holder.image.setImageContent(mediaSelection.getWatchable().getImage(), R.drawable.watchable_default);
+			holder.image.setImageContent(watchable.getImage(), R.drawable.watchable_default);
 			holder.image.setVisibility(View.VISIBLE);
 			
 			holder.userContainer.setVisibility(View.VISIBLE);
