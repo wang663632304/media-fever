@@ -15,8 +15,8 @@
 	<dimen name="mediaSessionSelectionWidth">50dp</dimen>
 
 	<!-- Dashboard -->
-	<dimen name="dashboardPadding">5dp</dimen>
-	<dimen name="dashboardIconSize">40dp</dimen>
+	<dimen name="dashboardIconMargin">4dp</dimen>
+	<dimen name="dashboardTextMargin">4dp</dimen>
 
 	<!-- Watchables -->
 

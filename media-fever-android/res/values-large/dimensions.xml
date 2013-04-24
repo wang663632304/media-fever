@@ -8,8 +8,8 @@
 	<dimen name="dashboardTextSize">24sp</dimen>
 
 	<!-- Dashboard -->
-	<dimen name="dashboardPadding">5dp</dimen>
-	<dimen name="dashboardIconSize">80dp</dimen>
+	<dimen name="dashboardIconMargin">16dp</dimen>
+	<dimen name="dashboardTextMargin">20dp</dimen>
 
 	<!-- Watchables -->
 

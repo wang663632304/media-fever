@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-	android:layout_height="0dp" android:layout_weight="0.2" android:background="@drawable/contextual_list_selector"
-	android:focusable="true">
-	<ImageView android:id="@+id/dashboardIcon" android:layout_width="@dimen/dashboardIconSize"
-		android:layout_height="@dimen/dashboardIconSize" android:src="@drawable/media_sessions_action_selector"
-		android:layout_marginLeft="@dimen/dashboardPadding" android:layout_marginRight="@dimen/dashboardPadding"
-		android:duplicateParentState="true" android:layout_centerVertical="true" />
+	android:layout_height="wrap_content" android:background="@drawable/contextual_list_selector" android:focusable="true">
+	<ImageView android:id="@+id/dashboardIcon" android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:src="@drawable/media_sessions_action_selector" android:layout_marginLeft="@dimen/dashboardIconMargin"
+		android:layout_marginRight="@dimen/dashboardIconMargin" android:duplicateParentState="true"
+		android:layout_centerVertical="true" />
 	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-		android:orientation="vertical" android:layout_toRightOf="@+id/dashboardIcon" android:layout_centerVertical="true">
+		android:orientation="vertical" android:layout_toRightOf="@+id/dashboardIcon" android:layout_centerVertical="true"
+		android:layout_marginTop="@dimen/dashboardTextMargin" android:layout_marginBottom="@dimen/dashboardTextMargin">
 		<TextView android:id="@+id/dashboardText" android:layout_height="wrap_content" android:layout_width="wrap_content"
 			android:text="@string/mediaSessions" android:textSize="@dimen/dashboardTextSize" android:textColor="@android:color/white"
 			android:fontFamily="sans-serif" />
