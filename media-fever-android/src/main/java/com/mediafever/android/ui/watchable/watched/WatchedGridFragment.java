@@ -77,7 +77,6 @@ public class WatchedGridFragment extends AbstractGridFragment<Watchable> {
 			@Override
 			public void run() {
 				setListAdapter(new WatchableAdapter(getActivity(), watchedUseCase.getWatchables()));
-				AnimationUtils.makeViewGroupAnimation(getGridView());
 				dismissLoading();
 			}
 		});

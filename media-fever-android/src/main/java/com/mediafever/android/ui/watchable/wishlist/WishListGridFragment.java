@@ -77,7 +77,6 @@ public class WishListGridFragment extends AbstractGridFragment<Watchable> {
 			@Override
 			public void run() {
 				setListAdapter(new WatchableAdapter(getActivity(), wishListUseCase.getWatchables()));
-				AnimationUtils.makeViewGroupAnimation(getGridView());
 				dismissLoading();
 			}
 		});

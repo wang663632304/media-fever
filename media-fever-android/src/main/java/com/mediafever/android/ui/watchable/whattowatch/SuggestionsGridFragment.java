@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.fragment.AbstractGridFragment;
-import com.jdroid.android.utils.AnimationUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
@@ -69,7 +68,6 @@ public class SuggestionsGridFragment extends AbstractGridFragment<Watchable> {
 			@Override
 			public void run() {
 				setListAdapter(new WatchableAdapter(getActivity(), suggestionsUseCase.getWatchables()));
-				AnimationUtils.makeViewGroupAnimation(getGridView());
 				dismissLoading();
 			}
 		});

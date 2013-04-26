@@ -48,7 +48,7 @@ public class AndroidBaseActivity extends BaseActivity {
 	}
 	
 	private Boolean isLeftNavBarEnabled() {
-		return AndroidUtils.isGoogleTV() || (AndroidUtils.isXLargeScreenOrBigger() && !AndroidUtils.isPreHoneycomb());
+		return AndroidUtils.isGoogleTV();
 	}
 	
 	/**
@@ -86,9 +86,7 @@ public class AndroidBaseActivity extends BaseActivity {
 		leftNavBar.setTitle(getActivity().getTitle());
 		leftNavBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		leftNavBar.flipOption(ActionBar.DISPLAY_SHOW_TITLE);
-		if (AndroidUtils.isGoogleTV()) {
-			leftNavBar.flipOption(LeftNavBar.DISPLAY_AUTO_EXPAND);
-		}
+		leftNavBar.flipOption(LeftNavBar.DISPLAY_AUTO_EXPAND);
 		leftNavBar.flipOption(LeftNavBar.DISPLAY_USE_LOGO_WHEN_EXPANDED);
 		
 		for (HomeItem leftAction : HomeItem.values()) {

@@ -10,7 +10,7 @@
 				android:orientation="horizontal" android:baselineAligned="false">
 
 				<LinearLayout android:layout_weight="0.5" android:layout_width="match_parent" android:layout_height="wrap_content"
-					android:orientation="vertical">
+					android:orientation="vertical" android:layout_marginRight="8dp">
 					<TextView style="@style/textView" android:text="@string/firstName" />
 					<EditText android:id="@+id/firstName" style="@style/editText" android:inputType="text">
 						<requestFocus />
@@ -18,7 +18,7 @@
 				</LinearLayout>
 
 				<LinearLayout android:layout_weight="0.5" android:layout_width="match_parent" android:layout_height="wrap_content"
-					android:orientation="vertical">
+					android:orientation="vertical" android:layout_marginLeft="8dp">
 					<TextView style="@style/textView" android:text="@string/lastName" />
 					<EditText android:id="@+id/lastName" style="@style/editText" android:inputType="text" />
 				</LinearLayout>
@@ -28,13 +28,13 @@
 				android:orientation="horizontal" android:baselineAligned="false">
 
 				<LinearLayout android:layout_weight="0.5" android:layout_width="match_parent" android:layout_height="wrap_content"
-					android:orientation="vertical">
+					android:orientation="vertical" android:layout_marginRight="8dp">
 					<TextView style="@style/textView" android:text="@string/email" />
 					<EditText android:id="@+id/email" style="@style/editText" android:inputType="textEmailAddress" />
 				</LinearLayout>
 
 				<LinearLayout android:layout_weight="0.5" android:layout_width="match_parent" android:layout_height="wrap_content"
-					android:orientation="vertical">
+					android:orientation="vertical" android:layout_marginLeft="8dp">
 					<TextView style="@style/textView" android:text="@string/confirmEmail" />
 					<EditText android:id="@+id/confirmEmail" style="@style/editText" android:inputType="textEmailAddress" />
 				</LinearLayout>
@@ -43,13 +43,13 @@
 			<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 				android:orientation="horizontal" android:baselineAligned="false">
 				<LinearLayout android:layout_weight="0.5" android:layout_width="match_parent" android:layout_height="wrap_content"
-					android:orientation="vertical">
+					android:orientation="vertical" android:layout_marginRight="8dp">
 					<TextView style="@style/textView" android:text="@string/password" />
 					<EditText android:id="@+id/password" style="@style/editText" android:inputType="textPassword" />
 				</LinearLayout>
 
 				<LinearLayout android:layout_weight="0.5" android:layout_width="match_parent" android:layout_height="wrap_content"
-					android:orientation="vertical">
+					android:orientation="vertical" android:layout_marginLeft="8dp">
 					<TextView style="@style/textView" android:text="@string/confirmPassword" />
 					<EditText android:id="@+id/confirmPassword" style="@style/editText" android:inputType="textPassword" />
 				</LinearLayout>
