@@ -6,18 +6,18 @@
 		<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 			android:orientation="vertical">
 
-			<TextView style="@style/textView" android:text="@string/firstName" />
+			<TextView style="@style/formLabel" android:text="@string/firstName" />
 			<EditText android:id="@+id/firstName" style="@style/editText" android:inputType="textPersonName"
 				android:nextFocusDown="@+id/lastName" />
 
-			<TextView style="@style/textView" android:text="@string/lastName" />
+			<TextView style="@style/formLabel" android:text="@string/lastName" />
 			<EditText android:id="@+id/lastName" style="@style/editText" android:inputType="textPersonName"
 				android:nextFocusDown="@+id/email" />
 
-			<TextView style="@style/textView" android:text="@string/email" />
+			<TextView style="@style/formLabel" android:text="@string/email" />
 			<EditText android:id="@+id/email" style="@style/editText" android:inputType="textEmailAddress" />
 
-			<TextView style="@style/textView" android:text="@string/confirmEmail" />
+			<TextView style="@style/formLabel" android:text="@string/confirmEmail" />
 			<EditText android:id="@+id/confirmEmail" style="@style/editText" android:inputType="textEmailAddress"
 				android:nextFocusDown="@+id/changePassword" />
 
@@ -32,10 +32,10 @@
 			<LinearLayout android:id="@+id/passwordContainer" android:layout_width="match_parent"
 				android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
 
-				<TextView style="@style/textView" android:text="@string/password" />
+				<TextView style="@style/formLabel" android:text="@string/password" />
 				<EditText android:id="@+id/password" style="@style/editText" android:inputType="textPassword" />
 
-				<TextView style="@style/textView" android:text="@string/confirmPassword" />
+				<TextView style="@style/formLabel" android:text="@string/confirmPassword" />
 				<EditText android:id="@+id/confirmPassword" style="@style/editText" android:inputType="textPassword" />
 			</LinearLayout>
 
@@ -52,8 +52,8 @@
 					android:layout_marginLeft="10dp" android:layout_alignParentRight="true" android:layout_centerInParent="true" />
 			</RelativeLayout>
 
-			<Button android:id="@+id/save" style="@style/defaultLargeButton" android:text="@string/save"
-				android:layout_gravity="center_horizontal" android:minWidth="140dp" />
+			<Button android:id="@+id/save" style="@style/largeButton" android:text="@string/save" android:layout_gravity="center_horizontal"
+				android:minWidth="140dp" />
 
 		</LinearLayout>
 	</ScrollView>

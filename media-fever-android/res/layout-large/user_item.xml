@@ -4,7 +4,7 @@
 
 	<com.jdroid.android.images.CustomImageView android:id="@+id/image"
 		android:layout_height="match_parent" android:layout_width="match_parent" android:scaleType="centerCrop" android:src="@drawable/user_default"
-		android:background="@color/white" />
+		android:background="@android:color/white" />
 
 	<TextView android:id="@+id/fullName" android:layout_height="wrap_content" android:layout_width="match_parent"
 		android:textStyle="bold" android:textSize="16sp" android:textColor="@android:color/white" android:background="@color/transluscentGrey"

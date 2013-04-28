@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+	<dimen name="rowImageDim">50dp</dimen>
+
+	<!-- Dashboard -->
+
 	<dimen name="dashboardSmallTextSize">11sp</dimen>
 	<dimen name="dashboardTextSize">16sp</dimen>
+	<dimen name="dashboardIconMargin">4dp</dimen>
+	<dimen name="dashboardTextMargin">4dp</dimen>
 
-	<dimen name="defaultTextSize">18sp</dimen>
-	<dimen name="rowImageDim">50dp</dimen>
+	<!-- Media Session -->
 
 	<dimen name="mediaSessionUserImageDim">40dp</dimen>
 	<dimen name="mediaSessionSelectionHeight">80dp</dimen>
 	<dimen name="mediaSessionSelectionWidth">50dp</dimen>
-
-	<!-- Dashboard -->
-	<dimen name="dashboardIconMargin">4dp</dimen>
-	<dimen name="dashboardTextMargin">4dp</dimen>
 
 	<!-- Watchables -->
 
@@ -27,10 +28,12 @@
 	<dimen name="watchableOverviewWidth">90dp</dimen>
 
 	<!-- Left Nav Bar -->
+
 	<dimen name="left_nav_expanded_width">230dp</dimen>
 	<dimen name="left_nav_expanded_apparent_width">218dp</dimen>
 
 	<!-- CoverFlow -->
+
 	<dimen name="coverFlowWidth">90dp</dimen>
 	<dimen name="coverFlowHeight">130dp</dimen>
 
