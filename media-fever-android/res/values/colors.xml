@@ -2,14 +2,11 @@
 <resources>
 
 	<color name="transluscentGrey">#AA000000</color>
-	<color name="blue">#357EC7</color>
-	<color name="green">#4C7D7E</color>
-	<color name="grey">#357EC7</color>
+	<color name="grey1">#DBDBDB</color>
 	<color name="grey2">#44FFFFFF</color>
 	<color name="grey3">#44AAAAAA</color>
-	<color name="lightWhite">#DBDBDB</color>
-
-	<color name="pagerTabBackground">#33b5e5</color>
-
+	<color name="lightBlue">#33B5E5</color>
+	<color name="blue">#357EC7</color>
+	<color name="green">#4C7D7E</color>
 
 </resources>

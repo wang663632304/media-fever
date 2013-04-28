@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<dimen name="smallTextSize">16sp</dimen>
-	<dimen name="normalTextSize">20sp</dimen>
+	<!-- Dashboard -->
 
 	<dimen name="dashboardSmallTextSize">16sp</dimen>
 	<dimen name="dashboardTextSize">24sp</dimen>
-
-	<!-- Dashboard -->
 	<dimen name="dashboardIconMargin">16dp</dimen>
 	<dimen name="dashboardTextMargin">20dp</dimen>
 
@@ -20,6 +17,7 @@
 	<dimen name="watchableOverviewWidth">180dp</dimen>
 
 	<!-- CoverFlow -->
+
 	<dimen name="coverFlowWidth">120dp</dimen>
 	<dimen name="coverFlowHeight">180dp</dimen>
 

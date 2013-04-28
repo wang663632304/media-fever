@@ -9,23 +9,23 @@
 			<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/logo_big"
 				android:layout_gravity="center_horizontal" android:layout_marginTop="15dp" android:layout_marginBottom="15dp" />
 
-			<TextView style="@style/textView" android:text="@string/email" />
+			<TextView style="@style/formLabel" android:text="@string/email" />
 			<EditText android:id="@+id/email" style="@style/editText" android:inputType="textEmailAddress" />
 
-			<TextView style="@style/textView" android:text="@string/password" />
+			<TextView style="@style/formLabel" android:text="@string/password" />
 			<EditText android:id="@+id/password" style="@style/editText" android:inputType="textPassword" />
 
 			<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 				android:orientation="horizontal" android:gravity="center_horizontal" android:layout_marginTop="10dp">
 
-				<Button android:id="@+id/login" style="@style/defaultButton" android:text="@string/login"
-					android:layout_gravity="center_horizontal" android:minWidth="140dp" />
+				<Button android:id="@+id/login" style="@style/button" android:text="@string/login" android:layout_gravity="center_horizontal"
+					android:minWidth="140dp" />
 
-				<Button android:id="@+id/signUp" style="@style/defaultButton" android:text="@string/signUp"
-					android:layout_gravity="center_horizontal" android:minWidth="140dp" />
+				<Button android:id="@+id/signUp" style="@style/button" android:text="@string/signUp" android:layout_gravity="center_horizontal"
+					android:minWidth="140dp" />
 			</LinearLayout>
 
-			<Button android:id="@+id/buyFullApp" style="@style/defaultLargeButton" android:text="@string/buyFullApp"
+			<Button android:id="@+id/buyFullApp" style="@style/largeButton" android:text="@string/buyFullApp"
 				android:layout_gravity="center_horizontal" android:minWidth="140dp" />
 
 		</LinearLayout>

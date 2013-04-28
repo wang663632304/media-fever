@@ -13,6 +13,7 @@ import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.exception.ExceptionHandler;
 import com.jdroid.android.fragment.BaseFragment;
 import com.jdroid.android.utils.NotificationUtils;
+import com.mediafever.R;
 import com.mediafever.android.exception.AndroidExceptionHandler;
 import com.mediafever.android.service.DisableDeviceService;
 import com.mediafever.android.service.EnableDeviceService;
@@ -131,5 +132,13 @@ public class AndroidApplication extends AbstractApplication {
 	@Override
 	public Boolean isGcmEnabled() {
 		return true;
+	}
+	
+	/**
+	 * @see com.jdroid.android.AbstractApplication#getAppName()
+	 */
+	@Override
+	public String getAppName() {
+		return getString(getAndroidApplicationContext().isFreeApp() ? R.string.appNameFree : R.string.appName);
 	}
 }

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
 	android:layout_width="match_parent" android:layout_height="match_parent" android:padding="10dp">
 
-	<Button android:id="@+id/buyFullApp" android:layout_width="200dp" style="@style/defaultButton" android:text="@string/buyFullApp"
+	<Button android:id="@+id/buyFullApp" android:layout_width="200dp" style="@style/button" android:text="@string/buyFullApp"
 		android:layout_gravity="center_horizontal" android:layout_marginTop="5dp" />
 
 </LinearLayout>

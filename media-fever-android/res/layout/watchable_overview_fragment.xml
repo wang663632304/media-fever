@@ -8,8 +8,7 @@
 
 			<TextView android:id="@+id/name" android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:textStyle="bold" android:textSize="22sp" style="@style/whiteShadowText" />
-			<TextView android:id="@+id/tagline" android:layout_height="wrap_content" android:layout_width="wrap_content"
-				android:textStyle="bold" android:textSize="@dimen/defaultTextSize" android:visibility="gone" />
+			<TextView android:id="@+id/tagline" style="@style/normalText" android:textStyle="bold" android:visibility="gone" />
 
 			<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 				android:orientation="horizontal" android:paddingTop="10dp">
@@ -21,8 +20,7 @@
 				</RelativeLayout>
 				<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 					android:orientation="vertical" android:paddingLeft="10dp">
-					<TextView android:id="@+id/releaseYear" android:layout_height="wrap_content" android:layout_width="wrap_content"
-						android:textStyle="bold" android:textSize="@dimen/defaultTextSize" />
+					<TextView android:id="@+id/releaseYear" style="@style/normalText" android:textStyle="bold" />
 					<Button android:id="@+id/watchedToogle" android:layout_height="wrap_content" android:layout_width="wrap_content"
 						android:layout_marginTop="5dp" android:minWidth="160dp" android:text="@string/watched" android:drawableRight="@drawable/accept" />
 					<Button android:id="@+id/wishListToogle" android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -32,20 +30,17 @@
 
 			<TextView android:id="@+id/actorsTitle" android:layout_height="wrap_content" android:layout_width="match_parent"
 				style="@style/watchableTitle" android:text="@string/actors" />
-			<TextView android:id="@+id/actors" android:layout_height="wrap_content" android:layout_width="wrap_content"
-				android:textSize="@dimen/defaultTextSize" />
+			<TextView android:id="@+id/actors" style="@style/normalText" />
 
 			<TextView android:id="@+id/genresTitle" android:layout_height="wrap_content" android:layout_width="match_parent"
 				style="@style/watchableTitle" android:text="@string/genres" />
-			<TextView android:id="@+id/genres" android:layout_height="wrap_content" android:layout_width="wrap_content"
-				android:textSize="@dimen/defaultTextSize" />
+			<TextView android:id="@+id/genres" style="@style/normalText" />
 
 			<TextView android:id="@+id/overviewTitle" android:layout_height="wrap_content" android:layout_width="match_parent"
 				style="@style/watchableTitle" android:text="@string/overview" />
-			<TextView android:id="@+id/overview" android:layout_height="wrap_content" android:layout_width="wrap_content"
-				android:textSize="@dimen/defaultTextSize" />
+			<TextView android:id="@+id/overview" style="@style/normalText" />
 
-			<Button android:id="@+id/viewTrailerButton" style="@style/defaultButton" android:text="@string/viewTrailer"
+			<Button android:id="@+id/viewTrailerButton" style="@style/button" android:text="@string/viewTrailer"
 				android:layout_gravity="center_horizontal" android:layout_marginTop="10dp" android:visibility="gone" />
 
 		</LinearLayout>
