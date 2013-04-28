@@ -14,9 +14,11 @@ import android.widget.SearchView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.BaseActivity;
 import com.jdroid.android.leftnavbar.LeftNavBar;
+import com.jdroid.android.share.ShareIntent;
 import com.jdroid.android.tabs.TabAction;
 import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
@@ -144,8 +146,7 @@ public class AndroidBaseActivity extends BaseActivity {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void doOnCreateOptionsMenu(Menu menu) {
 		super.doOnCreateOptionsMenu(menu);
-		if (getActivityIf().requiresAuthentication()
-				&& (AndroidUtils.isGoogleTV() || AndroidUtils.isXLargeScreenOrBigger())) {
+		if (getActivityIf().requiresAuthentication() && AndroidUtils.isGoogleTV()) {
 			SearchView searchView = (SearchView)menu.findItem(R.id.searchItem).getActionView();
 			searchView.setFocusable(true);
 			searchView.setSubmitButtonEnabled(true);
@@ -165,6 +166,13 @@ public class AndroidBaseActivity extends BaseActivity {
 		switch (item.getItemId()) {
 			case R.id.searchItem:
 				getActivity().onSearchRequested();
+				return true;
+			case R.id.shareItem:
+				String appName = AbstractApplication.get().getAppName();
+				String shareEmailSubject = getActivity().getString(R.string.shareSubject);
+				String shareEmailContent = getActivity().getString(R.string.shareContent, AndroidUtils.getPackageName());
+				
+				ShareIntent.share(appName, shareEmailSubject, shareEmailContent);
 				return true;
 			case R.id.aboutItem:
 				new AboutDialogFragment().show(getActivity());
