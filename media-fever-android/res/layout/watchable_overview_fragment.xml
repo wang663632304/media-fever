@@ -28,16 +28,16 @@
 				</LinearLayout>
 			</LinearLayout>
 
-			<TextView android:id="@+id/actorsTitle" android:layout_height="wrap_content" android:layout_width="match_parent"
-				style="@style/watchableTitle" android:text="@string/actors" />
+			<TextView android:id="@+id/actorsTitle" style="@style/sectionTitle" android:text="@string/actors"
+				android:layout_marginTop="8dp" />
 			<TextView android:id="@+id/actors" style="@style/normalText" />
 
-			<TextView android:id="@+id/genresTitle" android:layout_height="wrap_content" android:layout_width="match_parent"
-				style="@style/watchableTitle" android:text="@string/genres" />
+			<TextView android:id="@+id/genresTitle" style="@style/sectionTitle" android:text="@string/genres"
+				android:layout_marginTop="8dp" />
 			<TextView android:id="@+id/genres" style="@style/normalText" />
 
-			<TextView android:id="@+id/overviewTitle" android:layout_height="wrap_content" android:layout_width="match_parent"
-				style="@style/watchableTitle" android:text="@string/overview" />
+			<TextView android:id="@+id/overviewTitle" style="@style/sectionTitle" android:text="@string/overview"
+				android:layout_marginTop="8dp" />
 			<TextView android:id="@+id/overview" style="@style/normalText" />
 
 			<Button android:id="@+id/viewTrailerButton" style="@style/button" android:text="@string/viewTrailer"

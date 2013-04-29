@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<ListView android:id="@+id/android:list" style="@style/defaultList" android:layout_above="@+id/adViewContainer" />
+
+	<ScrollView android:id="@id/android:empty" android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:layout_above="@+id/adViewContainer" android:layout_margin="12dp" android:visibility="gone">
+
+		<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:orientation="vertical" android:padding="10dp">
+
+			<TextView style="@style/normalText" android:textSize="@dimen/normalTextSize" android:text="@string/noResultsMediaSessions" />
+
+			<TextView style="@style/sectionTitle" android:text="@string/mediaSessionWhatIsTitle"
+				android:layout_marginTop="24dp" android:layout_marginBottom="4dp" />
+			<TextView style="@style/normalText" android:text="@string/mediaSessionWhatIsDescription" />
+
+			<TextView style="@style/sectionTitle" android:text="@string/mediaSessionHowToCreateTitle"
+				android:layout_marginTop="24dp" android:layout_marginBottom="4dp" />
+			<TextView style="@style/normalText" android:text="@string/mediaSessionHowToCreateDescription" />
+
+		</LinearLayout>
+	</ScrollView>
+
+	<include layout="@layout/ad_view_container" />
+
+</RelativeLayout>
+
+

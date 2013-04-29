@@ -9,7 +9,7 @@ import com.google.ads.AdSize;
 import com.jdroid.android.domain.User;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.jdroid.android.utils.AndroidUtils;
-import com.jdroid.android.view.ListSeparatorView;
+import com.jdroid.android.view.ViewBuilder;
 import com.jdroid.java.utils.CollectionUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserAdapter;
@@ -65,8 +65,7 @@ public class WatchableSocialFragment extends AbstractListFragment<User> {
 		
 		if (CollectionUtils.isNotEmpty(userWatchable.getWatchedBy())) {
 			int resId = userWatchable.getWatchedBy().size() == 1 ? R.string.watchedByFriend : R.string.watchedByFriends;
-			mergeAdapter.addView(new ListSeparatorView(getActivity(), getString(resId,
-				userWatchable.getWatchedBy().size())));
+			mergeAdapter.addView(ViewBuilder.buildSectionTitle(getActivity(), resId, userWatchable.getWatchedBy().size()));
 			mergeAdapter.addAdapter(new UserAdapter(getActivity(), userWatchable.getWatchedBy(),
 					R.layout.user_small_item, false));
 		}
@@ -74,8 +73,8 @@ public class WatchableSocialFragment extends AbstractListFragment<User> {
 		if (CollectionUtils.isNotEmpty(userWatchable.getOnTheWishListOf())) {
 			int resId = userWatchable.getOnTheWishListOf().size() == 1 ? R.string.onTheWishListOfFriend
 					: R.string.onTheWishListOfFriends;
-			mergeAdapter.addView(new ListSeparatorView(getActivity(), getString(resId,
-				userWatchable.getOnTheWishListOf().size())));
+			mergeAdapter.addView(ViewBuilder.buildSectionTitle(getActivity(), resId,
+				userWatchable.getOnTheWishListOf().size()));
 			mergeAdapter.addAdapter(new UserAdapter(getActivity(), userWatchable.getOnTheWishListOf(),
 					R.layout.user_small_item, false));
 		}
