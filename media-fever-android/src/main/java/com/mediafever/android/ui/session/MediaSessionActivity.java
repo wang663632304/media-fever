@@ -135,7 +135,7 @@ public class MediaSessionActivity extends WizardActivity {
 				@Override
 				public void run() {
 					getActivity().finish();
-					MediaSelectionsActivity.start(getActivity(), getUseCase().getMediaSession(),
+					MediaSelectionsActivity.start(getActivity(), getUseCase().getMediaSession().getId(),
 						getUseCase().isCreated());
 				}
 			});

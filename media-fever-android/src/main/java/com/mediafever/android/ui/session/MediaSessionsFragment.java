@@ -49,7 +49,7 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	@Override
 	public void onItemSelected(MediaSession mediaSession) {
 		if (mediaSession.isAccepted()) {
-			MediaSelectionsActivity.start(getActivity(), mediaSession, false);
+			MediaSelectionsActivity.start(getActivity(), mediaSession.getId(), false);
 		} else {
 			AcceptRejectSessionDialogFragment.show(mediaSession.getId(), this);
 		}

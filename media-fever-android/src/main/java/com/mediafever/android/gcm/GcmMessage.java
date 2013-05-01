@@ -59,6 +59,13 @@ public enum GcmMessage {
 			synchronizeMediaSelection(intent);
 		}
 	},
+	MEDIA_SESSION_EXPIRED("mediaSessionExpired") {
+		
+		@Override
+		public void handle(Intent intent) {
+			synchronizeMediaSelection(intent);
+		}
+	},
 	MEDIA_SELECTION_THUMBS_UP("mediaSelectionThumbsUp") {
 		
 		@Override

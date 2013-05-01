@@ -156,12 +156,6 @@ public class MediaSession extends Entity {
 		return false;
 	}
 	
-	public void checkExpiration() {
-		if (isExpired()) {
-			throw ServerErrorCode.MEDIA_SESSION_EXPIRED.newBusinessException();
-		}
-	}
-	
 	public List<MediaSessionUser> getUsers() {
 		return users;
 	}

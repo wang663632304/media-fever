@@ -10,17 +10,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.AndroidUseCaseListener;
 import com.jdroid.android.activity.ActivityIf;
+import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.animation.FadeInOutAnimation;
 import com.jdroid.android.dialog.AlertDialogFragment;
 import com.jdroid.android.domain.FileContent;
@@ -42,14 +41,12 @@ import com.mediafever.usecase.mediasession.MediaSessionLeaveUseCase;
  */
 public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection> {
 	
-	private static final String TAG = MediaSelectionsFragment.class.getSimpleName();
-	
 	private static final String SYNCHRONIZE_ACTION = MediaSelectionsFragment.class.getSimpleName()
 			+ ".SYNCHRONIZE_ACTION";
 	
 	public static final int MEDIA_SELECTION_ADDED_REQUEST_CODE = 1;
 	
-	public static final String MEDIA_SESSION_EXTRA = "mediaSessionExtra";
+	public static final String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
 	public static final String MEDIA_SESSION_CREATED_EXTRA = "mediaSessionCreatedExtra";
 	
 	private MediaSessionDetailsUseCase mediaSessionDetailsUseCase;
@@ -57,7 +54,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	private AndroidUseCaseListener mediaSessionLeaveUseCaseListener;
 	
 	private BroadcastReceiver refreshBroadcastReceiver;
-	private MediaSession mediaSession;
+	private Long mediaSessionId;
 	private Boolean mediaSessionCreated;
 	
 	/**
@@ -67,25 +64,14 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		mediaSession = getArgument(MEDIA_SESSION_EXTRA);
+		mediaSessionId = getArgument(MEDIA_SESSION_ID_EXTRA);
 		mediaSessionCreated = getArgument(MEDIA_SESSION_CREATED_EXTRA);
 		
-		if (mediaSessionCreated) {
-			AlertDialogFragment.show(this, getString(R.string.mediaSessionCreatedTitle),
-				getString(R.string.mediaSessionCreatedDescription, getWatchablesString()),
-				LocalizationUtils.getString(R.string.ok), null, true);
-		} else if (mediaSession.isExpired()) {
-			MediaSelection mediaSelection = mediaSession.getMediaSelectionWinner();
-			if (mediaSelection != null) {
-				MediaSelectionExpiredDialogFragment.show(this, mediaSelection);
-			}
-		}
-		
 		mediaSessionDetailsUseCase = getInstance(MediaSessionDetailsUseCase.class);
-		mediaSessionDetailsUseCase.setMediaSessionId(mediaSession.getId());
+		mediaSessionDetailsUseCase.setMediaSessionId(mediaSessionId);
 		
 		mediaSessionLeaveUseCase = getInstance(MediaSessionLeaveUseCase.class);
-		mediaSessionLeaveUseCase.setMediaSessionId(mediaSession.getId());
+		mediaSessionLeaveUseCase.setMediaSessionId(mediaSessionId);
 		mediaSessionLeaveUseCaseListener = new AndroidUseCaseListener() {
 			
 			@Override
@@ -123,16 +109,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		return inflater.inflate(R.layout.media_selections_fragment, container, false);
 	}
 	
-	private String getWatchablesString() {
-		if (mediaSession.acceptOnlyMovies()) {
-			return getString(R.string.movies).toLowerCase();
-		} else if (mediaSession.acceptOnlySeries()) {
-			return getString(R.string.series).toLowerCase();
-		} else {
-			return getString(R.string.moviesOrSeries);
-		}
-	}
-	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractGridFragment#onViewCreated(android.view.View, android.os.Bundle)
 	 */
@@ -140,7 +116,10 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		refresh();
+		MediaSession mediaSession = mediaSessionDetailsUseCase.getMediaSession();
+		if (mediaSession != null) {
+			refresh(mediaSession);
+		}
 	}
 	
 	public static void synchronize(Bundle bundle) {
@@ -156,7 +135,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(mediaSessionDetailsUseCase, this);
+		onResumeUseCase(mediaSessionDetailsUseCase, this, UseCaseTrigger.ONCE);
 		onResumeUseCase(mediaSessionLeaveUseCase, mediaSessionLeaveUseCaseListener);
 		
 		refreshBroadcastReceiver = new BroadcastReceiver() {
@@ -165,11 +144,12 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			public void onReceive(Context context, Intent intent) {
 				
 				String mediaSessionId = intent.getStringExtra(GcmMessage.MEDIA_SESSION_ID_KEY);
-				if (mediaSessionId.equals(mediaSession.getId().toString())) {
+				if (mediaSessionId.equals(mediaSessionId.toString())) {
 					executeUseCase(mediaSessionDetailsUseCase);
 					
 					GcmMessage gcmMessage = GcmMessage.find(intent);
-					if (!gcmMessage.equals(GcmMessage.MEDIA_SESSION_UPDATED)) {
+					if (!gcmMessage.equals(GcmMessage.MEDIA_SESSION_UPDATED)
+							&& !gcmMessage.equals(GcmMessage.MEDIA_SESSION_EXPIRED)) {
 						FileContent imageContent = new UriFileContent(intent.getStringExtra(GcmMessage.IMAGE_URL_KEY));
 						CustomImageView customImageView = findView(R.id.userImage);
 						customImageView.setImageContent(imageContent, R.drawable.user_default);
@@ -219,14 +199,14 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	}
 	
 	/**
-	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com.actionbarsherlock.view.Menu,
-	 *      com.actionbarsherlock.view.MenuInflater)
+	 * @see com.actionbarsherlock.app.SherlockFragment#onPrepareOptionsMenu(com.actionbarsherlock.view.Menu)
 	 */
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
+	public void onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
 		
-		if (mediaSession.isExpired()) {
+		MediaSession mediaSession = mediaSessionDetailsUseCase.getMediaSession();
+		if ((mediaSession != null) && mediaSession.isExpired()) {
 			MenuItem menuItem = menu.findItem(R.id.editMediaSessionItem);
 			menuItem.setVisible(false);
 		}
@@ -239,7 +219,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.editMediaSessionItem:
-				MediaSessionActivity.start(getActivity(), mediaSession.getId());
+				MediaSessionActivity.start(getActivity(), mediaSessionId);
 				return true;
 			case R.id.leaveMediaSessionItem:
 				
@@ -267,27 +247,12 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	 */
 	@Override
 	public void onItemSelected(MediaSelection mediaSelection) {
+		MediaSession mediaSession = mediaSessionDetailsUseCase.getMediaSession();
 		if (mediaSelection.getWatchable() != null) {
-			MediaSelectionDialogFragment.show(this, mediaSession.getId(), mediaSelection, mediaSession.isExpired());
+			MediaSelectionDialogFragment.show(this, mediaSessionId, mediaSelection, mediaSession.isExpired());
 		} else {
-			MediaSelectionPickerDialogFragment.show(this, mediaSession.getId());
+			MediaSelectionPickerDialogFragment.show(this, mediaSessionId, mediaSession.getWatchableTypes());
 		}
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onStartUseCase()
-	 */
-	@Override
-	public void onStartUseCase() {
-		// Do nothing
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
-	 */
-	@Override
-	public void onFinishFailedUseCase(RuntimeException runtimeException) {
-		Log.e(TAG, MediaSessionDetailsUseCase.class.getSimpleName() + " failed when executed.", runtimeException);
 	}
 	
 	/**
@@ -299,21 +264,34 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			
 			@Override
 			public void run() {
-				mediaSession = mediaSessionDetailsUseCase.getMediaSession();
-				refresh();
+				MediaSession mediaSession = mediaSessionDetailsUseCase.getMediaSession();
+				if (mediaSessionCreated) {
+					AlertDialogFragment.show(MediaSelectionsFragment.this,
+						getString(R.string.mediaSessionCreatedTitle),
+						getString(R.string.mediaSessionCreatedDescription, getWatchablesString(mediaSession)),
+						LocalizationUtils.getString(R.string.ok), null, true);
+					mediaSessionCreated = false;
+				} else if (mediaSession.isExpired()) {
+					MediaSelection mediaSelection = mediaSession.getMediaSelectionWinner();
+					if (mediaSelection != null) {
+						MediaSelectionExpiredDialogFragment.show(MediaSelectionsFragment.this, mediaSelection);
+					}
+				}
+				getActivity().supportInvalidateOptionsMenu();
+				refresh(mediaSession);
 				dismissLoading();
 			}
 		});
 	}
 	
-	private void refresh() {
+	private void refresh(MediaSession mediaSession) {
 		
 		// Header
 		TextView header = findView(R.id.header);
 		if (mediaSession.isExpired()) {
 			header.setText(R.string.mediaSelectionsExpiredHeader);
 		} else {
-			header.setText(getString(R.string.mediaSelectionsHeader, getWatchablesString()));
+			header.setText(getString(R.string.mediaSelectionsHeader, getWatchablesString(mediaSession)));
 		}
 		
 		// Footer
@@ -329,6 +307,16 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		
 		setListAdapter(new MediaSelectionAdapter(MediaSelectionsFragment.this.getActivity(),
 				mediaSession.getSelections()));
+	}
+	
+	private String getWatchablesString(MediaSession mediaSession) {
+		if (mediaSession.acceptOnlyMovies()) {
+			return getString(R.string.movies).toLowerCase();
+		} else if (mediaSession.acceptOnlySeries()) {
+			return getString(R.string.series).toLowerCase();
+		} else {
+			return getString(R.string.moviesOrSeries);
+		}
 	}
 	
 	/**
