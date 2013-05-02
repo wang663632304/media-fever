@@ -17,6 +17,7 @@ public class SeriesInitialUpdateParser extends XmlParser {
 	private static final String BANNER_TAG = "Banner";
 	
 	private SeriesUpdateResponse response = new SeriesUpdateResponse();
+	private Long updateTime = 0l;
 	
 	private Boolean parsingSeries = Boolean.FALSE;
 	private Boolean ignoreTag = Boolean.FALSE;
@@ -47,7 +48,11 @@ public class SeriesInitialUpdateParser extends XmlParser {
 				} else if (SERIES_TAG.equals(localName)) {
 					parsingSeries = Boolean.FALSE;
 				} else if (TIME_TAG.equals(localName)) {
-					response.setTime(content);
+					// update response's time only if it's later than the current one.
+					if (Long.valueOf(content) > updateTime) {
+						updateTime = Long.valueOf(content);
+						response.setTime(content);
+					}
 				}
 			}
 		} else if (BANNER_TAG.equals(localName)) {

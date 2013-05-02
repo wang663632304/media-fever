@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jdroid.javaweb.domain.Entity;
+import com.mediafever.core.domain.watchable.visitor.DummyWatchableVisitor;
+import com.mediafever.core.domain.watchable.visitor.WatchableVisitor;
 
 /**
  * 
@@ -57,6 +59,10 @@ public class Season extends Entity {
 	}
 	
 	public void updateFrom(Season season) {
+		updateFrom(season, new DummyWatchableVisitor());
+	}
+	
+	public void updateFrom(Season season, WatchableVisitor watchableVisitor) {
 		seasonNumber = season.seasonNumber;
 		
 		// Update the seasons
@@ -73,13 +79,20 @@ public class Season extends Entity {
 				Episode otherEpisode = episodesMap.get(episode.getExternalId());
 				if (otherEpisode != null) {
 					episode.updateFrom(otherEpisode);
+					watchableVisitor.visitUpdated(episode);
 					episodesMap.remove(otherEpisode.getExternalId());
 				} else {
 					episodesToRemove.add(episode);
+					watchableVisitor.visitDeleted(episode);
 				}
 			}
 			episodes.removeAll(episodesToRemove);
 			episodes.addAll(episodesMap.values());
+			
+			// visit new episodes
+			for (Episode episode : episodesMap.values()) {
+				watchableVisitor.visitNew(episode);
+			}
 		}
 	}
 	

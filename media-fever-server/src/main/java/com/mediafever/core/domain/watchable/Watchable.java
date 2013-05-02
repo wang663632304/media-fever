@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jdroid.javaweb.domain.Entity;
+import com.mediafever.core.domain.watchable.visitor.DummyWatchableVisitor;
+import com.mediafever.core.domain.watchable.visitor.WatchableVisitor;
 
 /**
  * 
@@ -65,12 +67,17 @@ public abstract class Watchable extends Entity {
 		this.lastupdated = lastupdated;
 	}
 	
+	public void updateFrom(Watchable watchable) {
+		updateFrom(watchable, new DummyWatchableVisitor());
+	}
+	
 	/**
 	 * Updates this {@link Watchable} with the data contained in the {@link Watchable} passed as parameter.
 	 * 
 	 * @param watchable The {@link Watchable} with the new data.
+	 * @param watchableVisitor {@link WatchableVisitor} to add any special behavior on a {@link Watchable} update.
 	 */
-	public void updateFrom(Watchable watchable) {
+	public void updateFrom(Watchable watchable, WatchableVisitor watchableVisitor) {
 		imageURL = watchable.imageURL;
 		lastupdated = watchable.lastupdated;
 		name = watchable.name;

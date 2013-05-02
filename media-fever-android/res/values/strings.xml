@@ -169,9 +169,8 @@
 	<string name="friendRequestTickerText">%1$s wants to be your friend</string>
 	<string name="friendRequestContentTitle">Friendship Request</string>
 	<string name="friendRequestContentText">%1$s want to be your friend</string>
-	<string name="newEpisodeTickerText">New %1$s episode released</string>
-	<string name="newEpisodeContentTitle">New Episode</string>
-	<string name="newEpisodeContentText">New %1$s episode released</string>
+	<string name="newEpisodeTickerText">New \"%1$s\" episode</string>
+	<string name="newEpisodeContentText">New Episode: %1$s</string>
 
 	<!-- Search -->
 	<string name="search">Search</string>

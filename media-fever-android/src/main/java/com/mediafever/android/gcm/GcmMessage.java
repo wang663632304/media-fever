@@ -125,11 +125,14 @@ public enum GcmMessage {
 		@Override
 		public void handle(Intent intent) {
 			String seriesId = intent.getStringExtra(SERIES_ID_KEY);
+			String seriesName = intent.getStringExtra(SERIES_NAME_KEY);
 			String episodeName = intent.getStringExtra(EPISODE_NAME_KEY);
+			String episodeNumber = intent.getStringExtra(EPISODE_NUMBER_KEY);
 			
-			String tickerText = LocalizationUtils.getString(R.string.newEpisodeTickerText, episodeName);
-			String contentTitle = LocalizationUtils.getString(R.string.newEpisodeContentTitle);
-			String contentText = LocalizationUtils.getString(R.string.newEpisodeContentText, episodeName);
+			String tickerText = LocalizationUtils.getString(R.string.newEpisodeTickerText, seriesName);
+			String contentTitle = seriesName;
+			String contentText = LocalizationUtils.getString(R.string.newEpisodeContentText,
+				episodeName != null ? episodeName : episodeNumber);
 			String episodeImageUrl = intent.getStringExtra(EPISODE_IMAGE_URL_KEY);
 			
 			Intent notificationIntent = new Intent(AndroidApplication.get(), WatchableActivity.class);
@@ -146,7 +149,9 @@ public enum GcmMessage {
 	public static final String FULL_NAME_KEY = "fullName";
 	public static final String IMAGE_URL_KEY = "imageUrl";
 	private static final String SERIES_ID_KEY = "seriesId";
+	private static final String SERIES_NAME_KEY = "seriesName";
 	private static final String EPISODE_NAME_KEY = "episodeName";
+	private static final String EPISODE_NUMBER_KEY = "episodeNumber";
 	private static final String EPISODE_IMAGE_URL_KEY = "episodeImageUrl";
 	public static final String MEDIA_SESSION_ID_KEY = "mediaSessionId";
 	public static final String WATCHABLE_NAME_KEY = "watchableName";
