@@ -11,6 +11,7 @@ import com.jdroid.java.utils.IdGenerator;
 import com.jdroid.javaweb.push.PushMessage;
 import com.jdroid.javaweb.push.PushService;
 import com.jdroid.javaweb.search.Filter;
+import com.mediafever.api.exception.ServerErrorCode;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.core.domain.User;
 import com.mediafever.core.domain.session.MediaSelection;
@@ -25,6 +26,7 @@ import com.mediafever.core.service.push.gcm.MediaSelectionAddedGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSelectionRemovedGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSelectionThumbsDownGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSelectionThumbsUpGcmMessage;
+import com.mediafever.core.service.push.gcm.MediaSessionExpiredGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSessionInvitationGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSessionLeftGcmMessage;
 import com.mediafever.core.service.push.gcm.MediaSessionUpdatedGcmMessage;
@@ -82,8 +84,7 @@ public class MediaSessionService {
 	@Transactional
 	public void updateMediaSession(Long mediaSessionId, Date date, Date time, List<WatchableType> watchableTypes,
 			List<Long> usersIds, Long userId) {
-		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
-		mediaSession.checkExpiration();
+		MediaSession mediaSession = getMediaSelectionForEdition(mediaSessionId);
 		
 		List<Long> currentUsersIds = Lists.newArrayList();
 		for (MediaSessionUser mediaSessionUser : mediaSession.getUsers()) {
@@ -121,8 +122,7 @@ public class MediaSessionService {
 	
 	@Transactional
 	public void thumbsUpMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
-		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
-		mediaSession.checkExpiration();
+		MediaSession mediaSession = getMediaSelectionForEdition(mediaSessionId);
 		
 		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
@@ -151,8 +151,7 @@ public class MediaSessionService {
 	
 	@Transactional
 	public void thumbsDownMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
-		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
-		mediaSession.checkExpiration();
+		MediaSession mediaSession = getMediaSelectionForEdition(mediaSessionId);
 		
 		User user = userRepository.get(userId);
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
@@ -168,8 +167,7 @@ public class MediaSessionService {
 	
 	@Transactional
 	public void removeMediaSelection(Long mediaSessionId, Long mediaSelectionId, Long userId) {
-		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
-		mediaSession.checkExpiration();
+		MediaSession mediaSession = getMediaSelectionForEdition(mediaSessionId);
 		
 		MediaSelection mediaSelection = findMediaSelection(mediaSelectionId, mediaSession);
 		if (mediaSelection != null) {
@@ -224,9 +222,8 @@ public class MediaSessionService {
 	}
 	
 	@Transactional
-	public MediaSelection addSmartSelection(Long id, Long userId) {
-		MediaSession mediaSession = mediaSessionRepository.get(id);
-		mediaSession.checkExpiration();
+	public MediaSelection addSmartSelection(Long mediaSessionId, Long userId) {
+		MediaSession mediaSession = getMediaSelectionForEdition(mediaSessionId);
 		
 		Watchable watchable = getSmartSelection(mediaSession);
 		
@@ -234,9 +231,8 @@ public class MediaSessionService {
 	}
 	
 	@Transactional
-	public MediaSelection addRandomSelection(Long id, Long userId) {
-		MediaSession mediaSession = mediaSessionRepository.get(id);
-		mediaSession.checkExpiration();
+	public MediaSelection addRandomSelection(Long mediaSessionId, Long userId) {
+		MediaSession mediaSession = getMediaSelectionForEdition(mediaSessionId);
 		
 		Watchable watchable = getRandomSelection(mediaSession);
 		
@@ -244,9 +240,8 @@ public class MediaSessionService {
 	}
 	
 	@Transactional
-	public MediaSelection addManualSelection(Long id, Long userId, Long watchableId) {
-		MediaSession mediaSession = mediaSessionRepository.get(id);
-		mediaSession.checkExpiration();
+	public MediaSelection addManualSelection(Long mediaSessionId, Long userId, Long watchableId) {
+		MediaSession mediaSession = getMediaSelectionForEdition(mediaSessionId);
 		
 		Watchable watchable = watchableService.getWatchable(watchableId);
 		
@@ -262,6 +257,16 @@ public class MediaSessionService {
 				mediaSelection.getWatchable().getName(), user.getFullName(), user.getImageUrl()));
 		
 		return mediaSelection;
+	}
+	
+	public MediaSession getMediaSelectionForEdition(Long mediaSessionId) {
+		MediaSession mediaSession = mediaSessionRepository.get(mediaSessionId);
+		if (mediaSession.isExpired()) {
+			// Send push notifications
+			sendPushToMediaSessionUsers(mediaSession, null, new MediaSessionExpiredGcmMessage(mediaSession.getId()));
+			throw ServerErrorCode.MEDIA_SESSION_EXPIRED.newBusinessException();
+		}
+		return mediaSession;
 	}
 	
 	private Watchable getRandomSelection(MediaSession mediaSession) {

@@ -9,7 +9,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.android.images.CustomImageView;
-import com.jdroid.java.collections.Lists;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserCheckeableAdapter.UserCheckeableHolder;
 import com.mediafever.domain.UserImpl;
@@ -19,8 +18,6 @@ import com.mediafever.domain.UserImpl;
  * @author Maxi Rosson
  */
 public abstract class UserCheckeableAdapter extends BaseHolderArrayAdapter<UserImpl, UserCheckeableHolder> {
-	
-	private List<UserImpl> selectedUsers = Lists.newArrayList();
 	
 	public UserCheckeableAdapter(Activity context, List<UserImpl> items, int resource) {
 		super(context, items, resource);
@@ -74,10 +71,4 @@ public abstract class UserCheckeableAdapter extends BaseHolderArrayAdapter<UserI
 	
 	protected abstract Boolean isUserEnabled(UserImpl user);
 	
-	/**
-	 * @return the selectedUsers
-	 */
-	public List<UserImpl> getSelectedUsers() {
-		return selectedUsers;
-	}
 }

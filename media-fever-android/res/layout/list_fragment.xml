@@ -5,7 +5,7 @@
 	<ListView android:id="@+id/android:list" style="@style/defaultList" android:layout_above="@+id/adViewContainer" />
 
 	<TextView android:id="@id/android:empty" android:text="@string/noResults" style="@style/noResultsText"
-		android:textSize="16sp" android:layout_margin="15dp" />
+		android:textSize="@dimen/normalTextSize" android:layout_margin="15dp" />
 
 	<include layout="@layout/ad_view_container" />
 

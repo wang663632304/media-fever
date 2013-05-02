@@ -38,4 +38,11 @@ public class WatchablesSuggestionsUseCase extends SearchApiUseCase<Watchable, AP
 		}
 		return SearchResult.getInstance(watchables);
 	}
+	
+	/**
+	 * @param watchableTypes the watchableTypes to set
+	 */
+	public void setWatchableTypes(List<WatchableType> watchableTypes) {
+		this.watchableTypes = watchableTypes;
+	}
 }

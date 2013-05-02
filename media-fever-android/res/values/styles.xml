@@ -44,19 +44,6 @@
 		<item name="android:layout_margin">10dp</item>
 	</style>
 
-	<style name="watchableTitle" parent="@style/normalText">
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:layout_width">match_parent</item>
-		<item name="android:layout_marginTop">10dp</item>
-		<item name="android:layout_marginBottom">5dp</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:background">@drawable/title_background</item>
-		<item name="android:paddingLeft">10dp</item>
-		<item name="android:paddingRight">10dp</item>
-		<item name="android:paddingTop">1dp</item>
-		<item name="android:paddingBottom">1dp</item>
-	</style>
-
 	<style name="wizardPageTitle">
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">match_parent</item>

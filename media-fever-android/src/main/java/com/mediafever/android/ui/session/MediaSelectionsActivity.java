@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import com.jdroid.android.activity.FragmentContainerActivity;
 import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
-import com.mediafever.domain.session.MediaSession;
 
 /**
  * 
@@ -14,9 +13,9 @@ import com.mediafever.domain.session.MediaSession;
  */
 public class MediaSelectionsActivity extends FragmentContainerActivity {
 	
-	public static void start(Context context, MediaSession mediaSession, Boolean mediaSessionCreated) {
+	public static void start(Context context, Long mediaSessionId, Boolean mediaSessionCreated) {
 		Intent intent = new Intent(context, MediaSelectionsActivity.class);
-		intent.putExtra(MediaSelectionsFragment.MEDIA_SESSION_EXTRA, mediaSession);
+		intent.putExtra(MediaSelectionsFragment.MEDIA_SESSION_ID_EXTRA, mediaSessionId);
 		intent.putExtra(MediaSelectionsFragment.MEDIA_SESSION_CREATED_EXTRA, mediaSessionCreated);
 		intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		context.startActivity(intent);
