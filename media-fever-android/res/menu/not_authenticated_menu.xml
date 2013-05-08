@@ -4,6 +4,6 @@
 		android:showAsAction="ifRoom" />
 	<item android:id="@+id/shareItem" android:showAsAction="ifRoom" android:icon="@android:drawable/ic_menu_share"
 		android:title="@string/share" />
-	<item android:id="@+id/aboutItem" android:showAsAction="ifRoom" android:icon="@android:drawable/ic_menu_info_details"
+	<item android:id="@+id/aboutItem" android:showAsAction="never" android:icon="@android:drawable/ic_menu_info_details"
 		android:title="@string/about" />
 </menu>

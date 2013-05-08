@@ -4,7 +4,7 @@
 		android:showAsAction="ifRoom|withText" android:actionViewClass="android.widget.SearchView" />
 	<item android:id="@+id/settingsItem" android:showAsAction="never" android:icon="@android:drawable/ic_menu_preferences"
 		android:title="@string/settings" />
-	<item android:id="@+id/shareItem" android:showAsAction="ifRoom" android:icon="@android:drawable/ic_menu_share"
+	<item android:id="@+id/shareItem" android:showAsAction="never" android:icon="@android:drawable/ic_menu_share"
 		android:title="@string/share" />
 	<item android:id="@+id/aboutItem" android:showAsAction="never" android:icon="@android:drawable/ic_menu_info_details"
 		android:title="@string/about" />
