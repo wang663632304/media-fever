@@ -1,8 +1,8 @@
 package com.mediafever.android.service;
 
+import org.slf4j.Logger;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.inject.Inject;
 import com.jdroid.android.AbstractApplication;
@@ -10,7 +10,7 @@ import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.service.WorkerService;
 import com.jdroid.android.utils.IntentRetryUtils;
 import com.jdroid.java.exception.ApplicationException;
-import com.mediafever.android.gcm.GcmService;
+import com.jdroid.java.utils.LoggerUtils;
 import com.mediafever.service.APIService;
 
 /**
@@ -19,7 +19,7 @@ import com.mediafever.service.APIService;
  */
 public class EnableDeviceService extends WorkerService {
 	
-	private static final String TAG = GcmService.class.getSimpleName();
+	private final static Logger LOGGER = LoggerUtils.getLogger(EnableDeviceService.class);
 	
 	@Inject
 	private APIService apiService;
@@ -35,7 +35,7 @@ public class EnableDeviceService extends WorkerService {
 				apiService.enableDevice(AbstractApplication.get().getInstallationId(), registrationId);
 				GCMRegistrar.setRegisteredOnServer(getApplicationContext(), true);
 			} catch (ApplicationException e) {
-				Log.w(TAG, "Failed to register the device on server. Will retry later.");
+				LOGGER.warn("Failed to register the device on server. Will retry later.");
 				IntentRetryUtils.retry(intent);
 			}
 		}

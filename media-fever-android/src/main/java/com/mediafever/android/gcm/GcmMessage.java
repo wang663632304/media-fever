@@ -1,14 +1,15 @@
 package com.mediafever.android.gcm;
 
+import org.slf4j.Logger;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.contextual.ContextualActivity;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.LocalizationUtils;
 import com.jdroid.android.utils.NotificationUtils;
 import com.jdroid.java.utils.IdGenerator;
+import com.jdroid.java.utils.LoggerUtils;
 import com.mediafever.R;
 import com.mediafever.android.AndroidApplication;
 import com.mediafever.android.ui.friends.FriendsActivity;
@@ -144,7 +145,8 @@ public enum GcmMessage {
 		}
 	};
 	
-	private static final String TAG = GcmMessage.class.getSimpleName();
+	private final static Logger LOGGER = LoggerUtils.getLogger(GcmMessage.class);
+	
 	private static final String MESSAGE_KEY_EXTRA = "messageKey";
 	public static final String FULL_NAME_KEY = "fullName";
 	public static final String IMAGE_URL_KEY = "imageUrl";
@@ -163,13 +165,13 @@ public enum GcmMessage {
 	
 	public static GcmMessage find(Intent intent) {
 		String messageKey = intent.getStringExtra(MESSAGE_KEY_EXTRA);
-		Log.d(TAG, "GCM message received. / Message Key: " + messageKey);
+		LOGGER.debug("GCM message received. / Message Key: " + messageKey);
 		for (GcmMessage each : values()) {
 			if (each.messageKey.equalsIgnoreCase(messageKey)) {
 				return each;
 			}
 		}
-		Log.w(TAG, "The GCM message is unknown");
+		LOGGER.warn("The GCM message is unknown");
 		return null;
 	}
 	

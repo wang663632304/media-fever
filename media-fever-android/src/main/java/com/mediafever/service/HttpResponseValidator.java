@@ -3,18 +3,19 @@ package com.mediafever.service;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import android.util.Log;
+import org.slf4j.Logger;
 import com.jdroid.android.exception.CommonErrorCode;
 import com.jdroid.android.exception.InvalidApiVersionException;
 import com.jdroid.android.exception.InvalidUserTokenException;
 import com.jdroid.java.exception.ErrorCode;
 import com.jdroid.java.http.HttpWebServiceProcessor;
 import com.jdroid.java.http.WebService;
+import com.jdroid.java.utils.LoggerUtils;
 import com.mediafever.android.AndroidErrorCode;
 
 public class HttpResponseValidator implements HttpWebServiceProcessor {
 	
-	private static final String TAG = HttpResponseValidator.class.getSimpleName();
+	private final static Logger LOGGER = LoggerUtils.getLogger(HttpResponseValidator.class);
 	
 	private static final String STATUS_CODE_HEADER = "status-code";
 	private static final String SUCCESSFULL_STATUS_CODE = "200";
@@ -84,9 +85,9 @@ public class HttpResponseValidator implements HttpWebServiceProcessor {
 		sb.append(" Reason: ");
 		sb.append(httpResponse.getStatusLine().getReasonPhrase());
 		if (isSuccess(httpResponse)) {
-			Log.d(TAG, sb.toString());
+			LOGGER.debug(sb.toString());
 		} else {
-			Log.w(TAG, sb.toString());
+			LOGGER.warn(sb.toString());
 		}
 		return sb.toString();
 	}
@@ -111,13 +112,13 @@ public class HttpResponseValidator implements HttpWebServiceProcessor {
 		Header[] headerstatusCode = httpResponse.getHeaders(STATUS_CODE_HEADER);
 		if (headerstatusCode.length > 0) {
 			String statusCode = headerstatusCode[0].getValue();
-			Log.d(TAG, "Server Status code: " + statusCode);
+			LOGGER.debug("Server Status code: " + statusCode);
 			if (!statusCode.equals(SUCCESSFULL_STATUS_CODE)) {
 				errorCode = AndroidErrorCode.findByStatusCode(statusCode);
 				if (errorCode == null) {
 					errorCode = CommonErrorCode.findByStatusCode(statusCode);
 					if (errorCode == null) {
-						Log.w(TAG, "Unknown Server Status code: " + statusCode);
+						LOGGER.warn("Unknown Server Status code: " + statusCode);
 						throw defaultErrorCode.newApplicationException("Unknown Server Status code: " + statusCode);
 					}
 				}

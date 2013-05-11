@@ -12,7 +12,6 @@ import com.jdroid.javaweb.domain.Entity;
 @javax.persistence.Entity
 public class Settings extends Entity {
 	
-	@SuppressWarnings("unused")
 	@Enumerated(value = EnumType.STRING)
 	private SettingsKey settingsKey;
 	
