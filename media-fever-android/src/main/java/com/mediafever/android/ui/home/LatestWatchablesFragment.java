@@ -1,7 +1,7 @@
 package com.mediafever.android.ui.home;
 
+import org.slf4j.Logger;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +9,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
+import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.coverflow.CoverFlow;
 import com.jdroid.android.coverflow.CoverFlowImageAdapter;
@@ -17,6 +18,7 @@ import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.images.ReflectedRemoteImageResolver;
 import com.jdroid.java.exception.ConnectionException;
 import com.jdroid.java.utils.CollectionUtils;
+import com.jdroid.java.utils.LoggerUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.Watchable;
@@ -28,7 +30,7 @@ import com.mediafever.usecase.LatestWatchablesUseCase;
  */
 public class LatestWatchablesFragment extends AbstractFragment {
 	
-	private static final String TAG = LatestWatchablesFragment.class.getSimpleName();
+	private final static Logger LOGGER = LoggerUtils.getLogger(LatestWatchablesFragment.class);
 	
 	private LatestWatchablesUseCase latestWatchablesUseCase;
 	
@@ -99,9 +101,11 @@ public class LatestWatchablesFragment extends AbstractFragment {
 	 */
 	@Override
 	public void onFinishFailedUseCase(RuntimeException runtimeException) {
-		Log.e(TAG, "Failed to execute the use case", runtimeException);
 		if (runtimeException instanceof ConnectionException) {
+			LOGGER.error("Failed to execute the use case", runtimeException);
 			executeUseCase(latestWatchablesUseCase, 10L);
+		} else {
+			AbstractApplication.get().getExceptionHandler().logHandledException(runtimeException);
 		}
 	}
 	

@@ -1,9 +1,9 @@
 package com.mediafever.android.ui.settings;
 
+import org.slf4j.Logger;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +17,7 @@ import com.jdroid.android.facebook.MultipleUsersSharedPreferencesTokenCachingStr
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.ToastUtils;
+import com.jdroid.java.utils.LoggerUtils;
 import com.mediafever.R;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.usecase.settings.ConnectToFacebookUseCase;
@@ -29,7 +30,7 @@ import com.mediafever.usecase.settings.ConnectToFacebookUseCase;
  */
 public class SocialSettingsFragment extends AbstractFragment {
 	
-	private static final String TAG = SocialSettingsFragment.class.getSimpleName();
+	private final static Logger LOGGER = LoggerUtils.getLogger(SocialSettingsFragment.class);
 	
 	private ConnectToFacebookUseCase connectToFacebookUseCase;
 	
@@ -129,7 +130,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 	 * @param exception The exception that may have been thrown when trying to change the {@link Session}'s state.
 	 */
 	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-		Log.i(TAG, "Facebook session state changed to " + state.name());
+		LOGGER.debug("Facebook session state changed to " + state.name());
 		
 		if (SessionState.OPENED_TOKEN_UPDATED.equals(state)) {
 			// Refresh FB token in the server if its updated here.
