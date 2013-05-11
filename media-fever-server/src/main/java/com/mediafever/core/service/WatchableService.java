@@ -9,6 +9,8 @@ import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.jdroid.javaweb.search.Sorting;
 import com.mediafever.core.domain.watchable.Watchable;
+import com.mediafever.core.domain.watchable.visitor.DummyWatchableVisitor;
+import com.mediafever.core.domain.watchable.visitor.WatchableVisitor;
 import com.mediafever.core.repository.CustomSortingKey;
 import com.mediafever.core.repository.WatchableRepository;
 
@@ -34,10 +36,21 @@ public class WatchableService {
 	 */
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void saveWatchable(Watchable watchable) {
+		saveWatchable(watchable, new DummyWatchableVisitor());
+	}
+	
+	/**
+	 * Saves the given {@link Watchable} in the database. If it already exists, it is updated.
+	 * 
+	 * @param watchable The {@link Watchable} to save.
+	 * @param watchableVisitor A {@link WatchableVisitor} to use in the save process.
+	 */
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void saveWatchable(Watchable watchable, WatchableVisitor watchableVisitor) {
 		try {
 			Watchable existentWatchable = watchableRepository.getByExternalId(watchable.getExternalId(),
 				watchable.getType());
-			existentWatchable.updateFrom(watchable);
+			existentWatchable.updateFrom(watchable, watchableVisitor);
 		} catch (ObjectNotFoundException e) {
 			addWatchable(watchable);
 		}

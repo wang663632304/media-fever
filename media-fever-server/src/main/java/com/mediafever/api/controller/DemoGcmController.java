@@ -36,7 +36,7 @@ public class DemoGcmController {
 	@GET
 	@Path("/newEpisode")
 	public void pushNewEpisode() {
-		pushService.send(new NewEpisodeGcmMessage(1L, "Friends",
+		pushService.send(new NewEpisodeGcmMessage(1L, "Friends", "The One with the Monkey", 10,
 				"https://graph.facebook.com/maxirosson/picture?type=normal"), 1L);
 	}
 }

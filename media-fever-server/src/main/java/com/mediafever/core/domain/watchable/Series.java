@@ -9,6 +9,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mediafever.core.domain.watchable.visitor.WatchableVisitor;
 
 /**
  * 
@@ -44,12 +45,9 @@ public class Series extends Watchable {
 		return seasons;
 	}
 	
-	/**
-	 * @see com.mediafever.core.domain.watchable.Watchable#updateFrom(com.mediafever.core.domain.watchable.Watchable)
-	 */
 	@Override
-	public void updateFrom(Watchable series) {
-		super.updateFrom(series);
+	public void updateFrom(Watchable series, WatchableVisitor watchableVisitor) {
+		super.updateFrom(series, watchableVisitor);
 		Series otherSeries = Series.class.cast(series);
 		
 		// Update the seasons
@@ -65,7 +63,7 @@ public class Series extends Watchable {
 			for (Season season : seasons) {
 				Season otherSeason = seasonsMap.get(season.getExternalId());
 				if (otherSeason != null) {
-					season.updateFrom(otherSeason);
+					season.updateFrom(otherSeason, watchableVisitor);
 					seasonsMap.remove(otherSeason.getExternalId());
 				} else {
 					seasonsToRemove.add(season);

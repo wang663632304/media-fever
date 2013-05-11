@@ -3,9 +3,11 @@ package com.mediafever.core.repository;
 import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.UserWatchable;
+import com.mediafever.core.domain.watchable.WatchableType;
 
 /**
  * 
@@ -50,6 +52,20 @@ public class UserWatchableHibernateRepository extends HibernateRepository<UserWa
 		DetachedCriteria criteria = createDetachedCriteria();
 		criteria.createCriteria("watchable").add(Restrictions.in("id", watchablesIds));
 		criteria.createCriteria("user").add(Restrictions.eq("id", userId));
+		return find(criteria);
+	}
+	
+	/**
+	 * @see com.mediafever.core.repository.UserWatchableRepository#getWatchedBy(java.lang.Long,
+	 *      com.mediafever.core.domain.watchable.WatchableType)
+	 */
+	@Override
+	public List<UserWatchable> getWatchedBy(Long watchableExternalId, WatchableType watchableType) {
+		DetachedCriteria criteria = createDetachedCriteria();
+		criteria.add(Restrictions.eq("watched", true));
+		DetachedCriteria watchableCriteria = criteria.createCriteria("watchable").add(
+			Restrictions.eq("externalId", watchableExternalId));
+		addWatchableTypeRestriction(watchableCriteria, Lists.newArrayList(watchableType));
 		return find(criteria);
 	}
 	

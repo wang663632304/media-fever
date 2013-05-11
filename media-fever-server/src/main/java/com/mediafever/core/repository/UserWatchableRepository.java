@@ -5,6 +5,7 @@ import com.jdroid.java.repository.Repository;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.UserWatchable;
+import com.mediafever.core.domain.watchable.WatchableType;
 
 /**
  * Repository that handles the persistence of {@link UserWatchable}s.
@@ -24,6 +25,8 @@ public interface UserWatchableRepository extends Repository<UserWatchable> {
 	public UserWatchable get(Long userId, Long watchableId);
 	
 	public List<UserWatchable> findAll(Long userId, List<Long> watchablesIds);
+	
+	public List<UserWatchable> getWatchedBy(Long watchableExternalId, WatchableType watchableType);
 	
 	public List<UserWatchable> getWatchedBy(List<Long> userIds, Long watchableId);
 	
