@@ -145,7 +145,7 @@ public class SynchronizationService {
 			}
 			
 		} finally {
-			listener.onSyncMoviesFinished();
+			listener.onSyncSeriesFinished();
 		}
 	}
 	

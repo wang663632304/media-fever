@@ -131,13 +131,13 @@ public class SynchronizationScheduler implements SynchronizationListener {
 	 */
 	private class SyncController {
 		
-		private Boolean syncSeriesInProgress = Boolean.FALSE;
+		private Boolean syncInProgress = Boolean.FALSE;
 		private Date syncStartDate;
 		private Date syncEndDate;
 		
 		public synchronized Boolean acquireLock() {
-			if (!syncSeriesInProgress) {
-				syncSeriesInProgress = Boolean.TRUE;
+			if (!syncInProgress) {
+				syncInProgress = Boolean.TRUE;
 				syncStartDate = new Date();
 				return Boolean.TRUE;
 			}
@@ -145,7 +145,7 @@ public class SynchronizationScheduler implements SynchronizationListener {
 		}
 		
 		public synchronized void releaseLock() {
-			syncSeriesInProgress = Boolean.FALSE;
+			syncInProgress = Boolean.FALSE;
 			syncEndDate = new Date();
 		}
 		
