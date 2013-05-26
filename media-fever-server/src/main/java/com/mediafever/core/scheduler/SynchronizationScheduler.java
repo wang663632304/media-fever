@@ -59,7 +59,7 @@ public class SynchronizationScheduler implements SynchronizationListener {
 	 * Executes a series synchronization process with a fixed period of 10 hours between the end of the last invocation
 	 * and the start of the next one.
 	 */
-	@Scheduled(fixedDelay = 36000000)
+	@Scheduled(cron = "${cron.sync.series}")
 	public void scheduledSeriesSync() {
 		if (startSyncSeriesSchedule()) {
 			LOGGER.info("Series synchronization process started.");
@@ -72,7 +72,7 @@ public class SynchronizationScheduler implements SynchronizationListener {
 	 * Executes a movies synchronization process with a fixed period of 10 hours between the end of the last invocation
 	 * and the start of the next one.
 	 */
-	@Scheduled(fixedDelay = 36000000)
+	@Scheduled(cron = "${cron.sync.movies}")
 	public void scheduledMoviesSync() {
 		if (startSyncMoviesSchedule()) {
 			LOGGER.info("Movies synchronization process started.");
