@@ -3,6 +3,7 @@ package com.mediafever.core.service;
 import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.jdroid.java.utils.ExecutorUtils;
@@ -59,24 +60,37 @@ public class SynchronizationService {
 	@Autowired
 	private PushService pushService;
 	
-	public void synchMovies() {
+	/**
+	 * Synchronizes the Movies information from the MovieDb API to have the latest content.
+	 * 
+	 * @param listener {@link SynchronizationListener} that will be notified when the sync process is over.
+	 */
+	@Transactional
+	@Async
+	public void synchMovies(SynchronizationListener listener) {
 		
-		// Load new movies. Aprox 186587
-		Long minExternalId = watchableRepository.getLastMovieExternalId() + 1;
-		Long latestExternalId = movieDbApiService.getLatest();
-		addMovies(minExternalId, latestExternalId);
+		try {
+			// Load new movies. Aprox 186587
+			Long minExternalId = watchableRepository.getLastMovieExternalId() + 1;
+			Long latestExternalId = movieDbApiService.getLatest();
+			addMovies(minExternalId, latestExternalId);
+			
+			// Update old Movies
+			Integer page = 1;
+			PagedResult<Watchable> pagedResult = null;
+			do {
+				pagedResult = watchableRepository.getMovies(page);
+				List<Long> externalIds = movieDbApiService.getVersion(pagedResult.getData());
+				for (Long externalId : externalIds) {
+					addMovie(externalId);
+				}
+				page++;
+			} while (!pagedResult.isLastPage());
+			
+		} finally {
+			listener.onSyncMoviesFinished();
+		}
 		
-		// Update old Movies
-		Integer page = 1;
-		PagedResult<Watchable> pagedResult = null;
-		do {
-			pagedResult = watchableRepository.getMovies(page);
-			List<Long> externalIds = movieDbApiService.getVersion(pagedResult.getData());
-			for (Long externalId : externalIds) {
-				addMovie(externalId);
-			}
-			page++;
-		} while (!pagedResult.isLastPage());
 	}
 	
 	private void addMovies(Long fromExternalId, Long toExternalId) {
@@ -95,35 +109,43 @@ public class SynchronizationService {
 	
 	/**
 	 * Synchronizes the Series information from the TvDb API to have the latest content.
+	 * 
+	 * @param listener {@link SynchronizationListener} that will be notified when the sync process is over.
 	 */
 	@Transactional
-	public void synchSeries() {
+	@Async
+	public void synchSeries(SynchronizationListener listener) {
 		
-		Settings lastUpdateSettings = settingsRepository.getSeriesLastUpdate();
-		
-		SeriesUpdateResponse response;
-		if (INITIAL_UPDATE.equals(lastUpdateSettings.getValue())) {
-			response = tvDbApiService.getAllSeries();
-		} else {
-			// TODO: Improve the sync process to avoid updating episodes that haven't been modified.
-			response = tvDbApiService.getUpdatedSeries(lastUpdateSettings.getValue());
-		}
-		
-		// Update the DB only if there's a new update.
-		if (!lastUpdateSettings.getValue().equals(response.getTime())) {
+		try {
+			Settings lastUpdateSettings = settingsRepository.getSeriesLastUpdate();
 			
-			for (Long seriesId : response.getSeriesIds()) {
-				try {
-					addSeries(seriesId);
-				} catch (Exception e) {
-					// TODO: Add retry functionality.
-					LOGGER.error("Failed to update series with id " + seriesId, e);
-				}
+			SeriesUpdateResponse response;
+			if (INITIAL_UPDATE.equals(lastUpdateSettings.getValue())) {
+				response = tvDbApiService.getAllSeries();
+			} else {
+				// TODO: Improve the sync process to avoid updating episodes that haven't been modified.
+				response = tvDbApiService.getUpdatedSeries(lastUpdateSettings.getValue());
 			}
 			
-			// Update the lastUpdate time in the app settings.
-			lastUpdateSettings.update(response.getTime());
-			settingsRepository.update(lastUpdateSettings);
+			// Update the DB only if there's a new update.
+			if (!lastUpdateSettings.getValue().equals(response.getTime())) {
+				
+				for (Long seriesId : response.getSeriesIds()) {
+					try {
+						addSeries(seriesId);
+					} catch (Exception e) {
+						// TODO: Add retry functionality.
+						LOGGER.error("Failed to update series with id " + seriesId, e);
+					}
+				}
+				
+				// Update the lastUpdate time in the app settings.
+				lastUpdateSettings.update(response.getTime());
+				settingsRepository.update(lastUpdateSettings);
+			}
+			
+		} finally {
+			listener.onSyncSeriesFinished();
 		}
 	}
 	
@@ -138,5 +160,18 @@ public class SynchronizationService {
 						pushService));
 		}
 		ExecutorUtils.sleepInMillis(SLEEP_IN_MILLI);
+	}
+	
+	/**
+	 * Listener for the synchronization processes.
+	 * 
+	 * @author Estefanía Caravatti
+	 */
+	public interface SynchronizationListener {
+		
+		public void onSyncMoviesFinished();
+		
+		public void onSyncSeriesFinished();
+		
 	}
 }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import com.jdroid.java.context.GitContext;
 import com.mediafever.context.ApplicationContext;
-import com.mediafever.core.service.SynchronizationService;
+import com.mediafever.core.scheduler.SynchronizationScheduler;
 
 /**
  * @author Maxi Rosson
@@ -18,7 +18,7 @@ import com.mediafever.core.service.SynchronizationService;
 public class AdminController {
 	
 	@Autowired
-	private SynchronizationService synchronizationService;
+	private SynchronizationScheduler synchronizationScheduler;
 	
 	@GET
 	@Path("info")
@@ -59,15 +59,23 @@ public class AdminController {
 	@Path("synchMovies")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String synchMovies() {
-		synchronizationService.synchMovies();
-		return "Movies synchronization finished";
+		if (synchronizationScheduler.startSyncMoviesSchedule()) {
+			return "Movies synchronization started. Latest sync finished on "
+					+ synchronizationScheduler.getLastMoviesSyncEndDate();
+		}
+		return "Movies synchronization already in progress. Start time: "
+				+ synchronizationScheduler.getLastMoviesSyncStartDate();
 	}
 	
 	@GET
 	@Path("synchSeries")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String synchSeries() {
-		synchronizationService.synchSeries();
-		return "Series synchronization finished";
+		if (synchronizationScheduler.startSyncSeriesSchedule()) {
+			return "Series synchronization started. Latest sync finished on "
+					+ synchronizationScheduler.getLastSeriesSyncEndDate();
+		}
+		return "Series synchronization already in progress. Start time: "
+				+ synchronizationScheduler.getLastSeriesSyncStartDate();
 	}
 }
