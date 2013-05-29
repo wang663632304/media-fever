@@ -1,5 +1,6 @@
 package com.mediafever.core.domain.watchable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.jdroid.java.utils.DateUtils;
 import com.jdroid.javaweb.domain.Entity;
 import com.mediafever.core.domain.watchable.visitor.DummyWatchableVisitor;
 import com.mediafever.core.domain.watchable.visitor.WatchableVisitor;
@@ -46,7 +48,7 @@ public abstract class Watchable extends Entity {
 	private Float rating;
 	private Integer ratingCount;
 	
-	private Integer releaseYear;
+	private Date releaseDate;
 	private Long lastupdated;
 	
 	protected Watchable() {
@@ -54,7 +56,7 @@ public abstract class Watchable extends Entity {
 	}
 	
 	public Watchable(Long externalId, String name, String imageURL, String overview, List<Person> actors,
-			List<Genre> genres, Float rating, Integer ratingCount, Integer releaseYear, Long lastupdated) {
+			List<Genre> genres, Float rating, Integer ratingCount, Date releaseDate, Long lastupdated) {
 		this.externalId = externalId;
 		this.name = name;
 		this.imageURL = imageURL;
@@ -63,7 +65,7 @@ public abstract class Watchable extends Entity {
 		this.genres = genres;
 		this.rating = rating != null ? rating : 0f;
 		this.ratingCount = ratingCount != null ? ratingCount : 0;
-		this.releaseYear = releaseYear;
+		this.releaseDate = releaseDate;
 		this.lastupdated = lastupdated;
 	}
 	
@@ -82,7 +84,7 @@ public abstract class Watchable extends Entity {
 		lastupdated = watchable.lastupdated;
 		name = watchable.name;
 		overview = watchable.overview;
-		releaseYear = watchable.releaseYear;
+		releaseDate = watchable.releaseDate;
 		rating = watchable.rating;
 		ratingCount = watchable.ratingCount;
 		
@@ -163,8 +165,12 @@ public abstract class Watchable extends Entity {
 		return lastupdated;
 	}
 	
-	public Integer getReleaseYear() {
-		return releaseYear;
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+	
+	public Boolean isReleased() {
+		return (releaseDate != null) && DateUtils.isBeforeEquals(releaseDate, DateUtils.now());
 	}
 	
 	/**
@@ -177,5 +183,4 @@ public abstract class Watchable extends Entity {
 	public Integer getRatingCount() {
 		return ratingCount;
 	}
-	
 }

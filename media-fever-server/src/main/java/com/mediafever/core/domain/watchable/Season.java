@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jdroid.javaweb.domain.Entity;
@@ -58,6 +60,16 @@ public class Season extends Entity {
 		return episodes;
 	}
 	
+	public List<Episode> getReleasedEpisodes() {
+		return Lists.newArrayList(Iterables.filter(episodes, new Predicate<Episode>() {
+			
+			@Override
+			public boolean apply(Episode episode) {
+				return episode.isReleased();
+			}
+		}));
+	}
+	
 	public void updateFrom(Season season) {
 		updateFrom(season, new DummyWatchableVisitor());
 	}
@@ -95,5 +107,4 @@ public class Season extends Entity {
 			}
 		}
 	}
-	
 }

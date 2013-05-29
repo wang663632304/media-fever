@@ -20,7 +20,7 @@ public class WatchableJsonMarshaller<T extends Watchable> implements Marshaller<
 	private static final String OVERVIEW = "overview";
 	private static final String GENRES = "genres";
 	private static final String ACTORS = "actors";
-	private static final String RELEASE_YEAR = "releaseYear";
+	private static final String RELEASE_DATE = "releaseDate";
 	
 	/**
 	 * <pre>
@@ -29,7 +29,7 @@ public class WatchableJsonMarshaller<T extends Watchable> implements Marshaller<
 	 * 			"type": "Movie",
 	 * 			"name": "Sin City",
 	 * 			"image": "http://server.com/image1.png",
-	 *          "releaseYear": 1984,
+	 *          "releaseDate": "yyyy-MM-dd HH:mm:ss Z",
 	 * 			"overview": "Sin City is a neo-noir crime thriller based on ...",
 	 * 			"trailer": "http://www.youtube.com/watch?v=YKFLrTYKIXk",
 	 *          "genres": [
@@ -43,8 +43,8 @@ public class WatchableJsonMarshaller<T extends Watchable> implements Marshaller<
 	 * 		}
 	 * </pre>
 	 * 
-	 * @see com.jdroid.java.marshaller.Marshaller#marshall(java.lang.Object,
-	 *      com.jdroid.java.marshaller.MarshallerMode, java.util.Map)
+	 * @see com.jdroid.java.marshaller.Marshaller#marshall(java.lang.Object, com.jdroid.java.marshaller.MarshallerMode,
+	 *      java.util.Map)
 	 */
 	@Override
 	public JsonMap marshall(T watchable, MarshallerMode mode, Map<String, String> extras) {
@@ -53,7 +53,7 @@ public class WatchableJsonMarshaller<T extends Watchable> implements Marshaller<
 		map.put(TYPE, watchable.getClass().getSimpleName());
 		map.put(NAME, watchable.getName());
 		map.put(IMAGE, watchable.getImageURL());
-		map.put(RELEASE_YEAR, watchable.getReleaseYear());
+		map.put(RELEASE_DATE, watchable.getReleaseDate());
 		
 		if (mode.equals(MarshallerMode.COMPLETE)) {
 			map.put(OVERVIEW, watchable.getOverview());

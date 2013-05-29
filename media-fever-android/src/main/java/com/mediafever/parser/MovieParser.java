@@ -19,7 +19,7 @@ public class MovieParser extends JsonParser<JsonObjectWrapper> {
 	private static final String TRAILER = "trailer";
 	private static final String ACTORS = "actors";
 	private static final String GENRES = "genres";
-	private static final String RELEASE_YEAR = "releaseYear";
+	private static final String RELEASE_DATE = "releaseDate";
 	
 	/**
 	 * @see com.jdroid.java.parser.json.JsonParser#parse(java.lang.Object)
@@ -28,7 +28,7 @@ public class MovieParser extends JsonParser<JsonObjectWrapper> {
 	public Object parse(JsonObjectWrapper json) throws JSONException {
 		return new Movie(json.getLong(ID), json.getString(NAME), json.optString(TAGLINE), json.getString(IMAGE),
 				json.optString(OVERVIEW), json.optString(TRAILER), json.optList(ACTORS), json.optList(GENRES),
-				json.optInt(RELEASE_YEAR));
+				json.optDate(RELEASE_DATE));
 	}
 	
 }

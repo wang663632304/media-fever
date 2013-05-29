@@ -1,5 +1,7 @@
 package com.mediafever.core.domain.watchable;
 
+import java.util.Date;
+
 /**
  * 
  * @author Maxi Rosson
@@ -18,8 +20,8 @@ public class Episode extends Watchable {
 	}
 	
 	public Episode(Long externalId, String name, String imageURL, String overview, Float rating, Integer ratingCount,
-			Integer releaseYear, Long lastupdated, Integer episodeNumber) {
-		super(externalId, name, imageURL, overview, null, null, rating, ratingCount, releaseYear, lastupdated);
+			Date releaseDate, Long lastupdated, Integer episodeNumber) {
+		super(externalId, name, imageURL, overview, null, null, rating, ratingCount, releaseDate, lastupdated);
 		this.episodeNumber = episodeNumber;
 	}
 	

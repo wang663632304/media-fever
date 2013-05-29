@@ -21,7 +21,7 @@ public class SeriesJsonMarshaller extends WatchableJsonMarshaller<Series> {
 	public JsonMap marshall(Series series, MarshallerMode mode, Map<String, String> extras) {
 		JsonMap map = super.marshall(series, mode, extras);
 		if (mode.equals(MarshallerMode.COMPLETE)) {
-			map.put(SEASONS, series.getSeasons());
+			map.put(SEASONS, series.getStartedSeasons());
 		}
 		return map;
 	}

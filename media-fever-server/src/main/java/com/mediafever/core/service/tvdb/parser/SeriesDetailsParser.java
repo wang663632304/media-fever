@@ -1,5 +1,6 @@
 package com.mediafever.core.service.tvdb.parser;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.xml.sax.Attributes;
@@ -7,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jdroid.java.parser.xml.XmlParser;
 import com.jdroid.java.repository.ObjectNotFoundException;
+import com.jdroid.java.utils.DateUtils;
 import com.jdroid.java.utils.NumberUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.core.domain.watchable.Episode;
@@ -53,7 +55,7 @@ public class SeriesDetailsParser extends XmlParser {
 	private String imageURL;
 	private Long lastUpdated;
 	private String overview;
-	private Integer releaseYear;
+	private Date releaseDate;
 	private Float rating;
 	private Integer ratingCount;
 	
@@ -114,7 +116,8 @@ public class SeriesDetailsParser extends XmlParser {
 		} else if (localName.equals(OVERVIEW_TAG)) {
 			overview = content;
 		} else if (localName.equals(RELEASE_YEAR_TAG)) {
-			releaseYear = NumberUtils.getInteger(content.split("-")[0]);
+			releaseDate = StringUtils.isNotEmpty(content) ? DateUtils.parse(content, DateUtils.YYYYMMDD_DATE_FORMAT)
+					: null;
 		} else if (localName.equals(RATING_TAG)) {
 			rating = NumberUtils.getFloat(content, 0f) / 2;
 		} else if (localName.equals(RATING_COUNT_TAG)) {
@@ -161,7 +164,7 @@ public class SeriesDetailsParser extends XmlParser {
 			seasonId = NumberUtils.getLong(content);
 		} else if (localName.equals(SERIES_TAG)) {
 			onSeries = false;
-			series = new Series(id, name, imageURL, overview, actors, genres, rating, ratingCount, releaseYear,
+			series = new Series(id, name, imageURL, overview, actors, genres, rating, ratingCount, releaseDate,
 					lastUpdated);
 			reset();
 		} else if (localName.equals(EPISODE_TAG)) {
@@ -172,7 +175,7 @@ public class SeriesDetailsParser extends XmlParser {
 				series.addSeason(season);
 				seasonsMap.put(seasonId, season);
 			}
-			season.addEpisode(new Episode(id, name, imageURL, overview, rating, ratingCount, releaseYear, lastUpdated,
+			season.addEpisode(new Episode(id, name, imageURL, overview, rating, ratingCount, releaseDate, lastUpdated,
 					episodeNumber));
 			reset();
 		}

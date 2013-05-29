@@ -9,7 +9,7 @@ import com.jdroid.javaweb.search.SortingKey;
 public enum CustomSortingKey implements SortingKey {
 	
 	NAME("name"),
-	RELEASE_YEAR("releaseYear");
+	RELEASE_DATE("releaseDate");
 	
 	private String property;
 	

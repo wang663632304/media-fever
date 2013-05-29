@@ -54,7 +54,7 @@ public class UserWatchableJsonMarshaller implements Marshaller<UserWatchable, Js
 	 * 			   "type": "Movie",
 	 * 			   "name": "Sin City",
 	 * 			   "image": "http://server.com/image1.png",
-	 *             "releaseYear": 1984,
+	 *             "releaseDate": "yyyy-MM-dd HH:mm:ss Z",
 	 * 			   "overview": "Sin City is a neo-noir crime thriller based on ...",
 	 * 			   "trailer": "http://www.youtube.com/watch?v=YKFLrTYKIXk",
 	 *             "genres": [
