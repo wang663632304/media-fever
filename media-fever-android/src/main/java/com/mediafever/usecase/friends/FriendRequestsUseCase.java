@@ -43,4 +43,8 @@ public class FriendRequestsUseCase extends AbstractApiUseCase<APIService> {
 	public List<FriendRequest> getFriendRequests() {
 		return friendRequests;
 	}
+	
+	public void removeFriendRequest(FriendRequest friendRequest) {
+		friendRequests.remove(friendRequest);
+	}
 }

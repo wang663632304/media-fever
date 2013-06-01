@@ -42,6 +42,7 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 			
 			@Override
 			public void onFinishUseCase() {
+				friendRequestsUseCase.removeFriendRequest(acceptFriendRequestUseCase.getFriendRequest());
 				FriendsRequestsFragment.this.onFinishUseCase();
 			}
 			
