@@ -4,6 +4,7 @@ import java.util.Map;
 import com.jdroid.java.json.JsonMap;
 import com.jdroid.java.marshaller.Marshaller;
 import com.jdroid.java.marshaller.MarshallerMode;
+import com.jdroid.java.utils.StringUtils;
 import com.mediafever.core.domain.watchable.Watchable;
 
 /**
@@ -59,6 +60,8 @@ public class WatchableJsonMarshaller<T extends Watchable> implements Marshaller<
 			map.put(OVERVIEW, watchable.getOverview());
 			map.put(GENRES, watchable.getGenres());
 			map.put(ACTORS, watchable.getActors());
+		} else {
+			map.put(OVERVIEW, StringUtils.truncate(watchable.getOverview(), 200));
 		}
 		return map;
 	}

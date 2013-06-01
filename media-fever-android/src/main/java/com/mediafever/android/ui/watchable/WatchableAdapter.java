@@ -32,12 +32,16 @@ public class WatchableAdapter extends BaseHolderArrayAdapter<Watchable, Watchabl
 		if (holder.description != null) {
 			holder.description.setText(WatchableAdapter.getWatchableDescription(watchable));
 		}
+		if (holder.overview != null) {
+			holder.overview.setText(watchable.getOverview());
+		}
 	}
 	
 	@Override
 	protected WatchableHolder createViewHolderFromConvertView(View convertView) {
 		WatchableHolder holder = new WatchableHolder();
 		holder.name = findView(convertView, R.id.name);
+		holder.overview = findView(convertView, R.id.overview);
 		holder.image = findView(convertView, R.id.image);
 		holder.description = findView(convertView, R.id.description);
 		return holder;
@@ -47,6 +51,7 @@ public class WatchableAdapter extends BaseHolderArrayAdapter<Watchable, Watchabl
 		
 		protected CustomImageView image;
 		protected TextView name;
+		protected TextView overview;
 		protected TextView description;
 	}
 	
