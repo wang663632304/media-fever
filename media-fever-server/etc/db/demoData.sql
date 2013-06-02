@@ -284,7 +284,7 @@ INSERT INTO MediaSession VALUES ('6', DATE_ADD(now(), INTERVAL 31 DAY), now());
 INSERT INTO MediaSession VALUES ('7', DATE_ADD(now(), INTERVAL 31 DAY), null);
 INSERT INTO MediaSession VALUES ('8', DATE_ADD(now(), INTERVAL 31 DAY), now());
 INSERT INTO MediaSession VALUES ('9', DATE_ADD(now(), INTERVAL 31 DAY), now());
-INSERT INTO MediaSession VALUES ('10', DATE_ADD(now(), INTERVAL 31 DAY), now());
+INSERT INTO MediaSession VALUES ('10', DATE_ADD(now(), INTERVAL -1 DAY), now());
 INSERT INTO MediaSession VALUES ('11', DATE_ADD(now(), INTERVAL 31 DAY), null);
 INSERT INTO MediaSession VALUES ('12', null, null);
 INSERT INTO MediaSession VALUES ('13', null, now());
@@ -330,7 +330,7 @@ INSERT INTO MediaSessionUser VALUES ('17', '1', true, '9');
 INSERT INTO MediaSessionUser VALUES ('18', '1', true, '10');
 INSERT INTO MediaSessionUser VALUES ('19', '1', true, '11');
 INSERT INTO MediaSessionUser VALUES ('20', '1', true, '12');
-INSERT INTO MediaSessionUser VALUES ('21', '1', true, '13');
+INSERT INTO MediaSessionUser VALUES ('21', '1', null, '13');
 
 -- --------------------
 -- MEDIA_SELECTION

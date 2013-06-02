@@ -45,8 +45,6 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		}
 		
 		holder.selections.removeAllViews();
-		holder.usersUp.removeAllViews();
-		holder.usersDown.removeAllViews();
 		
 		List<MediaSelection> firstSelections = mediaSession.getTop3Selections();
 		for (MediaSelection mediaSelection : firstSelections) {
@@ -58,26 +56,39 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			holder.selections.addView(borderedCustomImageView);
 		}
 		
-		int max = 4;
-		if (AndroidUtils.isLargeScreenOrBigger()) {
-			max = 8;
-		}
-		
-		int usersAdded = 0;
-		for (MediaSessionUser mediaSessionUser : mediaSession.getMediaSessionUsers()) {
-			if (usersAdded < max) {
-				User user = mediaSessionUser.getUser();
-				if (!user.getId().equals(this.user.getId())) {
-					BorderedCustomImageView borderedCustomImageView = new BorderedCustomImageView(getContext(),
-							R.drawable.user_default, R.dimen.mediaSessionUserImageDim, R.dimen.mediaSessionUserImageDim);
-					borderedCustomImageView.setImageContent(user.getImage(), R.drawable.user_default);
-					if (usersAdded < (max / 2)) {
-						holder.usersUp.addView(borderedCustomImageView);
-					} else {
-						holder.usersDown.addView(borderedCustomImageView);
+		holder.usersAmount.setVisibility(View.GONE);
+		if (holder.usersUp != null) {
+			holder.usersUp.removeAllViews();
+			holder.usersDown.removeAllViews();
+			int max = 4;
+			if (AndroidUtils.isLargeScreenOrBigger()) {
+				max = 8;
+			}
+			
+			int usersAdded = 0;
+			for (MediaSessionUser mediaSessionUser : mediaSession.getMediaSessionUsers()) {
+				if (usersAdded < max) {
+					User user = mediaSessionUser.getUser();
+					if (!user.getId().equals(this.user.getId())) {
+						BorderedCustomImageView borderedCustomImageView = new BorderedCustomImageView(getContext(),
+								R.drawable.user_default, R.dimen.mediaSessionUserImageDim,
+								R.dimen.mediaSessionUserImageDim);
+						borderedCustomImageView.setImageContent(user.getImage(), R.drawable.user_default);
+						if (usersAdded < (max / 2)) {
+							holder.usersUp.addView(borderedCustomImageView);
+						} else {
+							holder.usersDown.addView(borderedCustomImageView);
+						}
+						usersAdded++;
 					}
-					usersAdded++;
 				}
+			}
+		} else if (mediaSession.isActive()) {
+			int usersAmount = mediaSession.getMediaSessionUsers().size() - 1;
+			if (usersAmount > 0) {
+				holder.usersAmount.setText(getContext().getResources().getQuantityString(R.plurals.friendsAccepted,
+					usersAmount, usersAmount));
+				holder.usersAmount.setVisibility(View.VISIBLE);
 			}
 		}
 	}
@@ -105,9 +116,9 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			long absSecondsToDate = Math.abs((fullDate.getTime() - now.getTime()) / 1000);
 			Boolean isCurrentDay = DateUtils.getDay(now) == DateUtils.getDay(fullDate);
 			
-			if ((absSecondsToDate < DateUtils.DAY) && isCurrentDay) {
+			if ((absSecondsToDate < DateUtils.DAY) && isCurrentDay && !mediaSession.isExpired()) {
 				dateBuilder.append(LocalizationUtils.getString(R.string.todayDateFormat));
-			} else if (absSecondsToDate < DateUtils.WEEK) {
+			} else if ((absSecondsToDate < DateUtils.WEEK) && !mediaSession.isExpired()) {
 				dateBuilder.append(DateUtils.format(fullDate, DateUtils.E_DATE_FORMAT));
 			} else {
 				Boolean isCurrentYear = DateUtils.getYear(now) == DateUtils.getYear(fullDate);
@@ -132,16 +143,18 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 		holder.selections = findView(convertView, R.id.selections);
 		holder.usersUp = findView(convertView, R.id.usersUp);
 		holder.usersDown = findView(convertView, R.id.usersDown);
+		holder.usersAmount = findView(convertView, R.id.usersAmount);
 		return holder;
 	}
 	
 	public static class MediaSessionHolder {
 		
-		protected TextView watchableTypes;
-		protected TextView date;
+		private TextView watchableTypes;
+		private TextView date;
 		private LinearLayout selections;
 		private LinearLayout usersUp;
 		private LinearLayout usersDown;
+		private TextView usersAmount;
 	}
 	
 }

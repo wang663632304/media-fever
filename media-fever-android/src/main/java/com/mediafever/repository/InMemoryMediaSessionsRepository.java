@@ -62,7 +62,7 @@ public class InMemoryMediaSessionsRepository extends SynchronizedInMemoryReposit
 	public List<MediaSession> getPendingMediaSessions() {
 		List<MediaSession> pendingMediaSessions = Lists.newArrayList();
 		for (MediaSession mediaSession : getAll()) {
-			if (!mediaSession.isAccepted()) {
+			if (mediaSession.isPending()) {
 				pendingMediaSessions.add(mediaSession);
 			}
 		}
@@ -71,17 +71,32 @@ public class InMemoryMediaSessionsRepository extends SynchronizedInMemoryReposit
 	}
 	
 	/**
-	 * @see com.mediafever.repository.MediaSessionsRepository#getAcceptedMediaSessions()
+	 * @see com.mediafever.repository.MediaSessionsRepository#getActiveMediaSessions()
 	 */
 	@Override
-	public List<MediaSession> getAcceptedMediaSessions() {
-		List<MediaSession> acceptedMediaSessions = Lists.newArrayList();
+	public List<MediaSession> getActiveMediaSessions() {
+		List<MediaSession> activeMediaSessions = Lists.newArrayList();
 		for (MediaSession mediaSession : getAll()) {
-			if (mediaSession.isAccepted()) {
-				acceptedMediaSessions.add(mediaSession);
+			if (mediaSession.isActive()) {
+				activeMediaSessions.add(mediaSession);
 			}
 		}
-		Collections.sort(acceptedMediaSessions);
-		return acceptedMediaSessions;
+		Collections.sort(activeMediaSessions);
+		return activeMediaSessions;
+	}
+	
+	/**
+	 * @see com.mediafever.repository.MediaSessionsRepository#getExpiredMediaSessions()
+	 */
+	@Override
+	public List<MediaSession> getExpiredMediaSessions() {
+		List<MediaSession> expiredMediaSessions = Lists.newArrayList();
+		for (MediaSession mediaSession : getAll()) {
+			if (mediaSession.isExpired()) {
+				expiredMediaSessions.add(mediaSession);
+			}
+		}
+		Collections.sort(expiredMediaSessions);
+		return expiredMediaSessions;
 	}
 }

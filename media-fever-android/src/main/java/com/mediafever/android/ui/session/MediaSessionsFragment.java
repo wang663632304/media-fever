@@ -30,7 +30,6 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 		super.onCreate(savedInstanceState);
 		
 		getSupportActionBar().setTitle(R.string.mediaSessions);
-		
 		mediaSessionsUseCase = getInstance(MediaSessionsUseCase.class);
 	}
 	
@@ -48,10 +47,10 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	 */
 	@Override
 	public void onItemSelected(MediaSession mediaSession) {
-		if (mediaSession.isAccepted()) {
-			MediaSelectionsActivity.start(getActivity(), mediaSession.getId(), false);
-		} else {
+		if (mediaSession.isPending()) {
 			AcceptRejectSessionDialogFragment.show(mediaSession.getId(), this);
+		} else {
+			MediaSelectionsActivity.start(getActivity(), mediaSession.getId(), false);
 		}
 	}
 	
@@ -96,10 +95,16 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 					mergeAdapter.addAdapter(new MediaSessionAdapter(activity, pendingMediaSessions, getUser()));
 				}
 				
-				List<MediaSession> acceptedMediaSessions = mediaSessionsUseCase.getAcceptedMediaSessions();
-				if (!acceptedMediaSessions.isEmpty()) {
-					mergeAdapter.addView(ViewBuilder.buildSectionTitle(activity, R.string.acceptedSessions));
-					mergeAdapter.addAdapter(new MediaSessionAdapter(activity, acceptedMediaSessions, getUser()));
+				List<MediaSession> activeMediaSessions = mediaSessionsUseCase.getActiveMediaSessions();
+				if (!activeMediaSessions.isEmpty()) {
+					mergeAdapter.addView(ViewBuilder.buildSectionTitle(activity, R.string.activeSessions));
+					mergeAdapter.addAdapter(new MediaSessionAdapter(activity, activeMediaSessions, getUser()));
+				}
+				
+				List<MediaSession> expiredMediaSessions = mediaSessionsUseCase.getExpiredMediaSessions();
+				if (!expiredMediaSessions.isEmpty()) {
+					mergeAdapter.addView(ViewBuilder.buildSectionTitle(activity, R.string.expiredSessions));
+					mergeAdapter.addAdapter(new MediaSessionAdapter(activity, expiredMediaSessions, getUser()));
 				}
 				
 				setListAdapter(mergeAdapter);

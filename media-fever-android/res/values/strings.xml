@@ -113,7 +113,8 @@
 	<string name="newMediaSession">New Media Session</string>
 	<string name="noResultsMediaSessions">There are no media sessions</string>
 	<string name="pendingSessions">Pending Sessions</string>
-	<string name="acceptedSessions">Accepted Sessions</string>
+	<string name="activeSessions">Active Sessions</string>
+	<string name="expiredSessions">Expired Sessions</string>
 	<string name="addMediaSession">Add Media Session</string>
 	<string name="editMediaSession">Edit Media Session</string>
 	<string name="leaveMediaSession">Leave Media Session</string>

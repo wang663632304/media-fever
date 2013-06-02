@@ -12,6 +12,8 @@ public interface MediaSessionsRepository extends SynchronizedRepository<MediaSes
 	
 	public List<MediaSession> getPendingMediaSessions();
 	
-	public List<MediaSession> getAcceptedMediaSessions();
+	public List<MediaSession> getActiveMediaSessions();
+	
+	public List<MediaSession> getExpiredMediaSessions();
 	
 }

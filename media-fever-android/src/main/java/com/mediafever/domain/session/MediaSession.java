@@ -129,6 +129,14 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		accepted = true;
 	}
 	
+	public Boolean isPending() {
+		return accepted == null;
+	}
+	
+	public Boolean isActive() {
+		return isAccepted() && !isExpired();
+	}
+	
 	public Boolean isAccepted() {
 		return (accepted != null) && accepted;
 	}
