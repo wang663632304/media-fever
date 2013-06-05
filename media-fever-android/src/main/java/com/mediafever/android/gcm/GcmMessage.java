@@ -113,6 +113,7 @@ public enum GcmMessage {
 			} else {
 				notificationIntent = new Intent(AndroidApplication.get(), FriendsRequestsActivity.class);
 			}
+			notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 			
 			NotificationUtils.sendNotification(IdGenerator.getIntId(), R.drawable.ic_launcher, friendImageUrl,
 				tickerText, contentTitle, contentText, notificationIntent);
