@@ -105,6 +105,16 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		return mediaSessionUsers;
 	}
 	
+	public List<MediaSessionUser> getAcceptedMediaSessionUsers() {
+		List<MediaSessionUser> acceptedMediaSessionUsers = Lists.newArrayList();
+		for (MediaSessionUser each : mediaSessionUsers) {
+			if ((each.isAccepted() != null) && each.isAccepted()) {
+				acceptedMediaSessionUsers.add(each);
+			}
+		}
+		return acceptedMediaSessionUsers;
+	}
+	
 	public List<User> getUsers() {
 		List<User> users = Lists.newArrayList();
 		for (MediaSessionUser each : mediaSessionUsers) {

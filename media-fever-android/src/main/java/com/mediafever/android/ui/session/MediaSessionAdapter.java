@@ -10,7 +10,6 @@ import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.android.domain.User;
 import com.jdroid.android.images.BorderedCustomImageView;
 import com.jdroid.android.utils.AndroidDateUtils;
-import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.LocalizationUtils;
 import com.jdroid.java.utils.DateUtils;
 import com.jdroid.java.utils.StringUtils;
@@ -56,17 +55,13 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 			holder.selections.addView(borderedCustomImageView);
 		}
 		
-		holder.usersAmount.setVisibility(View.GONE);
 		if (holder.usersUp != null) {
 			holder.usersUp.removeAllViews();
 			holder.usersDown.removeAllViews();
-			int max = 4;
-			if (AndroidUtils.isLargeScreenOrBigger()) {
-				max = 8;
-			}
+			int max = 8;
 			
 			int usersAdded = 0;
-			for (MediaSessionUser mediaSessionUser : mediaSession.getMediaSessionUsers()) {
+			for (MediaSessionUser mediaSessionUser : mediaSession.getAcceptedMediaSessionUsers()) {
 				if (usersAdded < max) {
 					User user = mediaSessionUser.getUser();
 					if (!user.getId().equals(this.user.getId())) {
@@ -83,12 +78,18 @@ public class MediaSessionAdapter extends BaseHolderArrayAdapter<MediaSession, Me
 					}
 				}
 			}
-		} else if (mediaSession.isActive()) {
-			int usersAmount = mediaSession.getMediaSessionUsers().size() - 1;
-			if (usersAmount > 0) {
-				holder.usersAmount.setText(getContext().getResources().getQuantityString(R.plurals.friendsAccepted,
-					usersAmount, usersAmount));
-				holder.usersAmount.setVisibility(View.VISIBLE);
+		}
+		
+		if (holder.usersAmount != null) {
+			if (mediaSession.isActive()) {
+				int usersAmount = mediaSession.getAcceptedMediaSessionUsers().size() - 1;
+				if (usersAmount > 0) {
+					holder.usersAmount.setText(getContext().getResources().getQuantityString(R.plurals.friendsAccepted,
+						usersAmount, usersAmount));
+					holder.usersAmount.setVisibility(View.VISIBLE);
+				}
+			} else {
+				holder.usersAmount.setVisibility(View.GONE);
 			}
 		}
 	}
