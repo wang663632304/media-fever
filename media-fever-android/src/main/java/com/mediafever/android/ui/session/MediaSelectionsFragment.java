@@ -162,6 +162,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 							synchMessage.setText(getString(R.string.mediaSelectionAdded, fullName, watchableName));
 						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_REMOVED)) {
 							synchMessage.setText(getString(R.string.mediaSelectionRemoved, fullName, watchableName));
+							MediaSelectionDialogFragment.dismiss(getActivity());
 						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_UP)) {
 							synchMessage.setText(getString(R.string.mediaSelectionThumbsUp, fullName, watchableName));
 						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_DOWN)) {

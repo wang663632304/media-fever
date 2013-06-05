@@ -76,12 +76,16 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public void thumbsUp(Watchable watchable) {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
-		mediaSelection.thumbsUp();
+		if (mediaSelection != null) {
+			mediaSelection.thumbsUp();
+		}
 	}
 	
 	public void thumbsDown(Watchable watchable) {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
-		mediaSelection.thumbsDown();
+		if (mediaSelection != null) {
+			mediaSelection.thumbsDown();
+		}
 	}
 	
 	private MediaSelection findMediaSelection(Watchable watchable) {
