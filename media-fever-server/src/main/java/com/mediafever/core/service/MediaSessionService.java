@@ -196,29 +196,44 @@ public class MediaSessionService {
 	}
 	
 	public List<MediaSession> getAll(Long userId) {
-		return mediaSessionRepository.getAll(userId);
+		List<MediaSession> mediaSessions = Lists.newArrayList();
+		// Filter all the expired and not accepted media sessions
+		for (MediaSession mediaSession : mediaSessionRepository.getAll(userId)) {
+			if (mediaSession.isExpired()) {
+				MediaSessionUser mediaSessionUser = findMediaSessionUser(mediaSession, userId);
+				if ((mediaSessionUser.isAccepted() != null) && mediaSessionUser.isAccepted()) {
+					mediaSessions.add(mediaSession);
+				}
+			} else {
+				mediaSessions.add(mediaSession);
+			}
+		}
+		return mediaSessions;
+	}
+	
+	private MediaSessionUser findMediaSessionUser(MediaSession mediaSession, Long userId) {
+		MediaSessionUser mediaSessionUser = null;
+		for (MediaSessionUser each : mediaSession.getUsers()) {
+			if (each.getUser().getId().equals(userId)) {
+				mediaSessionUser = each;
+				break;
+			}
+		}
+		return mediaSessionUser;
 	}
 	
 	@Transactional
 	public void acceptMediaSession(Long id, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
-		for (MediaSessionUser mediaSessionUser : mediaSession.getUsers()) {
-			if (mediaSessionUser.getUser().getId().equals(userId)) {
-				mediaSessionUser.accept();
-				break;
-			}
-		}
+		MediaSessionUser mediaSessionUser = findMediaSessionUser(mediaSession, userId);
+		mediaSessionUser.accept();
 	}
 	
 	@Transactional
 	public void rejectMediaSession(Long id, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
-		for (MediaSessionUser mediaSessionUser : mediaSession.getUsers()) {
-			if (mediaSessionUser.getUser().getId().equals(userId)) {
-				mediaSessionUser.reject();
-				break;
-			}
-		}
+		MediaSessionUser mediaSessionUser = findMediaSessionUser(mediaSession, userId);
+		mediaSessionUser.reject();
 	}
 	
 	@Transactional

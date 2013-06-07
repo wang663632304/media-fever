@@ -33,7 +33,11 @@ public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 		return mediaSessionsRepository.getPendingMediaSessions();
 	}
 	
-	public List<MediaSession> getAcceptedMediaSessions() {
-		return mediaSessionsRepository.getAcceptedMediaSessions();
+	public List<MediaSession> getActiveMediaSessions() {
+		return mediaSessionsRepository.getActiveMediaSessions();
+	}
+	
+	public List<MediaSession> getExpiredMediaSessions() {
+		return mediaSessionsRepository.getExpiredMediaSessions();
 	}
 }

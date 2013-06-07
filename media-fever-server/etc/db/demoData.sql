@@ -35,34 +35,37 @@ INSERT INTO Person VALUES ('30', 'Beyond All Reason');
 -- --------------------
 -- WATCHABLE
 -- --------------------
-INSERT INTO Watchable VALUES ('1', 'Movie', '114903', 'Aquí Entre Nos', 'http://cf2.imgobject.com/t/p/w92/eh8LW9tqihgQx1raVmrxnXkjMJ4.jpg', 'Un día, Rodolfo Guerra decide no ir a trabajar. Esta harto de que su mujer y sus tres hijas lo traten sólo como el proveedor de su casa. Basta con ese día, en que se rompe la rutina familiar, para que Rodolfo se dé cuenta que es un extraño en su propia casa, por lo que decide desentrañar el mundo de intrigas y mentiras en el que vive y llegar a descubrir la verdad con todas sus consecuencias.', '0.00', '0', '2012', UNIX_TIMESTAMP(), 'Some marriages end well... others last a whole life.', 'http://www.youtube.com/watch?v=2aqSh0l4wPU', null);
-INSERT INTO Watchable VALUES ('2', 'Movie', '114904', 'Pasanga', 'http://cf2.imgobject.com/t/p/w92/7X7eNyxKG44MXfOjtERPSnPbvPK.jpg', 'Pasanga is a 2009 Tamil film directed by debutant Pandiraj, who worked as an erstwhile assistant to Cheran. It stars numerous debutant child artists in the lead roles along with newcomer Vimal and Saroja fame Vega Tamotia in supporting roles. The film, produced by Sasikumar and scored by James Vasanthan, who both rose to fame with the 2008 hit film Subramaniyapuram, released on 1 May 2009 to high critical acclaim, bagging three National Film Awards and several other awards at International Film Festivals', '4.00', '1', '2009', UNIX_TIMESTAMP(), '', null, null);
+INSERT INTO Watchable VALUES ('1', 'Movie', '114903', 'Aquí Entre Nos', 'http://cf2.imgobject.com/t/p/w92/eh8LW9tqihgQx1raVmrxnXkjMJ4.jpg', 'Un día, Rodolfo Guerra decide no ir a trabajar. Esta harto de que su mujer y sus tres hijas lo traten sólo como el proveedor de su casa. Basta con ese día, en que se rompe la rutina familiar, para que Rodolfo se dé cuenta que es un extraño en su propia casa, por lo que decide desentrañar el mundo de intrigas y mentiras en el que vive y llegar a descubrir la verdad con todas sus consecuencias.', '0.00', '0', '2012-05-23', UNIX_TIMESTAMP(), 'Some marriages end well... others last a whole life.', 'http://www.youtube.com/watch?v=2aqSh0l4wPU', null);
+INSERT INTO Watchable VALUES ('2', 'Movie', '114904', 'Pasanga', 'http://cf2.imgobject.com/t/p/w92/7X7eNyxKG44MXfOjtERPSnPbvPK.jpg', 'Pasanga is a 2009 Tamil film directed by debutant Pandiraj, who worked as an erstwhile assistant to Cheran. It stars numerous debutant child artists in the lead roles along with newcomer Vimal and Saroja fame Vega Tamotia in supporting roles. The film, produced by Sasikumar and scored by James Vasanthan, who both rose to fame with the 2008 hit film Subramaniyapuram, released on 1 May 2009 to high critical acclaim, bagging three National Film Awards and several other awards at International Film Festivals', '4.00', '1', '2009-05-23', UNIX_TIMESTAMP(), '', null, null);
 INSERT INTO Watchable VALUES ('3', 'Movie', '114906', 'Les Enfoirés 2012 - Le Bal des Enfoirés', 'http://cf2.imgobject.com/t/p/w92/yyMqWI6u3ssCmJudQZsUCkw8nuz.jpg', 'Le Bal des Enfoirés est le vingt-deuxième album des Enfoirés, enregistré lors de leurs sept concerts ayant eu lieu à la Halle Tony-Garnier de Lyon du mercredi 1er février au lundi 6 février 2012', '0.00', '0', null, UNIX_TIMESTAMP(), '', null, null);
-INSERT INTO Watchable VALUES ('4', 'Movie', '114909', 'Oar', 'http://cf2.imgobject.com/t/p/w92/vlZXD0zjDk6tUA4TLePvYX5Bw1R.jpg', 'Drama about the difficult relationship between a former wrestler, his wife and their adopted children.', '0.00', '0', '1985', UNIX_TIMESTAMP(), '', null, null);
-INSERT INTO Watchable VALUES ('5', 'Movie', '114911', 'Blek Giek', 'http://cf2.imgobject.com/t/p/w92/d7osS0KQhmuU2RA6nXNeJ7iUWHB.jpg', 'Scellone, un criminale che non si fa intimorire da nulla e nessuno, viene colto da un forte dolore al petto durante una rapina in una farmacia, e teme si possa trattare di un infarto o un ischemia. Si consulta con Flaminio, un dentista della mala, che gli suggerisce di sottoporsi a trapianto di cuore: il chirurgo lo conosce lui, la sua sala operatoria (clandestina) è pronta, manca solo un donatore. Gigino, un barbone sfigato sempre in cerca di qualcosa che lo stordisca ben bene, ha trovato ciò che fa per lui: una sostanza dagli effetti mirabolanti. Quando Scellone incappa casualmente in Gigino, pensa di avere trovato il suo donatore, ma invece...', '0.00', '0', '2002', UNIX_TIMESTAMP(), '', null, null);
+INSERT INTO Watchable VALUES ('4', 'Movie', '114909', 'Oar', 'http://cf2.imgobject.com/t/p/w92/vlZXD0zjDk6tUA4TLePvYX5Bw1R.jpg', 'Drama about the difficult relationship between a former wrestler, his wife and their adopted children.', '0.00', '0', '1985-05-23', UNIX_TIMESTAMP(), '', null, null);
+INSERT INTO Watchable VALUES ('5', 'Movie', '114911', 'Blek Giek', 'http://cf2.imgobject.com/t/p/w92/d7osS0KQhmuU2RA6nXNeJ7iUWHB.jpg', 'Scellone, un criminale che non si fa intimorire da nulla e nessuno, viene colto da un forte dolore al petto durante una rapina in una farmacia, e teme si possa trattare di un infarto o un ischemia. Si consulta con Flaminio, un dentista della mala, che gli suggerisce di sottoporsi a trapianto di cuore: il chirurgo lo conosce lui, la sua sala operatoria (clandestina) è pronta, manca solo un donatore. Gigino, un barbone sfigato sempre in cerca di qualcosa che lo stordisca ben bene, ha trovato ciò che fa per lui: una sostanza dagli effetti mirabolanti. Quando Scellone incappa casualmente in Gigino, pensa di avere trovato il suo donatore, ma invece...', '0.00', '0', '2002-05-23', UNIX_TIMESTAMP(), '', null, null);
 
-INSERT INTO Watchable VALUES ('100', 'Series', '75251', 'Barking', null, '', '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, null);
-INSERT INTO Watchable VALUES ('101', 'Series', '75252', 'Battle for Ozzfest', null, 'Its the heavy metal opportunity of a lifetime--the king and queen of darkness, Ozzy and Sharon Osbourne, are looking for the next great band to rock the Ozzfest stage. MTVs giving you a VIP pass to watch it all go down. We held nationwide auditions to find 8 bands who will vie for one lucky shot at the grand prize: a highly coveted tour spot on Ozzfest 2005, plus band gear and enough money to cover all their expenses. But theres a secret twist or two that even the bands dont know about...  Every episode delivers more road tests and eliminations by Ozzy and Sharon. The contestants are constantly faced with various tasks intended to test their strength, be it physical, mental, moral or musical, because in the end, only one band will be crowned champion and receive the Grand Prize package...if theyre hardcore enough to handle it. The winners are.... Marc and A Dozen Furies, which got a slightly commanding 57%of the votes compared to Ryan and Cynders 43% Meet the Bands', '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, null);
-INSERT INTO Watchable VALUES ('102', 'Series', '75253', 'Nanny 911', null, 'Nanny 911 is a new unscripted series that follows a team of nannies armed with the dos and donts of child-rearing. Each nanny has a specific area of expertise, ranging from proper etiquette to controlling temper tantrums, and all are ready to help exhausted parents tackle the issues creating chaos in their home and whip their families into tip-top shape. (FOXs press release)', '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, null);
+INSERT INTO Watchable VALUES ('100', 'Series', '75251', 'Barking', null, '', '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, null);
+INSERT INTO Watchable VALUES ('101', 'Series', '75252', 'Battle for Ozzfest', null, 'Its the heavy metal opportunity of a lifetime--the king and queen of darkness, Ozzy and Sharon Osbourne, are looking for the next great band to rock the Ozzfest stage. MTVs giving you a VIP pass to watch it all go down. We held nationwide auditions to find 8 bands who will vie for one lucky shot at the grand prize: a highly coveted tour spot on Ozzfest 2005, plus band gear and enough money to cover all their expenses. But theres a secret twist or two that even the bands dont know about...  Every episode delivers more road tests and eliminations by Ozzy and Sharon. The contestants are constantly faced with various tasks intended to test their strength, be it physical, mental, moral or musical, because in the end, only one band will be crowned champion and receive the Grand Prize package...if theyre hardcore enough to handle it. The winners are.... Marc and A Dozen Furies, which got a slightly commanding 57%of the votes compared to Ryan and Cynders 43% Meet the Bands', '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, null);
+INSERT INTO Watchable VALUES ('102', 'Series', '75253', 'Nanny 911', null, 'Nanny 911 is a new unscripted series that follows a team of nannies armed with the dos and donts of child-rearing. Each nanny has a specific area of expertise, ranging from proper etiquette to controlling temper tantrums, and all are ready to help exhausted parents tackle the issues creating chaos in their home and whip their families into tip-top shape. (FOXs press release)', '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, null);
 
-INSERT INTO Watchable VALUES ('200', 'Episode', '166960', 'Episode 1', null, '', '0.00', '0', null, UNIX_TIMESTAMP(), null, null, '1');
-INSERT INTO Watchable VALUES ('201', 'Episode', '4244695', 'Episode 2', null, '', '0.00', '0', null, UNIX_TIMESTAMP(), null, null, '2');
-INSERT INTO Watchable VALUES ('202', 'Episode', '4244696', 'Episode 3', null, '', '0.00', '0', null, UNIX_TIMESTAMP(), null, null, '3');
-INSERT INTO Watchable VALUES ('203', 'Episode', '4244697', 'Episode 4', null, '', '0.00', '0', null, UNIX_TIMESTAMP(), null, null, '4');
-INSERT INTO Watchable VALUES ('204', 'Episode', '4244698', 'Episode 5', null, '', '0.00', '0', null, UNIX_TIMESTAMP(), null, null, '5');
-INSERT INTO Watchable VALUES ('205', 'Episode', '4244699', 'Episode 6', null, '', '0.00', '0', null, UNIX_TIMESTAMP(), null, null, '6');
-INSERT INTO Watchable VALUES ('206', 'Episode', '166961', 'The Battle for Ozzfest Begins', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '1');
-INSERT INTO Watchable VALUES ('207', 'Episode', '166962', 'Life On The Road', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '2');
-INSERT INTO Watchable VALUES ('208', 'Episode', '166963', 'Dirty Laundry & Dirty Deeds', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '3');
-INSERT INTO Watchable VALUES ('209', 'Episode', '166964', 'Bite the Bat', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '4');
-INSERT INTO Watchable VALUES ('210', 'Episode', '166965', 'Battle of the Bands', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '5');
-INSERT INTO Watchable VALUES ('211', 'Episode', '166966', 'Brush with the Law', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '6');
-INSERT INTO Watchable VALUES ('212', 'Episode', '166967', 'Sharons Trick', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '7');
-INSERT INTO Watchable VALUES ('213', 'Episode', '166968', 'Brittanys Final Day', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '8');
-INSERT INTO Watchable VALUES ('214', 'Episode', '166969', 'Playing With the Big Dogs', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '9');
-INSERT INTO Watchable VALUES ('215', 'Episode', '166970', 'Dude, Get Off My Bus!', null, null, '0.00', '0', '2004', UNIX_TIMESTAMP(), null, null, '10');
-INSERT INTO Watchable VALUES ('216', 'Episode', '166971', 'The Bands are Reunited', null, null, '0.00', '0', '2005', UNIX_TIMESTAMP(), null, null, '11');
-INSERT INTO Watchable VALUES ('217', 'Episode', '166972', 'The Finale', null, null, '0.00', '0', '2005', UNIX_TIMESTAMP(), null, null, '12');
+INSERT INTO Watchable VALUES ('200', 'Episode', '166960', 'Season 1 - Episode 1', null, '', '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '1');
+INSERT INTO Watchable VALUES ('201', 'Episode', '4244695', 'Season 1 - Episode 2', null, '', '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '2');
+INSERT INTO Watchable VALUES ('202', 'Episode', '4244696', 'Season 1 - Episode 3', null, '', '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '3');
+INSERT INTO Watchable VALUES ('203', 'Episode', '4244697', 'Season 1 - Episode 4', null, '', '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '4');
+INSERT INTO Watchable VALUES ('204', 'Episode', '4244698', 'Season 1 - Episode 5', null, '', '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '5');
+INSERT INTO Watchable VALUES ('205', 'Episode', '4244699', 'Season 1 - Episode 6', null, '', '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '6');
+INSERT INTO Watchable VALUES ('206', 'Episode', '166961', 'Season 2 - Episode 1', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '1');
+INSERT INTO Watchable VALUES ('207', 'Episode', '166962', 'Season 2 - Episode 2', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '2');
+INSERT INTO Watchable VALUES ('208', 'Episode', '166963', 'Season 2 - Episode 3', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '3');
+INSERT INTO Watchable VALUES ('209', 'Episode', '166964', 'Season 2 - Episode 4', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '4');
+INSERT INTO Watchable VALUES ('210', 'Episode', '166965', 'Season 2 - Episode 5', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '5');
+INSERT INTO Watchable VALUES ('211', 'Episode', '166966', 'Season 2 - Episode 6', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '6');
+INSERT INTO Watchable VALUES ('212', 'Episode', '166967', 'Season 2 - Episode 7', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '7');
+INSERT INTO Watchable VALUES ('213', 'Episode', '166968', 'Season 2 - Episode 8', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '8');
+INSERT INTO Watchable VALUES ('214', 'Episode', '166969', 'Season 2 - Episode 9', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '9');
+INSERT INTO Watchable VALUES ('215', 'Episode', '166970', 'Season 2 - Episode 10', null, null, '0.00', '0', '2004-05-23', UNIX_TIMESTAMP(), null, null, '10');
+INSERT INTO Watchable VALUES ('216', 'Episode', '166971', 'Season 2 - Episode 11 (Not Released)', null, null, '0.00', '0', '2115-05-23', UNIX_TIMESTAMP(), null, null, '11');
+INSERT INTO Watchable VALUES ('217', 'Episode', '166972', 'Season 2 - Episode 12 (Not Released)', null, null, '0.00', '0', null, UNIX_TIMESTAMP(), null, null, '12');
+INSERT INTO Watchable VALUES ('218', 'Episode', '166973', 'Season 3 - Episode 1 (Not Released)', null, null, '0.00', '0', '2115-05-23', UNIX_TIMESTAMP(), null, null, '12');
+INSERT INTO Watchable VALUES ('219', 'Episode', '166974', 'Season 3 - Episode 2 (Not Released)', null, null, '0.00', '0', null, UNIX_TIMESTAMP(), null, null, '12');
+
 
 -- --------------------
 -- WATCHABLE_GENRE
@@ -132,12 +135,14 @@ INSERT INTO Watchable_Actor VALUES ('203', '14');
 -- --------------------
 INSERT INTO Season VALUES ('1', '22711', '1');
 INSERT INTO Season VALUES ('2', '8655', '2');
+INSERT INTO Season VALUES ('3', '8656', '3');
 
 -- --------------------
 -- SERIES_SEASON
 -- --------------------
 INSERT INTO Series_Season VALUES ('100', '1');
 INSERT INTO Series_Season VALUES ('100', '2');
+INSERT INTO Series_Season VALUES ('100', '3');
 
 -- --------------------
 -- SEASON_EPISODE
@@ -160,6 +165,8 @@ INSERT INTO Season_Episode VALUES ('2', '214');
 INSERT INTO Season_Episode VALUES ('2', '215');
 INSERT INTO Season_Episode VALUES ('2', '216');
 INSERT INTO Season_Episode VALUES ('2', '217');
+INSERT INTO Season_Episode VALUES ('3', '218');
+INSERT INTO Season_Episode VALUES ('3', '219');
 
 -- --------------------
 -- USER
@@ -277,7 +284,7 @@ INSERT INTO MediaSession VALUES ('6', DATE_ADD(now(), INTERVAL 31 DAY), now());
 INSERT INTO MediaSession VALUES ('7', DATE_ADD(now(), INTERVAL 31 DAY), null);
 INSERT INTO MediaSession VALUES ('8', DATE_ADD(now(), INTERVAL 31 DAY), now());
 INSERT INTO MediaSession VALUES ('9', DATE_ADD(now(), INTERVAL 31 DAY), now());
-INSERT INTO MediaSession VALUES ('10', DATE_ADD(now(), INTERVAL 31 DAY), now());
+INSERT INTO MediaSession VALUES ('10', DATE_ADD(now(), INTERVAL -1 DAY), now());
 INSERT INTO MediaSession VALUES ('11', DATE_ADD(now(), INTERVAL 31 DAY), null);
 INSERT INTO MediaSession VALUES ('12', null, null);
 INSERT INTO MediaSession VALUES ('13', null, now());
@@ -323,7 +330,7 @@ INSERT INTO MediaSessionUser VALUES ('17', '1', true, '9');
 INSERT INTO MediaSessionUser VALUES ('18', '1', true, '10');
 INSERT INTO MediaSessionUser VALUES ('19', '1', true, '11');
 INSERT INTO MediaSessionUser VALUES ('20', '1', true, '12');
-INSERT INTO MediaSessionUser VALUES ('21', '1', true, '13');
+INSERT INTO MediaSessionUser VALUES ('21', '1', null, '13');
 
 -- --------------------
 -- MEDIA_SELECTION

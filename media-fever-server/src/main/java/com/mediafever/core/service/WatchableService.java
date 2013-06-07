@@ -57,7 +57,7 @@ public class WatchableService {
 	}
 	
 	public PagedResult<Watchable> searchWatchable(Filter filter) {
-		filter.setSorting(new Sorting(CustomSortingKey.RELEASE_YEAR, false));
+		filter.setSorting(new Sorting(CustomSortingKey.RELEASE_DATE, false));
 		return watchableRepository.search(filter);
 	}
 	

@@ -19,7 +19,7 @@ CREATE TABLE Watchable (
 	overview		TEXT			NULL,
 	rating			float(10,2)		NOT NULL,
 	ratingCount		bigint(20)		NOT NULL,
-	releaseYear		bigint(4) 		NULL,
+	releaseDate		DATETIME		NULL,
 	lastupdated		bigint(20)		NOT NULL,
 	tagline			VARCHAR(2000)	NULL,
 	trailerURL		VARCHAR(255)	NULL,

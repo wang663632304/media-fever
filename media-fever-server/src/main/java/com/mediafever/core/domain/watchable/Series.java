@@ -1,5 +1,6 @@
 package com.mediafever.core.domain.watchable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.CascadeType;
@@ -7,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mediafever.core.domain.watchable.visitor.WatchableVisitor;
@@ -32,8 +35,8 @@ public class Series extends Watchable {
 	}
 	
 	public Series(Long externalId, String name, String imageURL, String overview, List<Person> actors,
-			List<Genre> genres, Float rating, Integer ratingCount, Integer releaseYear, Long lastupdated) {
-		super(externalId, name, imageURL, overview, actors, genres, rating, ratingCount, releaseYear, lastupdated);
+			List<Genre> genres, Float rating, Integer ratingCount, Date releaseDate, Long lastupdated) {
+		super(externalId, name, imageURL, overview, actors, genres, rating, ratingCount, releaseDate, lastupdated);
 		seasons = Lists.newArrayList();
 	}
 	
@@ -43,6 +46,16 @@ public class Series extends Watchable {
 	
 	public List<Season> getSeasons() {
 		return seasons;
+	}
+	
+	public List<Season> getStartedSeasons() {
+		return Lists.newArrayList(Iterables.filter(seasons, new Predicate<Season>() {
+			
+			@Override
+			public boolean apply(Season season) {
+				return !season.getReleasedEpisodes().isEmpty();
+			}
+		}));
 	}
 	
 	@Override

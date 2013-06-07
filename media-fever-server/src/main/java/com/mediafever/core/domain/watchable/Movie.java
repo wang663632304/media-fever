@@ -1,5 +1,6 @@
 package com.mediafever.core.domain.watchable;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,9 +22,9 @@ public class Movie extends Watchable {
 	}
 	
 	public Movie(Long externalId, String name, String imageURL, String overview, List<Person> actors,
-			List<Genre> genres, Float rating, Integer ratingCount, Integer releaseYear, Long lastupdated,
-			String tagline, String trailerURL) {
-		super(externalId, name, imageURL, overview, actors, genres, rating, ratingCount, releaseYear, lastupdated);
+			List<Genre> genres, Float rating, Integer ratingCount, Date releaseDate, Long lastupdated, String tagline,
+			String trailerURL) {
+		super(externalId, name, imageURL, overview, actors, genres, rating, ratingCount, releaseDate, lastupdated);
 		this.tagline = tagline;
 		this.trailerURL = trailerURL;
 	}

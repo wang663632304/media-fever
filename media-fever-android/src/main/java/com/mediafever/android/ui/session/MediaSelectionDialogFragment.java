@@ -2,7 +2,9 @@ package com.mediafever.android.ui.session;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +46,14 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 		
 		dialogFragment.setTargetFragment(targetFragment, 1);
 		dialogFragment.show(fm, MediaSelectionDialogFragment.class.getSimpleName());
+	}
+	
+	public static void dismiss(FragmentActivity fragmentActivity) {
+		FragmentManager fm = fragmentActivity.getSupportFragmentManager();
+		DialogFragment dialogFragment = (DialogFragment)fm.findFragmentByTag(MediaSelectionDialogFragment.class.getSimpleName());
+		if (dialogFragment != null) {
+			dialogFragment.dismiss();
+		}
 	}
 	
 	/**

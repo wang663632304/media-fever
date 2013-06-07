@@ -19,7 +19,7 @@ public class SeriesParser extends JsonParser<JsonObjectWrapper> {
 	private static final String OVERVIEW = "overview";
 	private static final String ACTORS = "actors";
 	private static final String GENRES = "genres";
-	private static final String RELEASE_YEAR = "releaseYear";
+	private static final String RELEASE_DATE = "releaseDate";
 	private static final String SEASONS = "seasons";
 	
 	/**
@@ -29,7 +29,7 @@ public class SeriesParser extends JsonParser<JsonObjectWrapper> {
 	public Object parse(JsonObjectWrapper json) throws JSONException {
 		List<Season> seasons = parseList(json.optJSONArray(SEASONS), new SeasonParser());
 		return new Series(json.getLong(ID), json.getString(NAME), json.getString(IMAGE), json.optString(OVERVIEW),
-				json.optList(ACTORS), json.optList(GENRES), json.optInt(RELEASE_YEAR), seasons);
+				json.optList(ACTORS), json.optList(GENRES), json.optDate(RELEASE_DATE), seasons);
 	}
 	
 }

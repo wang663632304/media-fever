@@ -7,13 +7,21 @@
 	<TextView android:id="@+id/date" android:layout_height="wrap_content" android:layout_width="wrap_content"
 		android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
 		android:layout_marginRight="10dp" android:layout_below="@+id/watchableTypes" />
-	<TextView android:id="@+id/usersAmount" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
-		android:layout_toLeftOf="@+id/selections" android:maxLines="2" />
 
 	<LinearLayout android:id="@+id/selections" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:orientation="horizontal" android:layout_marginRight="10dp" android:layout_alignParentRight="true">
+		android:orientation="horizontal" android:layout_marginRight="10dp" android:layout_centerInParent="true">
+
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/usersUp" android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:orientation="horizontal" android:layout_alignParentRight="true" android:layout_marginRight="10dp"
+		android:layout_toRightOf="@+id/selections" android:gravity="right">
+
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/usersDown" android:layout_height="wrap_content" android:layout_width="wrap_content"
+		android:orientation="horizontal" android:layout_alignParentRight="true" android:layout_marginRight="10dp"
+		android:layout_toRightOf="@+id/selections" android:layout_below="@+id/usersUp" android:gravity="right">
 
 	</LinearLayout>
 

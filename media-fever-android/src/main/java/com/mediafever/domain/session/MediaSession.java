@@ -76,12 +76,16 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public void thumbsUp(Watchable watchable) {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
-		mediaSelection.thumbsUp();
+		if (mediaSelection != null) {
+			mediaSelection.thumbsUp();
+		}
 	}
 	
 	public void thumbsDown(Watchable watchable) {
 		MediaSelection mediaSelection = findMediaSelection(watchable);
-		mediaSelection.thumbsDown();
+		if (mediaSelection != null) {
+			mediaSelection.thumbsDown();
+		}
 	}
 	
 	private MediaSelection findMediaSelection(Watchable watchable) {
@@ -103,6 +107,16 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public List<MediaSessionUser> getMediaSessionUsers() {
 		return mediaSessionUsers;
+	}
+	
+	public List<MediaSessionUser> getAcceptedMediaSessionUsers() {
+		List<MediaSessionUser> acceptedMediaSessionUsers = Lists.newArrayList();
+		for (MediaSessionUser each : mediaSessionUsers) {
+			if ((each.isAccepted() != null) && each.isAccepted()) {
+				acceptedMediaSessionUsers.add(each);
+			}
+		}
+		return acceptedMediaSessionUsers;
 	}
 	
 	public List<User> getUsers() {
@@ -127,6 +141,14 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public void accept() {
 		accepted = true;
+	}
+	
+	public Boolean isPending() {
+		return accepted == null;
+	}
+	
+	public Boolean isActive() {
+		return isAccepted() && !isExpired();
 	}
 	
 	public Boolean isAccepted() {

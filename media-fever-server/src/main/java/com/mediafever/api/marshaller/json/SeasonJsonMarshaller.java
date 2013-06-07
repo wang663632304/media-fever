@@ -26,13 +26,13 @@ public class SeasonJsonMarshaller implements Marshaller<Season, JsonMap> {
 	private UserWatchableService userWatchableService;
 	
 	/**
-	 * @see com.jdroid.java.marshaller.Marshaller#marshall(java.lang.Object,
-	 *      com.jdroid.java.marshaller.MarshallerMode, java.util.Map)
+	 * @see com.jdroid.java.marshaller.Marshaller#marshall(java.lang.Object, com.jdroid.java.marshaller.MarshallerMode,
+	 *      java.util.Map)
 	 */
 	@Override
 	public JsonMap marshall(Season season, MarshallerMode mode, Map<String, String> extras) {
 		
-		List<Long> watchablesIds = Lists.transform(season.getEpisodes(), new IdPropertyFunction());
+		List<Long> watchablesIds = Lists.transform(season.getReleasedEpisodes(), new IdPropertyFunction());
 		
 		JsonMap map = new JsonMap(mode, extras);
 		map.put(ID, season.getId());

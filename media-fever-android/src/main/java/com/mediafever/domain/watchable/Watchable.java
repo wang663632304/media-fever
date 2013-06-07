@@ -1,9 +1,11 @@
 package com.mediafever.domain.watchable;
 
+import java.util.Date;
 import java.util.List;
 import com.jdroid.android.domain.Entity;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.domain.UriFileContent;
+import com.jdroid.java.utils.DateUtils;
 
 /**
  * 
@@ -16,17 +18,17 @@ public class Watchable extends Entity {
 	private String overview;
 	private List<String> actors;
 	private List<String> genres;
-	private Integer releaseYear;
+	private Date releaseDate;
 	
 	public Watchable(Long id, String name, String imageURL, String overview, List<String> actors, List<String> genres,
-			Integer releaseYear) {
+			Date releaseDate) {
 		super(id);
 		this.name = name;
 		image = new UriFileContent(imageURL);
 		this.overview = overview;
 		this.actors = actors;
 		this.genres = genres;
-		this.releaseYear = releaseYear;
+		this.releaseDate = releaseDate;
 	}
 	
 	public String getName() {
@@ -49,7 +51,11 @@ public class Watchable extends Entity {
 		return genres;
 	}
 	
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+	
 	public Integer getReleaseYear() {
-		return releaseYear;
+		return releaseDate != null ? DateUtils.getYear(releaseDate) : null;
 	}
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<plurals name="friendsAccepted">
+		<item quantity="one">1 friend accepted</item>
+		<item quantity="other">%d friends accepted</item>
+	</plurals>
+</resources>

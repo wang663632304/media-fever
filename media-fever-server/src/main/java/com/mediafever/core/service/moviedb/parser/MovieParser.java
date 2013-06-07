@@ -1,5 +1,6 @@
 package com.mediafever.core.service.moviedb.parser;
 
+import java.util.Date;
 import java.util.List;
 import org.json.JSONException;
 import com.google.common.collect.Lists;
@@ -8,8 +9,6 @@ import com.jdroid.java.parser.json.JsonObjectWrapper;
 import com.jdroid.java.parser.json.JsonParser;
 import com.jdroid.java.repository.ObjectNotFoundException;
 import com.jdroid.java.utils.DateUtils;
-import com.jdroid.java.utils.NumberUtils;
-import com.jdroid.java.utils.StringUtils;
 import com.mediafever.core.domain.watchable.Genre;
 import com.mediafever.core.domain.watchable.Movie;
 import com.mediafever.core.domain.watchable.Person;
@@ -70,11 +69,7 @@ public class MovieParser extends JsonParser<JsonArrayWrapper> {
 					overview = null;
 				}
 				String trailerURL = jsonObject.getString(TRAILER_KEY);
-				String released = jsonObject.getString(RELEASED_KEY);
-				Integer releaseYear = null;
-				if (StringUtils.isNotBlank(released)) {
-					releaseYear = NumberUtils.getInteger(released.split("-")[0]);
-				}
+				Date releaseDate = jsonObject.optDate(RELEASED_KEY, DateUtils.YYYYMMDD_DATE_FORMAT);
 				Float rating = jsonObject.optFloat(RATING_KEY, 0f) / 2;
 				Integer ratingCount = jsonObject.getInt(VOTES_KEY);
 				
@@ -114,7 +109,7 @@ public class MovieParser extends JsonParser<JsonArrayWrapper> {
 					}
 				}
 				
-				movie = new Movie(id, name, imageURL, overview, actors, genres, rating, ratingCount, releaseYear,
+				movie = new Movie(id, name, imageURL, overview, actors, genres, rating, ratingCount, releaseDate,
 						lastupdated, tagline, trailerURL);
 			}
 		}
