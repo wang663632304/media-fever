@@ -25,9 +25,9 @@
 
 				<RelativeLayout android:layout_height="@dimen/rowImageDim" android:layout_width="@dimen/rowImageDim">
 					<View android:layout_height="match_parent" android:layout_width="match_parent" android:background="@android:color/white" />
-					<com.jdroid.android.images.CustomImageView android:id="@+id/userImage"
-						android:scaleType="centerCrop" android:layout_width="match_parent" android:layout_height="match_parent"
-						android:layout_margin="1dp" android:src="@drawable/user_default" />
+					<com.jdroid.android.images.CustomImageView android:id="@+id/synchUserImage"
+	android:scaleType="centerCrop" android:layout_width="match_parent" android:layout_height="match_parent"
+	android:layout_margin="1dp" android:src="@drawable/user_default" />
 				</RelativeLayout>
 
 				<TextView android:id="@+id/synchMessage" android:layout_height="wrap_content" android:layout_width="wrap_content"

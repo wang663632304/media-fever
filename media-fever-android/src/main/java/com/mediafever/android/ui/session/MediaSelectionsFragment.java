@@ -26,6 +26,7 @@ import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.domain.UriFileContent;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.jdroid.android.images.CustomImageView;
+import com.jdroid.android.images.CustomImageView.ImageLoadingListener;
 import com.jdroid.android.utils.LocalizationUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
@@ -56,6 +57,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	private BroadcastReceiver refreshBroadcastReceiver;
 	private Long mediaSessionId;
 	private Boolean mediaSessionCreated;
+	private Boolean mediaSessionLoaded = false;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -141,42 +143,55 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		refreshBroadcastReceiver = new BroadcastReceiver() {
 			
 			@Override
-			public void onReceive(Context context, Intent intent) {
+			public void onReceive(Context context, final Intent intent) {
 				
 				String mediaSessionId = intent.getStringExtra(GcmMessage.MEDIA_SESSION_ID_KEY);
 				if (mediaSessionId.equals(mediaSessionId.toString())) {
 					executeUseCase(mediaSessionDetailsUseCase);
 					
-					GcmMessage gcmMessage = GcmMessage.find(intent);
+					final GcmMessage gcmMessage = GcmMessage.find(intent);
 					if (!gcmMessage.equals(GcmMessage.MEDIA_SESSION_UPDATED)
 							&& !gcmMessage.equals(GcmMessage.MEDIA_SESSION_EXPIRED)) {
+						CustomImageView customImageView = findView(R.id.synchUserImage);
+						customImageView.setImageLoadingListener(new ImageLoadingListener() {
+							
+							@Override
+							public void onImageLoaded() {
+								displayNotification(intent, gcmMessage);
+							}
+							
+							@Override
+							public void onStubImageLoaded() {
+								displayNotification(intent, gcmMessage);
+							}
+							
+						});
 						FileContent imageContent = new UriFileContent(intent.getStringExtra(GcmMessage.IMAGE_URL_KEY));
-						CustomImageView customImageView = findView(R.id.userImage);
 						customImageView.setImageContent(imageContent, R.drawable.user_default);
-						
-						String watchableName = intent.getStringExtra(GcmMessage.WATCHABLE_NAME_KEY);
-						
-						String fullName = intent.getStringExtra(GcmMessage.FULL_NAME_KEY);
-						TextView synchMessage = findView(R.id.synchMessage);
-						if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_ADDED)) {
-							synchMessage.setText(getString(R.string.mediaSelectionAdded, fullName, watchableName));
-						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_REMOVED)) {
-							synchMessage.setText(getString(R.string.mediaSelectionRemoved, fullName, watchableName));
-							MediaSelectionDialogFragment.dismiss(getActivity());
-						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_UP)) {
-							synchMessage.setText(getString(R.string.mediaSelectionThumbsUp, fullName, watchableName));
-						} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_DOWN)) {
-							synchMessage.setText(getString(R.string.mediaSelectionThumbsDown, fullName, watchableName));
-						} else if (gcmMessage.equals(GcmMessage.MEDIA_SESSION_LEFT)) {
-							synchMessage.setText(getString(R.string.mediaSessionLeft, fullName));
-						}
-						
-						ViewGroup mediaSelectionsSynch = findView(R.id.mediaSelectionsSynch);
-						mediaSelectionsSynch.clearAnimation();
-						mediaSelectionsSynch.startAnimation(new FadeInOutAnimation(mediaSelectionsSynch, 1000, 4000));
 					}
-					
 				}
+			}
+			
+			private void displayNotification(Intent intent, GcmMessage gcmMessage) {
+				String watchableName = intent.getStringExtra(GcmMessage.WATCHABLE_NAME_KEY);
+				
+				String fullName = intent.getStringExtra(GcmMessage.FULL_NAME_KEY);
+				TextView synchMessage = findView(R.id.synchMessage);
+				if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_ADDED)) {
+					synchMessage.setText(getString(R.string.mediaSelectionAdded, fullName, watchableName));
+				} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_REMOVED)) {
+					synchMessage.setText(getString(R.string.mediaSelectionRemoved, fullName, watchableName));
+					MediaSelectionDialogFragment.dismiss(getActivity());
+				} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_UP)) {
+					synchMessage.setText(getString(R.string.mediaSelectionThumbsUp, fullName, watchableName));
+				} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_DOWN)) {
+					synchMessage.setText(getString(R.string.mediaSelectionThumbsDown, fullName, watchableName));
+				} else if (gcmMessage.equals(GcmMessage.MEDIA_SESSION_LEFT)) {
+					synchMessage.setText(getString(R.string.mediaSessionLeft, fullName));
+				}
+				ViewGroup mediaSelectionsSynch = findView(R.id.mediaSelectionsSynch);
+				mediaSelectionsSynch.clearAnimation();
+				mediaSelectionsSynch.startAnimation(new FadeInOutAnimation(mediaSelectionsSynch, 1000, 4000));
 			}
 		};
 		
@@ -257,6 +272,27 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#goBackOnError()
+	 */
+	@Override
+	public Boolean goBackOnError() {
+		return !mediaSessionLoaded;
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 */
+	@Override
+	public void onFinishFailedUseCase(RuntimeException runtimeException) {
+		if (mediaSessionLoaded) {
+			AbstractApplication.get().getExceptionHandler().logHandledException(runtimeException);
+			dismissLoadingOnUIThread();
+		} else {
+			super.onFinishFailedUseCase(runtimeException);
+		}
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
 	 */
 	@Override
@@ -265,6 +301,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			
 			@Override
 			public void run() {
+				mediaSessionLoaded = true;
 				MediaSession mediaSession = mediaSessionDetailsUseCase.getMediaSession();
 				if (mediaSessionCreated) {
 					AlertDialogFragment.show(MediaSelectionsFragment.this,
