@@ -1,12 +1,16 @@
 package com.mediafever.core.repository;
 
+import java.util.Date;
 import java.util.List;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import com.jdroid.java.collections.Lists;
+import com.jdroid.java.utils.DateUtils;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
+import com.mediafever.core.domain.watchable.Series;
 import com.mediafever.core.domain.watchable.Watchable;
 import com.mediafever.core.domain.watchable.WatchableType;
 
@@ -43,6 +47,21 @@ public class WatchableHibernateRepository extends HibernateRepository<Watchable>
 		addWatchableTypeRestriction(criteria, Lists.newArrayList(watchableType));
 		return findUnique(criteria);
 		
+	}
+	
+	/**
+	 * @see com.mediafever.core.repository.WatchableRepository#getSeriesWithReleasedEpisodes(java.util.Date)
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Series> getSeriesWithReleasedEpisodes(Date date) {
+		DetachedCriteria watchableCriteria = DetachedCriteria.forClass(Series.class, "series");
+		watchableCriteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		DetachedCriteria episodeCriteria = watchableCriteria.createCriteria("seasons", "season").createCriteria(
+			"episodes", "episode");
+		episodeCriteria.add(Restrictions.eq("releaseDate", DateUtils.truncate(date)));
+		
+		return this.getHibernateTemplate().findByCriteria(watchableCriteria);
 	}
 	
 	/**

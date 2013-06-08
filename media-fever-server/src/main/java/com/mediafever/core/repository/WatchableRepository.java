@@ -1,8 +1,12 @@
 package com.mediafever.core.repository;
 
+import java.util.Date;
+import java.util.List;
 import com.jdroid.java.repository.Repository;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
+import com.mediafever.core.domain.watchable.Episode;
+import com.mediafever.core.domain.watchable.Series;
 import com.mediafever.core.domain.watchable.Watchable;
 import com.mediafever.core.domain.watchable.WatchableType;
 
@@ -33,4 +37,12 @@ public interface WatchableRepository extends Repository<Watchable> {
 	public Long getLastMovieExternalId();
 	
 	public PagedResult<Watchable> getMovies(Integer page);
+	
+	/**
+	 * Gets all the {@link Series} that have at least an {@link Episode} that is release on the given {@link Date}.
+	 * 
+	 * @param date The {@link Date} the episode is first aired.
+	 * @return The list of {@link Series}.
+	 */
+	public List<Series> getSeriesWithReleasedEpisodes(Date date);
 }

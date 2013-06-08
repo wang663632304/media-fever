@@ -8,16 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.jdroid.java.utils.ExecutorUtils;
 import com.jdroid.java.utils.LoggerUtils;
-import com.jdroid.javaweb.push.PushService;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.watchable.Movie;
 import com.mediafever.core.domain.watchable.Series;
 import com.mediafever.core.domain.watchable.Settings;
 import com.mediafever.core.domain.watchable.Watchable;
-import com.mediafever.core.domain.watchable.visitor.NewEpisodeVisitor;
 import com.mediafever.core.repository.PeopleRepository;
 import com.mediafever.core.repository.SettingsRepository;
-import com.mediafever.core.repository.UserWatchableRepository;
 import com.mediafever.core.repository.WatchableRepository;
 import com.mediafever.core.service.moviedb.MovieDbApiService;
 import com.mediafever.core.service.tvdb.TVDbApiService;
@@ -53,12 +50,6 @@ public class SynchronizationService {
 	
 	@Autowired
 	private SettingsRepository settingsRepository;
-	
-	@Autowired
-	private UserWatchableRepository userWatchableRepository;
-	
-	@Autowired
-	private PushService pushService;
 	
 	/**
 	 * Synchronizes the Movies information from the MovieDb API to have the latest content.
@@ -155,9 +146,7 @@ public class SynchronizationService {
 	private void addSeries(Long seriesId) {
 		Series series = tvDbApiService.getSeries(seriesId, peopleRepository);
 		if (series != null) {
-			watchableService.saveWatchable(series,
-				new NewEpisodeVisitor(seriesId, series.getName(), series.getImageURL(), userWatchableRepository,
-						pushService));
+			watchableService.saveWatchable(series);
 		}
 		ExecutorUtils.sleepInMillis(SLEEP_IN_MILLI);
 	}

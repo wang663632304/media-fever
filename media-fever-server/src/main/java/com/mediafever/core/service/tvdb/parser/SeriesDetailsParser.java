@@ -28,7 +28,7 @@ public class SeriesDetailsParser extends XmlParser {
 	private static final String ID_TAG = "id";
 	private static final String OVERVIEW_TAG = "Overview";
 	private static final String LAST_UPDATED_TAG = "lastupdated";
-	private static final String RELEASE_YEAR_TAG = "FirstAired";
+	private static final String FIRST_AIRED_TAG = "FirstAired";
 	private static final String RATING_TAG = "Rating";
 	private static final String RATING_COUNT_TAG = "RatingCount";
 	private static final String IMAGES_BASE_URL = "http://www.thetvdb.com/banners/";
@@ -115,7 +115,7 @@ public class SeriesDetailsParser extends XmlParser {
 			imageURL = StringUtils.isNotBlank(content) ? IMAGES_BASE_URL + content : null;
 		} else if (localName.equals(OVERVIEW_TAG)) {
 			overview = content;
-		} else if (localName.equals(RELEASE_YEAR_TAG)) {
+		} else if (localName.equals(FIRST_AIRED_TAG)) {
 			releaseDate = StringUtils.isNotEmpty(content) ? DateUtils.parse(content, DateUtils.YYYYMMDD_DATE_FORMAT)
 					: null;
 		} else if (localName.equals(RATING_TAG)) {
