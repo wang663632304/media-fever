@@ -56,6 +56,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	private BroadcastReceiver refreshBroadcastReceiver;
 	private Long mediaSessionId;
 	private Boolean mediaSessionCreated;
+	private Boolean mediaSessionLoaded = false;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -257,6 +258,27 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#goBackOnError()
+	 */
+	@Override
+	public Boolean goBackOnError() {
+		return !mediaSessionLoaded;
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
+	 */
+	@Override
+	public void onFinishFailedUseCase(RuntimeException runtimeException) {
+		if (mediaSessionLoaded) {
+			AbstractApplication.get().getExceptionHandler().logHandledException(runtimeException);
+			dismissLoadingOnUIThread();
+		} else {
+			super.onFinishFailedUseCase(runtimeException);
+		}
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
 	 */
 	@Override
@@ -265,6 +287,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			
 			@Override
 			public void run() {
+				mediaSessionLoaded = true;
 				MediaSession mediaSession = mediaSessionDetailsUseCase.getMediaSession();
 				if (mediaSessionCreated) {
 					AlertDialogFragment.show(MediaSelectionsFragment.this,
