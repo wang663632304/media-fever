@@ -1,7 +1,7 @@
 package com.mediafever.android;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import com.jdroid.android.DefaultAndroidModule;
 import com.jdroid.android.repository.UserRepository;
 import com.mediafever.android.repository.UserRepositoryImpl;
 import com.mediafever.repository.FriendRequestsRepository;
@@ -17,14 +17,13 @@ import com.mediafever.service.APIServiceImpl;
  * 
  * @author Maxi Rosson
  */
-public class AndroidModule extends DefaultAndroidModule {
+public class AndroidModule extends AbstractModule {
 	
 	/**
-	 * @see com.jdroid.android.DefaultAndroidModule#configure()
+	 * @see com.google.inject.AbstractModule#configure()
 	 */
 	@Override
 	protected void configure() {
-		super.configure();
 		
 		this.bind(MediaSessionsRepository.class).to(InMemoryMediaSessionsRepository.class).in(Singleton.class);
 		this.bind(FriendsRepository.class).to(InMemoryFriendsRepository.class).in(Singleton.class);
