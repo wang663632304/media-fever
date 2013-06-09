@@ -1,5 +1,6 @@
 package com.mediafever.core.domain.watchable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.CascadeType;
@@ -11,7 +12,9 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.jdroid.java.utils.DateUtils;
 import com.jdroid.javaweb.domain.Entity;
+import com.jdroid.javaweb.guava.predicate.ContainsPropertyPredicate;
 import com.mediafever.core.domain.watchable.visitor.DummyWatchableVisitor;
 import com.mediafever.core.domain.watchable.visitor.WatchableVisitor;
 
@@ -48,18 +51,20 @@ public class Season extends Entity {
 		episodes.add(episode);
 	}
 	
-	public Long getExternalId() {
-		return externalId;
+	/**
+	 * Get episodes with a given release date.
+	 * 
+	 * @param date the release {@link Date}.
+	 * @return the episodes.
+	 */
+	public List<Episode> getReleasedEpisodes(Date date) {
+		return Lists.newArrayList(Iterables.filter(episodes, new ContainsPropertyPredicate<Episode>("releaseDate",
+				DateUtils.truncate(date))));
 	}
 	
-	public Integer getSeasonNumber() {
-		return seasonNumber;
-	}
-	
-	public List<Episode> getEpisodes() {
-		return episodes;
-	}
-	
+	/**
+	 * @return The episodes that were already released to the date.
+	 */
 	public List<Episode> getReleasedEpisodes() {
 		return Lists.newArrayList(Iterables.filter(episodes, new Predicate<Episode>() {
 			
@@ -106,5 +111,17 @@ public class Season extends Entity {
 				watchableVisitor.visitNew(episode);
 			}
 		}
+	}
+	
+	public Long getExternalId() {
+		return externalId;
+	}
+	
+	public Integer getSeasonNumber() {
+		return seasonNumber;
+	}
+	
+	public List<Episode> getEpisodes() {
+		return episodes;
 	}
 }

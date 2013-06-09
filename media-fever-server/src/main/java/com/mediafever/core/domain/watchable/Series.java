@@ -56,6 +56,24 @@ public class Series extends Watchable {
 				return !season.getReleasedEpisodes().isEmpty();
 			}
 		}));
+		
+	}
+	
+	/**
+	 * Get all the {@link Episode}s of the {@link Series} that were released on the given date.
+	 * 
+	 * @param date The release {@link Date}.
+	 * @return The list of episodes.
+	 */
+	public List<Episode> getReleasedEpisodes(Date date) {
+		List<Episode> episodes = Lists.newArrayList();
+		for (Season season : seasons) {
+			List<Episode> seasonEpisodes = season.getReleasedEpisodes(date);
+			if (!seasonEpisodes.isEmpty()) {
+				episodes.addAll(seasonEpisodes);
+			}
+		}
+		return episodes;
 	}
 	
 	@Override
