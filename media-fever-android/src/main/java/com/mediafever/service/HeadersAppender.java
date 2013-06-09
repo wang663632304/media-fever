@@ -1,13 +1,11 @@
 package com.mediafever.service;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.domain.User;
+import com.jdroid.java.http.HttpResponseWrapper;
 import com.jdroid.java.http.HttpWebServiceProcessor;
 import com.jdroid.java.http.MimeType;
 import com.jdroid.java.http.WebService;
-import com.jdroid.java.http.apache.ApacheHttpWebService;
 import com.jdroid.java.utils.Hasher;
 import com.mediafever.context.ApplicationContext;
 
@@ -49,9 +47,9 @@ public class HeadersAppender implements HttpWebServiceProcessor {
 		// API Version header
 		webService.addHeader(API_VERSION_HEADER, API_VERSION_HEADER_VALUE);
 		
-		webService.addHeader(ApacheHttpWebService.CONTENT_TYPE_HEADER, MimeType.JSON.toString());
-		webService.addHeader(ApacheHttpWebService.ACCEPT_HEADER, MimeType.JSON.toString());
-		webService.addHeader(ApacheHttpWebService.ACCEPT_ENCODING_HEADER, ApacheHttpWebService.GZIP_ENCODING);
+		webService.addHeader(WebService.CONTENT_TYPE_HEADER, MimeType.JSON.toString());
+		webService.addHeader(WebService.ACCEPT_HEADER, MimeType.JSON.toString());
+		webService.addHeader(WebService.ACCEPT_ENCODING_HEADER, WebService.GZIP_ENCODING);
 		
 		// Time sync header. (time in milliseconds)
 		String timeSync = String.valueOf(System.currentTimeMillis());
@@ -71,10 +69,10 @@ public class HeadersAppender implements HttpWebServiceProcessor {
 	
 	/**
 	 * @see com.jdroid.java.http.HttpWebServiceProcessor#afterExecute(com.jdroid.java.http.WebService,
-	 *      org.apache.http.client.HttpClient, org.apache.http.HttpResponse)
+	 *      com.jdroid.java.http.HttpResponseWrapper)
 	 */
 	@Override
-	public void afterExecute(WebService webService, HttpClient client, HttpResponse httpResponse) {
+	public void afterExecute(WebService webService, HttpResponseWrapper httpResponse) {
 		// Do Nothing
 	}
 	

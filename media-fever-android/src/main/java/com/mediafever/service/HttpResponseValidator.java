@@ -1,13 +1,11 @@
 package com.mediafever.service;
 
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import com.jdroid.android.exception.CommonErrorCode;
 import com.jdroid.android.exception.InvalidApiVersionException;
 import com.jdroid.android.exception.InvalidUserTokenException;
 import com.jdroid.java.exception.ErrorCode;
+import com.jdroid.java.http.HttpResponseWrapper;
 import com.jdroid.java.http.HttpWebServiceProcessor;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.utils.LoggerUtils;
@@ -41,10 +39,10 @@ public class HttpResponseValidator implements HttpWebServiceProcessor {
 	
 	/**
 	 * @see com.jdroid.java.http.HttpWebServiceProcessor#afterExecute(com.jdroid.java.http.WebService,
-	 *      org.apache.http.client.HttpClient, org.apache.http.HttpResponse)
+	 *      com.jdroid.java.http.HttpResponseWrapper)
 	 */
 	@Override
-	public void afterExecute(WebService webService, HttpClient client, HttpResponse httpResponse) {
+	public void afterExecute(WebService webService, HttpResponseWrapper httpResponse) {
 		// validate response.
 		this.validateResponse(httpResponse);
 	}
@@ -54,16 +52,16 @@ public class HttpResponseValidator implements HttpWebServiceProcessor {
 	 * 
 	 * @param httpResponse
 	 */
-	protected void validateResponse(HttpResponse httpResponse) {
+	protected void validateResponse(HttpResponseWrapper httpResponse) {
 		
-		String message = logStatusCode(httpResponse);
-		if (isSuccess(httpResponse)) {
+		String message = httpResponse.logStatusCode();
+		if (httpResponse.isSuccess()) {
 			ErrorCode errorCode = getErrorCode(httpResponse, CommonErrorCode.SERVER_ERROR);
 			if (errorCode != null) {
 				throw errorCode.newBusinessException();
 			}
 			
-		} else if (isClientError(httpResponse)) {
+		} else if (httpResponse.isClientError()) {
 			ErrorCode errorCode = getErrorCode(httpResponse, CommonErrorCode.INTERNAL_ERROR);
 			if (CommonErrorCode.INVALID_API_VERSION.equals(errorCode)) {
 				throw new InvalidApiVersionException();
@@ -72,46 +70,15 @@ public class HttpResponseValidator implements HttpWebServiceProcessor {
 			} else if (AndroidErrorCode.INVALID_CREDENTIALS.equals(errorCode)) {
 				throw AndroidErrorCode.INVALID_CREDENTIALS.newBusinessException();
 			}
-		} else if (isServerError(httpResponse)) {
+		} else if (httpResponse.isServerError()) {
 			throw CommonErrorCode.SERVER_ERROR.newApplicationException(message);
 		}
 	}
 	
-	private String logStatusCode(HttpResponse httpResponse) {
-		int code = httpResponse.getStatusLine().getStatusCode();
-		StringBuilder sb = new StringBuilder();
-		sb.append("HTTP Status code: ");
-		sb.append(code);
-		sb.append(" Reason: ");
-		sb.append(httpResponse.getStatusLine().getReasonPhrase());
-		if (isSuccess(httpResponse)) {
-			LOGGER.debug(sb.toString());
-		} else {
-			LOGGER.warn(sb.toString());
-		}
-		return sb.toString();
-	}
-	
-	private Boolean isSuccess(HttpResponse httpResponse) {
-		int code = httpResponse.getStatusLine().getStatusCode();
-		return (code >= 200) && (code <= 299);
-	}
-	
-	private Boolean isClientError(HttpResponse httpResponse) {
-		int code = httpResponse.getStatusLine().getStatusCode();
-		return (code >= 400) && (code <= 499);
-	}
-	
-	private Boolean isServerError(HttpResponse httpResponse) {
-		int code = httpResponse.getStatusLine().getStatusCode();
-		return (code >= 500) && (code <= 599);
-	}
-	
-	private ErrorCode getErrorCode(HttpResponse httpResponse, ErrorCode defaultErrorCode) {
+	private ErrorCode getErrorCode(HttpResponseWrapper httpResponse, ErrorCode defaultErrorCode) {
 		ErrorCode errorCode = null;
-		Header[] headerstatusCode = httpResponse.getHeaders(STATUS_CODE_HEADER);
-		if (headerstatusCode.length > 0) {
-			String statusCode = headerstatusCode[0].getValue();
+		String statusCode = httpResponse.getHeader(STATUS_CODE_HEADER);
+		if (statusCode != null) {
 			LOGGER.debug("Server Status code: " + statusCode);
 			if (!statusCode.equals(SUCCESSFULL_STATUS_CODE)) {
 				errorCode = AndroidErrorCode.findByStatusCode(statusCode);
