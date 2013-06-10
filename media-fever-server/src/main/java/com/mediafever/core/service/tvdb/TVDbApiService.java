@@ -2,7 +2,7 @@ package com.mediafever.core.service.tvdb;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import com.jdroid.java.api.AbstractApiService;
+import com.jdroid.java.api.AbstractApacheApiService;
 import com.jdroid.java.http.HttpWebServiceProcessor;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.http.mock.AbstractMockWebService;
@@ -21,7 +21,7 @@ import com.mediafever.core.service.tvdb.parser.SeriesUpdateResponse;
  * @author Maxi Rosson
  */
 @Service
-public class TVDbApiService extends AbstractApiService {
+public class TVDbApiService extends AbstractApacheApiService {
 	
 	private static final String SERIES_MODULE = "series";
 	private static final String UPDATES_MODULE = "Updates.php";

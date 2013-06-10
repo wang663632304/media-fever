@@ -3,7 +3,7 @@ package com.mediafever.core.service.moviedb;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
-import com.jdroid.java.api.AbstractApiService;
+import com.jdroid.java.api.AbstractApacheApiService;
 import com.jdroid.java.http.HttpWebServiceProcessor;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.http.mock.AbstractMockWebService;
@@ -23,7 +23,7 @@ import com.mediafever.core.service.moviedb.parser.MovieParser;
  * @author Maxi Rosson
  */
 @Service
-public class MovieDbApiService extends AbstractApiService {
+public class MovieDbApiService extends AbstractApacheApiService {
 	
 	private static final String MOVIE_MODULE = "Movie";
 	private static final String GET_INFO_ACTION = "getInfo";
