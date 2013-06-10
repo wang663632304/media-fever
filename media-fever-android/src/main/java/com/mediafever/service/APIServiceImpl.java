@@ -6,13 +6,12 @@ import com.jdroid.android.debug.mocks.AndroidJsonMockWebService;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.search.PagedResult;
 import com.jdroid.android.utils.BitmapUtils;
-import com.jdroid.java.api.AbstractApiService;
+import com.jdroid.java.api.AbstractApacheApiService;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.java.http.HttpWebServiceProcessor;
 import com.jdroid.java.http.MimeType;
 import com.jdroid.java.http.MultipartWebService;
 import com.jdroid.java.http.WebService;
-import com.jdroid.java.http.apache.HttpClientFactory;
 import com.jdroid.java.http.mock.AbstractMockWebService;
 import com.jdroid.java.http.post.EntityEnclosingWebService;
 import com.jdroid.java.marshaller.MarshallerProvider;
@@ -49,7 +48,7 @@ import com.mediafever.service.marshaller.UserWatchableJsonMarshaller;
  * 
  * @author Maxi Rosson
  */
-public class APIServiceImpl extends AbstractApiService implements APIService {
+public class APIServiceImpl extends AbstractApacheApiService implements APIService {
 	
 	// Common Parameters
 	private static final String PAGE = "page";
@@ -530,13 +529,5 @@ public class APIServiceImpl extends AbstractApiService implements APIService {
 	@Override
 	protected String getServerURL() {
 		return ApplicationContext.get().getServerApiUrl();
-	}
-	
-	/**
-	 * @see com.jdroid.java.api.AbstractApiService#getHttpClientFactoryInstance()
-	 */
-	@Override
-	protected HttpClientFactory getHttpClientFactoryInstance() {
-		return super.getHttpClientFactoryInstance();
 	}
 }
