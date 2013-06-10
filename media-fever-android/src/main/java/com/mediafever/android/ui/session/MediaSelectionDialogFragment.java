@@ -171,10 +171,10 @@ public class MediaSelectionDialogFragment extends AbstractDialogFragment {
 	}
 	
 	/**
-	 * @see com.jdroid.android.dialog.AbstractDialogFragment#goBackOnError()
+	 * @see com.jdroid.android.dialog.AbstractDialogFragment#goBackOnError(java.lang.RuntimeException)
 	 */
 	@Override
-	public Boolean goBackOnError() {
+	public Boolean goBackOnError(RuntimeException runtimeException) {
 		return false;
 	}
 	

@@ -55,7 +55,7 @@ public class ManualMediaSelectionPickerFragment extends AbstractSearchFragment<W
 		addManualSelectionUseCaseListener = new AndroidUseCaseListener() {
 			
 			@Override
-			public Boolean goBackOnError() {
+			public Boolean goBackOnError(RuntimeException runtimeException) {
 				return false;
 			}
 			

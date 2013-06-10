@@ -129,10 +129,10 @@ public class SeriesSeasonsFragment extends AbstractListFragment<UserWatchable<Ep
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractListFragment#goBackOnError()
+	 * @see com.jdroid.android.fragment.AbstractListFragment#goBackOnError(java.lang.RuntimeException)
 	 */
 	@Override
-	public Boolean goBackOnError() {
+	public Boolean goBackOnError(RuntimeException runtimeException) {
 		return false;
 	}
 	

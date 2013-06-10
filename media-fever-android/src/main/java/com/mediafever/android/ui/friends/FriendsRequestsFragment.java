@@ -47,7 +47,7 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 			}
 			
 			@Override
-			public Boolean goBackOnError() {
+			public Boolean goBackOnError(RuntimeException runtimeException) {
 				return false;
 			}
 			
