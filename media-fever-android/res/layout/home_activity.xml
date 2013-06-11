@@ -3,10 +3,11 @@
 	android:layout_height="match_parent">
 
 	<LinearLayout android:id="@+id/latestFragmentContainer" android:layout_width="match_parent"
-		android:layout_height="wrap_content" />
+		android:orientation="horizontal" android:layout_height="wrap_content" />
 
 	<LinearLayout android:id="@+id/dashboardFragmentContainer" android:layout_width="match_parent"
-		android:layout_height="match_parent" android:layout_below="@+id/latestFragmentContainer" android:layout_above="@id/adViewContainer" />
+		android:layout_height="match_parent" android:orientation="horizontal" android:layout_below="@+id/latestFragmentContainer"
+		android:layout_above="@id/adViewContainer" />
 
 	<include android:id="@id/adViewContainer" layout="@layout/ad_view_container" />
 
