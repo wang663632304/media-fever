@@ -162,10 +162,10 @@ public class WatchableOverviewLargeFragment extends AbstractFragment {
 	}
 	
 	/**
-	 * @see com.jdroid.android.fragment.AbstractFragment#goBackOnError()
+	 * @see com.jdroid.android.fragment.AbstractFragment#goBackOnError(java.lang.RuntimeException)
 	 */
 	@Override
-	public Boolean goBackOnError() {
+	public Boolean goBackOnError(RuntimeException runtimeException) {
 		return false;
 	}
 	

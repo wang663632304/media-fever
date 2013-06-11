@@ -49,7 +49,7 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 		createFriendRequestUseCaseListener = new AndroidUseCaseListener() {
 			
 			@Override
-			public Boolean goBackOnError() {
+			public Boolean goBackOnError(RuntimeException runtimeException) {
 				return false;
 			}
 			
