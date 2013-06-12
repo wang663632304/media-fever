@@ -118,9 +118,9 @@ cp ./target/*.apk $ASSEMBLIES_DIRECTORY/
 # ************************
 #ANDROID_APP_DIR=$SOURCE_DIRECTORY/$PROJECT_NAME
 
-#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './despegar-android/res/values/strings.xml'
-#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './despegar-android/res/values-pt/strings.xml'
-#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './despegar-android/res/values/plurals.xml'
-#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './despegar-android/res/values-pt/plurals.xml'
-#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './despegar-android/res/values/array.xml'
-#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './despegar-android/res/values-pt/array.xml'
+#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './media-fever-android/res/values/strings.xml'
+#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './media-fever-android/res/values-pt/strings.xml'
+#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './media-fever-android/res/values/plurals.xml'
+#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './media-fever-android/res/values-pt/plurals.xml'
+#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './media-fever-android/res/values/array.xml'
+#sh $ANDROID_APP_DIR/validateMissingTranslations.sh $ANDROID_APP_DIR './media-fever-android/res/values-pt/array.xml'
