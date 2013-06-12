@@ -8,7 +8,7 @@
 		style="@style/defaultGrid" android:layout_margin="5dp" />
 
 	<TextView android:id="@id/android:empty" android:text="@string/noResultsSearch" style="@style/noResultsText"
-		android:textSize="20sp" />
+		android:textSize="20sp" android:visibility="gone" />
 
 	<include layout="@layout/ad_view_container" />
 
