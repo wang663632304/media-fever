@@ -51,7 +51,7 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		expired = false;
 		date = DateUtils.now();
 		mediaSessionUsers = Lists.newArrayList(new MediaSessionUser(SecurityContext.get().getUser()));
-		watchableTypes = Lists.newArrayList(WatchableType.MOVIE);
+		watchableTypes = Lists.newArrayList(WatchableType.find(watchable));
 		requiredWatchableTypes = Sets.newHashSet();
 		setSelections(null);
 		

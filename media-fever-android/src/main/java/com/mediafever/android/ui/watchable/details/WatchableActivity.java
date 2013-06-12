@@ -167,4 +167,16 @@ public class WatchableActivity extends AbstractFragmentActivity implements
 	public void setOnPageSelectedListener(OnPageSelectedListener onPageSelectedListener) {
 		this.onPageSelectedListener = onPageSelectedListener;
 	}
+	
+	/**
+	 * @see com.jdroid.android.activity.AbstractFragmentActivity#getMenuResourceId()
+	 */
+	@Override
+	public int getMenuResourceId() {
+		int menuResourceId = super.getMenuResourceId();
+		if (!AndroidUtils.isLargeScreenOrBigger()) {
+			menuResourceId = R.menu.watchable_menu;
+		}
+		return menuResourceId;
+	}
 }

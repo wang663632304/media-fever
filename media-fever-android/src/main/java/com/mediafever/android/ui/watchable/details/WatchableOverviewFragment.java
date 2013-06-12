@@ -10,11 +10,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import com.actionbarsherlock.view.MenuItem;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.images.CustomImageView;
 import com.jdroid.java.utils.CollectionUtils;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
+import com.mediafever.android.ui.session.MediaSessionActivity;
 import com.mediafever.domain.UserWatchable;
 import com.mediafever.domain.watchable.Movie;
 import com.mediafever.domain.watchable.Watchable;
@@ -55,6 +57,8 @@ public class WatchableOverviewFragment extends AbstractFragment {
 		userWatchable = getArgument(USER_WATCHABLE_EXTRA);
 		updateUserWatchableUseCase = getInstance(UpdateUserWatchableUseCase.class);
 		updateUserWatchableUseCase.setUserWatchable(userWatchable);
+		
+		setHasOptionsMenu(true);
 	}
 	
 	/**
@@ -203,5 +207,19 @@ public class WatchableOverviewFragment extends AbstractFragment {
 				dismissLoading();
 			}
 		});
+	}
+	
+	/**
+	 * @see com.jdroid.android.activity.BaseActivity#onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.mediaSessionItem:
+				MediaSessionActivity.start(getActivity(), userWatchable.getWatchable());
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 }
