@@ -156,6 +156,10 @@ public class MediaSession extends Entity {
 		return false;
 	}
 	
+	public void rejectUser(MediaSessionUser mediaSessionUser) {
+		users.remove(mediaSessionUser);
+	}
+	
 	public List<MediaSessionUser> getUsers() {
 		return users;
 	}

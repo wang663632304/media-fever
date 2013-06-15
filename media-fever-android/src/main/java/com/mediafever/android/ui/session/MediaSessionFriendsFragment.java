@@ -1,16 +1,12 @@
 package com.mediafever.android.ui.session;
 
-import java.util.List;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
-import com.jdroid.android.domain.User;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.mediafever.R;
-import com.mediafever.android.ui.UserCheckeableAdapter;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.friends.FriendsUseCase;
@@ -101,43 +97,24 @@ public class MediaSessionFriendsFragment extends AbstractListFragment<UserImpl> 
 	}
 	
 	private void loadFriends() {
-		setListAdapter(new MediaSessionUsersAdapter(MediaSessionFriendsFragment.this.getActivity(),
-				friendsUseCase.getFriends()));
-	}
-	
-	private class MediaSessionUsersAdapter extends UserCheckeableAdapter {
-		
-		private List<User> originalUsers;
-		
-		public MediaSessionUsersAdapter(Activity context, List<UserImpl> items) {
-			super(context, items);
-			originalUsers = getMediaSessionSetupUseCase().getMediaSession().getUsers();
-		}
-		
-		@Override
-		protected void onUserChecked(UserImpl user) {
-			mediaSession.addUser(user);
-		}
-		
-		@Override
-		protected void onUserUnChecked(UserImpl user) {
-			mediaSession.removeUser(user);
-		}
-		
-		@Override
-		protected Boolean isUserChecked(UserImpl user) {
-			return mediaSession.containsUser(user);
-		}
-		
-		@Override
-		protected Boolean isUserEnabled(UserImpl user) {
-			MediaSession mediaSession = getMediaSessionSetupUseCase().getMediaSession();
-			if (mediaSession.getId() != null) {
-				return !originalUsers.contains(user);
-			} else {
-				return true;
+		setListAdapter(new MediaSessionUserAdapter(MediaSessionFriendsFragment.this.getActivity(),
+				friendsUseCase.getFriends(), mediaSession) {
+			
+			@Override
+			protected Boolean isUserEnabled(UserImpl user) {
+				return getMediaSessionSetupUseCase().isRemovableUser(user);
 			}
-		}
+			
+			@Override
+			protected Boolean isAcceptedUser(UserImpl user) {
+				return getMediaSessionSetupUseCase().isAcceptedUser(user);
+			}
+			
+			@Override
+			protected Boolean isPendingUser(UserImpl user) {
+				return getMediaSessionSetupUseCase().isPendingUser(user);
+			}
+		});
 	}
 	
 	/**

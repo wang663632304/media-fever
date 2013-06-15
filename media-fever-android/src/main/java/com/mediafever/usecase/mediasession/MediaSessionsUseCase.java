@@ -29,6 +29,7 @@ public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 		mediaSessionsRepository.getAll();
 	}
 	
+	// TODO This three methods are called on the UI thread, and perform a request
 	public List<MediaSession> getPendingMediaSessions() {
 		return mediaSessionsRepository.getPendingMediaSessions();
 	}

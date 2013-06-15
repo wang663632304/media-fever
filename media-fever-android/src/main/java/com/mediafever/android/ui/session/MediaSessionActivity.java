@@ -99,7 +99,7 @@ public class MediaSessionActivity extends WizardActivity {
 				@Override
 				public void run() {
 					MediaSessionActivity activity = ((MediaSessionActivity)getActivity());
-					activity.getMediaSessionSetupUseCase().setMediaSession(getUseCase().getMediaSession());
+					activity.getMediaSessionSetupUseCase().setMediaSession(getUseCase().getMediaSession().clone());
 					activity.loadWizard();
 					activity.removeUseCaseFragment(MediaSessionDetailsUseCaseFragment.class);
 				}
