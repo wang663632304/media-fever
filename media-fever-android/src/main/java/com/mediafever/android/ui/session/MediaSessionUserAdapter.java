@@ -41,25 +41,31 @@ public abstract class MediaSessionUserAdapter extends BaseHolderArrayAdapter<Use
 		} else {
 			holder.accepted.setVisibility(View.GONE);
 		}
-		holder.checkbox.setOnCheckedChangeListener(null);
-		holder.checkbox.setChecked(mediaSession.containsUser(user));
-		holder.checkbox.setEnabled(isUserEnabled(user));
-		holder.checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					mediaSession.addUser(user);
-				} else {
-					mediaSession.removeUser(user);
+		
+		if (holder.checkbox != null) {
+			holder.checkbox.setOnCheckedChangeListener(null);
+			holder.checkbox.setChecked(mediaSession.containsUser(user));
+			holder.checkbox.setEnabled(isUserEnabled(user));
+			holder.checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked) {
+						mediaSession.addUser(user);
+					} else {
+						mediaSession.removeUser(user);
+					}
 				}
-			}
-		});
+			});
+		} else {
+			holder.convertView.setEnabled(isUserEnabled(user));
+		}
 	}
 	
 	@Override
 	protected UserCheckeableHolder createViewHolderFromConvertView(View convertView) {
 		UserCheckeableHolder holder = new UserCheckeableHolder();
+		holder.convertView = convertView;
 		holder.image = findView(convertView, R.id.image);
 		holder.fullName = findView(convertView, R.id.fullName);
 		holder.accepted = findView(convertView, R.id.accepted);
@@ -69,6 +75,7 @@ public abstract class MediaSessionUserAdapter extends BaseHolderArrayAdapter<Use
 	
 	public static class UserCheckeableHolder {
 		
+		protected View convertView;
 		protected CustomImageView image;
 		protected TextView fullName;
 		protected TextView accepted;
