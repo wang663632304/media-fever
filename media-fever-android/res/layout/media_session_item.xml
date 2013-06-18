@@ -2,13 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
 	android:layout_height="100dp" android:padding="5dp">
 
-	<TextView android:id="@+id/watchableTypes" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textStyle="bold" android:textSize="16sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp" />
-	<TextView android:id="@+id/date" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
+	<TextView android:id="@+id/watchableTypes" style="@style/h1Text" android:layout_marginLeft="10dp" />
+	<TextView android:id="@+id/date" style="@style/h2Text" android:layout_marginLeft="10dp"
 		android:layout_marginRight="10dp" android:layout_below="@+id/watchableTypes" />
-	<TextView android:id="@+id/usersAmount" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
+	<TextView android:id="@+id/usersAmount" style="@style/h2Text" android:layout_marginLeft="10dp"
 		android:layout_marginRight="10dp" android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
 		android:layout_toLeftOf="@+id/selections" android:maxLines="2" />
 

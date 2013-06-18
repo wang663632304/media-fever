@@ -6,12 +6,10 @@
 		android:layout_height="match_parent" android:layout_width="match_parent" android:scaleType="centerCrop" android:src="@drawable/user_default"
 		android:background="@android:color/white" />
 
-	<TextView android:id="@+id/accepted" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textSize="12sp" android:textColor="@android:color/white" android:fontFamily="sans-serif-light"
-		android:background="@color/transluscentGrey" android:layout_alignParentTop="true" android:layout_alignParentRight="true"
-		android:padding="5dp" />
+	<TextView android:id="@+id/accepted" style="@style/smallText" android:background="@color/transluscentGrey"
+		android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:padding="5dp" />
 
 	<TextView android:id="@+id/fullName" android:layout_height="wrap_content" android:layout_width="match_parent"
-		android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white" android:fontFamily="sans-serif"
-		android:background="@color/transluscentGrey" android:layout_alignParentBottom="true" android:padding="5dp" />
+		style="@style/smallText" android:fontFamily="sans-serif" android:textStyle="bold" android:background="@color/transluscentGrey"
+		android:layout_alignParentBottom="true" android:padding="5dp" />
 </RelativeLayout>

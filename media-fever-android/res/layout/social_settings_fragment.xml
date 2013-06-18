@@ -4,14 +4,13 @@
 
 	<LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
 		android:orientation="vertical" android:layout_above="@+id/adViewContainer">
-		<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/linkAccount"
-			android:layout_margin="10dp" android:textSize="20sp" />
+		<TextView style="@style/title2Text" android:text="@string/linkAccount" android:layout_margin="10dp" />
 
 		<com.facebook.widget.LoginButton android:id="@+id/authButton" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_margin="10dp" />
 
-		<TextView android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="10dp"
-			android:text="@string/newWaysToConnect" android:gravity="bottom|center_horizontal" android:textSize="15sp" />
+		<TextView android:layout_width="match_parent" android:layout_height="match_parent" style="@style/h2Text"
+			android:layout_margin="10dp" android:text="@string/newWaysToConnect" android:gravity="bottom|center_horizontal" />
 	</LinearLayout>
 
 	<include layout="@layout/ad_view_container" />

@@ -6,9 +6,8 @@
 		<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 			android:orientation="vertical" android:padding="10dp">
 
-			<TextView android:id="@+id/name" android:layout_height="wrap_content" android:layout_width="wrap_content"
-				android:textStyle="bold" android:textSize="22sp" style="@style/whiteShadowText" />
-			<TextView android:id="@+id/tagline" style="@style/normalText" android:textStyle="bold" android:visibility="gone" />
+			<TextView android:id="@+id/name" style="@style/title1Text" />
+			<TextView android:id="@+id/tagline" style="@style/h1Text" android:textStyle="normal" android:visibility="gone" />
 
 			<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 				android:orientation="horizontal" android:paddingTop="10dp">
@@ -20,11 +19,11 @@
 				</RelativeLayout>
 				<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 					android:orientation="vertical" android:paddingLeft="10dp">
-					<TextView android:id="@+id/releaseYear" style="@style/normalText" android:textStyle="bold" />
-					<Button android:id="@+id/watchedToogle" android:layout_height="wrap_content" android:layout_width="wrap_content"
-						android:layout_marginTop="5dp" android:minWidth="160dp" android:text="@string/watched" android:drawableRight="@drawable/accept" />
-					<Button android:id="@+id/wishListToogle" android:layout_height="wrap_content" android:layout_width="wrap_content"
-						android:minWidth="160dp" android:text="@string/wishList" android:drawableRight="@drawable/reject" />
+					<TextView android:id="@+id/releaseYear" style="@style/h1Text" android:textStyle="normal" />
+					<Button android:id="@+id/watchedToogle" style="@style/button" android:layout_marginTop="5dp"
+						android:minWidth="160dp" android:text="@string/watched" android:drawableRight="@drawable/accept" />
+					<Button android:id="@+id/wishListToogle" style="@style/button" android:minWidth="160dp" android:text="@string/wishList"
+						android:drawableRight="@drawable/reject" />
 				</LinearLayout>
 			</LinearLayout>
 

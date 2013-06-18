@@ -12,13 +12,9 @@
 
 	<LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content"
 		android:orientation="vertical">
-		<TextView android:id="@+id/name" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textStyle="bold" android:textSize="@dimen/normalTextSize" android:textColor="@android:color/white"
-			android:layout_marginLeft="10dp" />
-		<TextView android:id="@+id/description" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textSize="@dimen/normalTextSize" android:textColor="@color/grey1" android:layout_marginLeft="10dp" />
-		<TextView android:id="@+id/overview" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
+		<TextView android:id="@+id/name" style="@style/h1Text" android:layout_marginLeft="10dp" />
+		<TextView android:id="@+id/description" style="@style/h2Text" android:layout_marginLeft="10dp" />
+		<TextView android:id="@+id/overview" style="@style/smallText" android:layout_marginLeft="10dp"
 			android:ellipsize="end" android:lines="2" />
 	</LinearLayout>
 </LinearLayout>

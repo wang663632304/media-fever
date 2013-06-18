@@ -4,12 +4,7 @@
 	android:paddingTop="20dp" android:paddingBottom="20dp" android:paddingLeft="10dp" android:paddingRight="10dp"
 	android:layout_margin="15dp" android:minWidth="400dp">
 
-	<Button android:id="@+id/accept" android:layout_width="match_parent" android:layout_height="wrap_content"
-		android:layout_margin="3dp" android:text="@string/accept" android:textSize="18sp" android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp" />
-
-	<Button android:id="@+id/reject" android:layout_width="match_parent" android:layout_height="wrap_content"
-		android:layout_margin="3dp" android:text="@string/reject" android:textSize="18sp" android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp" />
+	<Button android:id="@+id/accept" style="@style/optionButton" android:text="@string/accept" />
+	<Button android:id="@+id/reject" style="@style/optionButton" android:text="@string/reject" />
 
 </LinearLayout>

@@ -7,8 +7,8 @@
 		android:src="@drawable/watchable_default" />
 
 	<TextView android:id="@+id/name" android:layout_height="wrap_content" android:layout_width="match_parent"
-		android:textStyle="bold" android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white"
-		android:background="@color/transluscentGrey" android:layout_alignParentBottom="true" android:padding="5dp" />
+		style="@style/smallText" android:fontFamily="sans-serif" android:textStyle="bold" android:background="@color/transluscentGrey"
+		android:layout_alignParentBottom="true" android:padding="5dp" />
 
 	<LinearLayout android:id="@+id/userContainer" android:orientation="horizontal" android:layout_width="match_parent"
 		android:layout_height="wrap_content" android:padding="4dp" android:gravity="center_vertical" android:background="@color/transluscentGrey">
@@ -20,21 +20,16 @@
 				android:layout_margin="1dp" android:src="@drawable/user_default" />
 		</RelativeLayout>
 
-		<TextView android:id="@+id/fullName" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textStyle="bold" android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white"
-			android:layout_marginLeft="10dp" />
+		<TextView android:id="@+id/fullName" style="@style/smallText" android:fontFamily="sans-serif"
+			android:textStyle="bold" android:layout_marginLeft="10dp" />
 	</LinearLayout>
 
 	<LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content" android:background="@color/transluscentGrey"
 		android:layout_below="@+id/userContainer" android:layout_alignParentRight="true" android:orientation="horizontal">
-		<TextView android:id="@+id/thumbsUp" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textStyle="bold" android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white"
-			android:padding="5dp" />
+		<TextView android:id="@+id/thumbsUp" style="@style/normalText" android:textStyle="bold" android:padding="5dp" />
 		<ImageView android:id="@+id/thumbsUpIcon" android:layout_height="wrap_content" android:layout_width="wrap_content"
 			android:src="@drawable/thumbs_up" android:layout_gravity="center_vertical" />
-		<TextView android:id="@+id/thumbsDown" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:textStyle="bold" android:textSize="@dimen/smallTextSize" android:textColor="@android:color/white"
-			android:padding="5dp" />
+		<TextView android:id="@+id/thumbsDown" style="@style/normalText" android:textStyle="bold" android:padding="5dp" />
 		<ImageView android:id="@+id/thumbsDownIcon" android:layout_height="wrap_content" android:layout_width="wrap_content"
 			android:src="@drawable/thumbs_down" android:layout_gravity="center_vertical" />
 	</LinearLayout>
