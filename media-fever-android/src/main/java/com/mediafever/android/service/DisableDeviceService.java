@@ -1,13 +1,15 @@
 package com.mediafever.android.service;
 
+import java.io.IOException;
+import org.slf4j.Logger;
 import android.content.Context;
 import android.content.Intent;
 import com.google.android.gcm.GCMRegistrar;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.inject.Inject;
 import com.jdroid.android.AbstractApplication;
-import com.jdroid.android.context.SecurityContext;
-import com.jdroid.android.domain.User;
 import com.jdroid.android.service.WorkerService;
+import com.jdroid.java.utils.LoggerUtils;
 import com.mediafever.service.APIService;
 
 /**
@@ -16,7 +18,9 @@ import com.mediafever.service.APIService;
  */
 public class DisableDeviceService extends WorkerService {
 	
-	private static String userToken;
+	private final static Logger LOGGER = LoggerUtils.getLogger(DisableDeviceService.class);
+	
+	private static final String USER_TOKEN = "userToken";
 	
 	@Inject
 	private APIService apiService;
@@ -26,30 +30,24 @@ public class DisableDeviceService extends WorkerService {
 	 */
 	@Override
 	protected void doExecute(Intent intent) {
-		if (GCMRegistrar.isRegisteredOnServer(getApplicationContext())) {
-			
-			User user = SecurityContext.get().getUser();
-			String userToken = user != null ? user.getUserToken() : null;
-			if (userToken == null) {
-				userToken = DisableDeviceService.userToken;
-			}
-			
-			// If this fails, the device is unregistered from GCM, but still registered in the server. We could try to
-			// unregister again, but it is not necessary: if the server tries to send a message to the device, it will
-			// get a "NotRegistered" error message and should unregister the device.
-			// DisableDeviceUseCase useCase = AbstractApplication.getInstance(DisableDeviceUseCase.class);
-			// useCase.run();
-			apiService.disableDevice(AbstractApplication.get().getInstallationId(), userToken);
-			GCMRegistrar.setRegisteredOnServer(getApplicationContext(), false);
+		try {
+			GoogleCloudMessaging googleCloudMessaging = GoogleCloudMessaging.getInstance(this);
+			googleCloudMessaging.unregister();
+		} catch (IOException e) {
+			LOGGER.warn("Failed to unregister the device on gcm.");
 		}
-		userToken = null;
+		
+		// If this fails, the device is unregistered from GCM, but still registered in the server. We could try
+		// to unregister again, but it is not necessary: if the server tries to send a message to the device, it
+		// will get a "NotRegistered" error message and should unregister the device.
+		String userToken = intent.getStringExtra(USER_TOKEN);
+		apiService.disableDevice(AbstractApplication.get().getInstallationId(), userToken);
+		GCMRegistrar.setRegisteredOnServer(getApplicationContext(), false);
 	}
 	
-	public static void runIntentInService(Context context) {
-		WorkerService.runIntentInService(context, new Intent(), DisableDeviceService.class);
-	}
-	
-	public static void setUserToken(String userToken) {
-		DisableDeviceService.userToken = userToken;
+	public static void runIntentInService(Context context, String userToken) {
+		Intent intent = new Intent();
+		intent.putExtra(USER_TOKEN, userToken);
+		WorkerService.runIntentInService(context, intent, DisableDeviceService.class);
 	}
 }

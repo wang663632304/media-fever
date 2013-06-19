@@ -1,16 +1,18 @@
 package com.mediafever.android.service;
 
+import java.io.IOException;
 import org.slf4j.Logger;
 import android.content.Context;
 import android.content.Intent;
 import com.google.android.gcm.GCMRegistrar;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.inject.Inject;
 import com.jdroid.android.AbstractApplication;
-import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.service.WorkerService;
 import com.jdroid.android.utils.IntentRetryUtils;
 import com.jdroid.java.exception.ApplicationException;
 import com.jdroid.java.utils.LoggerUtils;
+import com.mediafever.context.ApplicationContext;
 import com.mediafever.service.APIService;
 
 /**
@@ -29,15 +31,17 @@ public class EnableDeviceService extends WorkerService {
 	 */
 	@Override
 	protected void doExecute(Intent intent) {
-		if (SecurityContext.get().isAuthenticated()) {
-			try {
-				String registrationId = GCMRegistrar.getRegistrationId(getApplicationContext());
-				apiService.enableDevice(AbstractApplication.get().getInstallationId(), registrationId);
-				GCMRegistrar.setRegisteredOnServer(getApplicationContext(), true);
-			} catch (ApplicationException e) {
-				LOGGER.warn("Failed to register the device on server. Will retry later.");
-				IntentRetryUtils.retry(intent);
-			}
+		try {
+			GoogleCloudMessaging googleCloudMessaging = GoogleCloudMessaging.getInstance(this);
+			String registrationId = googleCloudMessaging.register(ApplicationContext.get().getGoogleProjectId());
+			apiService.enableDevice(AbstractApplication.get().getInstallationId(), registrationId);
+			GCMRegistrar.setRegisteredOnServer(getApplicationContext(), true);
+		} catch (ApplicationException e) {
+			LOGGER.warn("Failed to register the device on server. Will retry later.");
+			IntentRetryUtils.retry(intent);
+		} catch (IOException e) {
+			LOGGER.warn("Failed to register the device on gcm. Will retry later.");
+			IntentRetryUtils.retry(intent);
 		}
 	}
 	
