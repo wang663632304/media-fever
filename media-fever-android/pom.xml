@@ -106,12 +106,19 @@
 												}
 											} else if(applicationChildren.name() == 'activity') {
 
-												def activityAttributes = applicationChildren.attributes()
 												def metaData = applicationChildren.'meta-data'[0]
 												if (metaData != null) {
 													if (metaData.attributes()[ns.name] == "android.app.searchable") {
 														metaData.attributes()[ns.resource] = "@xml/searchable_" + "${apk.suffix}"
 													}
+												}
+											} else if(applicationChildren.name() == 'receiver') {
+
+												def receiverAttributes = applicationChildren.attributes()
+												if (receiverAttributes[ns.name] == 'com.mediafever.android.gcm.GcmBroadcastReceiver') {
+													def intentFilter = applicationChildren.'intent-filter'[0]
+													def category = intentFilter.'category'[0]
+													category.attributes()[ns.name] = "${manifest.package}"
 												}
 											}
 										}
