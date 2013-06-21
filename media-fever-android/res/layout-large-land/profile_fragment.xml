@@ -37,13 +37,12 @@
 			</LinearLayout>
 		</LinearLayout>
 
-		<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-			android:orientation="horizontal" android:layout_marginTop="10dp" android:layout_marginLeft="10dp">
-			<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/changePassword"
-				android:textStyle="bold" />
+		<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:layout_marginTop="10dp" android:layout_marginRight="10dp">
+			<TextView style="@style/formLabel" android:text="@string/changePassword" />
 			<CheckBox android:id="@+id/changePassword" android:layout_height="wrap_content" android:layout_width="wrap_content"
-				android:layout_marginLeft="10dp" />
-		</LinearLayout>
+				android:layout_marginLeft="10dp" android:layout_alignParentRight="true" android:layout_centerInParent="true" />
+		</RelativeLayout>
 
 		<LinearLayout android:id="@+id/passwordContainer" android:layout_width="match_parent"
 			android:layout_height="wrap_content" android:orientation="horizontal" android:baselineAligned="false"
@@ -62,13 +61,13 @@
 		</LinearLayout>
 
 		<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-			android:layout_marginTop="10dp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
+			android:layout_marginTop="10dp" android:layout_marginRight="10dp">
 			<LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:orientation="vertical" android:layout_alignParentLeft="true" android:layout_centerInParent="true"
 				android:layout_toLeftOf="@+id/publicProfile">
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfile"
-					android:textStyle="bold" />
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfileDescription" />
+				<TextView style="@style/formLabel" android:text="@string/publicProfile" />
+				<TextView style="@style/normalText" android:text="@string/publicProfileDescription"
+					android:layout_marginLeft="10dp" />
 			</LinearLayout>
 			<CheckBox android:id="@+id/publicProfile" android:layout_height="wrap_content" android:layout_width="wrap_content"
 				android:layout_marginLeft="10dp" android:layout_alignParentRight="true" android:layout_centerInParent="true" />
