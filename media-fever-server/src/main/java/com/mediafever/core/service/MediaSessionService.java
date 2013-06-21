@@ -227,13 +227,19 @@ public class MediaSessionService {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
 		MediaSessionUser mediaSessionUser = findMediaSessionUser(mediaSession, userId);
 		mediaSessionUser.accept();
+		
+		// Send push notifications
+		sendPushToMediaSessionUsers(mediaSession, userId, new MediaSessionUpdatedGcmMessage(mediaSession.getId()));
 	}
 	
 	@Transactional
 	public void rejectMediaSession(Long id, Long userId) {
 		MediaSession mediaSession = mediaSessionRepository.get(id);
 		MediaSessionUser mediaSessionUser = findMediaSessionUser(mediaSession, userId);
-		mediaSessionUser.reject();
+		mediaSession.rejectUser(mediaSessionUser);
+		
+		// Send push notifications
+		sendPushToMediaSessionUsers(mediaSession, userId, new MediaSessionUpdatedGcmMessage(mediaSession.getId()));
 	}
 	
 	@Transactional

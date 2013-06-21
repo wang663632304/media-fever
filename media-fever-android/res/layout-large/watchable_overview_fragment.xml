@@ -2,19 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
 	android:layout_width="match_parent" android:layout_height="match_parent" android:padding="10dp" android:paddingRight="25dp">
 
-	<TextView android:id="@+id/name" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textStyle="bold" android:textSize="30sp" style="@style/whiteShadowText" />
-	<TextView android:id="@+id/tagline" android:layout_height="wrap_content" android:layout_width="wrap_content"
-		android:textStyle="bold" android:textSize="18sp" android:visibility="gone" />
+	<TextView android:id="@+id/name" style="@style/title1Text" android:textSize="30sp" />
+	<TextView android:id="@+id/tagline" style="@style/h2Text" android:visibility="gone" />
 
 	<TextView android:id="@+id/releaseYear" style="@style/normalText" android:textStyle="bold" />
 
 	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 		android:layout_marginTop="20dp">
-		<Button android:id="@+id/watchedToogle" android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:text="@string/watched" android:minWidth="160dp" android:drawableRight="@drawable/accept" />
-		<Button android:id="@+id/wishListToogle" android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:text="@string/wishList" android:minWidth="160dp" android:drawableRight="@drawable/reject" />
+		<Button android:id="@+id/watchedToogle" style="@style/button" android:text="@string/watched" android:minWidth="160dp"
+			android:drawableRight="@drawable/accept" android:padding="10dp" />
+		<Button android:id="@+id/wishListToogle" style="@style/button" android:text="@string/wishList"
+			android:minWidth="160dp" android:drawableRight="@drawable/reject" android:padding="10dp" />
 	</LinearLayout>
 
 	<ScrollView android:layout_width="match_parent" android:layout_height="match_parent">

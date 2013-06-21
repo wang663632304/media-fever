@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="150dp"
-	android:layout_height="150dp" android:background="@drawable/grid_selector">
+	android:layout_height="150dp" android:background="@drawable/media_session_user_selector">
 
 	<com.jdroid.android.images.CustomImageView android:id="@+id/image"
 		android:layout_height="match_parent" android:layout_width="match_parent" android:scaleType="centerCrop" android:src="@drawable/user_default"
 		android:background="@android:color/white" />
+
+	<TextView android:id="@+id/accepted" style="@style/smallText" android:background="@color/transluscentGrey"
+		android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:padding="5dp" />
 
 	<TextView android:id="@+id/fullName" android:layout_height="wrap_content" android:layout_width="match_parent"
 		style="@style/smallText" android:fontFamily="sans-serif" android:textStyle="bold" android:background="@color/transluscentGrey"

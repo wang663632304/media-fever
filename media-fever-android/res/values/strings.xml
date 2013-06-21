@@ -124,6 +124,8 @@
 	<string name="anyDate">Any Date</string>
 	<string name="anyTime">Any Time</string>
 	<string name="mediaSessionFriendsHeader">Pick the friends you want to invite to this media session</string>
+	<string name="accepted">Accepted</string>
+	<string name="pending">Pending</string>
 	<string name="mediaSessionCreatedTitle">Media Session created</string>
 	<string name="mediaSessionCreatedDescription">Now you and your friends can pick the %1$s and start voting</string>
 	<string name="mediaSelectionsHeader">Pick the %1$s you want to add to this media session</string>

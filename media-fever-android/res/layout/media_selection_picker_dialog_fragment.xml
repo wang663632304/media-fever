@@ -11,9 +11,8 @@
 				android:src="@drawable/user_default" />
 			<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
 				android:orientation="vertical" android:layout_margin="10dp">
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
-					android:text="@string/manualSelection" />
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/manualSelectionDescription" />
+				<TextView style="@style/h1Text" android:text="@string/manualSelection" />
+				<TextView style="@style/normalText" android:text="@string/manualSelectionDescription" />
 			</LinearLayout>
 		</LinearLayout>
 
@@ -24,9 +23,8 @@
 				android:src="@drawable/random_selection" />
 			<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
 				android:orientation="vertical" android:layout_margin="10dp">
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
-					android:text="@string/randomSelection" />
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/randomSelectionDescription" />
+				<TextView style="@style/h1Text" android:text="@string/randomSelection" />
+				<TextView style="@style/normalText" android:text="@string/randomSelectionDescription" />
 			</LinearLayout>
 		</LinearLayout>
 
@@ -37,9 +35,8 @@
 				android:src="@drawable/smart_selection" />
 			<LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent"
 				android:orientation="vertical" android:layout_margin="10dp">
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textStyle="bold"
-					android:text="@string/smartSelection" />
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/smartSelectionDescription" />
+				<TextView style="@style/h1Text" android:text="@string/smartSelection" />
+				<TextView style="@style/normalText" android:text="@string/smartSelectionDescription" />
 			</LinearLayout>
 		</LinearLayout>
 

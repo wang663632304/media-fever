@@ -8,11 +8,7 @@
 	<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
 		android:orientation="vertical" android:layout_toRightOf="@+id/dashboardIcon" android:layout_centerVertical="true"
 		android:layout_marginTop="@dimen/dashboardTextMargin" android:layout_marginBottom="@dimen/dashboardTextMargin">
-		<TextView android:id="@+id/dashboardText" android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:text="@string/mediaSessions" android:textSize="@dimen/dashboardTextSize" android:textColor="@android:color/white"
-			android:fontFamily="sans-serif" />
-		<TextView android:id="@+id/dashboardTextDescription" android:layout_height="wrap_content"
-			android:layout_width="wrap_content" android:text="@string/mediaSessionsDescription" android:textSize="@dimen/dashboardSmallTextSize"
-			android:textColor="@android:color/white" android:fontFamily="sans-serif-light" />
+		<TextView android:id="@+id/dashboardText" style="@style/h1Text" android:text="@string/mediaSessions" />
+		<TextView android:id="@+id/dashboardTextDescription" style="@style/smallText" android:text="@string/mediaSessionsDescription" />
 	</LinearLayout>
 </RelativeLayout>

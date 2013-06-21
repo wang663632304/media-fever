@@ -7,9 +7,8 @@
 			android:orientation="vertical">
 
 			<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-				android:layout_marginTop="10dp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/photo"
-					android:layout_alignParentLeft="true" android:textStyle="bold" />
+				android:layout_marginTop="10dp" android:layout_marginRight="10dp">
+				<TextView style="@style/formLabel" android:text="@string/photo" android:layout_alignParentLeft="true" />
 				<RelativeLayout android:layout_height="50dp" android:layout_width="50dp"
 					android:layout_alignParentRight="true">
 					<View android:layout_height="match_parent" android:layout_width="match_parent" android:background="@android:color/white" />
@@ -35,11 +34,11 @@
 				android:nextFocusDown="@+id/changePassword" />
 
 			<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-				android:layout_marginTop="10dp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp">
-				<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/changePassword"
-					android:textStyle="bold" android:layout_centerInParent="true" android:layout_alignParentLeft="true" />
-				<CheckBox android:id="@+id/changePassword" android:layout_height="wrap_content" android:layout_width="wrap_content"
-					android:layout_alignParentRight="true" android:layout_marginLeft="10dp" android:layout_centerInParent="true" />
+				android:layout_marginTop="10dp" android:layout_marginRight="10dp">
+				<TextView style="@style/formLabel" android:text="@string/changePassword" android:layout_centerInParent="true"
+					android:layout_alignParentLeft="true" />
+				<CheckBox android:id="@+id/changePassword" android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_alignParentRight="true" android:layout_centerInParent="true" />
 			</RelativeLayout>
 
 			<LinearLayout android:id="@+id/passwordContainer" android:layout_width="match_parent"
@@ -57,9 +56,8 @@
 				<LinearLayout android:layout_height="wrap_content" android:layout_width="wrap_content"
 					android:orientation="vertical" android:layout_alignParentLeft="true" android:layout_centerInParent="true"
 					android:layout_toLeftOf="@+id/publicProfile">
-					<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfile"
-						android:textStyle="bold" />
-					<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/publicProfileDescription" />
+					<TextView style="@style/h1Text" android:text="@string/publicProfile" />
+					<TextView style="@style/normalText" android:text="@string/publicProfileDescription" />
 				</LinearLayout>
 				<CheckBox android:id="@+id/publicProfile" android:layout_height="wrap_content" android:layout_width="wrap_content"
 					android:layout_marginLeft="10dp" android:layout_alignParentRight="true" android:layout_centerInParent="true" />

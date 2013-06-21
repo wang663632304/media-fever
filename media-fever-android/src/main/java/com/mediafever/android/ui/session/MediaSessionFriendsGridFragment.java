@@ -1,6 +1,5 @@
 package com.mediafever.android.ui.session;
 
-import java.util.List;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.GridView;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
-import com.jdroid.android.domain.User;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.mediafever.R;
-import com.mediafever.android.ui.UserAdapter;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.friends.FriendsUseCase;
@@ -119,18 +116,24 @@ public class MediaSessionFriendsGridFragment extends AbstractGridFragment<UserIm
 	}
 	
 	private void loadFriends() {
-		setListAdapter(new UserAdapter(MediaSessionFriendsGridFragment.this.getActivity(), friendsUseCase.getFriends()));
-		MediaSession mediaSession = getMediaSessionSetupUseCase().getMediaSession();
-		if (mediaSession.getId() != null) {
-			List<User> users = mediaSession.getUsers();
-			List<UserImpl> friends = friendsUseCase.getFriends();
-			for (int i = 0; i < friends.size(); i++) {
-				User friend = friends.get(i);
-				if (users.contains(friend)) {
-					getGridView().setItemChecked(i, true);
-				}
+		setListAdapter(new MediaSessionUserAdapter(MediaSessionFriendsGridFragment.this.getActivity(),
+				friendsUseCase.getFriends(), mediaSession) {
+			
+			@Override
+			protected Boolean isUserEnabled(UserImpl user) {
+				return getMediaSessionSetupUseCase().isRemovableUser(user);
 			}
-		}
+			
+			@Override
+			protected Boolean isAcceptedUser(UserImpl user) {
+				return getMediaSessionSetupUseCase().isAcceptedUser(user);
+			}
+			
+			@Override
+			protected Boolean isPendingUser(UserImpl user) {
+				return getMediaSessionSetupUseCase().isPendingUser(user);
+			}
+		});
 	}
 	
 	/**

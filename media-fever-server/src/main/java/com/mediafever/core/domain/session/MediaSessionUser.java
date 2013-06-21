@@ -46,8 +46,4 @@ public class MediaSessionUser extends Entity {
 	public void accept() {
 		accepted = true;
 	}
-	
-	public void reject() {
-		accepted = false;
-	}
 }

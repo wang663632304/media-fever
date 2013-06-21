@@ -10,9 +10,11 @@
 			android:layout_margin="1dp" android:src="@drawable/user_default" />
 	</RelativeLayout>
 
-	<TextView android:id="@+id/fullName" android:layout_height="wrap_content" android:layout_width="0dp"
-		android:textStyle="bold" android:textSize="14sp" android:textColor="@android:color/white" android:layout_marginLeft="10dp"
-		android:layout_weight="1" />
+	<LinearLayout android:layout_height="wrap_content" android:layout_width="0dp" android:orientation="vertical"
+		android:layout_weight="1" android:layout_marginLeft="10dp">
+		<TextView android:id="@+id/fullName" style="@style/h1Text" />
+		<TextView android:id="@+id/accepted" style="@style/smallText" />
+	</LinearLayout>
 
 	<CheckBox android:id="@+id/checkbox" android:layout_height="wrap_content" android:layout_width="wrap_content" />
 </LinearLayout>

@@ -26,16 +26,6 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 	private static final String SELECTIONS = "selections";
 	private static final String WATCHABLES_TYPES = "watchablesTypes";
 	
-	private MediaSession mediaSession;
-	
-	public MediaSessionParser(MediaSession mediaSession) {
-		this.mediaSession = mediaSession;
-	}
-	
-	public MediaSessionParser() {
-		this(null);
-	}
-	
 	/**
 	 * @see com.jdroid.java.parser.json.JsonParser#parse(java.lang.Object)
 	 */
@@ -59,18 +49,6 @@ public class MediaSessionParser extends JsonParser<JsonObjectWrapper> {
 				break;
 			}
 		}
-		
-		if (mediaSession != null) {
-			mediaSession.setExpired(expired);
-			mediaSession.setDate(date);
-			mediaSession.setTime(time);
-			mediaSession.setMediaSessionUsers(users);
-			mediaSession.setSelections(selections);
-			mediaSession.setWatchableTypes(watchablesTypes);
-			mediaSession.setAccepted(accepted);
-			return mediaSession;
-		} else {
-			return new MediaSession(id, expired, date, time, users, selections, watchablesTypes, accepted);
-		}
+		return new MediaSession(id, expired, date, time, users, selections, watchablesTypes, accepted);
 	}
 }

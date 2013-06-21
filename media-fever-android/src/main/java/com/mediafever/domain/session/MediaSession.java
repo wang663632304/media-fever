@@ -29,13 +29,13 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	private Boolean accepted;
 	private List<MediaSelection> selections;
 	
-	public MediaSession(Long id, Boolean expired, Date date, Date time, List<MediaSessionUser> users,
+	public MediaSession(Long id, Boolean expired, Date date, Date time, List<MediaSessionUser> mediaSessionUsers,
 			List<MediaSelection> selections, List<WatchableType> watchableTypes, Boolean accepted) {
 		super(id);
 		this.expired = expired;
 		this.date = date;
 		this.time = time;
-		mediaSessionUsers = users;
+		this.mediaSessionUsers = mediaSessionUsers;
 		setSelections(selections);
 		this.watchableTypes = watchableTypes;
 		this.accepted = accepted;
@@ -51,20 +51,31 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 		expired = false;
 		date = DateUtils.now();
 		mediaSessionUsers = Lists.newArrayList(new MediaSessionUser(SecurityContext.get().getUser()));
-		watchableTypes = Lists.newArrayList(WatchableType.find(watchable));
+		watchableTypes = Lists.newArrayList();
 		requiredWatchableTypes = Sets.newHashSet();
 		setSelections(null);
 		
 		if (watchable != null) {
+			watchableTypes.add(WatchableType.find(watchable));
 			addSelection(new MediaSelection(watchable));
+		} else {
+			watchableTypes.add(WatchableType.MOVIE);
 		}
 	}
 	
-	public Boolean isExpired() {
-		return expired;
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public MediaSession clone() {
+		MediaSession mediaSession = new MediaSession(getId(), expired, date, time,
+				Lists.newArrayList(mediaSessionUsers), Lists.<MediaSelection>newArrayList(),
+				Lists.newArrayList(watchableTypes), accepted);
+		mediaSession.selections = selections;
+		return mediaSession;
 	}
 	
-	public void setSelections(List<MediaSelection> mediaSelections) {
+	private void setSelections(List<MediaSelection> mediaSelections) {
 		selections = Lists.newArrayList();
 		if (!expired) {
 			selections.add(new MediaSelection());
@@ -284,6 +295,10 @@ public class MediaSession extends Entity implements Comparable<MediaSession> {
 	
 	public Boolean isWatchableTypeRequired(WatchableType watchableType) {
 		return requiredWatchableTypes.contains(watchableType);
+	}
+	
+	public Boolean isExpired() {
+		return expired;
 	}
 	
 	/**
