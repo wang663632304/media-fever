@@ -86,12 +86,12 @@
 
 		<!-- Google Cloud Messaging Configuration -->
 		<service android:name="com.mediafever.android.gcm.GcmService" />
-		<receiver android:name="com.mediafever.android.gcm.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+		<receiver android:name="com.mediafever.android.gcm.GcmBroadcastReceiver" android:exported="true"
+			android:permission="com.google.android.c2dm.permission.SEND">
 			<intent-filter>
 				<!-- Receive actual messages -->
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-				<!-- Receive registration ids -->
-				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+				<!-- TODO Replace this by the package name -->
 				<category android:name="com.mediafever" />
 			</intent-filter>
 		</receiver>

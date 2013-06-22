@@ -2,9 +2,11 @@ package com.mediafever.android.ui.home;
 
 import android.os.Bundle;
 import com.google.ads.AdSize;
+import com.google.android.gcm.GCMRegistrar;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.AbstractFragmentActivity;
 import com.mediafever.R;
+import com.mediafever.android.service.EnableDeviceService;
 import com.mediafever.android.ui.login.LoginActivity;
 
 /**
@@ -27,6 +29,11 @@ public class HomeActivity extends AbstractFragmentActivity {
 	@Override
 	public Boolean onBeforeSetContentView() {
 		if (isAuthenticated()) {
+			
+			if (!GCMRegistrar.isRegistered(this) || !GCMRegistrar.isRegisteredOnServer(this)) {
+				EnableDeviceService.runIntentInService(this);
+			}
+			
 			return true;
 		} else {
 			ActivityLauncher.launchActivity(LoginActivity.class);

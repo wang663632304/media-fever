@@ -6,30 +6,12 @@ import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.gcm.AbstractGcmService;
 import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
-import com.mediafever.android.service.DisableDeviceService;
-import com.mediafever.android.service.EnableDeviceService;
 
 /**
  * 
  * @author Maxi Rosson
  */
 public class GcmService extends AbstractGcmService {
-	
-	/**
-	 * @see com.google.android.gcm.GCMBaseIntentService#onRegistered(android.content.Context, java.lang.String)
-	 */
-	@Override
-	public void onRegistered(Context context, String registrationId) {
-		EnableDeviceService.runIntentInService(context);
-	}
-	
-	/**
-	 * @see com.google.android.gcm.GCMBaseIntentService#onUnregistered(android.content.Context, java.lang.String)
-	 */
-	@Override
-	public void onUnregistered(Context context, String registrationId) {
-		DisableDeviceService.runIntentInService(context);
-	}
 	
 	/**
 	 * @see com.jdroid.android.gcm.AbstractGcmService#onMissingGoogleAccountError(android.content.Context)

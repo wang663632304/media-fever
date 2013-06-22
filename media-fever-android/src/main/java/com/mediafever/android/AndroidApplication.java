@@ -1,9 +1,7 @@
 package com.mediafever.android;
 
-import org.slf4j.Logger;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import com.google.android.gcm.GCMRegistrar;
 import com.google.inject.AbstractModule;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.ActivityLauncher;
@@ -13,11 +11,9 @@ import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.exception.ExceptionHandler;
 import com.jdroid.android.fragment.BaseFragment;
 import com.jdroid.android.utils.NotificationUtils;
-import com.jdroid.java.utils.LoggerUtils;
 import com.mediafever.R;
 import com.mediafever.android.exception.AndroidExceptionHandler;
 import com.mediafever.android.service.DisableDeviceService;
-import com.mediafever.android.service.EnableDeviceService;
 import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.android.ui.login.LoginActivity;
 import com.mediafever.context.ApplicationContext;
@@ -31,29 +27,8 @@ import com.mediafever.repository.MediaSessionsRepository;
  */
 public class AndroidApplication extends AbstractApplication {
 	
-	private final static Logger LOGGER = LoggerUtils.getLogger(AndroidApplication.class);
-	
 	public static AndroidApplication get() {
 		return (AndroidApplication)AbstractApplication.INSTANCE;
-	}
-	
-	/**
-	 * @see com.jdroid.android.AbstractApplication#onCreate()
-	 */
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		
-		if (SecurityContext.get().isAuthenticated()) {
-			if (GCMRegistrar.isRegistered(this)) {
-				LOGGER.debug("GCM already registered on the device");
-				if (!GCMRegistrar.isRegisteredOnServer(this)) {
-					EnableDeviceService.runIntentInService(this);
-				}
-			} else {
-				GCMRegistrar.register(this, getAndroidApplicationContext().getGoogleProjectId());
-			}
-		}
 	}
 	
 	/**
@@ -82,8 +57,7 @@ public class AndroidApplication extends AbstractApplication {
 	
 	public void logout() {
 		
-		DisableDeviceService.setUserToken(SecurityContext.get().getUser().getUserToken());
-		GCMRegistrar.unregister(this);
+		DisableDeviceService.runIntentInService(this, SecurityContext.get().getUser().getUserToken());
 		
 		SecurityContext.get().detachUser();
 		NotificationUtils.cancelAllNotifications();

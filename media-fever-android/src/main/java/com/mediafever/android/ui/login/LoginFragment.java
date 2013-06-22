@@ -7,7 +7,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import com.google.android.gcm.GCMRegistrar;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.fragment.AbstractFragment;
 import com.jdroid.android.listener.LaunchOnClickListener;
@@ -120,7 +119,6 @@ public class LoginFragment extends AbstractFragment {
 			
 			@Override
 			public void run() {
-				GCMRegistrar.register(AndroidApplication.get(), ApplicationContext.get().getGoogleProjectId());
 				getActivity().finish();
 				dismissLoading();
 				ActivityLauncher.launchHomeActivity();
