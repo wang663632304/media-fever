@@ -145,8 +145,8 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			@Override
 			public void onReceive(Context context, final Intent intent) {
 				
-				String mediaSessionId = intent.getStringExtra(GcmMessage.MEDIA_SESSION_ID_KEY);
-				if (mediaSessionId.equals(mediaSessionId.toString())) {
+				String notificationMediaSessionId = intent.getStringExtra(GcmMessage.MEDIA_SESSION_ID_KEY);
+				if (notificationMediaSessionId.equals(mediaSessionId.toString())) {
 					executeUseCase(mediaSessionDetailsUseCase);
 					
 					final GcmMessage gcmMessage = GcmMessage.find(intent);

@@ -13,6 +13,7 @@
 	<dimen name="mediaSessionUserImageDim">40dp</dimen>
 	<dimen name="mediaSessionSelectionHeight">80dp</dimen>
 	<dimen name="mediaSessionSelectionWidth">50dp</dimen>
+	<dimen name="mediaSessionNotificationSize">40dp</dimen>
 
 	<!-- Watchables -->
 
