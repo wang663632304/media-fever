@@ -21,7 +21,7 @@
 	<supports-screens android:largeScreens="true" />
 	<supports-screens android:xlargeScreens="true" />
 
-	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16" />
+	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="17" />
 
 	<application android:icon="@drawable/ic_launcher" android:logo="@drawable/logo" android:label="@string/appName"
 		android:allowBackup="true" android:name="com.mediafever.android.AndroidApplication" android:hardwareAccelerated="true"

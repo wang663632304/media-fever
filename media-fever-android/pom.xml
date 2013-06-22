@@ -14,7 +14,7 @@
 	</parent>
 
 	<properties>
-		<android.sdk.platform>16</android.sdk.platform>
+		<android.sdk.platform>17</android.sdk.platform>
 		<app.alias>androiddebugkey</app.alias>
 	</properties>
 
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>android</groupId>
 			<artifactId>android</artifactId>
-			<version>4.1_r3</version>
+			<version>4.2_r2</version>
 			<scope>provided</scope>
 		</dependency>
 
