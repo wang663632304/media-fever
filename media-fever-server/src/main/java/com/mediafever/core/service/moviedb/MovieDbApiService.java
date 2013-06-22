@@ -1,22 +1,20 @@
 package com.mediafever.core.service.moviedb;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.google.common.collect.Lists;
 import com.jdroid.java.api.AbstractApacheApiService;
 import com.jdroid.java.http.HttpWebServiceProcessor;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.http.mock.AbstractMockWebService;
 import com.jdroid.java.http.mock.JsonMockWebService;
-import com.jdroid.java.utils.StringUtils;
-import com.jdroid.javaweb.guava.function.PropertyFunction;
 import com.mediafever.context.ApplicationContext;
 import com.mediafever.core.domain.watchable.Movie;
-import com.mediafever.core.domain.watchable.Watchable;
 import com.mediafever.core.repository.PeopleRepository;
-import com.mediafever.core.service.moviedb.parser.GetVersionParser;
+import com.mediafever.core.repository.SettingsRepository;
 import com.mediafever.core.service.moviedb.parser.LatestParser;
 import com.mediafever.core.service.moviedb.parser.MovieParser;
+import com.mediafever.core.service.moviedb.parser.UpdatedMovieIdsParser;
 
 /**
  * 
@@ -25,35 +23,55 @@ import com.mediafever.core.service.moviedb.parser.MovieParser;
 @Service
 public class MovieDbApiService extends AbstractApacheApiService {
 	
-	private static final String MOVIE_MODULE = "Movie";
-	private static final String GET_INFO_ACTION = "getInfo";
-	private static final String GET_LATEST_ACTION = "getLatest";
-	private static final String GET_VERSION_ACTION = "getVersion";
+	@Autowired
+	private SettingsRepository settingsRepository;
 	
-	private static final String COMMON_URL = "/en/json/" + ApplicationContext.get().getMoviesApiKey();
+	private static final String ACCEPT_HEADER_KEY = "Accept";
+	private static final String ACCEPT_HEADER_VALUE = "application/json";
+	
+	private static final String MOVIE_MODULE = "movie";
+	private static final String GET_CHANGES_ACTION = "changes";
+	private static final String GET_LATEST_ACTION = "latest";
+	
+	private static final String API_KEY_PARAMETER = "api_key";
+	private static final String PAGE_PARAMETER = "page";
+	private static final String APPEND_TO_RESPONSE_PARAMETER = "append_to_response";
 	
 	public Movie getMovie(Long movieId, PeopleRepository peopleRepository) {
-		WebService webService = newGetService(MOVIE_MODULE, GET_INFO_ACTION);
-		webService.addUrlSegment(movieId);
-		return webService.execute(new MovieParser(peopleRepository));
+		// Example URL: http://api.themoviedb.org/3/movie/MOVIE_ID?api_key=APIKEY&append_to_response=trailers,casts
+		// Add the append to response parameter to call to trailers and cast APIs in a single call.
+		WebService webService = newGetService(MOVIE_MODULE, movieId);
+		webService.addQueryParameter(APPEND_TO_RESPONSE_PARAMETER, "trailers,casts");
+		return webService.execute(new MovieParser(settingsRepository.getMovieImageBaseURL(),
+				settingsRepository.getMovieTrailerBaseURL(), peopleRepository));
 	}
 	
 	/**
 	 * @return the ID of the last movie created in the db
 	 */
 	public Long getLatest() {
-		// Example URL: http://api.themoviedb.org/2.1/Movie.getLatest/en/json/APIKEY
+		// Example URL: http://api.themoviedb.org/3/movie/latest?api_key=APIKEY
 		WebService webService = newGetService(MOVIE_MODULE, GET_LATEST_ACTION);
 		return webService.execute(new LatestParser());
 	}
 	
-	public List<Long> getVersion(List<Watchable> movies) {
-		// Example URL: http://api.themoviedb.org/2.1/Movie.getVersion/en/json/APIKEY/585,155,11,550
-		WebService webService = newGetService(MOVIE_MODULE, GET_VERSION_ACTION);
+	/**
+	 * @return List of IDs that belong to the movies that have been updated on the last 24hs.
+	 */
+	public List<Long> getUpdatedMovieIds() {
+		// Example URL: http://api.themoviedb.org/3/movie/changes?api_key=APIKEY&page=3
+		UpdatedMovieIdsParser parser = new UpdatedMovieIdsParser();
 		
-		List<Long> externalIds = Lists.transform(movies, new PropertyFunction<Watchable, Long>("externalId"));
-		webService.addUrlSegment(StringUtils.join(externalIds));
-		return webService.execute(new GetVersionParser(movies));
+		WebService webService = newGetService(MOVIE_MODULE, GET_CHANGES_ACTION);
+		webService.execute(parser);
+		
+		// Since this API is paginated, we need to call it for all pages.
+		for (int i = 2; i <= parser.getTotalPages(); i++) {
+			webService = newGetService(MOVIE_MODULE, GET_CHANGES_ACTION);
+			webService.addQueryParameter(PAGE_PARAMETER, i);
+			webService.execute(parser);
+		}
+		return parser.getMovieIds();
 	}
 	
 	/**
@@ -94,15 +112,14 @@ public class MovieDbApiService extends AbstractApacheApiService {
 		return ApplicationContext.get().isHttpMockEnabled();
 	}
 	
+	/**
+	 * @see com.jdroid.java.api.AbstractApiService#newGetService(java.lang.Boolean, java.lang.Object[])
+	 */
 	@Override
-	protected String getBaseURL(String serverUrl, Object... urlSegments) {
-		StringBuilder builder = new StringBuilder();
-		builder.append(serverUrl);
-		builder.append(StringUtils.SLASH);
-		builder.append(urlSegments[0]);
-		builder.append(".");
-		builder.append(urlSegments[1]);
-		builder.append(COMMON_URL);
-		return builder.toString();
+	protected WebService newGetService(Boolean mocked, Object... urlSegments) {
+		WebService webService = super.newGetService(mocked, urlSegments);
+		webService.addQueryParameter(API_KEY_PARAMETER, ApplicationContext.get().getMoviesApiKey());
+		webService.addHeader(ACCEPT_HEADER_KEY, ACCEPT_HEADER_VALUE);
+		return webService;
 	}
 }

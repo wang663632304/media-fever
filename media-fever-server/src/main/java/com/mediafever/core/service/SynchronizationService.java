@@ -1,6 +1,5 @@
 package com.mediafever.core.service;
 
-import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -8,11 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.jdroid.java.utils.ExecutorUtils;
 import com.jdroid.java.utils.LoggerUtils;
-import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.watchable.Movie;
 import com.mediafever.core.domain.watchable.Series;
 import com.mediafever.core.domain.watchable.Settings;
-import com.mediafever.core.domain.watchable.Watchable;
 import com.mediafever.core.repository.PeopleRepository;
 import com.mediafever.core.repository.SettingsRepository;
 import com.mediafever.core.repository.WatchableRepository;
@@ -66,18 +63,12 @@ public class SynchronizationService {
 			Long latestExternalId = movieDbApiService.getLatest();
 			addMovies(minExternalId, latestExternalId);
 			
-			// Update old Movies
-			Integer page = 1;
-			PagedResult<Watchable> pagedResult = null;
-			do {
-				pagedResult = watchableRepository.getMovies(page);
-				List<Long> externalIds = movieDbApiService.getVersion(pagedResult.getData());
-				for (Long externalId : externalIds) {
-					addMovie(externalId);
-				}
-				page++;
-			} while (!pagedResult.isLastPage());
-			
+			// Update old movies that have been updated on the MovieDB.
+			for (Long externalId : movieDbApiService.getUpdatedMovieIds()) {
+				addMovie(externalId);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			listener.onSyncMoviesFinished();
 		}
@@ -108,7 +99,7 @@ public class SynchronizationService {
 	public void synchSeries(SynchronizationListener listener) {
 		
 		try {
-			Settings lastUpdateSettings = settingsRepository.getSeriesLastUpdate();
+			Settings lastUpdateSettings = settingsRepository.getSeriesLastUpdateSetting();
 			
 			SeriesUpdateResponse response;
 			if (INITIAL_UPDATE.equals(lastUpdateSettings.getValue())) {
