@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.jdroid.java.api.AbstractApacheApiService;
 import com.jdroid.java.http.HttpWebServiceProcessor;
+import com.jdroid.java.http.MimeType;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.http.mock.AbstractMockWebService;
 import com.jdroid.java.http.mock.JsonMockWebService;
@@ -27,7 +28,6 @@ public class MovieDbApiService extends AbstractApacheApiService {
 	private SettingsRepository settingsRepository;
 	
 	private static final String ACCEPT_HEADER_KEY = "Accept";
-	private static final String ACCEPT_HEADER_VALUE = "application/json";
 	
 	private static final String MOVIE_MODULE = "movie";
 	private static final String GET_CHANGES_ACTION = "changes";
@@ -119,7 +119,7 @@ public class MovieDbApiService extends AbstractApacheApiService {
 	protected WebService newGetService(Boolean mocked, Object... urlSegments) {
 		WebService webService = super.newGetService(mocked, urlSegments);
 		webService.addQueryParameter(API_KEY_PARAMETER, ApplicationContext.get().getMoviesApiKey());
-		webService.addHeader(ACCEPT_HEADER_KEY, ACCEPT_HEADER_VALUE);
+		webService.addHeader(ACCEPT_HEADER_KEY, MimeType.JSON.toString());
 		return webService;
 	}
 }

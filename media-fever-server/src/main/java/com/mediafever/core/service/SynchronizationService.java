@@ -68,7 +68,7 @@ public class SynchronizationService {
 				addMovie(externalId);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error synchronizing movies", e);
 		} finally {
 			listener.onSyncMoviesFinished();
 		}
