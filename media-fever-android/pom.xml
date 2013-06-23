@@ -14,7 +14,7 @@
 	</parent>
 
 	<properties>
-		<android.sdk.platform>16</android.sdk.platform>
+		<android.sdk.platform>17</android.sdk.platform>
 		<app.alias>androiddebugkey</app.alias>
 	</properties>
 
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>android</groupId>
 			<artifactId>android</artifactId>
-			<version>4.1_r3</version>
+			<version>4.2_r2</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -106,12 +106,19 @@
 												}
 											} else if(applicationChildren.name() == 'activity') {
 
-												def activityAttributes = applicationChildren.attributes()
 												def metaData = applicationChildren.'meta-data'[0]
 												if (metaData != null) {
 													if (metaData.attributes()[ns.name] == "android.app.searchable") {
 														metaData.attributes()[ns.resource] = "@xml/searchable_" + "${apk.suffix}"
 													}
+												}
+											} else if(applicationChildren.name() == 'receiver') {
+
+												def receiverAttributes = applicationChildren.attributes()
+												if (receiverAttributes[ns.name] == 'com.mediafever.android.gcm.GcmBroadcastReceiver') {
+													def intentFilter = applicationChildren.'intent-filter'[0]
+													def category = intentFilter.'category'[0]
+													category.attributes()[ns.name] = "${manifest.package}"
 												}
 											}
 										}
@@ -136,7 +143,7 @@
 									if(children.name() == 'string') {
 										def stringAttributes = children.attributes()
 										if (stringAttributes["name"] == 'ga_trackingId') {
-											children.value = "${analytics.trackingId}"
+											children.value = "${google.analytics.trackingId}"
 										}
 									}
 								}
