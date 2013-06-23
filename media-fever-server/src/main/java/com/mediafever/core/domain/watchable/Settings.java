@@ -12,6 +12,7 @@ import com.jdroid.javaweb.domain.Entity;
 @javax.persistence.Entity
 public class Settings extends Entity {
 	
+	@SuppressWarnings("unused")
 	@Enumerated(value = EnumType.STRING)
 	private SettingsKey settingsKey;
 	
@@ -49,7 +50,9 @@ public class Settings extends Entity {
 	 * @author Estefanía Caravatti
 	 */
 	public enum SettingsKey {
-		TV_DB_LAST_UPDATE // The last time an update was made from the TvDb.
+		TV_DB_LAST_UPDATE, // The last time an update was made from the TvDb.
+		MOVIE_DB_IMAGE_URL, // Base URL for images on the Movie DB.
+		MOVIE_DB_TRAILER_URL // Base URL for trailers on the Movie DB.
 	}
 	
 }
