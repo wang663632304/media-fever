@@ -1,15 +1,13 @@
 package com.mediafever.android.ui.session;
 
+import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +26,11 @@ import com.jdroid.android.fragment.AbstractGridFragment;
 import com.jdroid.android.images.CustomImageView;
 import com.jdroid.android.images.CustomImageView.ImageLoadingListener;
 import com.jdroid.android.utils.LocalizationUtils;
+import com.jdroid.java.collections.Lists;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
 import com.mediafever.android.gcm.GcmMessage;
+import com.mediafever.android.gcm.GcmMessageBroadcastReceiver;
 import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.MediaSessionDetailsUseCase;
@@ -42,9 +42,6 @@ import com.mediafever.usecase.mediasession.MediaSessionLeaveUseCase;
  */
 public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection> {
 	
-	private static final String SYNCHRONIZE_ACTION = MediaSelectionsFragment.class.getSimpleName()
-			+ ".SYNCHRONIZE_ACTION";
-	
 	public static final int MEDIA_SELECTION_ADDED_REQUEST_CODE = 1;
 	
 	public static final String MEDIA_SESSION_ID_EXTRA = "mediaSessionIdExtra";
@@ -55,6 +52,11 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	private AndroidUseCaseListener mediaSessionLeaveUseCaseListener;
 	
 	private BroadcastReceiver refreshBroadcastReceiver;
+	private List<GcmMessage> messagesToListen = Lists.newArrayList(GcmMessage.MEDIA_SELECTION_ADDED,
+		GcmMessage.MEDIA_SELECTION_REMOVED, GcmMessage.MEDIA_SELECTION_THUMBS_DOWN,
+		GcmMessage.MEDIA_SELECTION_THUMBS_UP, GcmMessage.MEDIA_SESSION_EXPIRED, GcmMessage.MEDIA_SESSION_LEFT,
+		GcmMessage.MEDIA_SESSION_UPDATED);
+	
 	private Long mediaSessionId;
 	private Boolean mediaSessionCreated;
 	private Boolean mediaSessionLoaded = false;
@@ -124,13 +126,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		}
 	}
 	
-	public static void synchronize(Bundle bundle) {
-		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(SYNCHRONIZE_ACTION);
-		broadcastIntent.putExtras(bundle);
-		LocalBroadcastManager.getInstance(AbstractApplication.get()).sendBroadcast(broadcastIntent);
-	}
-	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onResume()
 	 */
@@ -140,16 +135,15 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		onResumeUseCase(mediaSessionDetailsUseCase, this, UseCaseTrigger.ONCE);
 		onResumeUseCase(mediaSessionLeaveUseCase, mediaSessionLeaveUseCaseListener);
 		
-		refreshBroadcastReceiver = new BroadcastReceiver() {
+		refreshBroadcastReceiver = new GcmMessageBroadcastReceiver(messagesToListen) {
 			
 			@Override
-			public void onReceive(Context context, final Intent intent) {
+			protected void onGcmMessage(final GcmMessage gcmMessage, final Intent intent) {
 				
 				String notificationMediaSessionId = intent.getStringExtra(GcmMessage.MEDIA_SESSION_ID_KEY);
 				if (notificationMediaSessionId.equals(mediaSessionId.toString())) {
 					executeUseCase(mediaSessionDetailsUseCase);
 					
-					final GcmMessage gcmMessage = GcmMessage.find(intent);
 					if (!gcmMessage.equals(GcmMessage.MEDIA_SESSION_UPDATED)
 							&& !gcmMessage.equals(GcmMessage.MEDIA_SESSION_EXPIRED)) {
 						CustomImageView customImageView = findView(R.id.synchUserImage);
@@ -195,9 +189,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			}
 		};
 		
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction(SYNCHRONIZE_ACTION);
-		LocalBroadcastManager.getInstance(getActivity()).registerReceiver(refreshBroadcastReceiver, intentFilter);
+		GcmMessage.startListeningMediaSessionSynchBroadcasts(refreshBroadcastReceiver);
 	}
 	
 	/**
@@ -209,9 +201,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		onPauseUseCase(mediaSessionDetailsUseCase, this);
 		onPauseUseCase(mediaSessionLeaveUseCase, mediaSessionLeaveUseCaseListener);
 		
-		if (refreshBroadcastReceiver != null) {
-			LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(refreshBroadcastReceiver);
-		}
+		GcmMessage.stopListeningMediaSessionSynchBroadcasts(refreshBroadcastReceiver);
 	}
 	
 	/**

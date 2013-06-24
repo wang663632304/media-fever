@@ -1,8 +1,11 @@
 package com.mediafever.android.gcm;
 
 import org.slf4j.Logger;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
+import android.support.v4.content.LocalBroadcastManager;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.contextual.ContextualActivity;
 import com.jdroid.android.utils.AndroidUtils;
@@ -15,7 +18,6 @@ import com.mediafever.android.AndroidApplication;
 import com.mediafever.android.ui.friends.FriendsActivity;
 import com.mediafever.android.ui.friends.FriendsContextualItem;
 import com.mediafever.android.ui.friends.FriendsRequestsActivity;
-import com.mediafever.android.ui.session.MediaSelectionsFragment;
 import com.mediafever.android.ui.session.MediaSessionListActivity;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
 import com.mediafever.domain.watchable.WatchableType;
@@ -44,55 +46,57 @@ public enum GcmMessage {
 			
 			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
 			mediaSessionsRepository.resetLastUpdateTimestamp();
+			
+			synchronizeMediaSession(intent);
 		}
 	},
 	MEDIA_SESSION_LEFT("mediaSessionLeft") {
 		
 		@Override
 		public void handle(Intent intent) {
-			synchronizeMediaSelection(intent);
+			synchronizeMediaSession(intent);
 		}
 	},
 	MEDIA_SESSION_UPDATED("mediaSessionUpdated") {
 		
 		@Override
 		public void handle(Intent intent) {
-			synchronizeMediaSelection(intent);
+			synchronizeMediaSession(intent);
 		}
 	},
 	MEDIA_SESSION_EXPIRED("mediaSessionExpired") {
 		
 		@Override
 		public void handle(Intent intent) {
-			synchronizeMediaSelection(intent);
+			synchronizeMediaSession(intent);
 		}
 	},
 	MEDIA_SELECTION_THUMBS_UP("mediaSelectionThumbsUp") {
 		
 		@Override
 		public void handle(Intent intent) {
-			synchronizeMediaSelection(intent);
+			synchronizeMediaSession(intent);
 		}
 	},
 	MEDIA_SELECTION_THUMBS_DOWN("mediaSelectionThumbsDown") {
 		
 		@Override
 		public void handle(Intent intent) {
-			synchronizeMediaSelection(intent);
+			synchronizeMediaSession(intent);
 		}
 	},
 	MEDIA_SELECTION_ADDED("mediaSelectionAdded") {
 		
 		@Override
 		public void handle(Intent intent) {
-			synchronizeMediaSelection(intent);
+			synchronizeMediaSession(intent);
 		}
 	},
 	MEDIA_SELECTION_REMOVED("mediaSelectionRemoved") {
 		
 		@Override
 		public void handle(Intent intent) {
-			synchronizeMediaSelection(intent);
+			synchronizeMediaSession(intent);
 		}
 	},
 	FRIEND_REQUEST("friendRequest") {
@@ -148,6 +152,8 @@ public enum GcmMessage {
 	
 	private final static Logger LOGGER = LoggerUtils.getLogger(GcmMessage.class);
 	
+	public static final String MEDIA_SESSION_SYNCHRONIZE_ACTION = "MediaSession.SYNCHRONIZE_ACTION";
+	
 	private static final String MESSAGE_KEY_EXTRA = "messageKey";
 	public static final String FULL_NAME_KEY = "fullName";
 	public static final String IMAGE_URL_KEY = "imageUrl";
@@ -176,11 +182,27 @@ public enum GcmMessage {
 		return null;
 	}
 	
-	private static void synchronizeMediaSelection(Intent intent) {
+	private static void synchronizeMediaSession(Intent intent) {
 		MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
 		mediaSessionsRepository.resetLastUpdateTimestamp();
 		
-		MediaSelectionsFragment.synchronize(intent.getExtras());
+		// Send the Media Session synchronize broadcast
+		Intent broadcastIntent = new Intent();
+		broadcastIntent.setAction(MEDIA_SESSION_SYNCHRONIZE_ACTION);
+		broadcastIntent.putExtras(intent.getExtras());
+		LocalBroadcastManager.getInstance(AbstractApplication.get()).sendBroadcast(broadcastIntent);
+	}
+	
+	public static void startListeningMediaSessionSynchBroadcasts(BroadcastReceiver broadcastReceiver) {
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(MEDIA_SESSION_SYNCHRONIZE_ACTION);
+		LocalBroadcastManager.getInstance(AbstractApplication.get()).registerReceiver(broadcastReceiver, intentFilter);
+	}
+	
+	public static void stopListeningMediaSessionSynchBroadcasts(BroadcastReceiver broadcastReceiver) {
+		if (broadcastReceiver != null) {
+			LocalBroadcastManager.getInstance(AbstractApplication.get()).unregisterReceiver(broadcastReceiver);
+		}
 	}
 	
 	public abstract void handle(Intent intent);
