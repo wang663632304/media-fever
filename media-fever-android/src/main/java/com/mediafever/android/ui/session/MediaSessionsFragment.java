@@ -54,7 +54,11 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 		}
 	}
 	
-	public void refresh() {
+	public void onMediaSessionAccepted(MediaSession mediaSession) {
+		MediaSelectionsActivity.start(getActivity(), mediaSession.getId(), false);
+	}
+	
+	public void onMediaSessionRejected(MediaSession mediaSession) {
 		executeUseCase(mediaSessionsUseCase);
 	}
 	
