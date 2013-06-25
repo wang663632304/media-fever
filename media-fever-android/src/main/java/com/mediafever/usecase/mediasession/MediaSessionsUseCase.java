@@ -15,6 +15,10 @@ public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 	
 	private MediaSessionsRepository mediaSessionsRepository;
 	
+	private List<MediaSession> pendingMediaSessions;
+	private List<MediaSession> activeMediaSessions;
+	private List<MediaSession> expiredMediaSessions;
+	
 	@Inject
 	public MediaSessionsUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
 		super(apiService);
@@ -26,19 +30,20 @@ public class MediaSessionsUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		mediaSessionsRepository.getAll();
+		pendingMediaSessions = mediaSessionsRepository.getPendingMediaSessions();
+		activeMediaSessions = mediaSessionsRepository.getActiveMediaSessions();
+		expiredMediaSessions = mediaSessionsRepository.getExpiredMediaSessions();
 	}
 	
-	// TODO This three methods are called on the UI thread, and perform a request
 	public List<MediaSession> getPendingMediaSessions() {
-		return mediaSessionsRepository.getPendingMediaSessions();
+		return pendingMediaSessions;
 	}
 	
 	public List<MediaSession> getActiveMediaSessions() {
-		return mediaSessionsRepository.getActiveMediaSessions();
+		return activeMediaSessions;
 	}
 	
 	public List<MediaSession> getExpiredMediaSessions() {
-		return mediaSessionsRepository.getExpiredMediaSessions();
+		return expiredMediaSessions;
 	}
 }

@@ -117,7 +117,12 @@ public class AcceptRejectSessionDialogFragment extends AbstractDialogFragment {
 			
 			@Override
 			public void run() {
-				((MediaSessionsFragment)getTargetFragment()).refresh();
+				MediaSessionsFragment fragment = ((MediaSessionsFragment)getTargetFragment());
+				if (acceptMediaSessionUseCase.isAccepted()) {
+					fragment.onMediaSessionAccepted(acceptMediaSessionUseCase.getMediaSession());
+				} else {
+					fragment.onMediaSessionRejected(acceptMediaSessionUseCase.getMediaSession());
+				}
 				dismissLoading();
 				dismiss();
 			}

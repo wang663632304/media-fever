@@ -16,6 +16,8 @@ public class AcceptMediaSessionUseCase extends AbstractApiUseCase<APIService> {
 	private Long mediaSessionId;
 	private Boolean accept;
 	
+	private MediaSession mediaSession;
+	
 	@Inject
 	public AcceptMediaSessionUseCase(APIService apiService, MediaSessionsRepository mediaSessionsRepository) {
 		super(apiService);
@@ -27,7 +29,7 @@ public class AcceptMediaSessionUseCase extends AbstractApiUseCase<APIService> {
 	 */
 	@Override
 	protected void doExecute() {
-		MediaSession mediaSession = mediaSessionsRepository.get(mediaSessionId);
+		mediaSession = mediaSessionsRepository.get(mediaSessionId);
 		if (accept) {
 			getApiService().acceptMediaSession(mediaSession);
 			mediaSession.accept();
@@ -48,6 +50,14 @@ public class AcceptMediaSessionUseCase extends AbstractApiUseCase<APIService> {
 	
 	public void setMediaSessionId(Long mediaSessionId) {
 		this.mediaSessionId = mediaSessionId;
+	}
+	
+	public MediaSession getMediaSession() {
+		return mediaSession;
+	}
+	
+	public Boolean isAccepted() {
+		return accept;
 	}
 	
 }
