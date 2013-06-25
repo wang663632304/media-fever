@@ -9,7 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.contextual.ContextualActivity;
 import com.jdroid.android.utils.AndroidUtils;
-import com.jdroid.android.utils.LocalizationUtils;
+import com.jdroid.android.utils.NotificationBuilder;
 import com.jdroid.android.utils.NotificationUtils;
 import com.jdroid.java.utils.IdGenerator;
 import com.jdroid.java.utils.LoggerUtils;
@@ -36,13 +36,17 @@ public enum GcmMessage {
 		@Override
 		public void handle(Intent intent) {
 			String friendFullName = intent.getStringExtra(FULL_NAME_KEY);
-			String friendImageUrl = intent.getStringExtra(IMAGE_URL_KEY);
-			String tickerText = LocalizationUtils.getString(R.string.mediaSessionInvitationTickerText, friendFullName);
-			String contentTitle = LocalizationUtils.getString(R.string.mediaSessionInvitationContentTitle);
-			String contentText = LocalizationUtils.getString(R.string.mediaSessionInvitationContentText, friendFullName);
 			
-			NotificationUtils.sendNotification(IdGenerator.getIntId(), R.drawable.ic_launcher, friendImageUrl,
-				tickerText, contentTitle, contentText, MediaSessionListActivity.class);
+			NotificationBuilder builder = new NotificationBuilder();
+			builder.setSmallIcon(R.drawable.ic_launcher);
+			builder.setLargeIcon(intent.getStringExtra(IMAGE_URL_KEY));
+			builder.setTicker(R.string.mediaSessionInvitationTickerText, friendFullName);
+			builder.setContentTitle(R.string.mediaSessionInvitationContentTitle);
+			builder.setContentText(R.string.mediaSessionInvitationContentText, friendFullName);
+			builder.setWhen(System.currentTimeMillis());
+			builder.setContentIntent(MediaSessionListActivity.class);
+			
+			NotificationUtils.sendNotification(IdGenerator.getIntId(), builder);
 			
 			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
 			mediaSessionsRepository.resetLastUpdateTimestamp();
@@ -104,10 +108,6 @@ public enum GcmMessage {
 		@Override
 		public void handle(Intent intent) {
 			String friendFullName = intent.getStringExtra(FULL_NAME_KEY);
-			String friendImageUrl = intent.getStringExtra(IMAGE_URL_KEY);
-			String tickerText = LocalizationUtils.getString(R.string.friendRequestTickerText, friendFullName);
-			String contentTitle = LocalizationUtils.getString(R.string.friendRequestContentTitle);
-			String contentText = LocalizationUtils.getString(R.string.friendRequestContentText, friendFullName);
 			
 			Intent notificationIntent = null;
 			if (AndroidUtils.isLargeScreenOrBigger()) {
@@ -119,8 +119,16 @@ public enum GcmMessage {
 			}
 			notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 			
-			NotificationUtils.sendNotification(IdGenerator.getIntId(), R.drawable.ic_launcher, friendImageUrl,
-				tickerText, contentTitle, contentText, notificationIntent);
+			NotificationBuilder builder = new NotificationBuilder();
+			builder.setSmallIcon(R.drawable.ic_launcher);
+			builder.setLargeIcon(intent.getStringExtra(IMAGE_URL_KEY));
+			builder.setTicker(R.string.friendRequestTickerText, friendFullName);
+			builder.setContentTitle(R.string.friendRequestContentTitle);
+			builder.setContentText(R.string.friendRequestContentText, friendFullName);
+			builder.setWhen(System.currentTimeMillis());
+			builder.setContentIntent(notificationIntent);
+			
+			NotificationUtils.sendNotification(IdGenerator.getIntId(), builder);
 			
 			FriendRequestsRepository friendRequestsRepository = AbstractApplication.getInstance(FriendRequestsRepository.class);
 			friendRequestsRepository.resetLastUpdateTimestamp();
@@ -135,18 +143,20 @@ public enum GcmMessage {
 			String episodeName = intent.getStringExtra(EPISODE_NAME_KEY);
 			String episodeNumber = intent.getStringExtra(EPISODE_NUMBER_KEY);
 			
-			String tickerText = LocalizationUtils.getString(R.string.newEpisodeTickerText, seriesName);
-			String contentTitle = seriesName;
-			String contentText = LocalizationUtils.getString(R.string.newEpisodeContentText,
-				episodeName != null ? episodeName : episodeNumber);
-			String episodeImageUrl = intent.getStringExtra(EPISODE_IMAGE_URL_KEY);
-			
 			Intent notificationIntent = new Intent(AndroidApplication.get(), WatchableActivity.class);
 			notificationIntent.setData(Uri.parse(seriesId));
 			notificationIntent.putExtra(WatchableActivity.WATCHABLE_TYPE_EXTRA, WatchableType.SERIES);
 			
-			NotificationUtils.sendNotification(IdGenerator.getIntId(), R.drawable.ic_launcher, episodeImageUrl,
-				tickerText, contentTitle, contentText, notificationIntent);
+			NotificationBuilder builder = new NotificationBuilder();
+			builder.setSmallIcon(R.drawable.ic_launcher);
+			builder.setLargeIcon(intent.getStringExtra(EPISODE_IMAGE_URL_KEY));
+			builder.setTicker(R.string.newEpisodeTickerText, seriesName);
+			builder.setContentTitle(seriesName);
+			builder.setContentText(R.string.newEpisodeContentText, episodeName != null ? episodeName : episodeNumber);
+			builder.setWhen(System.currentTimeMillis());
+			builder.setContentIntent(notificationIntent);
+			
+			NotificationUtils.sendNotification(IdGenerator.getIntId(), builder);
 		}
 	};
 	
