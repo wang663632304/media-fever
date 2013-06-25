@@ -26,6 +26,7 @@ import com.mediafever.usecase.mediasession.MediaSessionsUseCase;
 public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	
 	private MediaSessionsUseCase mediaSessionsUseCase;
+	private Boolean showLoading = true;
 	
 	private BroadcastReceiver refreshBroadcastReceiver;
 	private List<GcmMessage> messagesToListen = Lists.newArrayList(GcmMessage.MEDIA_SESSION_INVITATION,
@@ -104,6 +105,16 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractListFragment#onStartUseCase()
+	 */
+	@Override
+	public void onStartUseCase() {
+		if (showLoading) {
+			super.onStartUseCase();
+		}
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishUseCase()
 	 */
 	@Override
@@ -136,6 +147,8 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 				
 				setListAdapter(mergeAdapter);
 				dismissLoading();
+				
+				showLoading = false;
 			}
 		});
 	}

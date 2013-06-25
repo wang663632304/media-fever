@@ -270,6 +270,16 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractFragment#onStartUseCase()
+	 */
+	@Override
+	public void onStartUseCase() {
+		if (!mediaSessionLoaded) {
+			super.onStartUseCase();
+		}
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onFinishFailedUseCase(java.lang.RuntimeException)
 	 */
 	@Override
