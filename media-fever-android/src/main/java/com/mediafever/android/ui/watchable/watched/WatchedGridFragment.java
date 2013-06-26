@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.fragment.AbstractGridFragment;
-import com.jdroid.android.utils.AnimationUtils;
 import com.mediafever.R;
 import com.mediafever.android.ui.watchable.WatchableAdapter;
 import com.mediafever.android.ui.watchable.details.WatchableActivity;
