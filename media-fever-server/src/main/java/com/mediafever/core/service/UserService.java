@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.domain.FileEntity;
+import com.jdroid.javaweb.push.Device;
+import com.jdroid.javaweb.push.DeviceRepository;
+import com.jdroid.javaweb.push.DeviceType;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.api.exception.ServerErrorCode;
@@ -25,6 +28,9 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private DeviceRepository deviceRepository;
+	
 	/**
 	 * Adds a user to the repository.
 	 * 
@@ -33,15 +39,26 @@ public class UserService {
 	 * @param firstName The {@link User} firstName
 	 * @param lastName The {@link User} lastName
 	 * @param publicProfile The {@link User} publicProfile flag
+	 * @param installationId
+	 * @param deviceType
 	 * 
 	 * @return The added {@link User}
 	 */
 	@Transactional
-	public User addUser(String email, String password, String firstName, String lastName, Boolean publicProfile) {
+	public User addUser(String email, String password, String firstName, String lastName, Boolean publicProfile,
+			String installationId, DeviceType deviceType) {
 		if (userRepository.existsWithEmail(email)) {
 			throw ServerErrorCode.USERNAME_DUPLICATED.newBusinessException(email);
 		}
 		User user = new User(email, password, firstName, lastName, publicProfile);
+		
+		Device device = deviceRepository.find(installationId, deviceType);
+		if (device == null) {
+			device = new Device(installationId, deviceType);
+			deviceRepository.add(device);
+		}
+		user.addDevice(device);
+		
 		userRepository.add(user);
 		return user;
 	}

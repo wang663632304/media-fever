@@ -7,14 +7,17 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import com.jdroid.android.AbstractApplication;
+import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.contextual.ContextualActivity;
 import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.NotificationBuilder;
 import com.jdroid.android.utils.NotificationUtils;
 import com.jdroid.java.utils.IdGenerator;
 import com.jdroid.java.utils.LoggerUtils;
+import com.jdroid.java.utils.NumberUtils;
 import com.mediafever.R;
 import com.mediafever.android.AndroidApplication;
+import com.mediafever.android.service.LogoutService;
 import com.mediafever.android.ui.friends.FriendsActivity;
 import com.mediafever.android.ui.friends.FriendsContextualItem;
 import com.mediafever.android.ui.friends.FriendsRequestsActivity;
@@ -164,6 +167,7 @@ public enum GcmMessage {
 	
 	public static final String MEDIA_SESSION_SYNCHRONIZE_ACTION = "MediaSession.SYNCHRONIZE_ACTION";
 	
+	private static final String REQUIRES_AUTHENTICATION_KEY_EXTRA = "requiresAuthenticationKey";
 	private static final String MESSAGE_KEY_EXTRA = "messageKey";
 	public static final String FULL_NAME_KEY = "fullName";
 	public static final String IMAGE_URL_KEY = "imageUrl";
@@ -185,10 +189,21 @@ public enum GcmMessage {
 		LOGGER.debug("GCM message received. / Message Key: " + messageKey);
 		for (GcmMessage each : values()) {
 			if (each.messageKey.equalsIgnoreCase(messageKey)) {
+				
+				Boolean requiresAuthenticationKey = NumberUtils.getBoolean(
+					intent.getStringExtra(REQUIRES_AUTHENTICATION_KEY_EXTRA), false);
+				
+				// We should ignore messages received for previously logged users
+				if (requiresAuthenticationKey && !SecurityContext.get().isAuthenticated()) {
+					LOGGER.warn("The GCM message is ignored because it requires to be authenticated");
+					// Tell the server to remove this device to that user id
+					LogoutService.runLogoutService(AndroidApplication.get());
+					return null;
+				}
 				return each;
 			}
 		}
-		LOGGER.warn("The GCM message is unknown");
+		LOGGER.warn("The GCM message key [" + messageKey + "] is unknown");
 		return null;
 	}
 	

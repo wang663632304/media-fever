@@ -28,21 +28,14 @@ public interface APIService {
 	 */
 	public UserImpl login(String email, String password);
 	
+	public void logout(Long userId);
+	
 	/**
 	 * Enable the device to start receiving GCM messages
 	 * 
-	 * @param installationId An unique device identifier
 	 * @param registrationId The registration id
 	 */
-	public void enableDevice(String installationId, String registrationId);
-	
-	/**
-	 * Disable the device to stop receiving GCM messages
-	 * 
-	 * @param installationId An unique device identifier
-	 * @param userToken The user token
-	 */
-	public void disableDevice(String installationId, String userToken);
+	public void enableDevice(String registrationId);
 	
 	public List<Watchable> searchSuggestedWatchables(String query, List<WatchableType> watchableTypes);
 	

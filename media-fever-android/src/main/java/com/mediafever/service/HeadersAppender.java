@@ -1,5 +1,6 @@
 package com.mediafever.service;
 
+import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.domain.User;
 import com.jdroid.java.http.HttpResponseWrapper;
@@ -24,6 +25,7 @@ public class HeadersAppender implements HttpWebServiceProcessor {
 	private static final String TOKEN_HEADER = "x-token";
 	private static final String HEADER_TOKEN_SEPARATOR = "--";
 	public static final String USER_TOKEN_HEADER = "x-user-token";
+	public static final String INSTALLATION_ID_HEADER = "installationId";
 	
 	private static final HeadersAppender INSTANCE = new HeadersAppender();
 	
@@ -64,6 +66,8 @@ public class HeadersAppender implements HttpWebServiceProcessor {
 		if (user != null) {
 			webService.addHeader(USER_TOKEN_HEADER, user.getUserToken());
 		}
+		
+		webService.addHeader(INSTALLATION_ID_HEADER, AbstractApplication.get().getInstallationId());
 		
 	}
 	

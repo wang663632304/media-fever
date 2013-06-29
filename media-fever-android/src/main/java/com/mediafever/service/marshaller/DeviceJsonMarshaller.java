@@ -8,16 +8,14 @@ import com.jdroid.java.json.JsonMap;
  */
 public class DeviceJsonMarshaller {
 	
-	private static final String INSTALLATION_ID = "installationId";
 	private static final String REGISTRATION_ID = "registrationId";
 	
-	public String marshall(String installationId, String registrationId) {
-		return doMarshall(installationId, registrationId).toString();
+	public String marshall(String registrationId) {
+		return doMarshall(registrationId).toString();
 	}
 	
-	protected JsonMap doMarshall(String installationId, String registrationId) {
+	protected JsonMap doMarshall(String registrationId) {
 		JsonMap map = new JsonMap();
-		map.put(INSTALLATION_ID, installationId);
 		map.put(REGISTRATION_ID, registrationId);
 		return map;
 	}

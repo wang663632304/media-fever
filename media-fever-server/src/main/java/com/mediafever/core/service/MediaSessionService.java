@@ -2,12 +2,12 @@ package com.mediafever.core.service;
 
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.jdroid.java.utils.IdGenerator;
+import com.jdroid.javaweb.push.Device;
 import com.jdroid.javaweb.push.PushMessage;
 import com.jdroid.javaweb.push.PushService;
 import com.jdroid.javaweb.search.Filter;
@@ -56,12 +56,16 @@ public class MediaSessionService {
 		
 		User creator = ApplicationContext.get().getSecurityContext().getUser();
 		List<MediaSessionUser> users = Lists.newArrayList();
+		List<Device> recipientsDevices = Lists.newArrayList();
 		for (Long id : usersIds) {
+			MediaSessionUser mediaSessionUser = null;
 			if (id.equals(creator.getId())) {
-				users.add(new MediaSessionUser(creator, true));
+				mediaSessionUser = new MediaSessionUser(creator, true);
 			} else {
-				users.add(new MediaSessionUser(userRepository.get(id)));
+				mediaSessionUser = new MediaSessionUser(userRepository.get(id));
+				recipientsDevices.addAll(mediaSessionUser.getUser().getDevices());
 			}
+			users.add(mediaSessionUser);
 		}
 		
 		MediaSession mediaSession = new MediaSession(watchableTypes, date, time, users);
@@ -72,12 +76,8 @@ public class MediaSessionService {
 			mediaSession.addSelection(creator, watchable);
 		}
 		
-		List<Long> recipientsIds = Lists.newArrayList(usersIds);
-		recipientsIds.remove(creator.getId());
-		if (CollectionUtils.isNotEmpty(recipientsIds)) {
-			pushService.send(new MediaSessionInvitationGcmMessage(creator.getFullName(), creator.getImageUrl()),
-				recipientsIds);
-		}
+		pushService.send(new MediaSessionInvitationGcmMessage(creator.getFullName(), creator.getImageUrl()),
+			recipientsDevices);
 		return mediaSession;
 	}
 	
@@ -137,16 +137,14 @@ public class MediaSessionService {
 	}
 	
 	private void sendPushToMediaSessionUsers(MediaSession mediaSession, Long excludedUserId, PushMessage pushMessage) {
-		List<Long> recipientsIds = Lists.newArrayList();
+		List<Device> recipientsDevices = Lists.newArrayList();
 		for (MediaSessionUser each : mediaSession.getUsers()) {
 			Long userId = each.getUser().getId();
 			if (!userId.equals(excludedUserId)) {
-				recipientsIds.add(userId);
+				recipientsDevices.addAll(each.getUser().getDevices());
 			}
 		}
-		if (CollectionUtils.isNotEmpty(recipientsIds)) {
-			pushService.send(pushMessage, recipientsIds);
-		}
+		pushService.send(pushMessage, recipientsDevices);
 	}
 	
 	@Transactional

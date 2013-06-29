@@ -1,10 +1,12 @@
 package com.mediafever.core.repository;
 
+import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import com.jdroid.java.repository.ObjectNotFoundException;
 import com.jdroid.java.utils.StringUtils;
+import com.jdroid.javaweb.push.Device;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.User;
@@ -29,6 +31,17 @@ public class UserHibernateRepository extends HibernateRepository<User> implement
 	@Override
 	public User getByUserToken(String userToken) throws ObjectNotFoundException {
 		return findUnique("userToken", userToken);
+	}
+	
+	/**
+	 * @see com.mediafever.core.repository.UserRepository#getByDevice(com.jdroid.javaweb.push.Device)
+	 */
+	@Override
+	public List<User> getByDevice(Device device) {
+		DetachedCriteria usersCriteria = createDetachedCriteria();
+		usersCriteria.createAlias("devices", "device");
+		usersCriteria.add(Restrictions.eq("device.id", device.getId()));
+		return find(usersCriteria);
 	}
 	
 	/**

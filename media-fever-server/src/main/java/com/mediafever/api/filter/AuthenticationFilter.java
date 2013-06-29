@@ -1,6 +1,7 @@
 package com.mediafever.api.filter;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -8,10 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
+import com.jdroid.java.collections.Lists;
 import com.jdroid.javaweb.context.AbstractApplicationContext;
 import com.jdroid.javaweb.exception.CommonErrorCode;
 import com.jdroid.javaweb.exception.InvalidAuthenticationException;
 import com.mediafever.api.controller.AuthenticationController;
+import com.mediafever.api.controller.DeviceController;
 import com.mediafever.api.controller.UserController;
 import com.mediafever.api.exception.ExceptionHandler;
 
@@ -26,6 +29,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	private static final Log LOG = LogFactory.getLog(AuthenticationFilter.class);
 	
 	private static final String USER_TOKEN_HEADER = "x-user-token";
+	
+	private List<String> allowedPaths = Lists.newArrayList(AuthenticationController.API_AUTH_PATH,
+		UserController.API_USERS_PATH, DeviceController.API_DEVICES_PATH);
 	
 	/**
 	 * @see org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(javax.servlet.http.HttpServletRequest,
@@ -56,7 +62,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	 * @return If authentication is needed.
 	 */
 	private Boolean requiresAuthentication(HttpServletRequest request) {
-		return !(request.getPathInfo().startsWith(AuthenticationController.API_AUTH_PATH) || UserController.API_USERS_PATH.equals(request.getPathInfo()));
+		for (String each : allowedPaths) {
+			if (request.getPathInfo().startsWith(each)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	private Boolean isAuthenticated(HttpServletRequest request) {

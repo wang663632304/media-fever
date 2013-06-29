@@ -121,6 +121,29 @@ CREATE TABLE User (
 );
 
 -- --------------------
+-- DEVICE
+-- --------------------
+CREATE TABLE Device (
+	id		 		bigint(20) 		NOT NULL auto_increment,
+	installationId	VARCHAR(255) 	NOT NULL,
+	registrationId	VARCHAR(255)	NOT NULL,
+	deviceType		VARCHAR(255) 	NOT NULL,
+	disabled		BOOLEAN			NOT NULL,
+	PRIMARY KEY  	(id)
+);
+
+-- --------------------
+-- USER_DEVICE
+-- --------------------
+CREATE TABLE User_Device (
+	userId					bigint(20)				NOT NULL,
+	deviceId				bigint(20)				NOT NULL,
+	PRIMARY KEY  			(userId, deviceId),
+	FOREIGN KEY 			(userId) 				REFERENCES User (id),
+	FOREIGN KEY 			(deviceId)				REFERENCES Device (id)
+);
+
+-- --------------------
 -- FRIENDSHIP
 -- --------------------
 CREATE TABLE Friendship (
@@ -223,19 +246,6 @@ CREATE TABLE MediaSelection_ThumbsDownUsers (
 	PRIMARY KEY  			(mediaSelectionId, userId),
 	FOREIGN KEY 			(mediaSelectionId) 		REFERENCES MediaSelection (id),
 	FOREIGN KEY 			(userId)				REFERENCES User (id)
-);
-
--- --------------------
--- DEVICE
--- --------------------
-CREATE TABLE Device (
-	id		 		bigint(20) 		NOT NULL auto_increment,
-	userId			bigint(20)		NOT NULL,
-	installationId	VARCHAR(255) 	NOT NULL,
-	registrationId	VARCHAR(255)	NOT NULL,
-	deviceType		VARCHAR(255) 	NOT NULL,
-	PRIMARY KEY  	(id),
-	FOREIGN KEY 	(userId) 		REFERENCES User (id)
 );
 
 -- --------------------

@@ -13,7 +13,7 @@ import com.jdroid.android.fragment.BaseFragment;
 import com.jdroid.android.utils.NotificationUtils;
 import com.mediafever.R;
 import com.mediafever.android.exception.AndroidExceptionHandler;
-import com.mediafever.android.service.DisableDeviceService;
+import com.mediafever.android.service.LogoutService;
 import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.android.ui.login.LoginActivity;
 import com.mediafever.context.ApplicationContext;
@@ -57,7 +57,7 @@ public class AndroidApplication extends AbstractApplication {
 	
 	public void logout() {
 		
-		DisableDeviceService.runIntentInService(this, SecurityContext.get().getUser().getUserToken());
+		LogoutService.runLogoutService(this, SecurityContext.get().getUser().getId());
 		
 		SecurityContext.get().detachUser();
 		NotificationUtils.cancelAllNotifications();

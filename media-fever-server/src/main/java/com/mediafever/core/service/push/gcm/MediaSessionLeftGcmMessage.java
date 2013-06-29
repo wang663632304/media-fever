@@ -1,12 +1,11 @@
 package com.mediafever.core.service.push.gcm;
 
-import com.jdroid.javaweb.push.gcm.DefaultGcmMessage;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class MediaSessionLeftGcmMessage extends DefaultGcmMessage {
+public class MediaSessionLeftGcmMessage extends AuthenticatedGcmMessage {
 	
 	private static final String MESSAGE_KEY = "mediaSessionLeft";
 	

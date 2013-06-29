@@ -1,12 +1,11 @@
 package com.mediafever.core.service.push.gcm;
 
-import com.jdroid.javaweb.push.gcm.DefaultGcmMessage;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class MediaSelectionAddedGcmMessage extends DefaultGcmMessage {
+public class MediaSelectionAddedGcmMessage extends AuthenticatedGcmMessage {
 	
 	private static final String MESSAGE_KEY = "mediaSelectionAdded";
 	

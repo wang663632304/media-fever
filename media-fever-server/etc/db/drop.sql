@@ -2,7 +2,6 @@
 -- Drop tables in reverse order
 --
 DROP TABLE IF EXISTS Settings;
-DROP TABLE IF EXISTS Device;
 DROP TABLE IF EXISTS MediaSessionInvitation;
 DROP TABLE IF EXISTS MediaSelection_ThumbsDownUsers;
 DROP TABLE IF EXISTS MediaSelection_ThumbsUpUsers;
@@ -13,6 +12,8 @@ DROP TABLE IF EXISTS MediaSession;
 DROP TABLE IF EXISTS UserWatchable;
 DROP TABLE IF EXISTS FriendRequest;
 DROP TABLE IF EXISTS Friendship;
+DROP TABLE IF EXISTS User_Device;
+DROP TABLE IF EXISTS Device;
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS FacebookAccount;
 DROP TABLE IF EXISTS FileEntity;

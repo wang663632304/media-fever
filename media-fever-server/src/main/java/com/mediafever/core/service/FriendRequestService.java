@@ -34,7 +34,7 @@ public class FriendRequestService {
 		FriendRequest friendRequest = sender.inviteFriend(friend);
 		if (friendRequest != null) {
 			pushService.send(new FriendRequestGcmMessage(friendRequest.getSender().getFullName(),
-					friendRequest.getSender().getImageUrl()), friendRequest.getUser().getId());
+					friendRequest.getSender().getImageUrl()), friendRequest.getUser().getDevices());
 		}
 		return friendRequest;
 	}

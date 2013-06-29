@@ -61,6 +61,7 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 	// Auth Module
 	private static final String AUTH_MODULE = "auth";
 	private static final String LOGIN_ACTION = "login";
+	private static final String LOGOUT_ACTION = "logout";
 	
 	// User module
 	private static final String USERS_MODULE = "users";
@@ -104,6 +105,16 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 		EntityEnclosingWebService webservice = newPostService(AUTH_MODULE, LOGIN_ACTION);
 		webservice.setEntity(new LoginJsonMarshaller().marshall(email, password));
 		return webservice.execute(new UserParser());
+	}
+	
+	/**
+	 * @see com.mediafever.service.APIService#logout(java.lang.Long)
+	 */
+	@Override
+	public void logout(Long userId) {
+		WebService webservice = newDeleteService(AUTH_MODULE, LOGOUT_ACTION);
+		webservice.addQueryParameter(USER_ID, userId);
+		webservice.execute();
 	}
 	
 	/**
@@ -191,24 +202,12 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#enableDevice(java.lang.String, java.lang.String)
+	 * @see com.mediafever.service.APIService#enableDevice(java.lang.String)
 	 */
 	@Override
-	public void enableDevice(String installationId, String registrationId) {
+	public void enableDevice(String registrationId) {
 		EntityEnclosingWebService webservice = newPostService(DEVICES);
-		webservice.setEntity(new DeviceJsonMarshaller().marshall(installationId, registrationId));
-		webservice.execute();
-	}
-	
-	/**
-	 * @see com.mediafever.service.APIService#disableDevice(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void disableDevice(String installationId, String userToken) {
-		WebService webservice = newDeleteService(DEVICES, installationId);
-		if (userToken != null) {
-			webservice.addHeader(HeadersAppender.USER_TOKEN_HEADER, userToken);
-		}
+		webservice.setEntity(new DeviceJsonMarshaller().marshall(registrationId));
 		webservice.execute();
 	}
 	

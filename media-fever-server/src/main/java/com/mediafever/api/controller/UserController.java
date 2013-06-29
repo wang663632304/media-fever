@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -22,6 +23,7 @@ import com.jdroid.java.utils.CollectionUtils;
 import com.jdroid.java.utils.FileUtils;
 import com.jdroid.javaweb.controller.AbstractController;
 import com.jdroid.javaweb.domain.FileEntity;
+import com.jdroid.javaweb.push.DeviceType;
 import com.jdroid.javaweb.search.Filter;
 import com.mediafever.api.controller.parser.FacebookAccountParser;
 import com.mediafever.api.controller.parser.FacebookAccountParser.FacebookAccountJson;
@@ -55,10 +57,11 @@ public class UserController extends AbstractController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@GZIP
-	public String signup(String userJSON) {
+	public String signup(@HeaderParam("User-Agent") String userAgent,
+			@HeaderParam("installationId") String installationId, String userJSON) {
 		UserJson userJson = (UserJson)(new UserParser().parse(userJSON));
 		User user = userService.addUser(userJson.getEmail(), userJson.getPassword(), userJson.getFirstName(),
-			userJson.getLastName(), userJson.getPublicProfile());
+			userJson.getLastName(), userJson.getPublicProfile(), installationId, DeviceType.find(userAgent));
 		return marshall(user);
 	}
 	

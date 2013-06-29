@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -21,6 +22,7 @@ import com.jdroid.javaweb.domain.FileEntity;
 import com.jdroid.javaweb.domain.Password;
 import com.jdroid.javaweb.exception.InvalidAuthenticationException;
 import com.jdroid.javaweb.guava.predicate.EqualsPropertyPredicate;
+import com.jdroid.javaweb.push.Device;
 import com.jdroid.javaweb.utils.CollectionUtils;
 import com.mediafever.api.exception.ServerErrorCode;
 import com.mediafever.context.ApplicationContext;
@@ -60,6 +62,11 @@ public class User extends Entity {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "facebookAccountId", nullable = true)
 	private FacebookAccount facebookAccount;
+	
+	@OneToMany(targetEntity = Device.class, fetch = FetchType.LAZY)
+	@JoinTable(name = "User_Device", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(
+			name = "deviceId"))
+	private List<Device> devices;
 	
 	/**
 	 * Default constructor.
@@ -244,5 +251,22 @@ public class User extends Entity {
 	 */
 	public FacebookAccount getFacebookAccount() {
 		return facebookAccount;
+	}
+	
+	public void addDevice(Device device) {
+		if (!devices.contains(device)) {
+			devices.add(device);
+		}
+	}
+	
+	public void removeDevice(Device device) {
+		devices.remove(device);
+	}
+	
+	/**
+	 * @return the devices
+	 */
+	public List<Device> getDevices() {
+		return devices;
 	}
 }

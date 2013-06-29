@@ -4,7 +4,6 @@ import android.os.Bundle;
 import com.google.ads.AdSize;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.AbstractFragmentActivity;
-import com.jdroid.android.gcm.GcmPreferences;
 import com.mediafever.R;
 import com.mediafever.android.service.EnableDeviceService;
 import com.mediafever.android.ui.login.LoginActivity;
@@ -28,12 +27,10 @@ public class HomeActivity extends AbstractFragmentActivity {
 	 */
 	@Override
 	public Boolean onBeforeSetContentView() {
+		
+		EnableDeviceService.runIntentInService(this);
+		
 		if (isAuthenticated()) {
-			
-			if (!GcmPreferences.isRegistered(this) || !GcmPreferences.isRegisteredOnServer(this)) {
-				EnableDeviceService.runIntentInService(this);
-			}
-			
 			return true;
 		} else {
 			ActivityLauncher.launchActivity(LoginActivity.class);

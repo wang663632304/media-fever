@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 import com.jdroid.java.utils.DateUtils;
-import com.jdroid.javaweb.guava.function.NestedPropertyFunction;
+import com.jdroid.javaweb.push.Device;
 import com.jdroid.javaweb.push.PushService;
 import com.mediafever.core.domain.UserWatchable;
 import com.mediafever.core.domain.watchable.Episode;
@@ -45,16 +45,18 @@ public class NewEpisodeScheduler {
 			List<UserWatchable> userWatchables = userWatchableRepository.getWatchedBy(series);
 			
 			if (!userWatchables.isEmpty()) {
-				// Get all the users that watch the series
-				List<Long> userIds = Lists.transform(userWatchables, new NestedPropertyFunction<UserWatchable, Long>(
-						"user.id"));
+				// Get the devices of all the users that watch the series
+				List<Device> devices = Lists.newArrayList();
+				for (UserWatchable each : userWatchables) {
+					devices.addAll(each.getUser().getDevices());
+				}
 				
 				for (Episode episode : series.getReleasedEpisodes(date)) {
 					
 					pushService.send(
 						new NewEpisodeGcmMessage(series.getId(), series.getName(), episode.getName(),
 								episode.getEpisodeNumber(), episode.getImageURL() != null ? episode.getImageURL()
-										: series.getImageURL()), userIds);
+										: series.getImageURL()), devices);
 				}
 			}
 		}

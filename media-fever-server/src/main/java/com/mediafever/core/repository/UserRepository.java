@@ -1,7 +1,9 @@
 package com.mediafever.core.repository;
 
+import java.util.List;
 import com.jdroid.java.repository.ObjectNotFoundException;
 import com.jdroid.java.repository.Repository;
+import com.jdroid.javaweb.push.Device;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.core.domain.User;
@@ -25,6 +27,12 @@ public interface UserRepository extends Repository<User> {
 	 * @throws ObjectNotFoundException If doesn't exist an {@link User} with the received userToken
 	 */
 	public User getByUserToken(String userToken) throws ObjectNotFoundException;
+	
+	/**
+	 * @param device The device of the searched {@link User}s
+	 * @return the {@link User}s
+	 */
+	public List<User> getByDevice(Device device);
 	
 	/**
 	 * @param email The email to search for
