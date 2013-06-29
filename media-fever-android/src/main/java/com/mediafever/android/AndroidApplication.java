@@ -102,14 +102,6 @@ public class AndroidApplication extends AbstractApplication {
 	}
 	
 	/**
-	 * @see com.jdroid.android.AbstractApplication#isGcmEnabled()
-	 */
-	@Override
-	public Boolean isGcmEnabled() {
-		return true;
-	}
-	
-	/**
 	 * @see com.jdroid.android.AbstractApplication#getAppName()
 	 */
 	@Override

@@ -1,13 +1,13 @@
 package com.mediafever.android.gcm;
 
 import android.content.Context;
-import com.google.android.gcm.GCMBroadcastReceiver;
+import com.jdroid.android.gcm.AbstractGcmBroadcastReceiver;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class GcmBroadcastReceiver extends GCMBroadcastReceiver {
+public class GcmBroadcastReceiver extends AbstractGcmBroadcastReceiver {
 	
 	/**
 	 * @see com.google.android.gcm.GCMBroadcastReceiver#getGCMIntentServiceClassName(android.content.Context)

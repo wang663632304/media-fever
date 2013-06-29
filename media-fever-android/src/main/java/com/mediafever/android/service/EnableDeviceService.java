@@ -4,10 +4,10 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import android.content.Context;
 import android.content.Intent;
-import com.google.android.gcm.GCMRegistrar;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.inject.Inject;
 import com.jdroid.android.AbstractApplication;
+import com.jdroid.android.gcm.GcmPreferences;
 import com.jdroid.android.service.WorkerService;
 import com.jdroid.android.utils.IntentRetryUtils;
 import com.jdroid.java.exception.ApplicationException;
@@ -34,8 +34,10 @@ public class EnableDeviceService extends WorkerService {
 		try {
 			GoogleCloudMessaging googleCloudMessaging = GoogleCloudMessaging.getInstance(this);
 			String registrationId = googleCloudMessaging.register(ApplicationContext.get().getGoogleProjectId());
+			GcmPreferences.setRegistrationId(getApplicationContext(), registrationId);
+			
 			apiService.enableDevice(AbstractApplication.get().getInstallationId(), registrationId);
-			GCMRegistrar.setRegisteredOnServer(getApplicationContext(), true);
+			GcmPreferences.setRegisteredOnServer(getApplicationContext(), true);
 		} catch (ApplicationException e) {
 			LOGGER.warn("Failed to register the device on server. Will retry later.");
 			IntentRetryUtils.retry(intent);
