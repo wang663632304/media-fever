@@ -19,20 +19,11 @@ public class ApplicationContext extends DefaultApplicationContext {
 	}
 	
 	private String contactUsEmail;
-	private String serverApiURL;
 	private String serverTokenSecret;
 	
 	public ApplicationContext() {
 		contactUsEmail = PropertiesUtils.getStringProperty("mail.contact");
-		serverApiURL = PropertiesUtils.getStringProperty("server.url");
 		serverTokenSecret = PropertiesUtils.getStringProperty("server.token.secret");
-	}
-	
-	/**
-	 * @return The base URL of the API server
-	 */
-	public String getServerApiUrl() {
-		return serverApiURL;
 	}
 	
 	/**
