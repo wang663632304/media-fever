@@ -126,7 +126,7 @@ CREATE TABLE User (
 CREATE TABLE Device (
 	id		 		bigint(20) 		NOT NULL auto_increment,
 	installationId	VARCHAR(255) 	NOT NULL,
-	registrationId	VARCHAR(255)	NOT NULL,
+	registrationId	VARCHAR(255)	NULL,
 	deviceType		VARCHAR(255) 	NOT NULL,
 	disabled		BOOLEAN			NOT NULL,
 	PRIMARY KEY  	(id)

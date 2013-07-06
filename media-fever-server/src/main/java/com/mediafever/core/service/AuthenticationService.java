@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.jdroid.java.repository.ObjectNotFoundException;
 import com.jdroid.javaweb.exception.InvalidAuthenticationException;
 import com.jdroid.javaweb.push.Device;
 import com.jdroid.javaweb.push.DeviceRepository;
@@ -38,12 +39,13 @@ public class AuthenticationService {
 			throws InvalidAuthenticationException {
 		User user = ApplicationContext.get().getSecurityContext().authenticateUser(email, password);
 		
-		Device device = deviceRepository.find(installationId, deviceType);
-		if (device == null) {
+		Device device = null;
+		try {
+			device = deviceRepository.find(installationId, deviceType);
+			detachDeviceFromUsers(device);
+		} catch (ObjectNotFoundException e) {
 			device = new Device(installationId, deviceType);
 			deviceRepository.add(device);
-		} else {
-			detachDeviceFromUsers(device);
 		}
 		user.addDevice(device);
 		return user;
