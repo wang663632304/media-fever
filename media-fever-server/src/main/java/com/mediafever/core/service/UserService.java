@@ -149,6 +149,6 @@ public class UserService {
 		User friend = userRepository.get(friendId);
 		user.removeFriend(friend);
 		
-		pushService.send(new FriendRemovedGcmMessage(), friend.getDevices());
+		pushService.send(new FriendRemovedGcmMessage(userId), friend.getDevices());
 	}
 }

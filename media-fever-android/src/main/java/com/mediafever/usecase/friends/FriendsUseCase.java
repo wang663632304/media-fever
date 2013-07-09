@@ -32,7 +32,7 @@ public class FriendsUseCase extends AbstractApiUseCase<APIService> {
 		if (friendsRepository.isOutdated()) {
 			List<UserImpl> friends = getApiService().getFriends(userId);
 			friendsRepository.replaceAll(friends);
-			friendsRepository.resetLastUpdateTimestamp();
+			friendsRepository.refreshUpdateTimestamp();
 		}
 		friends = friendsRepository.getAll();
 	}

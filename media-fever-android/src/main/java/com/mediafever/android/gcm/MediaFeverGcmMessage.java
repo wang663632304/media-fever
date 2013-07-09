@@ -10,6 +10,7 @@ import com.jdroid.android.utils.AndroidUtils;
 import com.jdroid.android.utils.NotificationBuilder;
 import com.jdroid.android.utils.NotificationUtils;
 import com.jdroid.java.utils.IdGenerator;
+import com.jdroid.java.utils.NumberUtils;
 import com.mediafever.R;
 import com.mediafever.android.AndroidApplication;
 import com.mediafever.android.ui.friends.FriendsActivity;
@@ -45,9 +46,6 @@ public enum MediaFeverGcmMessage implements GcmMessage {
 			builder.setContentIntent(MediaSessionListActivity.class);
 			
 			NotificationUtils.sendNotification(IdGenerator.getIntId(), builder);
-			
-			MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
-			mediaSessionsRepository.resetLastUpdateTimestamp();
 			
 			synchronizeMediaSession(intent);
 		}
@@ -128,21 +126,35 @@ public enum MediaFeverGcmMessage implements GcmMessage {
 			
 			NotificationUtils.sendNotification(IdGenerator.getIntId(), builder);
 			
-			synchronizeFriendRequests(intent);
+			// Someone sent me a friend request, so I need to synch my friends requests
+			FriendRequestsRepository friendRequestsRepository = AbstractApplication.getInstance(FriendRequestsRepository.class);
+			friendRequestsRepository.resetLastUpdateTimestamp();
+			
+			GcmMessageBroadcastReceiver.sendBroadcast(this, intent);
 		}
 	},
 	FRIEND_REQUEST_ACCEPTED("friendRequestAccepted") {
 		
 		@Override
 		public void handle(Intent intent) {
-			synchronizeFriendRequests(intent);
+			
+			// An user accepted my friend request, so I need to synch my friends
+			FriendsRepository friendsRepository = AbstractApplication.getInstance(FriendsRepository.class);
+			friendsRepository.resetLastUpdateTimestamp();
+			
+			GcmMessageBroadcastReceiver.sendBroadcast(this, intent);
 		}
 	},
 	FRIEND_REMOVED("friendRemoved") {
 		
 		@Override
 		public void handle(Intent intent) {
-			synchronizeFriends(intent);
+			Long removedFriendId = NumberUtils.getLong(intent.getStringExtra(REMOVED_FRIEND_ID_KEY));
+			
+			FriendsRepository friendsRepository = AbstractApplication.getInstance(FriendsRepository.class);
+			friendsRepository.remove(removedFriendId);
+			
+			GcmMessageBroadcastReceiver.sendBroadcast(this, intent);
 		}
 	},
 	NEW_EPISODE("newEpisode") {
@@ -180,6 +192,7 @@ public enum MediaFeverGcmMessage implements GcmMessage {
 	private static final String EPISODE_IMAGE_URL_KEY = "episodeImageUrl";
 	public static final String MEDIA_SESSION_ID_KEY = "mediaSessionId";
 	public static final String WATCHABLE_NAME_KEY = "watchableName";
+	private static final String REMOVED_FRIEND_ID_KEY = "removedFriendId";
 	
 	private String messageKey;
 	
@@ -190,20 +203,6 @@ public enum MediaFeverGcmMessage implements GcmMessage {
 	public void synchronizeMediaSession(Intent intent) {
 		MediaSessionsRepository mediaSessionsRepository = AbstractApplication.getInstance(MediaSessionsRepository.class);
 		mediaSessionsRepository.resetLastUpdateTimestamp();
-		
-		GcmMessageBroadcastReceiver.sendBroadcast(this, intent);
-	}
-	
-	public void synchronizeFriendRequests(Intent intent) {
-		FriendRequestsRepository friendRequestsRepository = AbstractApplication.getInstance(FriendRequestsRepository.class);
-		friendRequestsRepository.resetLastUpdateTimestamp();
-		
-		GcmMessageBroadcastReceiver.sendBroadcast(this, intent);
-	}
-	
-	public void synchronizeFriends(Intent intent) {
-		FriendsRepository friendsRepository = AbstractApplication.getInstance(FriendsRepository.class);
-		friendsRepository.resetLastUpdateTimestamp();
 		
 		GcmMessageBroadcastReceiver.sendBroadcast(this, intent);
 	}

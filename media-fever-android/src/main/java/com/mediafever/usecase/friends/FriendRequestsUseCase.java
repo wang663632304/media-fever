@@ -31,7 +31,7 @@ public class FriendRequestsUseCase extends AbstractApiUseCase<APIService> {
 		if (friendRequestsRepository.isOutdated()) {
 			List<FriendRequest> friendRequests = getApiService().getFriendRequests(userId);
 			friendRequestsRepository.replaceAll(friendRequests);
-			friendRequestsRepository.resetLastUpdateTimestamp();
+			friendRequestsRepository.refreshUpdateTimestamp();
 		}
 		friendRequests = friendRequestsRepository.getAll();
 	}
