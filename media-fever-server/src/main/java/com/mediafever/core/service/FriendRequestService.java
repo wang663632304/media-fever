@@ -9,6 +9,7 @@ import com.mediafever.core.domain.FriendRequest;
 import com.mediafever.core.domain.User;
 import com.mediafever.core.repository.FriendRequestRepository;
 import com.mediafever.core.repository.UserRepository;
+import com.mediafever.core.service.push.gcm.FriendRequestAcceptedGcmMessage;
 import com.mediafever.core.service.push.gcm.FriendRequestGcmMessage;
 
 /**
@@ -47,6 +48,9 @@ public class FriendRequestService {
 	public void acceptFriendRequest(Long friendRequestId) {
 		FriendRequest friendRequest = friendRequestRepository.get(friendRequestId);
 		friendRequest.accept();
+		
+		pushService.send(new FriendRequestAcceptedGcmMessage(), friendRequest.getSender().getDevices());
+		
 	}
 	
 	@Transactional

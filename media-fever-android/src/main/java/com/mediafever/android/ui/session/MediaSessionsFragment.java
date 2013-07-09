@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import com.commonsware.cwac.merge.MergeAdapter;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.fragment.AbstractListFragment;
+import com.jdroid.android.gcm.GcmMessage;
+import com.jdroid.android.gcm.GcmMessageBroadcastReceiver;
 import com.jdroid.android.view.ViewBuilder;
-import com.jdroid.java.collections.Lists;
 import com.mediafever.R;
-import com.mediafever.android.gcm.GcmMessage;
-import com.mediafever.android.gcm.GcmMessageBroadcastReceiver;
+import com.mediafever.android.gcm.MediaFeverGcmMessage;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.MediaSessionsUseCase;
 
@@ -29,10 +29,6 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 	private Boolean showLoading = true;
 	
 	private BroadcastReceiver refreshBroadcastReceiver;
-	private List<GcmMessage> messagesToListen = Lists.newArrayList(GcmMessage.MEDIA_SESSION_INVITATION,
-		GcmMessage.MEDIA_SELECTION_ADDED, GcmMessage.MEDIA_SELECTION_REMOVED, GcmMessage.MEDIA_SELECTION_THUMBS_DOWN,
-		GcmMessage.MEDIA_SELECTION_THUMBS_UP, GcmMessage.MEDIA_SESSION_EXPIRED, GcmMessage.MEDIA_SESSION_LEFT,
-		GcmMessage.MEDIA_SESSION_UPDATED);
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -82,7 +78,7 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 		super.onResume();
 		onResumeUseCase(mediaSessionsUseCase, this, UseCaseTrigger.ALWAYS);
 		
-		refreshBroadcastReceiver = new GcmMessageBroadcastReceiver(messagesToListen) {
+		refreshBroadcastReceiver = new GcmMessageBroadcastReceiver() {
 			
 			@Override
 			protected void onGcmMessage(GcmMessage gcmMessage, Intent intent) {
@@ -90,7 +86,11 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 			}
 		};
 		
-		GcmMessage.startListeningMediaSessionSynchBroadcasts(refreshBroadcastReceiver);
+		GcmMessageBroadcastReceiver.startListeningGcmBroadcasts(refreshBroadcastReceiver,
+			MediaFeverGcmMessage.MEDIA_SESSION_INVITATION, MediaFeverGcmMessage.MEDIA_SELECTION_ADDED,
+			MediaFeverGcmMessage.MEDIA_SELECTION_REMOVED, MediaFeverGcmMessage.MEDIA_SELECTION_THUMBS_DOWN,
+			MediaFeverGcmMessage.MEDIA_SELECTION_THUMBS_UP, MediaFeverGcmMessage.MEDIA_SESSION_EXPIRED,
+			MediaFeverGcmMessage.MEDIA_SESSION_LEFT, MediaFeverGcmMessage.MEDIA_SESSION_UPDATED);
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class MediaSessionsFragment extends AbstractListFragment<MediaSession> {
 		super.onPause();
 		onPauseUseCase(mediaSessionsUseCase, this);
 		
-		GcmMessage.stopListeningMediaSessionSynchBroadcasts(refreshBroadcastReceiver);
+		GcmMessageBroadcastReceiver.stopListeningGcmBroadcasts(refreshBroadcastReceiver);
 	}
 	
 	/**

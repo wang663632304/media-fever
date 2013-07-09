@@ -1,5 +1,7 @@
 package com.mediafever.android.ui.friends;
 
+import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,11 @@ import com.jdroid.android.AndroidUseCaseListener;
 import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.fragment.AbstractListFragment;
+import com.jdroid.android.gcm.GcmMessage;
+import com.jdroid.android.gcm.GcmMessageBroadcastReceiver;
 import com.jdroid.android.utils.AndroidUtils;
 import com.mediafever.R;
+import com.mediafever.android.gcm.MediaFeverGcmMessage;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.usecase.friends.AcceptFriendRequestUseCase;
 import com.mediafever.usecase.friends.FriendRequestsUseCase;
@@ -24,6 +29,8 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 	private FriendRequestsUseCase friendRequestsUseCase;
 	private AcceptFriendRequestUseCase acceptFriendRequestUseCase;
 	private AndroidUseCaseListener acceptFriendRequestUseCaseListener;
+	
+	private BroadcastReceiver refreshBroadcastReceiver;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -85,6 +92,17 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 		super.onResume();
 		onResumeUseCase(friendRequestsUseCase, this, UseCaseTrigger.ONCE);
 		onResumeUseCase(acceptFriendRequestUseCase, acceptFriendRequestUseCaseListener);
+		
+		refreshBroadcastReceiver = new GcmMessageBroadcastReceiver() {
+			
+			@Override
+			protected void onGcmMessage(GcmMessage gcmMessage, Intent intent) {
+				executeUseCase(friendRequestsUseCase);
+			}
+		};
+		
+		GcmMessageBroadcastReceiver.startListeningGcmBroadcasts(refreshBroadcastReceiver,
+			MediaFeverGcmMessage.FRIEND_REQUEST);
 	}
 	
 	/**
@@ -95,6 +113,8 @@ public class FriendsRequestsFragment extends AbstractListFragment<FriendRequest>
 		super.onPause();
 		onPauseUseCase(friendRequestsUseCase, this);
 		onPauseUseCase(acceptFriendRequestUseCase, acceptFriendRequestUseCaseListener);
+		
+		GcmMessageBroadcastReceiver.stopListeningGcmBroadcasts(refreshBroadcastReceiver);
 	}
 	
 	/**

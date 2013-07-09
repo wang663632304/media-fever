@@ -1,5 +1,7 @@
 package com.mediafever.android.ui.friends;
 
+import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -13,8 +15,11 @@ import com.jdroid.android.AndroidUseCaseListener;
 import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.fragment.AbstractGridFragment;
+import com.jdroid.android.gcm.GcmMessage;
+import com.jdroid.android.gcm.GcmMessageBroadcastReceiver;
 import com.jdroid.android.utils.ToastUtils;
 import com.mediafever.R;
+import com.mediafever.android.gcm.MediaFeverGcmMessage;
 import com.mediafever.android.ui.UserAdapter;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.usecase.friends.FriendsUseCase;
@@ -29,6 +34,8 @@ public class FriendsGridFragment extends AbstractGridFragment<UserImpl> {
 	private RemoveFriendUseCase removeFriendUseCase;
 	private FriendsUseCase friendsUseCase;
 	private AndroidUseCaseListener removeFriendUseCaseListener;
+	
+	private BroadcastReceiver refreshBroadcastReceiver;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onCreate(android.os.Bundle)
@@ -92,6 +99,17 @@ public class FriendsGridFragment extends AbstractGridFragment<UserImpl> {
 		super.onResume();
 		onResumeUseCase(friendsUseCase, this, UseCaseTrigger.ONCE);
 		onResumeUseCase(removeFriendUseCase, removeFriendUseCaseListener);
+		
+		refreshBroadcastReceiver = new GcmMessageBroadcastReceiver() {
+			
+			@Override
+			protected void onGcmMessage(GcmMessage gcmMessage, Intent intent) {
+				executeUseCase(friendsUseCase);
+			}
+		};
+		
+		GcmMessageBroadcastReceiver.startListeningGcmBroadcasts(refreshBroadcastReceiver,
+			MediaFeverGcmMessage.FRIEND_REQUEST_ACCEPTED, MediaFeverGcmMessage.FRIEND_REMOVED);
 	}
 	
 	/**
@@ -102,6 +120,8 @@ public class FriendsGridFragment extends AbstractGridFragment<UserImpl> {
 		super.onPause();
 		onPauseUseCase(friendsUseCase, this);
 		onPauseUseCase(removeFriendUseCase, removeFriendUseCaseListener);
+		
+		GcmMessageBroadcastReceiver.stopListeningGcmBroadcasts(refreshBroadcastReceiver);
 	}
 	
 	/**
