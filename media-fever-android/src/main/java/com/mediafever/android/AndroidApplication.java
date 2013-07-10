@@ -6,12 +6,15 @@ import com.google.inject.AbstractModule;
 import com.jdroid.android.AbstractApplication;
 import com.jdroid.android.ActivityLauncher;
 import com.jdroid.android.activity.BaseActivity;
+import com.jdroid.android.analytics.AnalyticsSender;
+import com.jdroid.android.analytics.AnalyticsTracker;
 import com.jdroid.android.context.DefaultApplicationContext;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.exception.ExceptionHandler;
 import com.jdroid.android.fragment.BaseFragment;
 import com.jdroid.android.utils.NotificationUtils;
 import com.mediafever.R;
+import com.mediafever.analytics.MediaFeverAnalyticsSender;
 import com.mediafever.android.exception.AndroidExceptionHandler;
 import com.mediafever.android.service.LogoutService;
 import com.mediafever.android.ui.home.HomeActivity;
@@ -29,6 +32,14 @@ public class AndroidApplication extends AbstractApplication {
 	
 	public static AndroidApplication get() {
 		return (AndroidApplication)AbstractApplication.INSTANCE;
+	}
+	
+	/**
+	 * @see com.jdroid.android.AbstractApplication#getAnalyticsSender()
+	 */
+	@Override
+	public AnalyticsSender<AnalyticsTracker> getAnalyticsSender() {
+		return MediaFeverAnalyticsSender.get();
 	}
 	
 	/**
