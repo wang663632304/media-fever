@@ -91,10 +91,13 @@ public class MediaSessionService {
 			currentUsersIds.add(mediaSessionUser.getUser().getId());
 		}
 		
+		List<Device> newUsersDevices = Lists.newArrayList();
 		List<MediaSessionUser> newUsers = Lists.newArrayList();
 		for (Long id : usersIds) {
 			if (!currentUsersIds.contains(id)) {
-				newUsers.add(new MediaSessionUser(userRepository.get(id)));
+				MediaSessionUser mediaSessionUser = new MediaSessionUser(userRepository.get(id));
+				newUsers.add(mediaSessionUser);
+				newUsersDevices.addAll(mediaSessionUser.getUser().getDevices());
 			}
 		}
 		
@@ -102,6 +105,8 @@ public class MediaSessionService {
 		
 		// Send push notifications
 		sendPushToMediaSessionUsers(mediaSession, userId, new MediaSessionUpdatedGcmMessage(mediaSession.getId()));
+		User user = ApplicationContext.get().getSecurityContext().getUser();
+		pushService.send(new MediaSessionInvitationGcmMessage(user.getFullName(), user.getImageUrl()), newUsersDevices);
 	}
 	
 	@Transactional

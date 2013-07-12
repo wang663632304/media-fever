@@ -1,6 +1,5 @@
 package com.mediafever.android.ui.session;
 
-import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -23,14 +22,14 @@ import com.jdroid.android.dialog.AlertDialogFragment;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.domain.UriFileContent;
 import com.jdroid.android.fragment.AbstractGridFragment;
+import com.jdroid.android.gcm.GcmMessage;
+import com.jdroid.android.gcm.GcmMessageBroadcastReceiver;
 import com.jdroid.android.images.CustomImageView;
 import com.jdroid.android.images.CustomImageView.ImageLoadingListener;
 import com.jdroid.android.utils.LocalizationUtils;
-import com.jdroid.java.collections.Lists;
 import com.jdroid.java.utils.StringUtils;
 import com.mediafever.R;
-import com.mediafever.android.gcm.GcmMessage;
-import com.mediafever.android.gcm.GcmMessageBroadcastReceiver;
+import com.mediafever.android.gcm.MediaFeverGcmMessage;
 import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
 import com.mediafever.usecase.mediasession.MediaSessionDetailsUseCase;
@@ -52,10 +51,6 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 	private AndroidUseCaseListener mediaSessionLeaveUseCaseListener;
 	
 	private BroadcastReceiver refreshBroadcastReceiver;
-	private List<GcmMessage> messagesToListen = Lists.newArrayList(GcmMessage.MEDIA_SELECTION_ADDED,
-		GcmMessage.MEDIA_SELECTION_REMOVED, GcmMessage.MEDIA_SELECTION_THUMBS_DOWN,
-		GcmMessage.MEDIA_SELECTION_THUMBS_UP, GcmMessage.MEDIA_SESSION_EXPIRED, GcmMessage.MEDIA_SESSION_LEFT,
-		GcmMessage.MEDIA_SESSION_UPDATED);
 	
 	private Long mediaSessionId;
 	private Boolean mediaSessionCreated;
@@ -135,17 +130,17 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		onResumeUseCase(mediaSessionDetailsUseCase, this, UseCaseTrigger.ONCE);
 		onResumeUseCase(mediaSessionLeaveUseCase, mediaSessionLeaveUseCaseListener);
 		
-		refreshBroadcastReceiver = new GcmMessageBroadcastReceiver(messagesToListen) {
+		refreshBroadcastReceiver = new GcmMessageBroadcastReceiver() {
 			
 			@Override
 			protected void onGcmMessage(final GcmMessage gcmMessage, final Intent intent) {
 				
-				String notificationMediaSessionId = intent.getStringExtra(GcmMessage.MEDIA_SESSION_ID_KEY);
+				String notificationMediaSessionId = intent.getStringExtra(MediaFeverGcmMessage.MEDIA_SESSION_ID_KEY);
 				if (notificationMediaSessionId.equals(mediaSessionId.toString())) {
 					executeUseCase(mediaSessionDetailsUseCase);
 					
-					if (!gcmMessage.equals(GcmMessage.MEDIA_SESSION_UPDATED)
-							&& !gcmMessage.equals(GcmMessage.MEDIA_SESSION_EXPIRED)) {
+					if (!gcmMessage.equals(MediaFeverGcmMessage.MEDIA_SESSION_UPDATED)
+							&& !gcmMessage.equals(MediaFeverGcmMessage.MEDIA_SESSION_EXPIRED)) {
 						CustomImageView customImageView = findView(R.id.synchUserImage);
 						customImageView.setImageLoadingListener(new ImageLoadingListener() {
 							
@@ -160,27 +155,28 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 							}
 							
 						});
-						FileContent imageContent = new UriFileContent(intent.getStringExtra(GcmMessage.IMAGE_URL_KEY));
+						FileContent imageContent = new UriFileContent(
+								intent.getStringExtra(MediaFeverGcmMessage.IMAGE_URL_KEY));
 						customImageView.setImageContent(imageContent, R.drawable.user_default);
 					}
 				}
 			}
 			
 			private void displayNotification(Intent intent, GcmMessage gcmMessage) {
-				String watchableName = intent.getStringExtra(GcmMessage.WATCHABLE_NAME_KEY);
+				String watchableName = intent.getStringExtra(MediaFeverGcmMessage.WATCHABLE_NAME_KEY);
 				
-				String fullName = intent.getStringExtra(GcmMessage.FULL_NAME_KEY);
+				String fullName = intent.getStringExtra(MediaFeverGcmMessage.FULL_NAME_KEY);
 				TextView synchMessage = findView(R.id.synchMessage);
-				if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_ADDED)) {
+				if (gcmMessage.equals(MediaFeverGcmMessage.MEDIA_SELECTION_ADDED)) {
 					synchMessage.setText(getString(R.string.mediaSelectionAdded, fullName, watchableName));
-				} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_REMOVED)) {
+				} else if (gcmMessage.equals(MediaFeverGcmMessage.MEDIA_SELECTION_REMOVED)) {
 					synchMessage.setText(getString(R.string.mediaSelectionRemoved, fullName, watchableName));
 					MediaSelectionDialogFragment.dismiss(getActivity());
-				} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_UP)) {
+				} else if (gcmMessage.equals(MediaFeverGcmMessage.MEDIA_SELECTION_THUMBS_UP)) {
 					synchMessage.setText(getString(R.string.mediaSelectionThumbsUp, fullName, watchableName));
-				} else if (gcmMessage.equals(GcmMessage.MEDIA_SELECTION_THUMBS_DOWN)) {
+				} else if (gcmMessage.equals(MediaFeverGcmMessage.MEDIA_SELECTION_THUMBS_DOWN)) {
 					synchMessage.setText(getString(R.string.mediaSelectionThumbsDown, fullName, watchableName));
-				} else if (gcmMessage.equals(GcmMessage.MEDIA_SESSION_LEFT)) {
+				} else if (gcmMessage.equals(MediaFeverGcmMessage.MEDIA_SESSION_LEFT)) {
 					synchMessage.setText(getString(R.string.mediaSessionLeft, fullName));
 				}
 				ViewGroup mediaSelectionsSynch = findView(R.id.mediaSelectionsSynch);
@@ -189,7 +185,11 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 			}
 		};
 		
-		GcmMessage.startListeningMediaSessionSynchBroadcasts(refreshBroadcastReceiver);
+		GcmMessageBroadcastReceiver.startListeningGcmBroadcasts(refreshBroadcastReceiver,
+			MediaFeverGcmMessage.MEDIA_SELECTION_ADDED, MediaFeverGcmMessage.MEDIA_SELECTION_REMOVED,
+			MediaFeverGcmMessage.MEDIA_SELECTION_THUMBS_DOWN, MediaFeverGcmMessage.MEDIA_SELECTION_THUMBS_UP,
+			MediaFeverGcmMessage.MEDIA_SESSION_EXPIRED, MediaFeverGcmMessage.MEDIA_SESSION_LEFT,
+			MediaFeverGcmMessage.MEDIA_SESSION_UPDATED);
 	}
 	
 	/**
@@ -201,7 +201,7 @@ public class MediaSelectionsFragment extends AbstractGridFragment<MediaSelection
 		onPauseUseCase(mediaSessionDetailsUseCase, this);
 		onPauseUseCase(mediaSessionLeaveUseCase, mediaSessionLeaveUseCaseListener);
 		
-		GcmMessage.stopListeningMediaSessionSynchBroadcasts(refreshBroadcastReceiver);
+		GcmMessageBroadcastReceiver.stopListeningGcmBroadcasts(refreshBroadcastReceiver);
 	}
 	
 	/**

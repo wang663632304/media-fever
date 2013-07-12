@@ -12,10 +12,12 @@ import com.jdroid.android.context.DefaultApplicationContext;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.exception.ExceptionHandler;
 import com.jdroid.android.fragment.BaseFragment;
+import com.jdroid.android.gcm.GcmMessageResolver;
 import com.jdroid.android.utils.NotificationUtils;
 import com.mediafever.R;
 import com.mediafever.analytics.MediaFeverAnalyticsSender;
 import com.mediafever.android.exception.AndroidExceptionHandler;
+import com.mediafever.android.gcm.MediaFeverGcmResolver;
 import com.mediafever.android.service.LogoutService;
 import com.mediafever.android.ui.home.HomeActivity;
 import com.mediafever.android.ui.login.LoginActivity;
@@ -118,5 +120,13 @@ public class AndroidApplication extends AbstractApplication {
 	@Override
 	public String getAppName() {
 		return getString(getAndroidApplicationContext().isFreeApp() ? R.string.appNameFree : R.string.appName);
+	}
+	
+	/**
+	 * @see com.jdroid.android.AbstractApplication#getGcmResolver()
+	 */
+	@Override
+	public GcmMessageResolver getGcmResolver() {
+		return MediaFeverGcmResolver.get();
 	}
 }

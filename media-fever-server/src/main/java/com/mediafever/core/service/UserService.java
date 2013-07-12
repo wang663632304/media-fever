@@ -10,6 +10,7 @@ import com.jdroid.javaweb.domain.FileEntity;
 import com.jdroid.javaweb.push.Device;
 import com.jdroid.javaweb.push.DeviceRepository;
 import com.jdroid.javaweb.push.DeviceType;
+import com.jdroid.javaweb.push.PushService;
 import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.api.exception.ServerErrorCode;
@@ -17,6 +18,7 @@ import com.mediafever.core.domain.FacebookAccount;
 import com.mediafever.core.domain.User;
 import com.mediafever.core.repository.CustomFilterKey;
 import com.mediafever.core.repository.UserRepository;
+import com.mediafever.core.service.push.gcm.FriendRemovedGcmMessage;
 
 /**
  * 
@@ -30,6 +32,9 @@ public class UserService {
 	
 	@Autowired
 	private DeviceRepository deviceRepository;
+	
+	@Autowired
+	private PushService pushService;
 	
 	/**
 	 * Adds a user to the repository.
@@ -143,5 +148,7 @@ public class UserService {
 		User user = userRepository.get(userId);
 		User friend = userRepository.get(friendId);
 		user.removeFriend(friend);
+		
+		pushService.send(new FriendRemovedGcmMessage(userId), friend.getDevices());
 	}
 }
