@@ -107,7 +107,7 @@ public class SignUpFragment extends AbstractFragment {
 			public void run() {
 				getActivity().finish();
 				dismissLoading();
-				ActivityLauncher.launchActivityClearTask(AbstractApplication.get().getHomeActivityClass(), true);
+				ActivityLauncher.launchActivityClearTask(AbstractApplication.get().getHomeActivityClass(), false);
 			}
 		});
 	}

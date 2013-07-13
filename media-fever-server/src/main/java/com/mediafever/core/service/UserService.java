@@ -2,6 +2,7 @@ package com.mediafever.core.service;
 
 import java.util.Date;
 import java.util.List;
+import javax.ws.rs.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.api.exception.ServerErrorCode;
 import com.mediafever.core.domain.FacebookAccount;
+import com.mediafever.core.domain.FacebookUser;
 import com.mediafever.core.domain.User;
 import com.mediafever.core.repository.CustomFilterKey;
 import com.mediafever.core.repository.UserRepository;
@@ -114,6 +116,36 @@ public class UserService {
 	public FacebookAccount getFacebookAccount(Long userId) {
 		User user = userRepository.get(userId);
 		return user.getFacebookAccount();
+	}
+	
+	/**
+	 * Return all the Facebook's friends of the user
+	 * 
+	 * @param userId The user id
+	 * @return The list of friends
+	 */
+	public List<FacebookUser> getFacebookFriends(Long userId) {
+		// TODO Implement this.
+		// 1. Obtain all the Facebook friends of the logged user
+		// 2. For each friend, see if it match by facebookId or email with any of our app users
+		// 3. For each matched user, create a FacebookUser with our user id, first name and last name
+		// 4. For each not matched user, create a FacebookUser with the facebookId, first name and last name
+		
+		List<FacebookUser> socialUsers = Lists.newArrayList();
+		socialUsers.add(new FacebookUser("facebookId1", "firstName1", "lastName1"));
+		FacebookUser user2 = new FacebookUser(null, "firstName2", "lastName2");
+		user2.setId(2L);
+		socialUsers.add(user2);
+		return socialUsers;
+	}
+	
+	/**
+	 * Invite the user to use the app. Post on the wall if possible, else send an email
+	 * 
+	 * @param facebookId The invited user's facebook id
+	 */
+	public void inviteFacebookFriend(@PathParam("id") Long facebookId) {
+		// TODO Implement this
 	}
 	
 	/**
