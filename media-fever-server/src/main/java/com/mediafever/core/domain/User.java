@@ -66,7 +66,7 @@ public class User extends Entity {
 	@OneToMany(targetEntity = Device.class, fetch = FetchType.LAZY)
 	@JoinTable(name = "User_Device", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(
 			name = "deviceId"))
-	private List<Device> devices;
+	private List<Device> devices = Lists.newArrayList();
 	
 	/**
 	 * Default constructor.
