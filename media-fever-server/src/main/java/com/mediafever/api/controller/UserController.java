@@ -116,6 +116,20 @@ public class UserController extends AbstractController {
 	}
 	
 	@GET
+	@Path("{id}/facebook/friends")
+	@Produces(MediaType.APPLICATION_JSON)
+	@GZIP
+	public String getFacebookFriends(@PathParam("id") Long userId) {
+		return marshallSimple(userService.getFacebookFriends(userId));
+	}
+	
+	@PUT
+	@Path("{id}/facebook/invite")
+	public void inviteFacebookFriend(@PathParam("id") Long facebookId) {
+		userService.inviteFacebookFriend(facebookId);
+	}
+	
+	@GET
 	@Path("{id}/friends")
 	@Produces(MediaType.APPLICATION_JSON)
 	@GZIP
