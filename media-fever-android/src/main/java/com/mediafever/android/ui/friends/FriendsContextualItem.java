@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import com.jdroid.android.tabs.TabAction;
 import com.mediafever.R;
 import com.mediafever.android.ui.settings.SocialSettingsActivity;
-import com.mediafever.android.ui.settings.SocialSettingsFragment;
 
 /**
  * 
@@ -31,7 +30,7 @@ public enum FriendsContextualItem implements TabAction {
 		
 		@Override
 		public Fragment createFragment(Object args) {
-			return new SocialSettingsFragment();
+			return new FacebookFriendsGridFragment();
 		}
 	},
 	SEARCH_USERS(R.string.searchUsers, R.drawable.search_users_contextual_selector, SearchUsersActivity.class) {

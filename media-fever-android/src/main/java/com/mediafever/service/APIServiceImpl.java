@@ -17,6 +17,7 @@ import com.jdroid.java.http.post.EntityEnclosingWebService;
 import com.jdroid.java.marshaller.MarshallerProvider;
 import com.jdroid.java.parser.json.JsonArrayParser;
 import com.mediafever.context.ApplicationContext;
+import com.mediafever.domain.FacebookUser;
 import com.mediafever.domain.FriendRequest;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
@@ -26,6 +27,7 @@ import com.mediafever.domain.social.FacebookAccount;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
 import com.mediafever.parser.FacebookAccountParser;
+import com.mediafever.parser.FacebookUserParser;
 import com.mediafever.parser.FriendRequestParser;
 import com.mediafever.parser.InnerWatchableParser;
 import com.mediafever.parser.MediaSelectionParser;
@@ -177,6 +179,15 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 	public List<UserImpl> getFriends(Long userId) {
 		WebService webservice = newGetService(USERS_MODULE, userId, FRIENDS);
 		return webservice.execute(new JsonArrayParser(new UserParser()));
+	}
+	
+	/**
+	 * @see com.mediafever.service.APIService#getFacebookFriends(java.lang.Long)
+	 */
+	@Override
+	public List<FacebookUser> getFacebookFriends(Long userId) {
+		WebService webservice = newGetService(USERS_MODULE, userId, FACEBOOK, FRIENDS);
+		return webservice.execute(new JsonArrayParser(new FacebookUserParser()));
 	}
 	
 	/**
