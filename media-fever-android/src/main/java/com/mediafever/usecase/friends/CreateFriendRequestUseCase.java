@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.usecase.AbstractApiUseCase;
 import com.mediafever.domain.FriendRequest;
-import com.mediafever.domain.UserImpl;
 import com.mediafever.repository.FriendRequestsRepository;
 import com.mediafever.repository.FriendsRepository;
 import com.mediafever.service.APIService;
@@ -17,7 +16,7 @@ public class CreateFriendRequestUseCase extends AbstractApiUseCase<APIService> {
 	
 	private FriendsRepository friendsRepository;
 	private FriendRequestsRepository friendRequestsRepository;
-	private UserImpl user;
+	private Long userId;
 	private Boolean addAsFriend;
 	
 	@Inject
@@ -36,28 +35,26 @@ public class CreateFriendRequestUseCase extends AbstractApiUseCase<APIService> {
 		
 		addAsFriend = false;
 		
-		FriendRequest friendRequest = new FriendRequest(null, user, (UserImpl)SecurityContext.get().getUser());
-		getApiService().createFriendRequest(friendRequest);
+		getApiService().createFriendRequest(userId, SecurityContext.get().getUser().getId());
 		
 		// If I have a pending friend request of the user I am trying to invite, add it as a friend and remove the
 		// friend request
-		friendRequest = friendRequestsRepository.getBySender(user);
+		FriendRequest friendRequest = friendRequestsRepository.getBySender(userId);
 		if (friendRequest != null) {
 			friendRequestsRepository.remove(friendRequest);
-			friendsRepository.add(user);
+			friendsRepository.add(friendRequest.getSender());
 			addAsFriend = true;
 		}
 	}
 	
-	public void setUser(UserImpl user) {
-		this.user = user;
-	}
-	
-	public UserImpl getUser() {
-		return user;
-	}
-	
 	public Boolean wasAddAsFriend() {
 		return addAsFriend;
+	}
+	
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 }

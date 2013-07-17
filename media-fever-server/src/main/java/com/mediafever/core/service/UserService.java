@@ -134,7 +134,7 @@ public class UserService {
 		List<FacebookUser> socialUsers = Lists.newArrayList();
 		socialUsers.add(new FacebookUser("facebookId1", "firstName1", "lastName1"));
 		FacebookUser user2 = new FacebookUser(null, "firstName2", "lastName2");
-		user2.setId(2L);
+		user2.setId(12L);
 		socialUsers.add(user2);
 		return socialUsers;
 	}

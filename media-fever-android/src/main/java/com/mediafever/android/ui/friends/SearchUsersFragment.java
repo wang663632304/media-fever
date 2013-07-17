@@ -1,25 +1,18 @@
 package com.mediafever.android.ui.friends;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.ads.AdSize;
-import com.jdroid.android.AndroidUseCaseListener;
-import com.jdroid.android.activity.ActivityIf;
 import com.jdroid.android.adapter.BaseArrayAdapter;
 import com.jdroid.android.fragment.AbstractSearchFragment;
 import com.jdroid.android.usecase.SearchUseCase;
 import com.jdroid.android.utils.AndroidUtils;
-import com.jdroid.android.utils.ToastUtils;
 import com.jdroid.java.collections.Lists;
 import com.mediafever.R;
 import com.mediafever.android.ui.UserAdapter;
 import com.mediafever.domain.UserImpl;
-import com.mediafever.usecase.friends.CreateFriendRequestUseCase;
 import com.mediafever.usecase.friends.SearchUsersUseCase;
 
 /**
@@ -29,8 +22,6 @@ import com.mediafever.usecase.friends.SearchUsersUseCase;
 public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 	
 	private SearchUsersUseCase searchUsersUseCase;
-	private CreateFriendRequestUseCase createFriendRequestUseCase;
-	private AndroidUseCaseListener createFriendRequestUseCaseListener;
 	
 	/**
 	 * @see com.jdroid.android.fragment.AbstractSearchFragment#onCreate(android.os.Bundle)
@@ -44,38 +35,6 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 		
 		searchUsersUseCase = getInstance(SearchUsersUseCase.class);
 		searchUsersUseCase.setUser(getUser());
-		
-		createFriendRequestUseCase = getInstance(CreateFriendRequestUseCase.class);
-		createFriendRequestUseCaseListener = new AndroidUseCaseListener() {
-			
-			@Override
-			public Boolean goBackOnError(RuntimeException runtimeException) {
-				return false;
-			}
-			
-			@Override
-			public void onFinishUseCase() {
-				executeOnUIThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						dismissLoading();
-						if (createFriendRequestUseCase.wasAddAsFriend()) {
-							ToastUtils.showInfoToast(getString(R.string.addedAsFriend,
-								createFriendRequestUseCase.getUser().getFullname()));
-						} else {
-							ToastUtils.showInfoToast(getString(R.string.invitedToBeYourFriend,
-								createFriendRequestUseCase.getUser().getFullname()));
-						}
-					}
-				});
-			}
-			
-			@Override
-			protected ActivityIf getActivityIf() {
-				return (ActivityIf)getActivity();
-			}
-		};
 	}
 	
 	/**
@@ -93,24 +52,6 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 	@Override
 	protected int getSearchEditTextHintResId() {
 		return R.string.searchByNameOrEmail;
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractSearchFragment#onResume()
-	 */
-	@Override
-	public void onResume() {
-		super.onResume();
-		onResumeUseCase(createFriendRequestUseCase, createFriendRequestUseCaseListener);
-	}
-	
-	/**
-	 * @see com.jdroid.android.fragment.AbstractSearchFragment#onPause()
-	 */
-	@Override
-	public void onPause() {
-		super.onPause();
-		onPauseUseCase(createFriendRequestUseCase, createFriendRequestUseCaseListener);
 	}
 	
 	/**
@@ -142,19 +83,7 @@ public class SearchUsersFragment extends AbstractSearchFragment<UserImpl> {
 	 */
 	@Override
 	public void onItemSelected(final UserImpl user) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle(R.string.friendRequest);
-		builder.setMessage(getString(R.string.addUser, user.getFullname()));
-		builder.setPositiveButton(R.string.yes, new OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				createFriendRequestUseCase.setUser(user);
-				executeUseCase(createFriendRequestUseCase);
-			}
-		});
-		builder.setNegativeButton(R.string.no, null);
-		builder.show();
+		CreateFriendRequestDialogFragment.show(getActivity(), user.getId(), user.getFullname());
 	}
 	
 	/**

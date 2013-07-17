@@ -14,6 +14,7 @@ import com.jdroid.java.http.MultipartWebService;
 import com.jdroid.java.http.WebService;
 import com.jdroid.java.http.mock.AbstractMockWebService;
 import com.jdroid.java.http.post.EntityEnclosingWebService;
+import com.jdroid.java.json.JsonMap;
 import com.jdroid.java.marshaller.MarshallerProvider;
 import com.jdroid.java.parser.json.JsonArrayParser;
 import com.mediafever.context.ApplicationContext;
@@ -383,12 +384,15 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#createFriendRequest(com.mediafever.domain.FriendRequest)
+	 * @see com.mediafever.service.APIService#createFriendRequest(java.lang.Long, java.lang.Long)
 	 */
 	@Override
-	public FriendRequest createFriendRequest(FriendRequest friendRequest) {
+	public FriendRequest createFriendRequest(Long userId, Long senderId) {
 		EntityEnclosingWebService webservice = newPostService(FRIEND_REQUESTS);
-		marshall(webservice, friendRequest);
+		JsonMap map = new JsonMap();
+		map.put("userId", userId);
+		map.put("senderId", senderId);
+		webservice.setEntity(map.toString());
 		return webservice.execute(new FriendRequestParser());
 	}
 	

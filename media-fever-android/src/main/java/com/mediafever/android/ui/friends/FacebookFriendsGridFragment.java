@@ -8,14 +8,14 @@ import com.google.ads.AdSize;
 import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.mediafever.R;
-import com.mediafever.domain.UserImpl;
+import com.mediafever.domain.FacebookUser;
 import com.mediafever.usecase.friends.FacebookFriendsUseCase;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class FacebookFriendsGridFragment extends AbstractGridFragment<UserImpl> {
+public class FacebookFriendsGridFragment extends AbstractGridFragment<FacebookUser> {
 	
 	private FacebookFriendsUseCase facebookFriendsUseCase;
 	
@@ -73,6 +73,18 @@ public class FacebookFriendsGridFragment extends AbstractGridFragment<UserImpl> 
 				dismissLoading();
 			}
 		});
+	}
+	
+	/**
+	 * @see com.jdroid.android.fragment.AbstractGridFragment#onItemSelected(java.lang.Object)
+	 */
+	@Override
+	public void onItemSelected(FacebookUser user) {
+		if (user.isMediaFeverUser()) {
+			CreateFriendRequestDialogFragment.show(getActivity(), user.getId(), user.getFullname());
+		} else {
+			// TODO
+		}
 	}
 	
 	/**

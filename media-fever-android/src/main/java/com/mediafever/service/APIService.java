@@ -68,7 +68,7 @@ public interface APIService {
 	
 	public List<FriendRequest> getFriendRequests(Long userId);
 	
-	public FriendRequest createFriendRequest(FriendRequest friendRequest);
+	public FriendRequest createFriendRequest(Long userId, Long senderId);
 	
 	public void acceptFriendRequest(FriendRequest friendRequest);
 	
