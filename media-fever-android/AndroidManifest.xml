@@ -67,6 +67,7 @@
 		<activity android:name="com.mediafever.android.ui.friends.FriendsListActivity" android:label="@string/friends" />
 		<activity android:name="com.mediafever.android.ui.friends.FriendsRequestsActivity" android:label="@string/friendsRequests" />
 		<activity android:name="com.mediafever.android.ui.friends.SearchUsersActivity" android:label="@string/searchUsers" />
+		<activity android:name="com.mediafever.android.ui.friends.FacebookFriendsActivity" android:label="@string/facebook" />
 
 		<activity android:name="com.mediafever.android.ui.settings.SettingsActivity" android:label="@string/settings" />
 		<activity android:name="com.mediafever.android.ui.settings.ProfileActivity" android:label="@string/profile"
