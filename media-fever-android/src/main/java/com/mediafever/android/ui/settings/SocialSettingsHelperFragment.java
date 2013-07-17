@@ -12,8 +12,6 @@ import com.mediafever.usecase.settings.MediaFeverFacebookLoginUseCase;
  */
 public class SocialSettingsHelperFragment extends FacebookHelperFragment {
 	
-	private Boolean login;
-	
 	/**
 	 * @see com.jdroid.android.facebook.FacebookHelperFragment#createFacebookLoginUseCase()
 	 */
