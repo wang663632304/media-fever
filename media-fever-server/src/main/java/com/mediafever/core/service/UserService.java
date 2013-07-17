@@ -2,7 +2,6 @@ package com.mediafever.core.service;
 
 import java.util.Date;
 import java.util.List;
-import javax.ws.rs.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -142,9 +141,10 @@ public class UserService {
 	/**
 	 * Invite the user to use the app. Post on the wall if possible, else send an email
 	 * 
+	 * @param userId The user id
 	 * @param facebookId The invited user's facebook id
 	 */
-	public void inviteFacebookFriend(@PathParam("id") Long facebookId) {
+	public void inviteFacebookFriend(Long userId, String facebookId) {
 		// TODO Implement this
 	}
 	

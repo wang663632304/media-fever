@@ -124,9 +124,9 @@ public class UserController extends AbstractController {
 	}
 	
 	@PUT
-	@Path("{id}/facebook/invite")
-	public void inviteFacebookFriend(@PathParam("id") Long facebookId) {
-		userService.inviteFacebookFriend(facebookId);
+	@Path("{id}/facebook/invite/{facebookId}")
+	public void inviteFacebookFriend(@PathParam("id") Long userId, @PathParam("facebookId") String facebookId) {
+		userService.inviteFacebookFriend(userId, facebookId);
 	}
 	
 	@GET

@@ -91,6 +91,7 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 	private static final String PROFILE = "profile";
 	private static final String IMAGE = "image";
 	private static final String FACEBOOK = "facebook";
+	private static final String INVITE = "invite";
 	
 	public APIServiceImpl() {
 		MarshallerProvider.get().addMarshaller(UserImpl.class, new UserJsonMarshaller());
@@ -189,6 +190,15 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 	public List<FacebookUser> getFacebookFriends(Long userId) {
 		WebService webservice = newGetService(USERS_MODULE, userId, FACEBOOK, FRIENDS);
 		return webservice.execute(new JsonArrayParser(new FacebookUserParser()));
+	}
+	
+	/**
+	 * @see com.mediafever.service.APIService#inviteFacebookFriend(java.lang.Long, com.mediafever.domain.FacebookUser)
+	 */
+	@Override
+	public void inviteFacebookFriend(Long userId, FacebookUser facebookUser) {
+		WebService webservice = newPutService(USERS_MODULE, userId, FACEBOOK, INVITE, facebookUser.getFacebookId());
+		webservice.execute();
 	}
 	
 	/**

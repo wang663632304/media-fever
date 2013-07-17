@@ -70,6 +70,8 @@ public interface APIService {
 	
 	public FriendRequest createFriendRequest(Long userId, Long senderId);
 	
+	public void inviteFacebookFriend(Long userId, FacebookUser facebookUser);
+	
 	public void acceptFriendRequest(FriendRequest friendRequest);
 	
 	public void rejectFriendRequest(FriendRequest friendRequest);

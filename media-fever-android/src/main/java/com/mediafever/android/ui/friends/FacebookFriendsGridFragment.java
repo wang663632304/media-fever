@@ -83,7 +83,7 @@ public class FacebookFriendsGridFragment extends AbstractGridFragment<FacebookUs
 		if (user.isMediaFeverUser()) {
 			CreateFriendRequestDialogFragment.show(getActivity(), user.getId(), user.getFullname());
 		} else {
-			// TODO
+			InviteFacebookFriendDialogFragment.show(getActivity(), user);
 		}
 	}
 	
