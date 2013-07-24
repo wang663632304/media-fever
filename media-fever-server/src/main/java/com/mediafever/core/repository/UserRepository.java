@@ -34,6 +34,8 @@ public interface UserRepository extends Repository<User> {
 	 */
 	public List<User> getByDevice(Device device);
 	
+	public User getByFacebookId(String facebookId);
+	
 	/**
 	 * @param email The email to search for
 	 * @return Whether an user with the given email exists or not

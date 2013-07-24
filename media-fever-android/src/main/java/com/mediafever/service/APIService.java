@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.search.PagedResult;
-import com.mediafever.domain.FacebookUser;
 import com.mediafever.domain.FriendRequest;
+import com.mediafever.domain.SocialUser;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
 import com.mediafever.domain.session.MediaSelection;
@@ -48,7 +48,7 @@ public interface APIService {
 	
 	public List<UserImpl> getFriends(Long userId);
 	
-	public List<FacebookUser> getFacebookFriends(Long userId);
+	public List<SocialUser> getFacebookFriends(Long userId);
 	
 	public List<UserImpl> searchUsers(Long userId, String query);
 	
@@ -69,8 +69,6 @@ public interface APIService {
 	public List<FriendRequest> getFriendRequests(Long userId);
 	
 	public FriendRequest createFriendRequest(Long userId, Long senderId);
-	
-	public void inviteFacebookFriend(Long userId, FacebookUser facebookUser);
 	
 	public void acceptFriendRequest(FriendRequest friendRequest);
 	

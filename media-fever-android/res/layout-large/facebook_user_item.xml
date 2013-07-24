@@ -10,8 +10,7 @@
 		style="@style/smallText" android:fontFamily="sans-serif" android:textStyle="bold" android:background="@color/transluscentGrey"
 		android:layout_alignParentBottom="true" android:padding="5dp" />
 
-	<ImageView android:id="@+id/appLogo" android:layout_height="24dp" android:layout_width="24dp"
-		android:src="@drawable/ic_launcher" android:layout_alignParentTop="true" android:layout_alignParentRight="true"
-		android:layout_margin="4dp" />
+	<ImageView android:id="@+id/socialNetworkLogo" android:layout_height="24dp" android:layout_width="24dp"
+		android:layout_alignParentTop="true" android:layout_alignParentRight="true" android:layout_margin="4dp" />
 
 </RelativeLayout>

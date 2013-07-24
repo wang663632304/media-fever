@@ -164,6 +164,10 @@ public class User extends Entity {
 		return friends;
 	}
 	
+	public Boolean isFriendOf(User user) {
+		return friends.contains(user);
+	}
+	
 	public String getImageUrl() {
 		String imageUrl = getLocalImageUrl();
 		return imageUrl != null ? imageUrl : getFacebookImageUrl();

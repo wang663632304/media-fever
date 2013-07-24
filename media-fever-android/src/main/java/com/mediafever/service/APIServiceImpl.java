@@ -18,8 +18,8 @@ import com.jdroid.java.json.JsonMap;
 import com.jdroid.java.marshaller.MarshallerProvider;
 import com.jdroid.java.parser.json.JsonArrayParser;
 import com.mediafever.context.ApplicationContext;
-import com.mediafever.domain.FacebookUser;
 import com.mediafever.domain.FriendRequest;
+import com.mediafever.domain.SocialUser;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
 import com.mediafever.domain.session.MediaSelection;
@@ -28,12 +28,12 @@ import com.mediafever.domain.social.FacebookAccount;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
 import com.mediafever.parser.FacebookAccountParser;
-import com.mediafever.parser.FacebookUserParser;
 import com.mediafever.parser.FriendRequestParser;
 import com.mediafever.parser.InnerWatchableParser;
 import com.mediafever.parser.MediaSelectionParser;
 import com.mediafever.parser.MediaSessionParser;
 import com.mediafever.parser.PagedResultParser;
+import com.mediafever.parser.SocialUserParser;
 import com.mediafever.parser.UserParser;
 import com.mediafever.parser.UserWatchableParser;
 import com.mediafever.parser.WatchableParser;
@@ -187,18 +187,9 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 	 * @see com.mediafever.service.APIService#getFacebookFriends(java.lang.Long)
 	 */
 	@Override
-	public List<FacebookUser> getFacebookFriends(Long userId) {
+	public List<SocialUser> getFacebookFriends(Long userId) {
 		WebService webservice = newGetService(USERS_MODULE, userId, FACEBOOK, FRIENDS);
-		return webservice.execute(new JsonArrayParser(new FacebookUserParser()));
-	}
-	
-	/**
-	 * @see com.mediafever.service.APIService#inviteFacebookFriend(java.lang.Long, com.mediafever.domain.FacebookUser)
-	 */
-	@Override
-	public void inviteFacebookFriend(Long userId, FacebookUser facebookUser) {
-		WebService webservice = newPutService(USERS_MODULE, userId, FACEBOOK, INVITE, facebookUser.getFacebookId());
-		webservice.execute();
+		return webservice.execute(new JsonArrayParser(new SocialUserParser()));
 	}
 	
 	/**

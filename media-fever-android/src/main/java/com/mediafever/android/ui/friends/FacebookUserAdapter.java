@@ -9,23 +9,23 @@ import com.jdroid.android.adapter.BaseHolderArrayAdapter;
 import com.jdroid.android.images.CustomImageView;
 import com.mediafever.R;
 import com.mediafever.android.ui.friends.FacebookUserAdapter.FacebookUserHolder;
-import com.mediafever.domain.FacebookUser;
+import com.mediafever.domain.SocialUser;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class FacebookUserAdapter extends BaseHolderArrayAdapter<FacebookUser, FacebookUserHolder> {
+public class FacebookUserAdapter extends BaseHolderArrayAdapter<SocialUser, FacebookUserHolder> {
 	
-	public FacebookUserAdapter(Activity context, List<FacebookUser> items) {
+	public FacebookUserAdapter(Activity context, List<SocialUser> items) {
 		super(context, items, R.layout.facebook_user_item);
 	}
 	
 	@Override
-	protected void fillHolderFromItem(FacebookUser user, FacebookUserHolder holder) {
+	protected void fillHolderFromItem(SocialUser user, FacebookUserHolder holder) {
 		holder.image.setImageContent(user.getImage(), R.drawable.user_default);
 		holder.fullName.setText(user.getFullname());
-		holder.appLogo.setVisibility(user.isMediaFeverUser() ? View.VISIBLE : View.GONE);
+		holder.socialNetworkLogo.setImageResource(R.drawable.facebook_icon);
 	}
 	
 	@Override
@@ -33,7 +33,7 @@ public class FacebookUserAdapter extends BaseHolderArrayAdapter<FacebookUser, Fa
 		FacebookUserHolder holder = new FacebookUserHolder();
 		holder.image = findView(convertView, R.id.image);
 		holder.fullName = findView(convertView, R.id.fullName);
-		holder.appLogo = findView(convertView, R.id.appLogo);
+		holder.socialNetworkLogo = findView(convertView, R.id.socialNetworkLogo);
 		return holder;
 	}
 	
@@ -41,7 +41,7 @@ public class FacebookUserAdapter extends BaseHolderArrayAdapter<FacebookUser, Fa
 		
 		protected CustomImageView image;
 		protected TextView fullName;
-		protected ImageView appLogo;
+		protected ImageView socialNetworkLogo;
 	}
 	
 }

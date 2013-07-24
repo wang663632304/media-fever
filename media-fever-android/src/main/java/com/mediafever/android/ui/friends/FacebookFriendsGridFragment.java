@@ -3,19 +3,20 @@ package com.mediafever.android.ui.friends;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.google.ads.AdSize;
-import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
+import com.jdroid.android.activity.AbstractFragmentActivity;
 import com.jdroid.android.fragment.AbstractGridFragment;
 import com.mediafever.R;
-import com.mediafever.domain.FacebookUser;
+import com.mediafever.domain.SocialUser;
 import com.mediafever.usecase.friends.FacebookFriendsUseCase;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class FacebookFriendsGridFragment extends AbstractGridFragment<FacebookUser> {
+public class FacebookFriendsGridFragment extends AbstractGridFragment<SocialUser> implements FacebookFriendsListener {
 	
 	private FacebookFriendsUseCase facebookFriendsUseCase;
 	
@@ -30,6 +31,10 @@ public class FacebookFriendsGridFragment extends AbstractGridFragment<FacebookUs
 		
 		facebookFriendsUseCase = getInstance(FacebookFriendsUseCase.class);
 		facebookFriendsUseCase.setUserId(getUser().getId());
+		
+		if (getFacebookFriendsHelperFragment() == null) {
+			((AbstractFragmentActivity)getActivity()).addFragment(new FacebookFriendsHelperFragment(), 0, false);
+		}
 	}
 	
 	/**
@@ -42,12 +47,32 @@ public class FacebookFriendsGridFragment extends AbstractGridFragment<FacebookUs
 	}
 	
 	/**
+	 * @see com.jdroid.android.fragment.AbstractGridFragment#onViewCreated(android.view.View, android.os.Bundle)
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		
+		findView(R.id.authButton).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				getFacebookFriendsHelperFragment().startLoginProcess();
+			}
+		});
+	}
+	
+	private FacebookFriendsHelperFragment getFacebookFriendsHelperFragment() {
+		return ((AbstractFragmentActivity)getActivity()).getFragment(FacebookFriendsHelperFragment.class);
+	}
+	
+	/**
 	 * @see com.jdroid.android.fragment.AbstractFragment#onResume()
 	 */
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(facebookFriendsUseCase, this, UseCaseTrigger.ONCE);
+		onResumeUseCase(facebookFriendsUseCase, this);
 	}
 	
 	/**
@@ -57,6 +82,14 @@ public class FacebookFriendsGridFragment extends AbstractGridFragment<FacebookUs
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(facebookFriendsUseCase, this);
+	}
+	
+	/**
+	 * @see com.mediafever.android.ui.friends.FacebookFriendsListener#loadFriends()
+	 */
+	@Override
+	public void loadFriends() {
+		executeUseCase(facebookFriendsUseCase);
 	}
 	
 	/**
@@ -79,12 +112,8 @@ public class FacebookFriendsGridFragment extends AbstractGridFragment<FacebookUs
 	 * @see com.jdroid.android.fragment.AbstractGridFragment#onItemSelected(java.lang.Object)
 	 */
 	@Override
-	public void onItemSelected(FacebookUser user) {
-		if (user.isMediaFeverUser()) {
-			CreateFriendRequestDialogFragment.show(getActivity(), user.getId(), user.getFullname());
-		} else {
-			InviteFacebookFriendDialogFragment.show(getActivity(), user);
-		}
+	public void onItemSelected(SocialUser user) {
+		CreateFriendRequestDialogFragment.show(getActivity(), user.getId(), user.getFullname());
 	}
 	
 	/**

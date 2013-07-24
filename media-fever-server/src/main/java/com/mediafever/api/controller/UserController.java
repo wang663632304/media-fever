@@ -123,12 +123,6 @@ public class UserController extends AbstractController {
 		return marshallSimple(userService.getFacebookFriends(userId));
 	}
 	
-	@PUT
-	@Path("{id}/facebook/invite/{facebookId}")
-	public void inviteFacebookFriend(@PathParam("id") Long userId, @PathParam("facebookId") String facebookId) {
-		userService.inviteFacebookFriend(userId, facebookId);
-	}
-	
 	@GET
 	@Path("{id}/friends")
 	@Produces(MediaType.APPLICATION_JSON)

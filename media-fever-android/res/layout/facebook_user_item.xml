@@ -13,6 +13,6 @@
 	<TextView android:id="@+id/fullName" android:layout_width="0dp" style="@style/h1Text"
 		android:layout_marginLeft="10dp" android:layout_weight="1" />
 
-	<ImageView android:id="@+id/appLogo" android:layout_height="24dp" android:layout_width="24dp"
-		android:src="@drawable/ic_launcher" android:layout_marginLeft="10dp" />
+	<ImageView android:id="@+id/socialNetworkLogo" android:layout_height="24dp" android:layout_width="24dp"
+		android:layout_marginLeft="10dp" />
 </LinearLayout>

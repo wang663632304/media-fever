@@ -5,17 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.ads.AdSize;
-import com.jdroid.android.activity.BaseActivity.UseCaseTrigger;
 import com.jdroid.android.fragment.AbstractListFragment;
 import com.mediafever.R;
-import com.mediafever.domain.FacebookUser;
+import com.mediafever.domain.SocialUser;
 import com.mediafever.usecase.friends.FacebookFriendsUseCase;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class FacebookFriendsListFragment extends AbstractListFragment<FacebookUser> {
+public class FacebookFriendsListFragment extends AbstractListFragment<SocialUser> implements FacebookFriendsListener {
 	
 	private FacebookFriendsUseCase facebookFriendsUseCase;
 	
@@ -47,7 +46,7 @@ public class FacebookFriendsListFragment extends AbstractListFragment<FacebookUs
 	@Override
 	public void onResume() {
 		super.onResume();
-		onResumeUseCase(facebookFriendsUseCase, this, UseCaseTrigger.ONCE);
+		onResumeUseCase(facebookFriendsUseCase, this);
 	}
 	
 	/**
@@ -57,6 +56,14 @@ public class FacebookFriendsListFragment extends AbstractListFragment<FacebookUs
 	public void onPause() {
 		super.onPause();
 		onPauseUseCase(facebookFriendsUseCase, this);
+	}
+	
+	/**
+	 * @see com.mediafever.android.ui.friends.FacebookFriendsListener#loadFriends()
+	 */
+	@Override
+	public void loadFriends() {
+		executeUseCase(facebookFriendsUseCase);
 	}
 	
 	/**
@@ -79,12 +86,8 @@ public class FacebookFriendsListFragment extends AbstractListFragment<FacebookUs
 	 * @see com.jdroid.android.fragment.AbstractGridFragment#onItemSelected(java.lang.Object)
 	 */
 	@Override
-	public void onItemSelected(FacebookUser user) {
-		if (user.isMediaFeverUser()) {
-			CreateFriendRequestDialogFragment.show(getActivity(), user.getId(), user.getFullname());
-		} else {
-			InviteFacebookFriendDialogFragment.show(getActivity(), user);
-		}
+	public void onItemSelected(SocialUser user) {
+		CreateFriendRequestDialogFragment.show(getActivity(), user.getId(), user.getFullname());
 	}
 	
 	/**

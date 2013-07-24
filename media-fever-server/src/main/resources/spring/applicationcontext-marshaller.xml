@@ -20,8 +20,8 @@
 				<entry key="com.mediafever.core.domain.User">
 					<bean class="com.mediafever.api.marshaller.json.UserJsonMarshaller" />
 				</entry>
-				<entry key="com.mediafever.core.domain.FacebookUser">
-					<bean class="com.mediafever.api.marshaller.json.FacebookUserJsonMarshaller" />
+				<entry key="com.mediafever.core.domain.FacebookSocialUser">
+					<bean class="com.mediafever.api.marshaller.json.SocialUserJsonMarshaller" />
 				</entry>
 				<entry key="com.mediafever.core.domain.session.MediaSession">
 					<bean class="com.mediafever.api.marshaller.json.MediaSessionJsonMarshaller" />
