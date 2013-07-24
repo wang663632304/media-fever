@@ -97,7 +97,6 @@ CREATE TABLE FacebookAccount (
 	id						bigint(20)		NOT NULL auto_increment,
 	userId					VARCHAR(255)	NOT NULL,
 	accessToken				VARCHAR(255)	NOT NULL,
-	accessExpirationDate	DATETIME		NOT NULL,
 	PRIMARY KEY				(id)
 );
 

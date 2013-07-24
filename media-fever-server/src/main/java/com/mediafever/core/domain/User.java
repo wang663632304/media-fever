@@ -1,6 +1,5 @@
 package com.mediafever.core.domain;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -118,14 +117,12 @@ public class User extends Entity {
 	 * 
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
-	 * @param facebookAccessExpirationDate FB session's expiration date.
 	 */
-	public void linkToFacebookAccount(String facebookUserId, String facebookAccessToken,
-			Date facebookAccessExpirationDate) {
+	public void linkToFacebookAccount(String facebookUserId, String facebookAccessToken) {
 		if (facebookAccount == null) {
-			facebookAccount = new FacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpirationDate);
+			facebookAccount = new FacebookAccount(facebookUserId, facebookAccessToken);
 		} else {
-			facebookAccount.update(facebookAccessToken, facebookAccessExpirationDate);
+			facebookAccount.update(facebookAccessToken);
 		}
 	}
 	

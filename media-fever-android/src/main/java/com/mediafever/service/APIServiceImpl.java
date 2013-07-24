@@ -1,6 +1,5 @@
 package com.mediafever.service;
 
-import java.util.Date;
 import java.util.List;
 import com.jdroid.android.debug.mocks.AndroidJsonMockWebService;
 import com.jdroid.android.domain.FileContent;
@@ -24,10 +23,8 @@ import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
 import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.domain.social.FacebookAccount;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
-import com.mediafever.parser.FacebookAccountParser;
 import com.mediafever.parser.FriendRequestParser;
 import com.mediafever.parser.InnerWatchableParser;
 import com.mediafever.parser.MediaSelectionParser;
@@ -147,15 +144,12 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 	}
 	
 	/**
-	 * @see com.mediafever.service.APIService#connectToFacebook(java.lang.Long, java.lang.String, java.lang.String,
-	 *      java.util.Date)
+	 * @see com.mediafever.service.APIService#connectToFacebook(java.lang.Long, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken,
-			Date facebookExpirationDate) {
+	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken) {
 		EntityEnclosingWebService webservice = newPostService(USERS_MODULE, userId, FACEBOOK);
-		webservice.setEntity(new FacebookAccountJsonMarshaller().marshall(facebookUserId, facebookAccessToken,
-			facebookExpirationDate));
+		webservice.setEntity(new FacebookAccountJsonMarshaller().marshall(facebookUserId, facebookAccessToken));
 		webservice.execute();
 	}
 	
@@ -166,12 +160,6 @@ public class APIServiceImpl extends AbstractApacheApiService implements APIServi
 	public void disconnectFromFacebook(Long userId) {
 		WebService webservice = newDeleteService(USERS_MODULE, userId, FACEBOOK);
 		webservice.execute();
-	}
-	
-	@Override
-	public FacebookAccount getFacebookAccount(Long userId) {
-		WebService webservice = newGetService(USERS_MODULE, userId, FACEBOOK);
-		return webservice.execute(new FacebookAccountParser());
 	}
 	
 	/**

@@ -1,6 +1,5 @@
 package com.mediafever.core.service;
 
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,13 +89,11 @@ public class UserService {
 	 * @param userId The user id.
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
-	 * @param facebookAccessExpirationDate The FB session's expiration date.
 	 */
 	@Transactional
-	public void linkToFacebookAccount(Long userId, String facebookUserId, String facebookAccessToken,
-			Date facebookAccessExpirationDate) {
+	public void linkToFacebookAccount(Long userId, String facebookUserId, String facebookAccessToken) {
 		User user = userRepository.get(userId);
-		user.linkToFacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpirationDate);
+		user.linkToFacebookAccount(facebookUserId, facebookAccessToken);
 	}
 	
 	/**
@@ -111,17 +108,6 @@ public class UserService {
 	}
 	
 	/**
-	 * Returns the {@link User}'s {@link FacebookAccount}.
-	 * 
-	 * @param userId The user id.
-	 * @return The {@link FacebookAccount}.
-	 */
-	public FacebookAccount getFacebookAccount(Long userId) {
-		User user = userRepository.get(userId);
-		return user.getFacebookAccount();
-	}
-	
-	/**
 	 * Return all the Facebook's friends of the user that are also users of this app
 	 * 
 	 * @param userId The user id
@@ -132,19 +118,26 @@ public class UserService {
 		User user = userRepository.get(userId);
 		List<SocialUser> socialUsers = Lists.newArrayList();
 		FacebookRepository facebookRepository = new FacebookRepository();
-		List<FacebookUser> friends = facebookRepository.getAppFriends(user.getFacebookAccount().getAccessToken());
-		for (FacebookUser each : friends) {
-			try {
-				User facebookUser = userRepository.getByFacebookId(each.getFacebookId());
-				if (!facebookUser.isFriendOf(user)) {
-					FacebookSocialUser facebookSocialUser = new FacebookSocialUser(each.getFacebookId(),
-							each.getFirstName(), each.getLastName());
-					facebookSocialUser.setId(facebookUser.getId());
-					socialUsers.add(facebookSocialUser);
+		
+		if (user.getFacebookAccount() != null) {
+			
+			// TODO Throw an authentication error to force the client to relogin, if this request fails
+			List<FacebookUser> friends = facebookRepository.getAppFriends(user.getFacebookAccount().getAccessToken());
+			for (FacebookUser each : friends) {
+				try {
+					User facebookUser = userRepository.getByFacebookId(each.getFacebookId());
+					if (!facebookUser.isFriendOf(user)) {
+						FacebookSocialUser facebookSocialUser = new FacebookSocialUser(each.getFacebookId(),
+								each.getFirstName(), each.getLastName());
+						facebookSocialUser.setId(facebookUser.getId());
+						socialUsers.add(facebookSocialUser);
+					}
+				} catch (ObjectNotFoundException e) {
+					// Do Nothing
 				}
-			} catch (ObjectNotFoundException e) {
-				// Do Nothing
 			}
+		} else {
+			// TODO Throw an authentication error to force the client to relogin
 		}
 		return socialUsers;
 	}
