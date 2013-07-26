@@ -1,31 +1,20 @@
 package com.mediafever.android.ui.friends;
 
-import android.os.Bundle;
 import com.jdroid.android.facebook.BasicFacebookUserInfo;
 import com.jdroid.android.facebook.FacebookHelperFragment;
-import com.jdroid.android.facebook.FacebookLoginUseCase;
 import com.mediafever.usecase.settings.MediaFeverFacebookLoginUseCase;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class FacebookFriendsHelperFragment extends FacebookHelperFragment {
-	
-	/**
-	 * @see com.jdroid.android.facebook.FacebookHelperFragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// startLoginProcess();
-	}
+public class FacebookFriendsHelperFragment extends FacebookHelperFragment<MediaFeverFacebookLoginUseCase> {
 	
 	/**
 	 * @see com.jdroid.android.facebook.FacebookHelperFragment#createFacebookLoginUseCase()
 	 */
 	@Override
-	protected FacebookLoginUseCase createFacebookLoginUseCase() {
+	protected MediaFeverFacebookLoginUseCase createFacebookLoginUseCase() {
 		return getInstance(MediaFeverFacebookLoginUseCase.class);
 	}
 	

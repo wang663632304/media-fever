@@ -27,10 +27,10 @@ public class MediaFeverFacebookLoginUseCase extends FacebookLoginUseCase {
 	}
 	
 	/**
-	 * @see com.jdroid.android.facebook.FacebookLoginUseCase#sendFacebookLogout()
+	 * @see com.jdroid.android.facebook.FacebookLoginUseCase#afterFacebookLogout()
 	 */
 	@Override
-	protected void sendFacebookLogout() {
+	protected void afterFacebookLogout() {
 		apiService.disconnectFromFacebook(SecurityContext.get().getUser().getId());
 	}
 }
