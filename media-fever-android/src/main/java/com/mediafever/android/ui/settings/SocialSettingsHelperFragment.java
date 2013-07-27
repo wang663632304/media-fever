@@ -9,13 +9,14 @@ import com.mediafever.usecase.settings.MediaFeverFacebookAuthenticationUseCase;
  * 
  * @author Maxi Rosson
  */
-public class SocialSettingsHelperFragment extends FacebookAuthenticationFragment<MediaFeverFacebookAuthenticationUseCase> {
+public class SocialSettingsHelperFragment extends
+		FacebookAuthenticationFragment<MediaFeverFacebookAuthenticationUseCase> {
 	
 	/**
 	 * @see com.jdroid.android.facebook.FacebookAuthenticationFragment#createFacebookAuthenticationUseCase()
 	 */
 	@Override
-	protected MediaFeverFacebookAuthenticationUseCase createFacebookLoginUseCase() {
+	protected MediaFeverFacebookAuthenticationUseCase createFacebookAuthenticationUseCase() {
 		return getInstance(MediaFeverFacebookAuthenticationUseCase.class);
 	}
 	
