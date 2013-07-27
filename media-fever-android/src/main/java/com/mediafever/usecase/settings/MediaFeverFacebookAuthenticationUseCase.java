@@ -2,24 +2,24 @@ package com.mediafever.usecase.settings;
 
 import com.google.inject.Inject;
 import com.jdroid.android.context.SecurityContext;
-import com.jdroid.android.facebook.FacebookLoginUseCase;
+import com.jdroid.android.facebook.FacebookAuthenticationUseCase;
 import com.mediafever.service.APIService;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class MediaFeverFacebookLoginUseCase extends FacebookLoginUseCase {
+public class MediaFeverFacebookAuthenticationUseCase extends FacebookAuthenticationUseCase {
 	
 	private APIService apiService;
 	
 	@Inject
-	public MediaFeverFacebookLoginUseCase(APIService apiService) {
+	public MediaFeverFacebookAuthenticationUseCase(APIService apiService) {
 		this.apiService = apiService;
 	}
 	
 	/**
-	 * @see com.jdroid.android.facebook.FacebookLoginUseCase#sendFacebookLogin(java.lang.String, java.lang.String)
+	 * @see com.jdroid.android.facebook.FacebookAuthenticationUseCase#sendFacebookLogin(java.lang.String, java.lang.String)
 	 */
 	@Override
 	protected void sendFacebookLogin(String facebookId, String token) {
@@ -27,7 +27,7 @@ public class MediaFeverFacebookLoginUseCase extends FacebookLoginUseCase {
 	}
 	
 	/**
-	 * @see com.jdroid.android.facebook.FacebookLoginUseCase#afterFacebookLogout()
+	 * @see com.jdroid.android.facebook.FacebookAuthenticationUseCase#afterFacebookLogout()
 	 */
 	@Override
 	protected void afterFacebookLogout() {

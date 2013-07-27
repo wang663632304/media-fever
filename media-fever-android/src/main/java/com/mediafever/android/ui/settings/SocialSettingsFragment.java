@@ -25,6 +25,7 @@ public class SocialSettingsFragment extends AbstractFragment {
 	
 	private final static Logger LOGGER = LoggerUtils.getLogger(SocialSettingsFragment.class);
 	
+	// TODO Implement this fragment
 	// private ConnectToFacebookUseCase connectToFacebookUseCase;
 	
 	/**

@@ -1,28 +1,28 @@
 package com.mediafever.android.ui.friends;
 
-import com.jdroid.android.facebook.BasicFacebookUserInfo;
-import com.jdroid.android.facebook.FacebookHelperFragment;
-import com.mediafever.usecase.settings.MediaFeverFacebookLoginUseCase;
+import com.jdroid.android.facebook.FacebookAuthenticationFragment;
+import com.jdroid.android.facebook.FacebookUser;
+import com.mediafever.usecase.settings.MediaFeverFacebookAuthenticationUseCase;
 
 /**
  * 
  * @author Maxi Rosson
  */
-public class FacebookFriendsHelperFragment extends FacebookHelperFragment<MediaFeverFacebookLoginUseCase> {
+public class FacebookFriendsHelperFragment extends FacebookAuthenticationFragment<MediaFeverFacebookAuthenticationUseCase> {
 	
 	/**
-	 * @see com.jdroid.android.facebook.FacebookHelperFragment#createFacebookLoginUseCase()
+	 * @see com.jdroid.android.facebook.FacebookAuthenticationFragment#createFacebookAuthenticationUseCase()
 	 */
 	@Override
-	protected MediaFeverFacebookLoginUseCase createFacebookLoginUseCase() {
-		return getInstance(MediaFeverFacebookLoginUseCase.class);
+	protected MediaFeverFacebookAuthenticationUseCase createFacebookLoginUseCase() {
+		return getInstance(MediaFeverFacebookAuthenticationUseCase.class);
 	}
 	
 	/**
-	 * @see com.jdroid.android.facebook.FacebookHelperFragment#onFacebookLoginUseCaseFinished(com.jdroid.android.facebook.BasicFacebookUserInfo)
+	 * @see com.jdroid.android.facebook.FacebookAuthenticationFragment#onFacebookLoginUseCaseFinished(com.jdroid.android.facebook.FacebookUser)
 	 */
 	@Override
-	protected void onFacebookLoginUseCaseFinished(BasicFacebookUserInfo userInfo) {
+	protected void onFacebookLoginUseCaseFinished(FacebookUser facebookUser) {
 		
 		// TODO Use FacebookFriendsListener
 		FacebookFriendsListFragment fragment = (FacebookFriendsListFragment)getSherlockActivity().getSupportFragmentManager().findFragmentByTag(
