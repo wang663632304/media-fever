@@ -1,13 +1,14 @@
 package com.mediafever.core.service;
 
-import java.util.Date;
 import java.util.List;
-import javax.ws.rs.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.jdroid.java.collections.Lists;
+import com.jdroid.java.repository.ObjectNotFoundException;
 import com.jdroid.javaweb.domain.FileEntity;
+import com.jdroid.javaweb.facebook.FacebookRepository;
+import com.jdroid.javaweb.facebook.FacebookUser;
 import com.jdroid.javaweb.push.Device;
 import com.jdroid.javaweb.push.DeviceRepository;
 import com.jdroid.javaweb.push.DeviceType;
@@ -16,7 +17,8 @@ import com.jdroid.javaweb.search.Filter;
 import com.jdroid.javaweb.search.PagedResult;
 import com.mediafever.api.exception.ServerErrorCode;
 import com.mediafever.core.domain.FacebookAccount;
-import com.mediafever.core.domain.FacebookUser;
+import com.mediafever.core.domain.FacebookSocialUser;
+import com.mediafever.core.domain.SocialUser;
 import com.mediafever.core.domain.User;
 import com.mediafever.core.repository.CustomFilterKey;
 import com.mediafever.core.repository.UserRepository;
@@ -87,13 +89,11 @@ public class UserService {
 	 * @param userId The user id.
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
-	 * @param facebookAccessExpirationDate The FB session's expiration date.
 	 */
 	@Transactional
-	public void linkToFacebookAccount(Long userId, String facebookUserId, String facebookAccessToken,
-			Date facebookAccessExpirationDate) {
+	public void linkToFacebookAccount(Long userId, String facebookUserId, String facebookAccessToken) {
 		User user = userRepository.get(userId);
-		user.linkToFacebookAccount(facebookUserId, facebookAccessToken, facebookAccessExpirationDate);
+		user.linkToFacebookAccount(facebookUserId, facebookAccessToken);
 	}
 	
 	/**
@@ -108,44 +108,38 @@ public class UserService {
 	}
 	
 	/**
-	 * Returns the {@link User}'s {@link FacebookAccount}.
-	 * 
-	 * @param userId The user id.
-	 * @return The {@link FacebookAccount}.
-	 */
-	public FacebookAccount getFacebookAccount(Long userId) {
-		User user = userRepository.get(userId);
-		return user.getFacebookAccount();
-	}
-	
-	/**
-	 * Return all the Facebook's friends of the user
+	 * Return all the Facebook's friends of the user that are also users of this app
 	 * 
 	 * @param userId The user id
 	 * @return The list of friends
 	 */
-	public List<FacebookUser> getFacebookFriends(Long userId) {
-		// TODO Implement this.
-		// 1. Obtain all the Facebook friends of the logged user
-		// 2. For each friend, see if it match by facebookId or email with any of our app users
-		// 3. For each matched user, create a FacebookUser with our user id, first name and last name
-		// 4. For each not matched user, create a FacebookUser with the facebookId, first name and last name
+	public List<SocialUser> getFacebookFriends(Long userId) {
 		
-		List<FacebookUser> socialUsers = Lists.newArrayList();
-		socialUsers.add(new FacebookUser("facebookId1", "firstName1", "lastName1"));
-		FacebookUser user2 = new FacebookUser(null, "firstName2", "lastName2");
-		user2.setId(2L);
-		socialUsers.add(user2);
+		User user = userRepository.get(userId);
+		List<SocialUser> socialUsers = Lists.newArrayList();
+		FacebookRepository facebookRepository = new FacebookRepository();
+		
+		if (user.getFacebookAccount() != null) {
+			
+			// TODO Throw an authentication error to force the client to relogin, if this request fails
+			List<FacebookUser> friends = facebookRepository.getAppFriends(user.getFacebookAccount().getAccessToken());
+			for (FacebookUser each : friends) {
+				try {
+					User facebookUser = userRepository.getByFacebookId(each.getFacebookId());
+					if (!facebookUser.isFriendOf(user)) {
+						FacebookSocialUser facebookSocialUser = new FacebookSocialUser(each.getFacebookId(),
+								each.getFirstName(), each.getLastName());
+						facebookSocialUser.setId(facebookUser.getId());
+						socialUsers.add(facebookSocialUser);
+					}
+				} catch (ObjectNotFoundException e) {
+					// Do Nothing
+				}
+			}
+		} else {
+			// TODO Throw an authentication error to force the client to relogin
+		}
 		return socialUsers;
-	}
-	
-	/**
-	 * Invite the user to use the app. Post on the wall if possible, else send an email
-	 * 
-	 * @param facebookId The invited user's facebook id
-	 */
-	public void inviteFacebookFriend(@PathParam("id") Long facebookId) {
-		// TODO Implement this
 	}
 	
 	/**

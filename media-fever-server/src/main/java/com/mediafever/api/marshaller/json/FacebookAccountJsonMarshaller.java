@@ -14,7 +14,6 @@ import com.mediafever.core.domain.FacebookAccount;
 public class FacebookAccountJsonMarshaller implements Marshaller<FacebookAccount, JsonMap> {
 	
 	private final static String ACCESS_TOKEN = "accessToken";
-	private final static String EXPIRATION_DATE = "accessExpirationDate";
 	
 	/**
 	 * @see com.jdroid.java.marshaller.Marshaller#marshall(java.lang.Object, com.jdroid.java.marshaller.MarshallerMode,
@@ -24,7 +23,6 @@ public class FacebookAccountJsonMarshaller implements Marshaller<FacebookAccount
 	public JsonMap marshall(FacebookAccount facebookAccount, MarshallerMode mode, Map<String, String> extras) {
 		JsonMap map = new JsonMap(mode, extras);
 		map.put(ACCESS_TOKEN, facebookAccount.getAccessToken());
-		map.put(EXPIRATION_DATE, facebookAccount.getAccessExpirationDate());
 		return map;
 	}
 	

@@ -11,6 +11,8 @@ import com.jdroid.android.analytics.AnalyticsTracker;
 import com.jdroid.android.context.DefaultApplicationContext;
 import com.jdroid.android.context.SecurityContext;
 import com.jdroid.android.exception.ExceptionHandler;
+import com.jdroid.android.facebook.FacebookConnector;
+import com.jdroid.android.facebook.FacebookPreferencesUtils;
 import com.jdroid.android.fragment.BaseFragment;
 import com.jdroid.android.gcm.GcmMessageResolver;
 import com.jdroid.android.utils.NotificationUtils;
@@ -71,6 +73,10 @@ public class AndroidApplication extends AbstractApplication {
 	public void logout() {
 		
 		LogoutService.runLogoutService(this, SecurityContext.get().getUser().getId());
+		
+		FacebookConnector facebookConnector = new FacebookConnector();
+		facebookConnector.logout();
+		FacebookPreferencesUtils.cleanFacebookUser();
 		
 		SecurityContext.get().detachUser();
 		NotificationUtils.cancelAllNotifications();

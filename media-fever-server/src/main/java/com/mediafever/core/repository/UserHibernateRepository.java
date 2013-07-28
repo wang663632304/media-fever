@@ -45,6 +45,17 @@ public class UserHibernateRepository extends HibernateRepository<User> implement
 	}
 	
 	/**
+	 * @see com.mediafever.core.repository.UserRepository#getByFacebookId(java.lang.String)
+	 */
+	@Override
+	public User getByFacebookId(String facebookId) {
+		DetachedCriteria usersCriteria = createDetachedCriteria();
+		usersCriteria.createAlias("facebookAccount", "facebookAccount");
+		usersCriteria.add(Restrictions.eq("facebookAccount.userId", facebookId));
+		return findUnique(usersCriteria);
+	}
+	
+	/**
 	 * @see com.mediafever.core.repository.UserRepository#existsWithEmail(java.lang.String)
 	 */
 	@Override

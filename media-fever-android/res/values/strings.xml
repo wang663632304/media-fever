@@ -99,6 +99,7 @@
 	<string name="addUser">Do you want to add %1$s as a friend?</string>
 	<string name="addedAsFriend">%1$s was added as a friend</string>
 	<string name="invitedToBeYourFriend">%1$s was invited to be your friend</string>
+	<string name="connectToFacebook">Connect to Facebook</string>
 
 	<!-- Friends Requests -->
 	<string name="friendsRequests">Friends Requests</string>

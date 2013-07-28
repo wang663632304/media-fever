@@ -1,15 +1,14 @@
 package com.mediafever.service;
 
-import java.util.Date;
 import java.util.List;
 import com.jdroid.android.domain.FileContent;
 import com.jdroid.android.search.PagedResult;
 import com.mediafever.domain.FriendRequest;
+import com.mediafever.domain.SocialUser;
 import com.mediafever.domain.UserImpl;
 import com.mediafever.domain.UserWatchable;
 import com.mediafever.domain.session.MediaSelection;
 import com.mediafever.domain.session.MediaSession;
-import com.mediafever.domain.social.FacebookAccount;
 import com.mediafever.domain.watchable.Watchable;
 import com.mediafever.domain.watchable.WatchableType;
 
@@ -47,6 +46,8 @@ public interface APIService {
 	
 	public List<UserImpl> getFriends(Long userId);
 	
+	public List<SocialUser> getFacebookFriends(Long userId);
+	
 	public List<UserImpl> searchUsers(Long userId, String query);
 	
 	public void removeFriend(Long userId, Long friendId);
@@ -65,7 +66,7 @@ public interface APIService {
 	
 	public List<FriendRequest> getFriendRequests(Long userId);
 	
-	public FriendRequest createFriendRequest(FriendRequest friendRequest);
+	public FriendRequest createFriendRequest(Long userId, Long senderId);
 	
 	public void acceptFriendRequest(FriendRequest friendRequest);
 	
@@ -79,10 +80,8 @@ public interface APIService {
 	 * @param userId The user id.
 	 * @param facebookUserId The FB user id.
 	 * @param facebookAccessToken The FB access token.
-	 * @param facebookExpirationDate FB session's expiration date.
 	 */
-	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken,
-			Date facebookExpirationDate);
+	public void connectToFacebook(Long userId, String facebookUserId, String facebookAccessToken);
 	
 	/**
 	 * Disconnects an user account from its Facebook profile.
@@ -90,14 +89,6 @@ public interface APIService {
 	 * @param userId The user id.
 	 */
 	public void disconnectFromFacebook(Long userId);
-	
-	/**
-	 * Gets the user's {@link FacebookAccount} if any is linked.
-	 * 
-	 * @param userId The user id.
-	 * @return The {@link FacebookAccount}.
-	 */
-	public FacebookAccount getFacebookAccount(Long userId);
 	
 	public void markAsWatched(Long userId, List<Long> watchablesIds, Boolean watched);
 	

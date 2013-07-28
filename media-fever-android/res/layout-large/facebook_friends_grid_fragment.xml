@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<GridView android:id="@+id/grid" android:layout_width="match_parent" android:layout_height="match_parent"
+		android:layout_above="@+id/adViewContainer" android:verticalSpacing="20dp" android:horizontalSpacing="5dp"
+		android:gravity="center" android:numColumns="auto_fit" android:columnWidth="150dp" android:stretchMode="columnWidth"
+		style="@style/defaultGrid" android:layout_margin="5dp" android:visibility="gone" />
+
+	<TextView android:id="@id/android:empty" android:text="@string/noResultsSearch" style="@style/noResultsText"
+		android:visibility="gone" />
+
+	<LinearLayout android:id="@+id/facebookLoginContainer" android:layout_width="match_parent"
+		android:layout_height="match_parent" android:orientation="vertical" android:layout_above="@+id/adViewContainer">
+		<TextView style="@style/title2Text" android:text="@string/linkAccount" android:layout_margin="10dp" />
+
+		<Button android:id="@+id/authButton" android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal" android:layout_margin="10dp" android:text="@string/connectToFacebook"
+			android:background="@drawable/facebook_button_selector" />
+
+		<TextView android:layout_width="match_parent" android:layout_height="match_parent" style="@style/h2Text"
+			android:layout_margin="10dp" android:text="@string/newWaysToConnect" android:gravity="bottom|center_horizontal" />
+	</LinearLayout>
+
+	<include layout="@layout/ad_view_container" />
+
+</RelativeLayout>

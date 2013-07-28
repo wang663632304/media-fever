@@ -2,7 +2,6 @@ package com.mediafever.repository;
 
 import com.jdroid.android.repository.SynchronizedInMemoryRepository;
 import com.mediafever.domain.FriendRequest;
-import com.mediafever.domain.UserImpl;
 
 /**
  * 
@@ -12,12 +11,12 @@ public class InMemoryFriendRequestsRepository extends SynchronizedInMemoryReposi
 		FriendRequestsRepository {
 	
 	/**
-	 * @see com.mediafever.repository.FriendRequestsRepository#getBySender(com.mediafever.domain.UserImpl)
+	 * @see com.mediafever.repository.FriendRequestsRepository#getBySender(java.lang.Long)
 	 */
 	@Override
-	public FriendRequest getBySender(UserImpl sender) {
+	public FriendRequest getBySender(Long senderId) {
 		for (FriendRequest friendRequest : getAll()) {
-			if (friendRequest.getSender().equals(sender)) {
+			if (friendRequest.getSender().getId().equals(senderId)) {
 				return friendRequest;
 			}
 		}

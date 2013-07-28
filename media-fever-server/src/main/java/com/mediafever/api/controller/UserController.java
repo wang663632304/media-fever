@@ -97,16 +97,7 @@ public class UserController extends AbstractController {
 	@GZIP
 	public void linkFacebookAccount(@PathParam("id") Long userId, String facebookAccountJSON) {
 		FacebookAccountJson facebookAccountJson = (FacebookAccountJson)(new FacebookAccountParser().parse(facebookAccountJSON));
-		userService.linkToFacebookAccount(userId, facebookAccountJson.getUserId(),
-			facebookAccountJson.getAccessToken(), facebookAccountJson.getAccessExpirationDate());
-	}
-	
-	@GET
-	@Path("{id}/facebook")
-	@Produces(MediaType.APPLICATION_JSON)
-	@GZIP
-	public String getFacebookAccount(@PathParam("id") Long userId) {
-		return marshallSimple(userService.getFacebookAccount(userId));
+		userService.linkToFacebookAccount(userId, facebookAccountJson.getUserId(), facebookAccountJson.getAccessToken());
 	}
 	
 	@DELETE
@@ -121,12 +112,6 @@ public class UserController extends AbstractController {
 	@GZIP
 	public String getFacebookFriends(@PathParam("id") Long userId) {
 		return marshallSimple(userService.getFacebookFriends(userId));
-	}
-	
-	@PUT
-	@Path("{id}/facebook/invite")
-	public void inviteFacebookFriend(@PathParam("id") Long facebookId) {
-		userService.inviteFacebookFriend(facebookId);
 	}
 	
 	@GET
